@@ -1,0 +1,37 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:/Programacion/Prueba1 -type f -not -path */node_modules/* -not -path */.git/*)",
+      "Bash(ollama list:*)",
+      "Bash(node .claude/obrero.js *)",
+      "Bash(ollama run qwen-obrero *)",
+      "Bash(python:*)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*(genera|crea|boilerplate|test unitario|refactoriza|repetitivo|Obrero).*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo [Obrero] Detectada tarea delegable a Qwen local...",
+            "shell": "bash"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo [Hook] Interceptando escritura de archivo...",
+            "shell": "bash"
+          }
+        ]
+      }
+    ]
+  }
+}

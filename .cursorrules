@@ -1,0 +1,22 @@
+# Hybrid Vibe Coding System Rules
+# Target: Cursor, Windsurf, & Antigravity Assistant
+
+## Directiva de Arquitectura Híbrida (RTX 4060 Ti 8GB + Claude)
+
+A partir de ahora, todas las interacciones de IA en esta carpeta se regirán por el modelo **Arquitecto-Obrero**:
+
+### 1. El Obrero Local (Ollama: qwen-obrero)
+- **CUÁNDO USAR**: Para TODA escritura de código "de bajo valor lingüístico" (boilerplate, tests unitarios, comentarios, logs, refactorización repetitiva).
+- **CONEXIÓN**: `http://localhost:11434/api/generate` o `ollama run qwen-obrero`.
+- **PARÁMETROS**: `num_ctx: 16384`, `kv_cache: q4_0` (aceleración GPU 100%).
+
+### 2. El Arquitecto (Claude / Cloud)
+- **CUÁNDO USAR**: Diseño conceptual, mapeo de archivos complejos, resolución de fallos lógicos sutiles y revisión final de calidad.
+- **FLUJO**: El Arquitecto diseña el "qué" y delega el "cómo" al obrero local.
+
+### 3. Protocolo de Persistencia
+- El Obrero genera -> El Arquitecto revisa -> Se guarda en el archivo.
+- No guardar nunca código de Ollama sin que pase por el filtro de Claude.
+
+---
+Mantra: "Diseña en la nube, pica código en el silicio local."

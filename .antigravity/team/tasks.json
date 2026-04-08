@@ -1,0 +1,406 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Investigar parsers de Pine Script o mapeo de funciones en JS",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Investigador",
+      "dependencies": []
+    },
+    {
+      "id": 2,
+      "title": "Dise\u00f1ar panel de 'Pine Editor' para el terminal",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 3,
+      "title": "Implementar el motor de calculo para SMA/EMA custom via Pine",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Implementar endpoint para guardar/cargar scripts",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Backend",
+      "dependencies": []
+    },
+    {
+      "id": 5,
+      "title": "Implementar pineRuntime.ts",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Refactorize Vortex Engine for State Persistence",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Architect",
+      "dependencies": []
+    },
+    {
+      "id": 7,
+      "title": "Optimize Canvas Rendering and Script Interface",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Specialist",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "[ARCHITECT] Engine Upgrade (Area Series Support)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 9,
+      "title": "[OBRERO] Flux VWAP Script Refactor",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Backend: Anadir date_to en FastAPI MT5 Bridge",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 11,
+      "title": "Frontend: Listener LogicalRange en React",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Pugobot",
+      "dependencies": []
+    },
+    {
+      "id": 12,
+      "title": "Backend: Soportar to_timestamp en history-footprint",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Backend",
+      "dependencies": [
+        "[10]"
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Frontend: Listener de Scroll y Lazy Fetch",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        "[11]"
+      ]
+    },
+    {
+      "id": 14,
+      "title": "QA: Validar Merging de Footprint en Tiempo Real",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Revisor",
+      "dependencies": []
+    },
+    {
+      "id": 15,
+      "title": "Fix: Auto-seguimiento de Linea Limite (Pugobot Skill)",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Pugobot",
+      "dependencies": []
+    },
+    {
+      "id": 16,
+      "title": "[OBRERO] Debugging Verboso de Sincronizaci\u00c3\u00b3n L\u00c3\u00admite",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Obrero",
+      "dependencies": [
+        "15"
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Recuperaci\u00c3\u00b3n de Script: VWAP Wave Flux",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 18,
+      "title": "Auditor\u00c3\u00ada de C\u00c3\u00a1lculo P&L Proyectado (D\u00c3\u00b3lares)",
+      "status": "IN_PROGRESS",
+      "plan_approved": true,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 19,
+      "title": "Correcci\u00c3\u00b3n de Error NaN en Overlay Trading",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Arquitecto",
+      "dependencies": [
+        18
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Redise\u00c3\u00b1o Visual Panel de \u00c3\u201crdenes y L\u00c3\u00adneas (TradingView Style)",
+      "status": "IN_PROGRESS",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 21,
+      "title": "Analizar l\u00f3gica de Footprint",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 22,
+      "title": "Dise\u00f1ar algoritmo de Stacked Imbalance",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 23,
+      "title": "Implementar visualizaci\u00f3n (Boilerplate)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 24,
+      "title": "Review y Refinamiento",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Pugobot",
+      "dependencies": []
+    },
+    {
+      "id": 25,
+      "title": "Dise\u00f1ar opciones de visualizaci\u00f3n de estrategia",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 26,
+      "title": "Implementar l\u00f3gica de detecci\u00f3n de velas",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 27,
+      "title": "Desarrollar componentes visuales (Primitive/Overlay)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 28,
+      "title": "Desacoplar bucle renderizado de ticks en ChartComponent",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 29,
+      "title": "Documentaci\u00f3n T\u00e9cnica Heatmap Rithmic",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 30,
+      "title": "Documentaci\u00f3n T\u00e9cnica Heatmap Rithmic",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 31,
+      "title": "Ingesta Heatmap Independiente de Velas",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 32,
+      "title": "Continuidad DeepDOM (Renderizado de Cinta)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 33,
+      "title": "Aumentar Buffer Store",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 34,
+      "title": "Dise\u00f1ar sistema de comunicaci\u00f3n Worker-MainThread",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Pugobot",
+      "dependencies": []
+    },
+    {
+      "id": 35,
+      "title": "Implementar heatmapWorker.ts con Price Binning",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Worker",
+      "dependencies": []
+    },
+    {
+      "id": 36,
+      "title": "Refactorizar BookmapOverlay.tsx con Graded Rendering",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Graphics",
+      "dependencies": []
+    },
+    {
+      "id": 37,
+      "title": "Definir Tipos de Mensajes para el Worker",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 38,
+      "title": "Implementar HeatmapWorker (OffscreenCanvas)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": []
+    },
+    {
+      "id": 39,
+      "title": "Refactorizar BookmapOverlay para delegaci\u00f3n al Worker",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero Local",
+      "dependencies": []
+    },
+    {
+      "id": 40,
+      "title": "Diagn\u00f3stico Rithmic",
+      "status": "PENDING",
+      "assigned_to": "Investigador"
+    },
+    {
+      "id": 41,
+      "title": "Auditor\u00eda S\u00edmbolos",
+      "status": "PENDING",
+      "assigned_to": "Arquitecto"
+    },
+    {
+      "id": 42,
+      "title": "Debug Frontend",
+      "status": "PENDING",
+      "assigned_to": "Especialista Frontend"
+    },
+    {
+      "id": 43,
+      "title": "Tests Obrero",
+      "status": "PENDING",
+      "assigned_to": "Obrero"
+    },
+    {
+      "id": 44,
+      "title": "Configurar .gitignore",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 45,
+      "title": "Inicializar Repo Git",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista",
+      "dependencies": []
+    },
+    {
+      "id": 46,
+      "title": "Vincular y Subir a GitHub",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista",
+      "dependencies": []
+    }
+  ],
+  "members": [
+    {
+      "name": "Pugobot",
+      "role": "Director"
+    },
+    {
+      "name": "Investigador",
+      "role": "Research & Analysis"
+    },
+    {
+      "name": "Arquitecto",
+      "role": "UI/UX & System Architecture"
+    },
+    {
+      "name": "Especialista Frontend",
+      "role": "Engine & UI Implementation"
+    },
+    {
+      "name": "Especialista Backend",
+      "role": "API & Persistence"
+    },
+    {
+      "name": "Obrero",
+      "role": "Local Worker (Cost Optimization)"
+    }
+  ]
+}

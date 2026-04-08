@@ -1,0 +1,33 @@
+# Hybrid Vibe Coding System Rules
+# Target: Antigravity Assistant & Claude Code CLI
+
+## 1. Hybrid Model Routing (MANDATORY)
+- **Architect (Cloud/Claude)**: Use primarily for project mapping, complex logic, architectural decisions, and final review of code.
+- **Worker (Local/Ollama - qwen-obrero)**: Use for all "grunt work" including boilerplate generation, unit tests creation, verbose documentation, and repetitive refactoring (e.g., adding logs, error handling).
+
+## 2. Interaction Protocol
+- When the USER requests code changes, ALWAYS first identify if the task can be delegated to the local sub-agent.
+- If delegatable, use `ollama run qwen-obrero` or the Ollama API at `http://localhost:11434` to generate the code block.
+- ALWAYS review the local output for architectural coherence and syntax correctness before persistence.
+
+## 3. Hardware Optimization
+- Maximize GPU utilization on the NVIDIA RTX 4060 Ti 8GB.
+- Use `OLLAMA_KV_CACHE_TYPE=q4_0` and `num_ctx=16384` for the local worker to handle medium context files efficiently.
+- Avoid unnecessary cloud token consumption by pre-summarizing files locally if needed.
+
+## 4. Developer Experience
+- Maintain transparency: explicitly state "[Obrero Local: Generando código...]" when using Ollama.
+- Speed is key: prefer the local model's lower latency for interactive drafting tasks.
+
+## 5. Orchestration (Equipo Pugobot) - MANDATORY
+- For ANY non-trivial task, Antigravity MUST act as **Pugobot (Director)** and/o **Arquitecto**.
+- All work must be tracked in `.antigravity/team/tasks.json`.
+- **Gatekeeping**: No code implementation is allowed without an `APPROVED` plan in the corresponding agent's mailbox or `tasks.json`.
+- **Hybrid Assignment**:
+    - **Cloud**: Logic mapping, Architecture, Final Review.
+    - **Obrero (Local)**: Boilerplate, repetitive tasks, unit testing, and documentation.
+- Antes de finalizar una tarea, el agente debe actualizar el estado en `tasks.json` a `COMPLETED`.
+
+## 6. Idioma y Localización (MANDATORIO)
+- Todas las comunicaciones con el usuario, documentación (incluyendo archivos `.md`), planes de implementación y nombres de tareas en `task.md` **DEBEN** ser en **ESPAÑOL**.
+- Los bloques de pensamiento interno (`<thought>`) también deben redactarse en **ESPAÑOL** para mantener la coherencia total del proyecto.

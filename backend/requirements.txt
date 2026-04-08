@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+MetaTrader5
+pandas
+pydantic
+python-dotenv
+websockets

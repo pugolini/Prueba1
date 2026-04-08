@@ -1,0 +1,1275 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { createChart, ColorType, ISeriesApi, Time, LineStyle, IChartApi, ISeriesPrimitive } from 'lightweight-charts';
+import { useStore } from '../../store/useStore';
+import axios from 'axios';
+import OrderTicket from '../Sidebar/OrderTicket';
+import { executeVortexJS } from '../../engine/vortexEngine';
+import FootprintOverlay from './FootprintOverlay';
+import OrderFlowStrategiesOverlay from './OrderFlowStrategiesOverlay';
+import { BigTradesOverlay } from './BigTradesOverlay';
+import { HeatmapOverlay } from './BookmapOverlay';
+import TradingOverlay from './TradingOverlay';
+import PositionsPanel from './PositionsPanel';
+import { TrendlinePrimitive } from './plugins/TrendlinePrimitive';
+import { RectanglePrimitive } from './plugins/RectanglePrimitive';
+import { FibonacciPrimitive } from './plugins/FibonacciPrimitive';
+import { PositionPrimitive } from './plugins/PositionPrimitive';
+import { AnchoredVwapPrimitive } from './plugins/AnchoredVwapPrimitive';
+
+const ChartComponent: React.FC = () => {
+    const chartContainerRef = useRef<HTMLDivElement>(null);
+    const chartRef = useRef<IChartApi | null>(null);
+    const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+    const pineSeriesRef = useRef<{ [key: string]: ISeriesApi<'Line'>[] }>({});
+    const drawingsRef = useRef<Record<string, any>>({}); // id -> Primitive instance (including AVWAPs)
+    const tempDrawingRef = useRef<{ id: string, type: string, points: any[], plugin: any } | null>(null);
+
+    const {
+        symbol, timeframe, setData, data,
+        indicators, pineIndicators, activeTool, isOrderTicketOpen,
+        serverOffset, theme, chartRange, setChartRange, isFootprintEnabled,
+        positions, pendingOrders, fetchTradingStatus, modifyTradingOrder, closeTradingPosition,
+        lastTickPrice, defaultLot, setDefaultLot,
+        isLimitMode, pendingLimitPrice, setPendingLimitPrice, isPendingLimitDragged,
+        drawingsBySymbol, anchoredVwapsBySymbol, addAnchoredVwap, removeAnchoredVwap, updateAnchoredVwap, setActiveTool,
+        selectedAnchoredVwapId, setSelectedAnchoredVwapId,
+        addDrawing, removeDrawing, updateDrawing, selectedDrawingId, setSelectedDrawingId
+    } = useStore();
+
+    const drawings = drawingsBySymbol[symbol] || [];
+    const anchoredVwaps = anchoredVwapsBySymbol[symbol] || [];
+
+    const [dashboardData, setDashboardData] = useState<Record<string, string>>({});
+    const priceLinesRef = useRef<{ [ticket: string]: any[] }>({}); // ticket -> [entry, sl, tp] lines
+    const [draggingLine, setDraggingLine] = useState<{ ticket: number, type: 'price' | 'sl' | 'tp', isOrder: boolean } | null>(null);
+
+
+    // 1. Initial Chart & Series Setup
+    useEffect(() => {
+        if (!chartContainerRef.current) return;
+
+        const isDark = theme === 'dark';
+        const bgColor = isDark ? '#0a0e15' : '#ffffff';
+        const textColor = isDark ? '#c3c5d8' : '#6c757d';
+        const gridColor = isDark ? 'rgba(43, 46, 56, 0.3)' : 'rgba(0, 0, 0, 0.06)';
+        const borderColor = isDark ? 'rgba(43, 46, 56, 0.5)' : 'rgba(0, 0, 0, 0.1)';
+
+        const chart = createChart(chartContainerRef.current, {
+            layout: {
+                background: { type: ColorType.Solid, color: bgColor },
+                textColor: textColor,
+                fontSize: 11,
+                fontFamily: "'Inter', sans-serif",
+            },
+            grid: {
+                vertLines: { color: gridColor, style: LineStyle.SparseDotted },
+                horzLines: { color: gridColor, style: LineStyle.SparseDotted },
+            },
+            crosshair: {
+                mode: 1,
+                vertLine: { width: 1, color: '#2962ff', style: LineStyle.LargeDashed, labelBackgroundColor: '#2962ff' },
+                horzLine: { width: 1, color: '#2962ff', style: LineStyle.LargeDashed, labelBackgroundColor: '#2962ff' },
+            },
+            timeScale: {
+                borderColor: borderColor,
+                timeVisible: true,
+                secondsVisible: false,
+                rightOffset: 15, // Espacio para dibujo futuro
+                barSpacing: 6,
+                minBarSpacing: 0.5,
+            },
+            rightPriceScale: {
+                borderColor: borderColor,
+            },
+        });
+
+        const candlestickSeries = chart.addCandlestickSeries({
+            upColor: '#089981',
+            downColor: '#f23645',
+            borderVisible: false,
+            wickUpColor: '#089981',
+            wickDownColor: '#f23645',
+            lastValueVisible: false, // 🚀 Fusión Nativa: Ocultamos la nativa para usar la personalizada con timer
+        });
+
+        chart.applyOptions({
+            handleScroll: true,
+            handleScale: true,
+            rightPriceScale: {
+                autoScale: true,
+                borderVisible: true,
+                borderColor: theme === 'dark' ? '#2B2B43' : '#D6DCDE',
+                scaleMargins: {
+                    top: 0.1,
+                    bottom: 0.1,
+                },
+                alignLabels: true,
+            },
+        });
+
+        chartRef.current = chart;
+        seriesRef.current = candlestickSeries;
+
+        // 🟢 Resize Handling
+        const handleResize = () => {
+            if (chartContainerRef.current && chart) {
+                chart.applyOptions({ 
+                    width: chartContainerRef.current.clientWidth,
+                    height: chartContainerRef.current.clientHeight 
+                });
+            }
+        };
+
+        const resizeObserver = new ResizeObserver(() => handleResize());
+        resizeObserver.observe(chartContainerRef.current);
+
+        // 📡 Listen for high-performance resize events from App.tsx
+        const onDirectResize = () => handleResize();
+        window.addEventListener('resize-chart', onDirectResize);
+
+        return () => {
+            if (resizeObserver) resizeObserver.disconnect();
+            window.removeEventListener('resize-chart', onDirectResize);
+            if (chartRef.current) {
+                try {
+                    chartRef.current.remove();
+                } catch (e) {
+                    console.warn('[Chart] Error during chart removal:', e);
+                }
+                chartRef.current = null;
+            }
+        };
+
+    }, [theme]);
+
+    // 1.5 Auto-Zoom para el Footprint - REMOVED per user request to keep position
+    
+    // 🟢 WebSocket Institutional OrderFlow (dxFeed Mock/Integration)
+    useEffect(() => {
+        if (!symbol) return;
+        
+        let socket: WebSocket | null = null;
+        let reconnectTimeout: any = null;
+        let isIntentionallyClosed = false;
+        let connectTimeout: any = null;
+
+        const connect = () => {
+            if (isIntentionallyClosed) return;
+            console.log(`[OrderFlow] Conectando a ws://127.0.0.1:8005/ws/orderflow/${symbol}`);
+            const ws = new WebSocket(`ws://127.0.0.1:8005/ws/orderflow/${symbol}`);
+            socket = ws;
+
+            ws.onopen = () => console.log("[OrderFlow] Conectado.");
+            
+            ws.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                
+                // 1. BIG TRADES (Burbujas)
+                if (message.type === 'big_trade') {
+                    useStore.getState().addBigTrade(message);
+                } 
+                // 2. HEATMAP (Liquidación Institucional)
+                else if (message.type === 'heatmap') {
+                    const levels = message.data?.length || 0;
+                    if (levels > 0) {
+                        const state = useStore.getState();
+                        state.updateHeatmap(message.time, message.data);
+                    }
+                }
+                else if (message.type === 'heatmap_history') {
+                    if (message.data && message.data.length > 0) {
+                        const state = useStore.getState();
+                        state.setHeatmapHistory(message.data);
+                    }
+                }
+                // 3. ACTUALIZACIÓN DE VELA (Institucional Rithmic)
+                else if (message.type === 'price_update') {
+                    const state = useStore.getState();
+                    if (state.data.length > 0 && seriesRef.current) {
+                        const lastBar = state.data[state.data.length - 1];
+                        const price = message.price;
+                        
+                        // Solo actualizamos si el símbolo coincide y el tiempo es coherente con la última vela
+                        // Nota: El backend ya maneja el tiempo Unix correcto en rithmic_service
+                        const updatedBar = {
+                            ...lastBar,
+                            high: Math.max(lastBar.high, price),
+                            low: Math.min(lastBar.low, price),
+                            close: price,
+                        };
+                        
+                        // Actualizamos el store y la serie visual (Bypass para máxima fluidez)
+                        state.addBar(updatedBar);
+                        seriesRef.current.update(updatedBar as any);
+                        state.setLastTickPrice(price);
+                    }
+                }
+                // 4. ESTATUS / HEARTBEAT
+                else if (message.type === 'status_update') {
+                    if (message.ping) return; // Ignorar pings silenciosos
+                    if (message.source === 'rithmic') {
+                        useStore.getState().setRithmicConfig({ connected: message.connected });
+                    }
+                }
+            };
+
+            ws.onerror = (err) => console.error("[OrderFlow] Error:", err);
+            
+            ws.onclose = () => {
+                if (isIntentionallyClosed) return;
+                console.warn("[OrderFlow] Desconectado. Reintentando en 3s...");
+                reconnectTimeout = setTimeout(connect, 3000);
+            };
+        };
+
+        connectTimeout = setTimeout(connect, 100);
+
+        return () => {
+            isIntentionallyClosed = true;
+            if (connectTimeout) clearTimeout(connectTimeout);
+            if (reconnectTimeout) clearTimeout(reconnectTimeout);
+            if (socket) {
+                socket.onclose = null;
+                socket.onerror = null;
+                socket.close(1000, "Clean mount unmount");
+            }
+        };
+    }, [symbol]);
+    
+    // Limpieza de datos cuando el símbolo cambia
+    useEffect(() => {
+        return () => {
+            const state = useStore.getState();
+            state.clearOrderFlowData();
+            // Desactivar bookmap al cambiar símbolo — se reactivará automáticamente
+            // cuando lleguen datos L2 del nuevo símbolo (ver handler heatmap arriba)
+            if (state.orderFlowStrategies.bookmap) {
+                state.toggleStrategy('bookmap');
+            }
+        };
+    }, [symbol]);
+
+    // 🟢 WebSocket de Precios (MT5 Principal)
+    useEffect(() => {
+        if (chartRef.current && chartContainerRef.current) {
+            const chart = chartRef.current;
+            const container = chartContainerRef.current;
+            const resize = () => {
+                chart.applyOptions({ 
+                    width: container.clientWidth,
+                    height: container.clientHeight 
+                });
+            };
+            resize();
+            // Small delay to ensure CSS transitions have finished
+            setTimeout(resize, 50);
+            setTimeout(resize, 150);
+            setTimeout(resize, 300);
+        }
+    }, [isOrderTicketOpen]);
+
+    // 2. Poll Trading Status periodically
+    useEffect(() => {
+        if (!symbol) return;
+        const interval = setInterval(() => fetchTradingStatus(), 1000);
+        fetchTradingStatus();
+        return () => clearInterval(interval);
+    }, [symbol, fetchTradingStatus]);
+
+    // 3. Render Trading Lines (Entry, SL, TP)
+    useEffect(() => {
+        if (!seriesRef.current || !chartRef.current) return;
+        const series = seriesRef.current;
+
+        const activeTicketsArray = [
+            ...positions.map(p => `pos_${p.ticket}`),
+            ...pendingOrders.map(o => `ord_${o.ticket}`)
+        ];
+        const activeTickets = new Set(activeTicketsArray);
+
+        // Limpiar líneas de tickets cerrados
+        Object.keys(priceLinesRef.current).forEach(key => {
+            if (!activeTickets.has(key)) {
+                priceLinesRef.current[key].forEach(l => series.removePriceLine(l));
+                delete priceLinesRef.current[key];
+            }
+        });
+
+        const createOrUpdateLine = (ticketKey: string, type: string, price: number, color: string, title: string) => {
+            if (price <= 0) return;
+            if (!priceLinesRef.current[ticketKey]) priceLinesRef.current[ticketKey] = [];
+            
+            let line = priceLinesRef.current[ticketKey].find((l: any) => l._type === type);
+            if (line) {
+                line.applyOptions({ price, title, color });
+            } else {
+                line = series.createPriceLine({
+                    price,
+                    color,
+                    lineWidth: 2,
+                    lineStyle: LineStyle.Solid,
+                    axisLabelVisible: true,
+                    title: title,
+                });
+                (line as any)._type = type;
+                (line as any)._ticketKey = ticketKey;
+                priceLinesRef.current[ticketKey].push(line);
+            }
+        };
+
+        positions.forEach(p => {
+            const key = `pos_${p.ticket}`;
+            const color = p.type === 'BUY' ? '#089981' : '#f23645';
+            createOrUpdateLine(key, 'price', p.price_open, color, `${p.type} ${p.volume} (#${p.ticket})`);
+            if (p.sl > 0) createOrUpdateLine(key, 'sl', p.sl, '#f23645', `SL`);
+            if (p.tp > 0) createOrUpdateLine(key, 'tp', p.tp, '#089981', `TP`);
+        });
+
+        pendingOrders.forEach(o => {
+            const key = `ord_${o.ticket}`;
+            const color = '#2962ff';
+            createOrUpdateLine(key, 'price', o.price_open, color, `${o.type} ${o.volume} (#${o.ticket})`);
+            if (o.sl > 0) createOrUpdateLine(key, 'sl', o.sl, '#f23645', `SL`);
+            if (o.tp > 0) createOrUpdateLine(key, 'tp', o.tp, '#089981', `TP`);
+        });
+    }, [positions, pendingOrders]);
+
+    // 5. Drawing Rendering Engine (Reactive with Primitives API)
+    useEffect(() => {
+        if (!chartRef.current || !seriesRef.current) return;
+        const series = seriesRef.current;
+
+        // Limpiar dibujos eliminados
+        const currentIds = drawings.map((d: any) => d.id);
+        Object.keys(drawingsRef.current).forEach((id: string) => {
+            if (!currentIds.includes(id)) {
+                const plugin = drawingsRef.current[id];
+                if (plugin && chartRef.current) {
+                    try { series.detachPrimitive(plugin); } catch (e) {
+                        console.warn('[Chart] Failed to detach primitive:', e);
+                    }
+                }
+                delete drawingsRef.current[id];
+            }
+        });
+
+        // Dibujar/Actualizar cada dibujo
+        drawings.forEach((d: any) => {
+            let plugin = drawingsRef.current[d.id];
+            
+            const isSelected = d.id === selectedDrawingId;
+            const activeColor = isSelected ? '#ffffff' : d.color;
+            const activeWidth = isSelected ? 4 : d.lineWidth || 2;
+
+            if (!plugin) {
+                if (d.type === 'trendline') {
+                    plugin = new TrendlinePrimitive(d.points, { color: activeColor, width: activeWidth, style: d.lineStyle });
+                } else if (d.type === 'rectangle') {
+                    plugin = new RectanglePrimitive(d.points, { color: activeColor, width: activeWidth, fillColor: isSelected ? 'rgba(255,255,255,0.1)' : 'rgba(41, 98, 255, 0.1)' });
+                } else if (d.type === 'fibonacci') {
+                    plugin = new FibonacciPrimitive(d.points, { color: activeColor, width: activeWidth });
+                } else if (d.type === 'long' || d.type === 'short') {
+                    plugin = new PositionPrimitive(d.type, d.points, { color: activeColor, width: activeWidth });
+                }
+                if (plugin) {
+                    series.attachPrimitive(plugin);
+                    drawingsRef.current[d.id] = plugin;
+                }
+            } else {
+                // Actualizar Parámetros
+                plugin.points = d.points;
+                plugin.parameters = { 
+                    ...plugin.parameters, 
+                    color: activeColor, 
+                    width: activeWidth,
+                    style: d.lineStyle,
+                    fillColor: isSelected ? 'rgba(255,255,255,0.1)' : 'rgba(41, 98, 255, 0.1)'
+                };
+                plugin.updateAllViews();
+            }
+        });
+    }, [drawings, selectedDrawingId]);
+
+    // 4. Drag & Interaction Engine Logic
+    useEffect(() => {
+        if (!chartContainerRef.current || !chartRef.current || !seriesRef.current) return;
+        const container = chartContainerRef.current;
+        const chart = chartRef.current;
+        const series = seriesRef.current;
+
+        // Helper para obtener tiempo (Real o Extrapolado al futuro)
+        const getChartTime = (x: number) => {
+            if (!chart || data.length === 0) return null;
+            const timeScale = chart.timeScale();
+            let t = timeScale.coordinateToTime(x);
+            if (t === null) {
+                const logical = timeScale.coordinateToLogical(x);
+                if (logical !== null) {
+                    const lastData = data[data.length - 1];
+                    const lastLogical = data.length - 1;
+                    const diff = logical - lastLogical;
+                    let interval = 60;
+                    if (data.length >= 2) {
+                        interval = (data[data.length-1].time as number) - (data[data.length-2].time as number);
+                    }
+                    return (lastData.time as number) + (diff * interval);
+                }
+            }
+            return typeof t === 'number' ? t : (t as any)?.timestamp || null;
+        };
+
+        const handleMouseDown = (e: MouseEvent) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const ts = getChartTime(x);
+            const price = series.coordinateToPrice(y);
+            
+            if (price === null || ts === null) return;
+
+            // --- Selection Logic (Cursor Mode) ---
+            if (activeTool === 'cursor') {
+                const clickedDrawing = drawings.find(d => {
+                    const seriesList = drawingsRef.current[d.id];
+                    if (!seriesList || d.points.length < 2) return false;
+
+                    const timeScale = chart.timeScale();
+                    const p1X = timeScale.timeToCoordinate(d.points[0].time as Time);
+                    const p1Y = series.priceToCoordinate(d.points[0].price);
+                    const p2X = timeScale.timeToCoordinate(d.points[1].time as Time);
+                    const p2Y = series.priceToCoordinate(d.points[1].price);
+
+                    if (p1X === null || p1Y === null || p2X === null || p2Y === null) return false;
+
+                    if (d.type === 'trendline') {
+                        const A = x - p1X;
+                        const B = y - p1Y;
+                        const C = p2X - p1X;
+                        const D = p2Y - p1Y;
+                        const dot = A * C + B * D;
+                        const lenSq = C * C + D * D;
+                        let param = lenSq !== 0 ? dot / lenSq : -1;
+                        let xx, yy;
+                        if (param < 0) { xx = p1X; yy = p1Y; }
+                        else if (param > 1) { xx = p2X; yy = p2Y; }
+                        else { xx = p1X + param * C; yy = p1Y + param * D; }
+                        const dx = x - xx;
+                        const dy = y - yy;
+                        return Math.sqrt(dx * dx + dy * dy) < 15;
+                    } else if (d.type === 'rectangle' || d.type === 'fibonacci' || d.type === 'long' || d.type === 'short') {
+                        const xMin = Math.min(p1X, p2X);
+                        const xMax = Math.max(p1X, p2X);
+                        const yMin = Math.min(p1Y, p2Y);
+                        const yMax = Math.max(p1Y, p2Y);
+                        const nearEdge = (Math.abs(x - xMin) < 15 || Math.abs(x - xMax) < 15) && y >= yMin && y <= yMax ||
+                                         (Math.abs(y - yMin) < 15 || Math.abs(y - yMax) < 15) && x >= xMin && x <= xMax;
+                        const isInside = x >= xMin && x <= xMax && y >= yMin && y <= yMax;
+                        return nearEdge || isInside;
+                    }
+                    return false;
+                });
+                
+                if (clickedDrawing) {
+                    setSelectedDrawingId(clickedDrawing.id);
+                    return;
+                } else {
+                    setSelectedDrawingId(null);
+                }
+
+                // AVWAP Selection (Check near anchor)
+                const clickedVwap = (anchoredVwaps || []).find(v => {
+                    const timeScale = chart.timeScale();
+                    const xV = timeScale.timeToCoordinate(v.startTime as Time);
+                    if (xV === null) return false;
+                    
+                    const candle = data.find(d => (d.time as number) === v.startTime);
+                    if (!candle) return false;
+                    const yV = series.priceToCoordinate(candle.high);
+                    if (yV === null) return false;
+
+                    const dx = x - xV;
+                    const dy = y - yV;
+                    return Math.sqrt(dx * dx + dy * dy) < 25;
+                });
+
+                if (clickedVwap) {
+                    setSelectedAnchoredVwapId(clickedVwap.id);
+                    return;
+                } else {
+                    setSelectedAnchoredVwapId(null);
+                }
+            }
+
+            // --- Drawing Tool Logic (Trendline / Rectangle / Fib / Position) ---
+            const drawingTools = ['trendline', 'rectangle', 'fibonacci', 'long', 'short'];
+            if (drawingTools.includes(activeTool)) {
+                const initialPoints = [{ time: ts, price: price }, { time: ts, price: price }];
+                const tempId = 'temp_' + Math.random();
+                const previewColor = theme === 'dark' ? '#ffffff' : '#000000';
+                
+                let plugin: any = null;
+                if (activeTool === 'trendline') {
+                    plugin = new TrendlinePrimitive(initialPoints, { color: previewColor, width: 3, style: LineStyle.Solid });
+                } else if (activeTool === 'rectangle') {
+                    plugin = new RectanglePrimitive(initialPoints, { color: previewColor, width: 3, fillColor: 'rgba(255,255,255,0.1)' });
+                } else if (activeTool === 'fibonacci') {
+                    plugin = new FibonacciPrimitive(initialPoints, { color: previewColor, width: 2 });
+                } else if (activeTool === 'long' || activeTool === 'short') {
+                    plugin = new PositionPrimitive(activeTool as 'long' | 'short', initialPoints, { color: previewColor, width: 2 });
+                }
+
+                if (plugin) {
+                    series.attachPrimitive(plugin);
+                    tempDrawingRef.current = { id: tempId, type: activeTool, points: initialPoints, plugin };
+                }
+                
+                chart.applyOptions({ handleScroll: false, handleScale: false });
+                return;
+            }
+
+            // --- Anchored VWAP Placement ---
+            if (activeTool === 'anchoredVwap') {
+                const index = data.findIndex(d => (d.time as number) >= ts);
+                if (index !== -1) {
+                    addAnchoredVwap({
+                        startTime: ts,
+                        startIndex: index,
+                        color: theme === 'dark' ? '#2962ff' : '#2196f3',
+                        lineWidth: 2
+                    });
+                    setActiveTool('cursor');
+                    return;
+                }
+            }
+
+            // --- Trading Line Drag Logic ---
+            let closest: any = null;
+            let minDist = 15;
+            Object.values(priceLinesRef.current).flat().forEach((line: any) => {
+                const lineY = series.priceToCoordinate(line.options().price);
+                if (lineY !== null) {
+                    const dist = Math.abs(lineY - y);
+                    if (dist < minDist) {
+                        minDist = dist;
+                        closest = line;
+                    }
+                }
+            });
+
+            if (closest) {
+                const ticket = parseInt(closest._ticketKey.split('_')[1]);
+                setDraggingLine({ ticket, type: closest._type, isOrder: closest._ticketKey.startsWith('ord_') });
+                chart.applyOptions({ handleScroll: false, handleScale: false });
+            }
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const ts = getChartTime(x);
+            const price = series.coordinateToPrice(y);
+            if (price === null || ts === null) return;
+
+            if (tempDrawingRef.current) {
+                const temp = tempDrawingRef.current;
+                temp.points[1] = { time: ts as number, price: price as number };
+                
+                if (temp.plugin) {
+                    temp.plugin.points = [...temp.points];
+                    temp.plugin.updateAllViews();
+                }
+                return;
+            }
+
+            if (draggingLine) {
+                const step = price > 10000 ? 5 : (price > 1000 ? 1 : (price > 100 ? 0.05 : 0.01));
+                const roundedPrice = Math.round(price / step) * step;
+                const key = draggingLine.isOrder ? `ord_${draggingLine.ticket}` : `pos_${draggingLine.ticket}`;
+                const line = priceLinesRef.current[key]?.find((l: any) => l._type === draggingLine.type);
+                if (line) line.applyOptions({ price: roundedPrice });
+            }
+        };
+
+        const handleMouseUp = async (e: MouseEvent) => {
+            if (tempDrawingRef.current) {
+                const rect = container.getBoundingClientRect();
+                const ts = getChartTime(e.clientX - rect.left);
+                const price = series.coordinateToPrice(e.clientY - rect.top);
+                const temp = tempDrawingRef.current;
+                if (ts !== null && price !== null) temp.points[1] = { time: ts, price };
+                
+                if (Math.abs(temp.points[0].time - temp.points[1].time) > 0 || Math.abs(temp.points[0].price - temp.points[1].price) > 0.1) {
+                    addDrawing({
+                        type: temp.type as any,
+                        points: temp.points,
+                        color: theme === 'dark' ? '#2962ff' : '#2196f3',
+                        lineWidth: 2,
+                        lineStyle: 0
+                    });
+                }
+                if (temp.plugin) series.detachPrimitive(temp.plugin);
+                tempDrawingRef.current = null;
+                chart.applyOptions({ handleScroll: true, handleScale: true });
+                setActiveTool('cursor');
+                return;
+            }
+
+            if (draggingLine) {
+                const rect = container.getBoundingClientRect();
+                const price = series.coordinateToPrice(e.clientY - rect.top);
+                if (price !== null) {
+                    const step = price > 10000 ? 5 : (price > 1000 ? 1 : (price > 100 ? 0.05 : 0.01));
+                    const finalPrice = Math.round(price / step) * step;
+                    if (draggingLine.type === 'sl') await modifyTradingOrder(draggingLine.ticket, finalPrice, 0);
+                    else if (draggingLine.type === 'tp') await modifyTradingOrder(draggingLine.ticket, 0, finalPrice);
+                    else if (draggingLine.isOrder && draggingLine.type === 'price') await modifyTradingOrder(draggingLine.ticket, 0, 0, finalPrice);
+                }
+                setDraggingLine(null);
+                chart.applyOptions({ handleScroll: true, handleScale: true });
+            }
+        };
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Delete' || e.key === 'Backspace') {
+                const state = useStore.getState();
+                if (state.selectedDrawingId) state.removeDrawing(state.selectedDrawingId);
+                else if (state.selectedAnchoredVwapId) state.removeAnchoredVwap(state.selectedAnchoredVwapId);
+            }
+        };
+
+        container.addEventListener('mousedown', handleMouseDown);
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            container.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [draggingLine, modifyTradingOrder, activeTool, data, anchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, drawings]);
+
+    // Control de flujo y recuperación de errores
+    const lastFetchTimeRef = useRef<number>(0);
+    const failedTimestampsRef = useRef<Set<number>>(new Set());
+
+    useEffect(() => {
+        if (!isFootprintEnabled || !symbol || !timeframe || !chartRef.current) return;
+
+        const chart = chartRef.current;
+        const timeScale = chart.timeScale();
+
+        const fetchFootprint = async (toTimestamp?: number) => {
+            const now = Date.now();
+            
+            // 1. Throttling: Máximo 1 petición cada 1.5s
+            if (now - lastFetchTimeRef.current < 1500) return;
+            
+            // 2. Blacklist: Si falló recientemente para este timestamp, abortar
+            if (toTimestamp && failedTimestampsRef.current.has(toTimestamp)) {
+                console.warn(`[Footprint] Skipping blacklisted timestamp: ${toTimestamp}`);
+                return;
+            }
+
+            if (useStore.getState().isLoadingFootprint) return;
+            
+            useStore.getState().setIsLoadingFootprint(true);
+            lastFetchTimeRef.current = now;
+
+            try {
+                console.log(`[Footprint] Fetching history ${toTimestamp ? `before ${toTimestamp}` : 'initial'}...`);
+                const url = `http://127.0.0.1:8005/api/history-footprint/${symbol}?timeframe=${timeframe}&count=80000${toTimestamp ? `&to_timestamp=${toTimestamp}` : ''}`;
+                
+                // Añadimos timeout explícito de 15s para dar aire a MT5
+                const response = await axios.get(url, { timeout: 15000 });
+                
+                if (response.data && Object.keys(response.data).length > 0) {
+                    useStore.getState().injectHistoricalFootprint(response.data);
+                    // Si tiene éxito, limpiar blacklist para este TS por si acaso
+                    if (toTimestamp) failedTimestampsRef.current.delete(toTimestamp);
+                }
+            } catch (err) {
+                console.error('[Footprint] Error lazy loading:', err);
+                
+                if (toTimestamp) {
+                    failedTimestampsRef.current.add(toTimestamp);
+                    // Expira la lista negra en 10 segundos
+                    setTimeout(() => failedTimestampsRef.current.delete(toTimestamp!), 10000);
+                }
+                
+                lastFetchTimeRef.current = Date.now() + 2000; 
+            } finally {
+                useStore.getState().setIsLoadingFootprint(false);
+            }
+        };
+
+        // Carga inicial
+        const currentDataKeys = Object.keys(useStore.getState().footprintData);
+        if (currentDataKeys.length === 0) {
+            fetchFootprint();
+        }
+
+        const handleVisibleRangeChange = () => {
+            const range = timeScale.getVisibleRange();
+            if (!range || !range.from) return;
+
+            const fromTime = typeof range.from === 'number' ? range.from : (range.from as any).timestamp || 0;
+            const existingTimes = Object.keys(useStore.getState().footprintData).map(Number).sort((a,b)=>a-b);
+            if (existingTimes.length === 0) return;
+
+            const minTimeLoaded = existingTimes[0];
+            const timeframeSeconds = timeframe.includes('m') ? parseInt(timeframe)*60 : 3600;
+
+            if (fromTime < minTimeLoaded + (timeframeSeconds * 30)) {
+                fetchFootprint(minTimeLoaded);
+            }
+        };
+
+        timeScale.subscribeVisibleTimeRangeChange(handleVisibleRangeChange);
+        return () => timeScale.unsubscribeVisibleTimeRangeChange(handleVisibleRangeChange);
+    }, [isFootprintEnabled, symbol, timeframe]);
+
+    // 2. Fetch History when Symbol/TF changes
+    useEffect(() => {
+        const fetchHistory = async () => {
+            if (!seriesRef.current || !chartRef.current) return;
+
+            // REINICIO FORZOSO (AUTO-TOGGLE): Simulamos tu acción manual para
+            // destruir el canvas huérfano y resetear la comunicación puramente.
+            const storeState = useStore.getState();
+            const wasFootprintEnabled = storeState.isFootprintEnabled;
+            if (wasFootprintEnabled) {
+                storeState.setFootprintEnabled(false);
+                storeState.clearFootprint();
+            }
+
+            try {
+                const response = await axios.get(`http://127.0.0.1:8005/api/history/${symbol}?timeframe=${timeframe}&count=1000`);
+                
+                const sortedData = response.data
+                    .map((d: any) => ({
+                        time: Number(d.time) as Time,
+                        open: Number(d.open),
+                        high: Number(d.high),
+                        low: Number(d.low),
+                        close: Number(d.close),
+                        volume: Number(d.tick_volume || d.volume || 0),
+                    }))
+                    .sort((a: any, b: any) => (a.time as number) - (b.time as number));
+
+                const formattedData = sortedData.filter((v: any, i: any, a: any) => 
+                    i === 0 || v.time !== a[i - 1].time
+                );
+
+                if (formattedData.length > 0) {
+                    seriesRef.current.setData(formattedData);
+                    setData(formattedData);
+                    chartRef.current.timeScale().fitContent();
+
+                    // TRAS DIBUJAR LAS VELAS EXITOSAMENTE -> REENCENDEMOS EL FOOTPRINT 
+                    // Esto emula al 100% que tú hayas presionado el botón.
+                    if (wasFootprintEnabled) {
+                        setTimeout(() => {
+                            useStore.getState().setFootprintEnabled(true);
+                        }, 200);
+                    }
+                }
+            } catch (error) {
+                console.error('[Chart] Error fetch OHLC:', error);
+            }
+        };
+
+        fetchHistory();
+    }, [symbol, timeframe]);
+
+
+    // 3. WebSocket Streaming (Updates Store) - FIX para BTCUSD (Agregación Pro)
+    useEffect(() => {
+        if (!symbol) return;
+        const ws = new WebSocket(`ws://127.0.0.1:8005/ws/prices/${symbol}`);
+        
+        const getTimeframeSeconds = (tf: string) => {
+            const unit = tf.slice(-1);
+            const val = parseInt(tf);
+            if (unit === 'm') return val * 60;
+            if (unit === 'h') return val * 3600;
+            if (unit === 'd') return val * 86400;
+            return 60;
+        };
+
+        ws.onmessage = (event) => {
+            const message = JSON.parse(event.data);
+            const state = useStore.getState();
+            const timeframeSeconds = getTimeframeSeconds(state.timeframe);
+
+            // 🟢 Manejar tick_burst o heartbeat
+            if ((message.type === 'tick_burst' || message.type === 'heartbeat') && state.data.length > 0) {
+                const lastBar = state.data[state.data.length - 1];
+                
+                // Determinar precio y tiempo del mensaje (Priorizamos datos del bróker)
+                let price = 0;
+                let messageTimeMs = 0;
+                let rawTicks: any[] = [];
+
+                if (message.type === 'tick_burst') {
+                    rawTicks = message.data;
+                    const lastTick = rawTicks[rawTicks.length - 1];
+                    price = lastTick.price;
+                    messageTimeMs = lastTick.time;
+                } else {
+                    price = message.price;
+                    messageTimeMs = message.time;
+                }
+
+                if (price <= 0 || messageTimeMs <= 0) return;
+
+                const messageTimeSec = Math.floor(messageTimeMs / 1000);
+                const candleTime = (Math.floor(messageTimeSec / timeframeSeconds) * timeframeSeconds);
+
+                // BLOQUEO DE SEGURIDAD: Solo procesar si el tiempo es >= a la última vela cargada
+                if (candleTime >= (lastBar.time as number)) {
+                    const isNewCandle = candleTime > (lastBar.time as number);
+                    
+                    const updatedBar = {
+                        time: candleTime as Time,
+                        open: isNewCandle ? price : lastBar.open,
+                        high: isNewCandle ? price : Math.max(lastBar.high, price),
+                        low: isNewCandle ? price : Math.min(lastBar.low, price),
+                        close: price,
+                        volume: isNewCandle 
+                            ? (message.type === 'tick_burst' ? rawTicks.reduce((s, t) => s + (t.volume || 1), 0) : 1)
+                            : (lastBar.volume || 0) + (message.type === 'tick_burst' ? rawTicks.reduce((s, t) => s + (t.volume || 1), 0) : 1),
+                    };
+
+                    state.addBar(updatedBar);
+                    seriesRef.current?.update(updatedBar as any);
+                    
+                    // 🟢 ALIMENTAR EL STORE GLOBAL CON EL ÚLTIMO PRECIO (TASK #16)
+                    state.setLastTickPrice(price);
+                }
+
+                // Actualizar FOOTPRINT
+                if (state.isFootprintEnabled) {
+                    if (message.type === 'tick_burst') {
+                        state.addTicksToFootprint(rawTicks);
+                    } else {
+                        // Tratar heartbeat como un tick individual para no perder datos en baja volatilidad
+                        state.addTicksToFootprint([{
+                            time: messageTimeMs,
+                            price: price,
+                            bid: message.bid || price,
+                            ask: message.ask || price,
+                            volume: 1 // Volumen nominal para heartbeat
+                        }]);
+                    }
+                }
+            }
+
+            if (message.type === 'error') {
+                console.error('[WS] Error:', message.message);
+            }
+        };
+
+        ws.onclose = () => console.log(`[WS] Closed for ${symbol}`);
+
+        return () => {
+            if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+                try {
+                    ws.close();
+                } catch (e) {
+                    // Silenciar errores de cierre prematuro
+                }
+            }
+        };
+    }, [symbol, timeframe]);
+
+    // Herramienta de Diagnóstico para el Subagente/Usuario
+    useEffect(() => {
+        (window as any).debugFootprint = () => {
+            const state = useStore.getState();
+            console.log('=== DIAGNÓSTICO FOOTPRINT ===');
+            console.log('Símbolo:', symbol);
+            console.log('Timeframe:', state.timeframe);
+            console.log('Enabled:', state.isFootprintEnabled);
+            console.log('Data count:', Object.keys(state.footprintData).length);
+            console.log('Last keys:', Object.keys(state.footprintData).slice(-3));
+            const lastKey = Number(Object.keys(state.footprintData).slice(-1)[0]);
+            console.log('Sample Data:', state.footprintData[lastKey]);
+        };
+    }, [symbol]);
+
+    const lastUpdateRef = useRef<number>(0);
+    const lastDataLengthRef = useRef<number>(0);
+    
+    // 4. Unified Sync Effect (Candles, Indicators, Markers, Dashboard)
+    useEffect(() => {
+        if (!chartRef.current || !seriesRef.current || data.length === 0) return;
+
+        const isHistoryFetch = Math.abs(data.length - (lastDataLengthRef.current || 0)) > 2;
+        lastDataLengthRef.current = data.length;
+
+        // Throttling: Solo ejecutar scripts si ha pasado > 200ms o es una nueva barra
+        const now = Date.now();
+        const lastBarTime = data[data.length - 1].time as number;
+        const isNewBar = lastBarTime > (lastUpdateRef.current || 0);
+        
+        if (!isNewBar && (now - lastUpdateRef.current < 200)) return;
+        lastUpdateRef.current = now;
+
+        // A. Limpiar indicadores que ya no existen
+        const currentIndIds = pineIndicators.map(i => i.id);
+        Object.keys(pineSeriesRef.current).forEach(id => {
+            if (!currentIndIds.includes(id)) {
+                pineSeriesRef.current[id].forEach(s => chartRef.current?.removeSeries(s));
+                delete pineSeriesRef.current[id];
+            }
+        });
+
+        let allMarkers: any[] = [];
+        let combinedDashboard: { [key: string]: string } = {};
+        let finalBarColors = new Map<number, string>();
+
+        // B. Ejecutar todos los scripts
+        try {
+            pineIndicators.forEach(ind => {
+                const results = executeVortexJS(ind.script, data, serverOffset, theme);
+                const { lineSeries, markers, barColors, dashboard } = results;
+
+                if (dashboard) combinedDashboard = { ...combinedDashboard, ...dashboard };
+                if (markers) allMarkers = [...allMarkers, ...markers];
+                if (barColors) {
+                    barColors.forEach((bc: any) => finalBarColors.set(bc.time, bc.color));
+                }
+
+                // Sync line series (Atomic update)
+                const existingSeries = pineSeriesRef.current[ind.id] || [];
+                
+                // Si el número de series ha cambiado, limpiamos y recreamos para seguridad
+                if (existingSeries.length !== lineSeries.length) {
+                    existingSeries.forEach(s => {
+                        try { chartRef.current?.removeSeries(s); } catch (e) {}
+                    });
+                    
+                    pineSeriesRef.current[ind.id] = lineSeries.map((ls: any) => {
+                        let lineStyle = LineStyle.Solid;
+                        if (ls.style === 'dashed') lineStyle = LineStyle.Dashed;
+                        else if (ls.style === 'dotted') lineStyle = LineStyle.Dotted;
+                        else if (ls.style === 'largeDashed') lineStyle = LineStyle.LargeDashed;
+                        else if (ls.style === 'sparseDotted') lineStyle = LineStyle.SparseDotted;
+
+                        const series = chartRef.current!.addLineSeries({
+                            color: ls.color || '#2962ff',
+                            lineWidth: (ls.linewidth as any) || 2,
+                            lineStyle: lineStyle,
+                            title: ls.title,
+                        });
+                        series.setData(ls.data);
+                        return series;
+                    });
+                } else {
+                    // Actualización normal (Optimizada Obrero Local)
+                    lineSeries.forEach((ls: any, idx: number) => {
+                        const series = existingSeries[idx];
+                        if (series) {
+                             if (isHistoryFetch || ls.data.length < 2) {
+                                 series.setData(ls.data);
+                             } else {
+                                 const lastPoint = ls.data[ls.data.length - 1];
+                                 if (lastPoint) series.update(lastPoint);
+                             }
+                        }
+                    });
+                }
+            });
+        } catch (error) {
+            console.error('[Chart] Indicator execution crashed:', error);
+        }
+
+        // C. Aplicar colores y data a las velas (OPTIMIZADO OBRERO LOCAL)
+        try {
+            if (isHistoryFetch) {
+                const coloredData = data.map(d => ({
+                    ...d,
+                    color: finalBarColors.get(d.time as number) || (d.close >= d.open ? '#089981' : '#f23645')
+                }));
+                seriesRef.current.setData(coloredData as any);
+            } else {
+                const lastBar = data[data.length - 1];
+                if (lastBar) {
+                    const color = finalBarColors.get(lastBar.time as number) || (lastBar.close >= lastBar.open ? '#089981' : '#f23645');
+                    seriesRef.current.update({ ...lastBar, color } as any);
+                }
+            }
+            
+            // D. Marcadores y Dashboard
+            setDashboardData(combinedDashboard);
+            seriesRef.current.setMarkers(allMarkers.sort((a, b) => (a.time as number) - (b.time as number)));
+        } catch (e) {
+            console.error('[Chart] Final render step failed:', e);
+        }
+
+    }, [pineIndicators, data, serverOffset]);
+
+    // 7. Anchored VWAP Engine (Reactive with Primitive API)
+    useEffect(() => {
+        if (!chartRef.current || !seriesRef.current || data.length === 0) return;
+        const series = seriesRef.current;
+
+        // Clean up / Hide deleted AVWAPs (Persistent plugins to avoid LWC V5 lag bug)
+        const currentIds = (anchoredVwaps || []).map(v => v.id);
+        Object.keys(drawingsRef.current).forEach(id => {
+            if (id.startsWith('avwap_')) {
+                const plugin = drawingsRef.current[id] as AnchoredVwapPrimitive;
+                if (plugin && !currentIds.includes(id.replace('avwap_', ''))) {
+                    plugin.visible = false;
+                    if (plugin.requestUpdate) plugin.requestUpdate();
+                }
+            }
+        });
+
+        // Render/Update AVWAPs
+        (anchoredVwaps || []).forEach(v => {
+            const pluginId = `avwap_${v.id}`;
+            let plugin = drawingsRef.current[pluginId] as AnchoredVwapPrimitive;
+            
+            if (!plugin) {
+                plugin = new AnchoredVwapPrimitive(v.startTime, data, { color: v.color, width: v.lineWidth }, v.bands || []);
+                series.attachPrimitive(plugin);
+                drawingsRef.current[pluginId] = plugin;
+            } else {
+                plugin.visible = true;
+                plugin.startTime = v.startTime;
+                plugin.parameters = { color: v.color, width: v.lineWidth };
+                plugin.bands = v.bands || [];
+                plugin.data = data; // Data setter handles internal update check and requestUpdate
+            }
+        });
+    }, [anchoredVwaps, data]);
+
+    // 6. Handle Time Range Scaling
+    useEffect(() => {
+        if (!chartRef.current || !chartRange || data.length === 0) return;
+
+        const timeScale = chartRef.current.timeScale();
+        const lastBar = data[data.length - 1];
+        const to = (lastBar.time as number);
+        let from = to;
+
+        const oneDay = 24 * 60 * 60;
+
+        switch (chartRange) {
+            case '1D': from = to - oneDay; break;
+            case '5D': from = to - (5 * oneDay); break;
+            case '1M': from = to - (30 * oneDay); break;
+            case '3M': from = to - (90 * oneDay); break;
+            case '6M': from = to - (180 * oneDay); break;
+            case '1Y': from = to - (365 * oneDay); break;
+            case 'YTD': 
+                from = new Date(new Date().getFullYear(), 0, 1).getTime() / 1000;
+                break;
+            case 'Todo': 
+                timeScale.fitContent();
+                setChartRange(null);
+                return;
+        }
+
+        try {
+            timeScale.setVisibleRange({ from: from as Time, to: to as Time });
+        } catch (e) {
+            console.warn("Error setting range:", e);
+        }
+        
+        setChartRange(null);
+    }, [chartRange, data, setChartRange]);
+
+    return (
+        <div className="flex flex-col h-full w-full bg-[#0a0e15] overflow-hidden">
+            <div className="flex-1 flex min-h-0 relative">
+                <div className="flex-1 relative min-w-0">
+                    <div ref={chartContainerRef} className="w-full h-full relative" />
+                    
+                    {/* Quick Trading Buttons (SELL - LOT - BUY) */}
+                    <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
+                        <div className={`flex border rounded-[4px] overflow-hidden shadow-2xl items-center backdrop-blur-sm ${
+                            theme === 'dark' ? 'bg-[#1e222d]/40 border-gray-700/30' : 'bg-white/40 border-gray-300/30'
+                        }`}>
+                            {/* SELL BUTTON (LEFT) - Compressed */}
+                            <button 
+                                onClick={() => {
+                                    const params = {
+                                        symbol: symbol,
+                                        type: 'SELL',
+                                        lot: defaultLot || 0.01,
+                                        price: lastTickPrice || 0
+                                    };
+                                    useStore.getState().placeTradingOrder(params);
+                                }}
+                                className="bg-[#f23645] hover:bg-[#f23645]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-l-[4px]"
+                            >
+                                <span>SELL</span>
+                                <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
+                            </button>
+                            
+                            {/* Lot Size Input (Pure Crystal Background) */}
+                            <div className={`border-x h-full flex items-center px-1 ${
+                                theme === 'dark' ? 'bg-black/20 border-white/10' : 'bg-white/30 border-black/10'
+                            }`}>
+                                <input 
+                                    type="number" 
+                                    step="0.01"
+                                    min="0.01"
+                                    value={defaultLot || 0.01}
+                                    onChange={(e) => {
+                                        const val = parseFloat(e.target.value);
+                                        if (!isNaN(val) && val > 0) setDefaultLot(val);
+                                        else if (e.target.value === "") setDefaultLot(0.01);
+                                    }}
+                                    className={`bg-transparent text-[11px] font-bold w-12 text-center outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${
+                                        theme === 'dark' ? 'text-white' : 'text-black'
+                                    }`}
+                                />
+                            </div>
+
+                            {/* BUY BUTTON (RIGHT) - Compressed */}
+                            <button 
+                                onClick={() => {
+                                    const params = {
+                                        symbol: symbol,
+                                        type: 'BUY',
+                                        lot: defaultLot || 0.01,
+                                        price: lastTickPrice || 0
+                                    };
+                                    useStore.getState().placeTradingOrder(params);
+                                }}
+                                className="bg-[#089981] hover:bg-[#089981]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-r-[4px]"
+                            >
+                                <span>BUY</span>
+                                <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* OPTIMIZED OVERLAYS (EVENT-DRIVEN) */}
+                    {chartRef.current && seriesRef.current && (
+                        <>
+                            <HeatmapOverlay chart={chartRef.current} series={seriesRef.current} />
+                            <BigTradesOverlay chart={chartRef.current} series={seriesRef.current} />
+                            <FootprintOverlay chart={chartRef.current} series={seriesRef.current} />
+                            <OrderFlowStrategiesOverlay chart={chartRef.current} series={seriesRef.current} />
+                            <TradingOverlay chart={chartRef.current} series={seriesRef.current} />
+                        </>
+                    )}
+            
+                    {/* AVWAP Property Panel */}
+                    {selectedAnchoredVwapId && (
+                        <div className={`absolute bottom-20 left-4 z-20 border p-4 rounded-xl shadow-2xl backdrop-blur-lg w-72 transition-all animate-in fade-in slide-in-from-bottom-2 ${
+                            theme === 'dark' ? 'bg-[#1e222d]/90 border-gray-700/50 text-white' : 'bg-white/90 border-gray-200 text-gray-900'
+                        }`}>
+                            <div className="flex justify-between items-center mb-4 border-b pb-2">
+                                <h3 className="text-sm font-bold flex items-center gap-2">
+                                    <span className="text-orange-500">⚓</span> Anchored VWAP
+                                </h3>
+                                <button onClick={() => setSelectedAnchoredVwapId(null)} className="text-xs opacity-50 hover:opacity-100 italic">Cerrar</button>
+                            </div>
+
+                            {anchoredVwaps.find(v => v.id === selectedAnchoredVwapId) && (
+                                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                                    {/* Main Line Config */}
+                                    <div className="space-y-2">
+                                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-bold">Línea Principal</div>
+                                        <div className="flex items-center gap-3">
+                                            <input 
+                                                type="color" 
+                                                value={anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.color || '#ff9800'} 
+                                                onChange={(e) => updateAnchoredVwap(selectedAnchoredVwapId, { color: e.target.value })}
+                                                className="w-8 h-8 rounded cursor-pointer bg-transparent border-none"
+                                            />
+                                            <select 
+                                                value={anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.lineWidth || 2}
+                                                onChange={(e) => updateAnchoredVwap(selectedAnchoredVwapId, { lineWidth: parseInt(e.target.value) })}
+                                                className={`text-xs p-1 rounded bg-transparent border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}
+                                            >
+                                                {[1,2,3,4].map(w => <option key={w} value={w}>{w}px</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    {/* Bands Config */}
+                                    <div className="space-y-3 pt-2">
+                                        <div className="text-[10px] uppercase tracking-wider opacity-60 font-bold">Bandas Sigma ({"+/- 1, 2"})</div>
+                                        {anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.bands.map((band: any, idx: number) => (
+                                            <div key={idx} className="flex items-center justify-between gap-2 p-2 rounded bg-black/5">
+                                                <div className="flex items-center gap-2">
+                                                    <input 
+                                                        type="checkbox" 
+                                                        checked={band.enabled} 
+                                                        onChange={(e) => {
+                                                            const currentVwap = anchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
+                                                            if (!currentVwap) return;
+                                                            const newBands = [...currentVwap.bands];
+                                                            newBands[idx] = { ...band, enabled: e.target.checked };
+                                                            updateAnchoredVwap(selectedAnchoredVwapId, { bands: newBands });
+                                                        }}
+                                                    />
+                                                    <span className="text-xs font-mono">{band.multiplier > 0 ? `+${band.multiplier}` : band.multiplier}σ</span>
+                                                </div>
+                                                <input 
+                                                    type="color" 
+                                                    value={band.color} 
+                                                    onChange={(e) => {
+                                                        const currentVwap = anchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
+                                                        if (!currentVwap) return;
+                                                        const newBands = [...currentVwap.bands];
+                                                        newBands[idx] = { ...band, color: e.target.value };
+                                                        updateAnchoredVwap(selectedAnchoredVwapId, { bands: newBands });
+                                                    }}
+                                                    className="w-5 h-5 rounded cursor-pointer"
+                                                />
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <button 
+                                        onClick={() => removeAnchoredVwap(selectedAnchoredVwapId)}
+                                        className="w-full mt-4 p-2 text-xs bg-red-500/10 text-red-500 hover:bg-red-500 hover:text-white rounded-lg transition-colors border border-red-500/20"
+                                    >
+                                        Eliminar Herramienta (Supr)
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
+                    {/* Dashboard Overlay */}
+                    {dashboardData && Object.keys(dashboardData).length > 0 && (
+                        <div className={`absolute top-4 right-[110px] z-10 border p-3 rounded-lg shadow-xl backdrop-blur-md min-w-[200px] pointer-events-none transition-all ${
+                            theme === 'dark'
+                                ? 'bg-[#1e222d]/90 border-gray-700/50'
+                                : 'bg-white/90 border-gray-200'
+                        }`}>
+                            <div className={`text-[10px] font-bold mb-2 tracking-widest uppercase border-b pb-1 ${
+                                theme === 'dark' ? 'text-blue-400 border-gray-700/50' : 'text-blue-600 border-gray-200'
+                            }`}>Trade Checklist</div>
+                            <div className="space-y-1.5">
+                                {Object.entries(dashboardData).map(([key, value]) => (
+                                    <div key={key} className="flex justify-between items-center gap-4">
+                                        <span className={`text-[11px] ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>{key}</span>
+                                        <span className={`text-[11px] font-medium ${
+                                            (value as string).includes('ALCISTA') || (value as string).includes('BALANCE') || (value as string).includes('COMPRA') ? 'text-green-400' :
+                                            (value as string).includes('BAJISTA') || (value as string).includes('DISCOVERY') || (value as string).includes('VENTA') ? 'text-red-400' :
+                                            theme === 'dark' ? 'text-white' : 'text-gray-900'
+                                        }`}>{value as string}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ChartComponent;
