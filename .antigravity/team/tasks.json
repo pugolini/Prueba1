@@ -3,7 +3,7 @@
     {
       "id": 1,
       "title": "Investigar parsers de Pine Script o mapeo de funciones en JS",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "plan_approved": false,
       "assigned_to": "Investigador",
       "dependencies": []
@@ -11,7 +11,7 @@
     {
       "id": 2,
       "title": "Dise\u00f1ar panel de 'Pine Editor' para el terminal",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "plan_approved": false,
       "assigned_to": "Arquitecto",
       "dependencies": []
@@ -19,7 +19,7 @@
     {
       "id": 3,
       "title": "Implementar el motor de calculo para SMA/EMA custom via Pine",
-      "status": "PENDING",
+      "status": "COMPLETED",
       "plan_approved": false,
       "assigned_to": "Especialista Frontend",
       "dependencies": [
@@ -374,6 +374,128 @@
       "status": "PENDING",
       "plan_approved": false,
       "assigned_to": "Especialista",
+      "dependencies": []
+    },
+    {
+      "id": 47,
+      "title": "Auditor\u00eda de integridad del b\u00fanker",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": []
+    },
+    {
+      "id": 48,
+      "title": "Verificaci\u00f3n de conexi\u00f3n con MT5",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": [
+        "1"
+      ]
+    },
+    {
+      "id": 49,
+      "title": "An\u00e1lisis de dependencias del frontend",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": []
+    },
+    {
+      "id": 50,
+      "title": "Analizar alternativas Bookmap Agiles",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Investigador",
+      "dependencies": []
+    },
+    {
+      "id": 52,
+      "title": "Backend: C\u00e1lculo de Perfil Overnight (POC/VAH/VAL + Histogram)",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Especialista Backend",
+      "dependencies": []
+    },
+    {
+      "id": 53,
+      "title": "Frontend: Implementar AnchoredProfilePrimitive.ts",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        52
+      ]
+    },
+    {
+      "id": 54,
+      "title": "Frontend: Integraci\u00f3n de Perfil Overnight en SessionZonesOverlay",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        53
+      ]
+    },
+    {
+      "id": 55,
+      "title": "Frontend: Ampliar hist\u00f3rico de velas a 5000 unidades",
+      "status": "COMPLETED",
+      "plan_approved": true,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": []
+    },
+    {
+      "id": 55,
+      "title": "Localizar activos de la watchlist",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Obrero",
+      "dependencies": []
+    },
+    {
+      "id": 56,
+      "title": "Mapear ES a US500",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Backend",
+      "dependencies": []
+    },
+    {
+      "id": 57,
+      "title": "[ARQUITECTO] Dise\\u00f1ar Plugin Nativo para Marcadores Diamond (V4 API)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Arquitecto",
+      "dependencies": [
+        "[24]"
+      ]
+    },
+    {
+      "id": 58,
+      "title": "[ESPECIALISTA] Migrar c\\u00e1lculo de Absorci\\u00f3n a useStore (Pre-calculo)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Especialista Frontend",
+      "dependencies": [
+        "[24]"
+      ]
+    },
+    {
+      "id": 59,
+      "title": "Instalar Kimi k2.6 CLI",
+      "status": "COMPLETED",
+      "plan_approved": false,
+      "assigned_to": "Pugobot",
+      "dependencies": []
+    },
+    {
+      "id": 60,
+      "title": "Configurar Claude Code con Gemini (Browser Login)",
+      "status": "PENDING",
+      "plan_approved": false,
+      "assigned_to": "Pugobot",
       "dependencies": []
     }
   ],

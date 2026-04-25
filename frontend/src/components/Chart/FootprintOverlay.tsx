@@ -10,7 +10,7 @@ interface FootprintOverlayProps {
 const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { isFootprintEnabled, theme } = useStore();
+  const { isFootprintEnabled, theme, timeframe, footprintData, lastTickTime } = useStore();
 
   useEffect(() => {
     if (!isFootprintEnabled || !canvasRef.current) return;
@@ -20,16 +20,19 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
     if (!ctx) return;
 
     const render = () => {
-      const width = canvas.width;
-      const height = canvas.height;
+      // FIX #5: DPR para nitidez en HiDPI
+      const dpr = window.devicePixelRatio || 1;
+      const width = canvas.width / dpr;
+      const height = canvas.height / dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
 
       const timeScale = chart.timeScale();
       const visibleRange = timeScale.getVisibleRange();
       if (!visibleRange) return;
 
-      const currentFootprintData = useStore.getState().footprintData;
-      const entries = Object.entries(currentFootprintData);
+      const { footprintData } = useStore.getState();
+      const entries = Object.entries(footprintData);
       
       // Feedback si no hay datos
       if (entries.length === 0) {
@@ -42,22 +45,67 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
       const isDark = theme === 'dark';
       ctx.font = 'bold 9px Inter, sans-serif';
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
 
       // Iterar sobre las velas con datos (Renderizado Individual Puro)
       entries.forEach(([timeStr, priceMap]) => {
         const time = parseInt(timeStr);
 
-        const x = timeScale.timeToCoordinate(time as any);
-        if (x === null) {
-            const xAlt = timeScale.timeToCoordinate((time + 1) as any) || timeScale.timeToCoordinate((time - 1) as any);
-            if (!xAlt) return;
-        }
+        let x = timeScale.timeToCoordinate(time as any);
         
-        const finalX = x !== null ? x : (timeScale.timeToCoordinate((time + 1) as any) as number);
-        if (finalX < -300 || finalX > width + 300) return;
+        // --- PROYECCIÓN Y TOLERANCIA HISTÓRICA (v11.2) ---
+        if (x === null) {
+            const data = useStore.getState().data;
+            
+            // 1. Fallback Histórico: Buscar vela más cercana (tolerancia de 2h/7200s por offsets MT5/Rithmic)
+            if (data.length > 0) {
+                let bestMatch = data[0];
+                let minDiff = Math.abs((bestMatch.time as number) - time);
+                
+                for (let i = 1; i < data.length; i++) {
+                    const diff = Math.abs((data[i].time as number) - time);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        bestMatch = data[i];
+                    }
+                }
+                
+                // Si la vela más cercana está a menos de 2 horas (offset de broker típico), la usamos
+                if (minDiff <= 7200) {
+                    x = timeScale.timeToCoordinate(bestMatch.time as any);
+                }
+            }
+
+            // 2. Fallback Futuro: Proyección para mercado en vivo que excede el gráfico MT5
+            if (x === null) {
+                const lastBarTime = data.length > 0 ? (data[data.length - 1].time as number) : 0;
+                if (lastBarTime > 0 && time > lastBarTime) {
+                    const lastX = timeScale.timeToCoordinate(lastBarTime as any);
+                    if (lastX !== null) {
+                        const barWidth = timeScale.options().barSpacing;
+                        let tfSec = 60;
+                        const tfStr = (useStore.getState().timeframe || '1m').toLowerCase();
+                        if (tfStr.includes('m')) tfSec = parseInt(tfStr) * 60;
+                        else if (tfStr.includes('h')) tfSec = parseInt(tfStr) * 3600;
+                        else if (tfStr.includes('d')) tfSec = 24 * 3600;
+                        else {
+                            const num = parseInt(tfStr);
+                            tfSec = num < 60 ? num * 60 : num;
+                        }
+
+                        const barsDiff = (time - lastBarTime) / tfSec;
+                        x = lastX + (barWidth * barsDiff);
+                    }
+                }
+            }
+        }
+
+        if (x === null || x < -300 || x > width + 500) return;
+        const finalX = x;
 
         const barWidth = timeScale.options().barSpacing;
-        if (barWidth < 25) return;
+        // El heatmap de celdas solo se dibuja con zoom suficiente
+        const showHeatmapCells = barWidth >= 12;
 
         let maxVol = 0;
         let pocPrice = 0;
@@ -68,112 +116,76 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
         let minPrice = Infinity;
         let maxPrice = -Infinity;
 
-        Object.entries(priceMap).forEach(([p, vol]) => {
+        // FIX #2.1: Acumular totales de TODO (incluido inyecciones como "poc") antes de filtrar precio
+        Object.entries(priceMap).forEach(([p, vol]: [string, any]) => {
+          if (!vol || typeof vol.bid !== 'number' || typeof vol.ask !== 'number') return;
+
           const total = vol.bid + vol.ask;
           totalCandleVol += total;
           totalCandleDelta += (vol.ask - vol.bid);
+
           const currentPrice = parseFloat(p);
+          if (isNaN(currentPrice)) return; // Ignorar en maxPrice/minPrice pero conservar Delta arriba
+
           if (total > maxVol) { maxVol = total; pocPrice = currentPrice; }
           if (vol.bid > maxSingleVol) maxSingleVol = vol.bid;
           if (vol.ask > maxSingleVol) maxSingleVol = vol.ask;
-          
           if (currentPrice < minPrice) minPrice = currentPrice;
           if (currentPrice > maxPrice) maxPrice = currentPrice;
         });
 
-        const getTickSize = (p: number) => {
-          if (p >= 10000) return 5;
-          if (p >= 1000) return 1;
-          if (p >= 100) return 0.05;
-          if (p >= 5) return 0.01;
-          return 0.0001;
-        };
+        // --- OPTIMIZACIÓN TURBO (v7.5): Clipping y Acceso Directo O(1) ---
+        const state = useStore.getState();
+        const tickSizeRaw = state.symbolInfo?.tickSize || 0.25;
+        
+        // Viewport Clipping: Solo procesar lo que se ve en pantalla
+        const priceAtTop = series.coordinateToPrice(0) || 0;
+        const priceAtBottom = series.coordinateToPrice(height) || 0;
+        const visibleMaxP = Math.max(priceAtTop, priceAtBottom) + tickSizeRaw;
+        const visibleMinP = Math.min(priceAtTop, priceAtBottom) - tickSizeRaw;
 
-        let lowestY = 0; // Guardamos el punto más profundo de ESTA vela en específico
+        // Limitar el rango de dibujo al área visible real
+        const renderMinP = Math.max(minPrice, visibleMinP);
+        const renderMaxP = Math.min(maxPrice, visibleMaxP);
 
+        const m = Math.pow(10, 5); // Multiplicador de precisión
+        const stepStr = Math.round(tickSizeRaw * m);
+        const startP = Math.round(renderMinP * m);
+        const endP = Math.round(renderMaxP * m);
+
+        let lowestY = 0;
         const candleGap = barWidth * 0.41; 
         const maxBoxWidth = barWidth * 0.08; 
 
-        if (minPrice !== Infinity && maxPrice !== -Infinity) {
-            const tickSizeRaw = getTickSize(minPrice);
-            // Multiplicador agresivo para evitar pérdida de precisión flotante en el bucle
-            const m = Math.pow(10, 5); 
-            const startStr = Math.round(minPrice * m);
-            const endStr = Math.round(maxPrice * m);
-            const stepStr = Math.round(tickSizeRaw * m);
-
+        // Solo renderizar celdas del heatmap si hay zoom suficiente (barWidth >= 12)
+        if (showHeatmapCells && renderMinP <= renderMaxP) {
             const IMBALANCE_RATIO = 3.0;
             const STACKED_MIN_LEVELS = 3;
 
-            // Arrays para almacenar imbalances de la vela actual
-            const askImbalances: number[] = [];
-            const bidImbalances: number[] = [];
+            // Pre-cálculo de claves para acceso O(1)
+            const getVols = (p: number) => {
+                const key = (Math.round(p * m) / m).toString();
+                return (priceMap as any)[key] || (priceMap as any)[p.toFixed(2)] || { bid: 0, ask: 0 };
+            };
 
-            // Primer paso: Detectar Imbalances (Diagonal comparison)
-            for (let pInt = endStr; pInt >= startStr; pInt -= stepStr) {
+            const askImbalances: Set<number> = new Set();
+            const bidImbalances: Set<number> = new Set();
+
+            // Detección de Imbalances solo en el rango visible
+            for (let pInt = endP; pInt >= startP; pInt -= stepStr) {
                 const price = pInt / m;
-                const nextPrice = (pInt + stepStr) / m;
-                const prevPrice = (pInt - stepStr) / m;
+                const vols = getVols(price);
+                const nextVols = getVols(price + tickSizeRaw);
+                const prevVols = getVols(price - tickSizeRaw);
 
-                const priceKey = Object.keys(priceMap).find(k => Math.abs(parseFloat(k) - price) < tickSizeRaw * 0.1);
-                const nextKey = Object.keys(priceMap).find(k => Math.abs(parseFloat(k) - nextPrice) < tickSizeRaw * 0.1);
-                const prevKey = Object.keys(priceMap).find(k => Math.abs(parseFloat(k) - prevPrice) < tickSizeRaw * 0.1);
-
-                const vols = priceKey ? (priceMap as any)[priceKey] : { bid: 0, ask: 0 };
-                const nextVols = nextKey ? (priceMap as any)[nextKey] : { bid: 0, ask: 0 };
-                const prevVols = prevKey ? (priceMap as any)[prevKey] : { bid: 0, ask: 0 };
-
-                // Ask Imbalance: Ask de este precio vs Bid del precio superior
-                if (vols.ask >= nextVols.bid * IMBALANCE_RATIO && vols.ask > 0) {
-                    askImbalances.push(price);
-                }
-                // Bid Imbalance: Bid de este precio vs Ask del precio inferior
-                if (vols.bid >= prevVols.ask * IMBALANCE_RATIO && vols.bid > 0) {
-                    bidImbalances.push(price);
-                }
+                if (vols.ask >= nextVols.bid * IMBALANCE_RATIO && vols.ask > 0) askImbalances.add(price);
+                if (vols.bid >= prevVols.ask * IMBALANCE_RATIO && vols.bid > 0) bidImbalances.add(price);
             }
 
-            // Segundo paso: Detectar Stacked Imbalances (Consecutivos)
-            const stackedAskPrices: Set<number> = new Set();
-            const stackedBidPrices: Set<number> = new Set();
-
-            let currentAskSeries: number[] = [];
-            for (let i = 0; i <= (endStr - startStr) / stepStr; i++) {
-                const p = (endStr - (i * stepStr)) / m;
-                if (askImbalances.includes(p)) {
-                    currentAskSeries.push(p);
-                } else {
-                    if (currentAskSeries.length >= STACKED_MIN_LEVELS) {
-                        currentAskSeries.forEach(price => stackedAskPrices.add(price));
-                    }
-                    currentAskSeries = [];
-                }
-            }
-            if (currentAskSeries.length >= STACKED_MIN_LEVELS) {
-                currentAskSeries.forEach(price => stackedAskPrices.add(price));
-            }
-
-            let currentBidSeries: number[] = [];
-            for (let i = 0; i <= (endStr - startStr) / stepStr; i++) {
-                const p = (endStr - (i * stepStr)) / m;
-                if (bidImbalances.includes(p)) {
-                    currentBidSeries.push(p);
-                } else {
-                    if (currentBidSeries.length >= STACKED_MIN_LEVELS) {
-                        currentBidSeries.forEach(price => stackedBidPrices.add(price));
-                    }
-                    currentBidSeries = [];
-                }
-            }
-            if (currentBidSeries.length >= STACKED_MIN_LEVELS) {
-                currentBidSeries.forEach(price => stackedBidPrices.add(price));
-            }
-
-            // Tercer paso: Renderizado
-            for (let pInt = endStr; pInt >= startStr; pInt -= stepStr) {
+            // Renderizado de Celdas
+            for (let pInt = endP; pInt >= startP; pInt -= stepStr) {
                 const price = pInt / m;
-                const priceKey = Object.keys(priceMap).find(k => Math.abs(parseFloat(k) - price) < tickSizeRaw * 0.1);
-                const vols = priceKey ? (priceMap as any)[priceKey] : { bid: 0, ask: 0 };
+                const vols = getVols(price);
 
                 const yTop = series.priceToCoordinate(price + tickSizeRaw);
                 const yBottom = series.priceToCoordinate(price);
@@ -182,157 +194,75 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
                 if (yBottom > lowestY) lowestY = yBottom;
                 const cellHeight = Math.max(1.5, Math.abs(yBottom - yTop));
                 const cellY = Math.min(yBottom, yTop);
+                
                 const isPoc = Math.abs(price - pocPrice) < tickSizeRaw * 0.1;
-
                 const bidX = (finalX - candleGap) - maxBoxWidth;
                 const askX = finalX + candleGap;
-
                 const emptyBg = isDark ? 'rgba(120, 123, 134, 0.06)' : 'rgba(120, 123, 134, 0.04)';
                 
-                // Color Bid
-                const isStackedBid = stackedBidPrices.has(price);
-                const isBidImbalance = bidImbalances.includes(price);
-                if (isPoc) {
-                    ctx.fillStyle = isDark ? '#e2e8f0' : '#1e293b';
-                } else if (isStackedBid) {
-                    ctx.fillStyle = '#f23645'; // Rojo sólido para Stacked
-                } else if (vols.bid > 0) {
-                    const alpha = Math.min((vols.bid / (maxSingleVol || 1)) + 0.15, 0.85);
-                    ctx.fillStyle = isBidImbalance ? `rgba(255, 100, 100, ${alpha})` : `rgba(242, 54, 69, ${alpha})`;
-                } else {
-                    ctx.fillStyle = emptyBg;
-                }
+                // Color y Dibujo Bid/Ask
+                const isBidImbalance = bidImbalances.has(price);
+                const isAskImbalance = askImbalances.has(price);
+
+                ctx.fillStyle = isPoc ? (isDark ? '#e2e8f0' : '#1e293b') : 
+                                (vols.bid > 0 ? `rgba(242, 54, 69, ${Math.min((vols.bid / (maxSingleVol || 1)) + 0.15, 0.85)})` : emptyBg);
                 ctx.fillRect(bidX, cellY, maxBoxWidth, cellHeight);
 
-                // Color Ask
-                const isStackedAsk = stackedAskPrices.has(price);
-                const isAskImbalance = askImbalances.includes(price);
-                if (isPoc) {
-                    ctx.fillStyle = isDark ? '#e2e8f0' : '#1e293b';
-                } else if (isStackedAsk) {
-                    ctx.fillStyle = '#089981'; // Verde sólido para Stacked
-                } else if (vols.ask > 0) {
-                    const alpha = Math.min((vols.ask / (maxSingleVol || 1)) + 0.15, 0.85);
-                    ctx.fillStyle = isAskImbalance ? `rgba(100, 255, 150, ${alpha})` : `rgba(8, 153, 129, ${alpha})`;
-                } else {
-                    ctx.fillStyle = emptyBg;
-                }
+                ctx.fillStyle = isPoc ? (isDark ? '#e2e8f0' : '#1e293b') : 
+                                (vols.ask > 0 ? `rgba(8, 153, 129, ${Math.min((vols.ask / (maxSingleVol || 1)) + 0.15, 0.85)})` : emptyBg);
                 ctx.fillRect(askX, cellY, maxBoxWidth, cellHeight);
 
-                // Bordes para Imbalances individuales y Glow para Stacked
-                if (isStackedBid || isStackedAsk) {
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = isStackedBid ? '#ff0000' : '#00ff00';
-                    ctx.strokeRect(isStackedBid ? bidX : askX, cellY, maxBoxWidth, cellHeight);
-                } else if (isBidImbalance || isAskImbalance) {
+                // Bordes de imbalance
+                if (isBidImbalance || isAskImbalance) {
                     ctx.lineWidth = 1;
                     ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)';
                     ctx.strokeRect(isBidImbalance ? bidX : askX, cellY, maxBoxWidth, cellHeight);
                 }
 
-                if (isPoc && barWidth > 30) {
-                    ctx.setLineDash([2, 4]);
-                    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.5)' : 'rgba(0,0,0,0.5)';
-                    ctx.beginPath();
-                    ctx.moveTo(bidX - 10, cellY + cellHeight / 2);
-                    ctx.lineTo(askX + maxBoxWidth + 10, cellY + cellHeight / 2);
-                    ctx.stroke();
-                    ctx.setLineDash([]);
-                }
-
                 if (barWidth > 70 && cellHeight > 8) {
-                    const isMuted = vols.bid === 0 && vols.ask === 0;
                     ctx.font = `bold ${Math.min(10, cellHeight - 2)}px Inter, sans-serif`;
-                    const textY = yBottom - (cellHeight / 2) + 3;
-                    
-                    if (isPoc) {
-                       ctx.fillStyle = isDark ? '#000000' : '#ffffff';
-                    } else if (isStackedBid || isStackedAsk) {
-                       ctx.fillStyle = '#ffffff'; // Blanco sobre color sólido
-                    } else if (isMuted) {
-                       ctx.fillStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)';
-                    } else {
-                       ctx.fillStyle = isDark ? '#ffffff' : '#000000';
-                    }
-                    
-                    const formatVol = (v: number) => {
-                        if (v === 0) return '0';
-                        if (v >= 1000000) return (v/1000000).toFixed(2) + 'M';
-                        if (v >= 1000) return (v/1000).toFixed(1) + 'K';
-                        return Math.round(v).toString();
-                    };
-
+                    ctx.fillStyle = isPoc ? (isDark ? '#000' : '#fff') : (isDark ? '#fff' : '#000');
                     ctx.textAlign = 'right';
-                    ctx.fillText(formatVol(vols.bid), finalX - candleGap - 3, textY);
-                    
+                    ctx.fillText(Math.round(vols.bid).toString(), finalX - candleGap - 3, cellY + cellHeight / 2);
                     ctx.textAlign = 'left';
-                    ctx.fillText(formatVol(vols.ask), finalX + candleGap + 3, textY);
+                    ctx.fillText(Math.round(vols.ask).toString(), finalX + candleGap + 3, cellY + cellHeight / 2);
                 }
             }
         }
 
-        // Caja de Resumen Individual adherida inmediatamente bajo el Footprint aislado
-        if (barWidth > 30 && lowestY > 0) {
-            const isWide = barWidth > 80; 
-            const boxWidth = isWide ? Math.min(85, barWidth * 0.95) : barWidth * 0.92;
-            const boxHeight = isWide ? 28 : 22; 
-            const boxX = finalX - boxWidth / 2;
-            // FIJACIÓN FLOTANTE INDIVIDUAL DEBAJO DE LA ÚLTIMA CELDA DE ESTA VELA EXCLUSIVAMENTE
-            const boxY = lowestY + 12;
+        // --- SUMARIO DELTA (v11 robusto) ---
+        ctx.save();
+        
+        const isPositive = totalCandleDelta >= 0;
+        const absDelta = Math.abs(Math.round(totalCandleDelta));
+        
+        ctx.font = 'bold 11px Inter, sans-serif';
+        const textWidth = ctx.measureText(absDelta.toString()).width;
+        let boxWidth = Math.max(textWidth + 12, 34); // mínimo 34px de ancho para legibilidad
+        // Restricción visual si hay muchas velas (zoom out)
+        if (barWidth < 20) boxWidth = Math.max(textWidth + 4, barWidth * 1.5);
+        
+        const boxHeight = 16;
+        const boxX = finalX - boxWidth / 2;
+        
+        // Clamping estricto para asegurar visibilidad en pantalla
+        const boxY = Math.min(lowestY > 0 ? lowestY + 8 : height - 30, height - boxHeight - 4);
 
-            ctx.save();
-            ctx.shadowColor = 'rgba(0, 0, 0, 0.15)';
-            ctx.shadowBlur = isWide ? 6 : 2;
-            ctx.shadowOffsetY = isWide ? 3 : 1;
-            ctx.fillStyle = isDark ? '#1e222d' : '#ffffff';
-            
+        if (boxY > 0 && totalCandleVol > 0) {
             ctx.beginPath();
-            ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 4);
+            ctx.fillStyle = isPositive ? 'rgba(8, 153, 129, 0.85)' : 'rgba(242, 54, 69, 0.85)';
+            ctx.roundRect ? ctx.roundRect(boxX, boxY, boxWidth, boxHeight, 4) : ctx.fillRect(boxX, boxY, boxWidth, boxHeight);
             ctx.fill();
-            ctx.restore();
 
-            ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            const formatVol = (v: number) => {
-               if (Math.abs(v) >= 1000000) return (Math.abs(v)/1000000).toFixed(2) + 'M';
-               if (Math.abs(v) >= 10000) return (Math.abs(v)/1000).toFixed(0) + 'K';
-               if (Math.abs(v) >= 1000) return (Math.abs(v)/1000).toFixed(1) + 'K';
-               return Math.round(Math.abs(v)).toString();
-            };
-
-            const deltaColor = totalCandleDelta > 0 ? '#089981' : (totalCandleDelta < 0 ? '#f23645' : (isDark ? '#fff' : '#000'));
-            const deltaStr = totalCandleDelta > 0 ? `+${formatVol(totalCandleDelta)}` : (totalCandleDelta < 0 ? `-${formatVol(Math.abs(totalCandleDelta))}` : formatVol(totalCandleDelta));
-            const totalStr = formatVol(totalCandleVol);
-
-            ctx.font = isWide ? 'bold 9px Inter, sans-serif' : 'bold 8px Inter, sans-serif';
-            
-            if (isWide) {
-                ctx.textAlign = 'right';
-                ctx.fillStyle = isDark ? '#b2b5be' : '#787b86';
-                ctx.fillText('Delta', boxX + boxWidth / 2 - 4, boxY + 11);
-                
-                ctx.textAlign = 'left';
-                ctx.fillStyle = deltaColor;
-                ctx.fillText(deltaStr, boxX + boxWidth / 2 + 4, boxY + 11);
-
-                ctx.textAlign = 'right';
-                ctx.fillStyle = isDark ? '#b2b5be' : '#787b86';
-                ctx.fillText('Total', boxX + boxWidth / 2 - 4, boxY + 22);
-                 
-                ctx.textAlign = 'left';
-                ctx.fillStyle = isDark ? '#ffffff' : '#131722';
-                ctx.fillText(totalStr, boxX + boxWidth / 2 + 4, boxY + 22);
-            } else {
-                ctx.textAlign = 'center';
-                ctx.fillStyle = deltaColor;
-                ctx.fillText(deltaStr, finalX, boxY + 9);
-                ctx.fillStyle = isDark ? '#8a8d95' : '#787b86';
-                ctx.fillText(totalStr, finalX, boxY + 18);
-            }
+            ctx.fillStyle = '#FFFFFF';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(absDelta.toString(), finalX, boxY + boxHeight / 2);
         }
+        
+        ctx.restore();
       });
+      console.log('[FP-RENDER]', new Date().toISOString(), 'entries:', entries.length);
     };
 
     // Sincronizar con cambios en el gráfico
@@ -346,21 +276,27 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
     timeScale.subscribeVisibleTimeRangeChange(handleRangeChange);
     timeScale.subscribeVisibleLogicalRangeChange(handleRangeChange);
     
-    // Suscripción de alto rendimiento a ticks (bypasseando re-renders de React)
-    let lastFootprintData = useStore.getState().footprintData;
-    const unsubscribeStore = useStore.subscribe((state: any) => {
-        if (state.footprintData !== lastFootprintData) {
-            lastFootprintData = state.footprintData;
-            requestAnimationFrame(render);
-        }
+    // Fix inmediato: usar la firma simple para reaccionar verdaderamente a los triggers
+    let lastSeenTick = 0;
+    const unsubscribeStore = useStore.subscribe((state) => {
+      if (state.lastTickTime !== lastSeenTick) {
+        lastSeenTick = state.lastTickTime;
+        requestAnimationFrame(render);
+      }
     });
 
+    // FIX #5: resize con devicePixelRatio
     const resizeCanvas = () => {
-        if (canvas.parentElement) {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
-            render();
-        }
+      if (canvas.parentElement) {
+        const dpr = window.devicePixelRatio || 1;
+        const cssW = canvas.parentElement.clientWidth;
+        const cssH = canvas.parentElement.clientHeight;
+        canvas.width = cssW * dpr;
+        canvas.height = cssH * dpr;
+        canvas.style.width = cssW + 'px';
+        canvas.style.height = cssH + 'px';
+        render();
+      }
     };
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas(); // Render inicial automático
@@ -372,7 +308,7 @@ const FootprintOverlay: React.FC<FootprintOverlayProps> = ({ chart, series }) =>
       timeScale.unsubscribeVisibleLogicalRangeChange(handleRangeChange);
       unsubscribeStore();
     };
-  }, [isFootprintEnabled, theme, chart, series]);
+  }, [isFootprintEnabled, theme, timeframe, chart, series]);
 
   if (!isFootprintEnabled) return null;
 

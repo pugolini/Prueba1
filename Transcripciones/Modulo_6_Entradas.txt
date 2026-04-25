@@ -1,0 +1,1564 @@
+
+--- INICIO: 6.1 - Mis 12 Modelos de Entrada con Order Flow.txt ---
+
+Vamos a ver los modelos de entrada, la
+
+Adrianus Playbook. Esto ya os lo compartí hace unos días y básicamente
+
+son mis 12 modelos de entrada basados en
+
+order flow. Estos modelos los podemos
+
+clasificar en tres categorías, que son reversiones, continuaciones u
+
+opening plays, que serían modelos en función de la
+
+apertura.
+
+En este vídeo vamos a ir uno por uno y vamos a ver cada uno de ellos, en
+
+qué consisten y cómo
+
+ejecutarlos. Nos vamos a centrar muchísimo más en lo que es
+
+la parte teórica o la ejecución de cada uno de ellos, y no vamos a
+
+ver ejemplos prácticos en el gráfico, porque eso lo iremos
+
+viendo en el día a día en los directos y demás.
+
+Vamos a ver únicamente lo que sería la entrada, la teoría de la
+
+entrada.
+
+Tengo que decir que yo inicialmente tenía ocho modelos.
+
+De hecho, esta es la segunda vez que grabo el vídeo.
+
+Inicialmente os grabé un vídeo muy similar a este, pero con ocho modelos,
+
+que realmente son los mismos 12 modelos, solo que de forma un poco más general.
+
+Entonces he preferido haceros un nuevo vídeo un poco más
+
+específico, que básicamente viene a ser lo mismo, pero distinguiendo un poquito más
+
+en función de la zona o de exactamente qué es lo que estoy buscando.
+
+Creo que con estos 12 modelos de entrada, que pueden parecer muchos,
+
+realmente veréis que prácticamente siempre es lo mismo,
+
+pero diferencio muy bien en dónde estoy buscando esto, cuándo
+
+y demás. Tenemos modelos superespecíficos y literalmente que
+
+es todo lo que yo opero. Antes de nada, quiero dejar muy
+
+claro que, como os digo, quizá puede parecer que son 12
+
+modelos, muchísimos modelos de entrada.
+
+Realmente, cuando estamos operando order flow, siempre estamos buscando lo mismo,
+
+que es, esto lo voy a repetir muchísimo, continuamente,
+
+absorción
+
+más agresión.
+
+El
+
+100 % de mis entradas son esto.
+
+Cuando estamos visualizando herramientas de order flow,
+
+estamos continuamente buscando esto de aquí.
+
+Quién está siendo absorbido, quién está siendo
+
+atrapado, quién está haciendo mucho esfuerzo sin apenas
+
+resultado. Eso es la absorción.
+
+Y luego tenemos la agresión, quién está realmente empujando el mercado
+
+en dirección opuesta a esa absorción.
+
+Siempre tenemos una parte del mercado, unos participantes que
+
+están siendo absorbidos
+
+y unos que están empujando. Entonces,
+
+siempre el order flow va a consistir continuamente, lo que viene a ser la parte
+
+de la ejecución, dejando
+
+fuera de la ecuación ahora mismo la parte de contexto y zona,
+
+sino únicamente lo que es la ejecución, va a consistir en
+
+identificar quién está siendo absorbido y quién está
+
+agrediendo, quién está empujando.
+
+Dicho esto, vamos a ir a esos 12 modelos,
+
+que ya veréis que es más simple de lo que parece.
+
+Vamos a por el primero de ellos, que es el
+
+VWAP Reject/Reclaim. Es un modelo de entrada basado en el
+
+VWAP. Es el modelo más simple, probablemente, y siendo sincero, es el que mejor me
+
+funciona. Es el que veo que
+
+mejor me sale o que menos me falla.
+
+Es muy simple, es una
+
+media, que es el VWAP. Recordad, es el
+
+precio medio ponderado por volumen.
+
+Y es simplemente ver qué ocurre o buscar esa
+
+absorción y agresión cuando el precio interactúa con el VWAP.
+
+Así de simple. Entonces, tenemos el precio por debajo del VWAP, en este caso,
+
+vemos que el precio llega a ese VWAP siendo incapaz
+
+de superarlo y ahí vemos continuación de ese movimiento en el que veníamos.
+
+Si estamos por debajo del VWAP, siempre, de forma general, vamos a
+
+preferir ventas, porque el mercado está
+
+aceptando precios más bajos. Si estamos por encima,
+
+siempre vamos a intentar priorizar
+
+compras, a menos que el order flow nos diga lo contrario.
+
+Por eso
+
+no buscamos tanto predecir, sino buscamos cuando llegue aquí, vamos a ver qué
+
+pasa. Cuando llega en este
+
+punto, con order flow y demás, evaluamos qué está pasando,
+
+quién está siendo absorbido, quién está agrediendo,
+
+cuánto esfuerzo se está haciendo y cuál está siendo el resultado.
+
+Entonces, aquí idealmente, en el caso de ver un VWAP Reject,
+
+es que el VWAP está siendo una resistencia
+
+o soporte, pero está siendo rechazado.
+
+En caso de que tengamos el precio por debajo del VWAP, aquí lo que vamos a querer
+
+ver son compradores,
+
+muchos compradores o un gran delta.
+
+Podemos verlo así en forma de delta.
+
+Mucho delta sin apenas
+
+resultado.
+
+Y de hecho, es muy probable que empecemos a ver
+
+agresión por parte de los vendedores, también en forma de delta.
+
+Entonces, este es un setup de manual.
+
+Tenemos precio por debajo del VWAP,
+
+interacción con el VWAP, tenemos compradores haciendo mucho esfuerzo sin resultado,
+
+entra agresión
+
+vendedora y aquí tenemos una posible entrada en corto con stop loss por encima de
+
+la agresión,
+
+buscando precios más bajos. Luego tenemos
+
+el caso del VWAP Reclaim, que viene a ser
+
+lo mismo, pero en el caso de que el precio no rechace,
+
+sino de alguna forma recupere ese VWAP,
+
+que es el caso que tenemos aquí a la derecha,
+
+en el cual podríamos ver que el precio es capaz de romper el
+
+VWAP con mucha agresión por parte de los compradores.
+
+Estos compradores, a diferencia de estos, están siendo recompensados.
+
+Sabemos que el precio tiene esa continuación.
+
+Esos compradores están haciendo esfuerzo, pero
+
+también con mucho resultado.Y luego
+
+es posible, o muy probable, que en este
+
+pequeño movimiento de aquí veamos vendedores que están intentando empujar el
+
+precio hacia abajo sin resultado.
+
+A la vez, estos compradores de aquí, que fueron capaces de romper el VWAP,
+
+muy probablemente,
+
+si
+
+proyectamos
+
+esta zona,
+
+van a intentar defender la posición, con lo cual cualquier retroceso a esta zona
+
+de aquí
+
+probablemente va a ser defendida por estos
+
+compradores.
+
+Y, como os digo, probablemente, si vemos vendedores aquí
+
+intentando empujar el precio sin resultado, muchísimo mejor.
+
+Si luego somos capaces de ver agresión por parte de compradores, ya os digo,
+
+en forma de big trades o con delta,
+
+ahí tenemos también una entrada espectacular.
+
+De forma general, en el delta vamos a ver algo tal que así:
+
+mucho esfuerzo por parte de los vendedores, sin embargo,
+
+compradores y VWAP soportando ese
+
+movimiento. En el caso opuesto, básicamente, si
+
+estamos en el VWAP reject, tenemos el precio por encima.
+
+El precio interactúa con ese VWAP
+
+y de ahí tenemos vendedores atrapados en la parte inferior y agresión
+
+compradora,
+
+donde el VWAP actúa como soporte.
+
+Y en el VWAP reclaim,
+
+en el caso opuesto, es al revés. Venimos desde
+
+arriba, rompemos el VWAP con agresión, el precio
+
+retestea ese VWAP, que probablemente también tenemos aquí
+
+vendedores que han entrado con fuerza, que van a intentar defender
+
+la posición.
+
+Y aquí es probable que veamos también compradores sin ningún tipo de
+
+resultado y luego veamos más agresión
+
+para continuar el movimiento a la baja.
+
+Modelo muy simple que funciona muy bien.
+
+Vamos a por el siguiente modelo, que es el
+
+value area high, value area low reject,
+
+plus más absorción.
+
+Este es el modelo de entrada ideal en casos de mercado
+
+balanceado. Tenemos un mercado que está
+
+consolidando y tenemos nuestro perfil en D, recordad, con el value area
+
+high, value area low, y vemos que el precio,
+
+cuando se acerca a ambos extremos, es
+
+rechazado. Y en este caso, tenemos que el precio
+
+trata de romper el value area high sin efecto.
+
+Aquí, de nuevo, ¿qué tenemos? Recordad: absorción, agresión.
+
+Aquí tenemos compradores entrando muy fuerte,
+
+sin resultado, y luego vemos agresión bajista.
+
+De nuevo, misma entrada, stop loss aquí arriba.
+
+En este caso, va a depender un poco del contexto y demás, pero podríamos buscar,
+
+por un lado, el POC,
+
+recordad, que es el
+
+precio donde ha habido más negociación, y incluso el value
+
+area low, e incluso, por qué no, si tenemos un contexto que lo apoya,
+
+buscar precios todavía más bajos.
+
+En el caso opuesto,
+
+básicamente, es ver que
+
+los vendedores están tratando
+
+de romper ese value area low que ha estado previamente
+
+aguantando como soporte, sin ningún tipo de resultado.
+
+Entra agresión compradora. Aquí buscaremos con nuestras herramientas de big
+
+trades, delta, footprint, incluso, y demás,
+
+una entrada en largo, buscando, de nuevo,
+
+tanto el POC como el value area high.
+
+Jugada muy simple: value area high, value area low, absorciones,
+
+ver quién está siendo atrapado
+
+y buscar agresión en dirección opuesta. Muy simple.
+
+Vamos a por el siguiente modelo de entrada, que es el value
+
+area high,
+
+value area low breakout y continuación.
+
+Básicamente, es una variación del modelo anterior.
+
+En el modelo anterior, teníamos que el precio era
+
+rechazado en los extremos y buscábamos absorción para buscar agresión en dirección
+
+opuesta.
+
+¿Okey?
+
+Y
+
+en este caso, que es esta variación, lo que tenemos es que el precio
+
+definitivamente rompe ese área de valor,
+
+acepta precios más bajos o más altos y desde ahí podemos empezar a
+
+buscar una continuación. El
+
+tema viene aquí. Cuando el precio está rompiendo,
+
+aquí lo que vamos a ver en el 95 % de las veces,
+
+en este caso bajista,
+
+veremos que
+
+cuando el precio se acerca al value area low, probablemente van a entrar compras,
+
+van a entrar compradores. Sin embargo, no van a tener ningún tipo de
+
+efecto en el mercado y el precio los va a
+
+absorber. Va a entrar agresión vendedora y esta
+
+agresión vendedora va a ser recompensada.
+
+Veremos que los vendedores están entrando aquí
+
+y están teniendo un resultado en el precio.
+
+Entonces, es muy probable que tengamos ese retest del value
+
+area low. Además, probablemente va a coincidir con estos vendedores que están
+
+agrediendo y que están empujando el precio, y aquí podamos
+
+buscar una entrada en corto. Esto lo mismo en el delta,
+
+veremos que está habiendo aquí agresión vendedora
+
+posterior a una agresión compradora sin ningún tipo de efecto.
+
+Con lo cual, yo aquí suelo recomendar ver
+
+qué pasa cuando tenemos ese retest al
+
+value area low, en este caso, a los big trades,
+
+porque queremos asegurarnos que esto no es un fake out
+
+para volver hacia arriba, sino que realmente el precio está
+
+aceptando esos valores.
+
+Vamos a ver si el precioCuando está retesteando esa zona, si están entrando
+
+compradores, están entrando vendedores, qué efecto está teniendo.
+
+Idealmente, aquí queremos ver cierta agresión compradora
+
+sin gran resultado y que luego, de nuevo, los
+
+vendedores sigan apretando. Aquí tenemos una entrada muy
+
+buena. Perdonad, no sé qué está pasando con Internet.
+
+Lo voy a desconectar directamente,
+
+que no sé qué está pasando.
+
+Aquí tenemos una potencial entrada en corto con el "stop
+
+loss", que podría ser en este caso por encima de los
+
+"big trades" vendedores, buscando precios más bajos.
+
+Luego tenemos el caso opuesto, que es cuando tenemos la ruptura
+
+del "value area high" con aceptación en cuanto a
+
+tiempo y volumen.
+
+Con esto me refiero a que, en este caso, probablemente veremos compradores
+
+que están tratando de empujar el precio y lo hacen con efecto, con
+
+resultados, están siendo recompensados.
+
+Y probablemente si el precio vuelve a esa ruptura, a ese
+
+"value area high", donde los compradores habían estado activos, probablemente el
+
+precio va a continuar
+
+buscando nuevos precios, en un estado de imbalance hasta que se encuentre el
+
+nuevo balance. Aquí, de nuevo, es muy probable
+
+también que veamos vendedores
+
+intentando o pensando que es un precio caro
+
+y, si este movimiento es lo suficientemente fuerte, los compradores van a
+
+intentar defender esa posición. Y si vemos de nuevo agresión
+
+compradora, tenemos
+
+una entrada aquí en largo con el "stop loss" por debajo de los vendedores
+
+atrapados,
+
+buscando precios más altos.
+
+Esos son los dos modelos en función del "value area
+
+high", "value area low". En este caso buscamos absorción,
+
+buscando rechazo en ese extremo del "value area", y en este caso lo que buscamos es
+
+que haya aceptación en cuanto a volumen y tiempo, y lo que buscamos es la
+
+continuación.
+
+El siguiente modelo, el cuarto, es el "low volume
+
+node continuation". Aquí vamos a buscar una continuación
+
+de un movimiento
+
+y en concreto lo vamos a hacer en un "low volume node", en un nodo de bajo
+
+volumen.
+
+Perdonad si no me ha salido muy bien el dibujo, pero creo que está bastante claro.
+
+Básicamente, lo que tenemos es que el precio está subiendo,
+
+por lo que sea, hemos tenido una
+
+ruptura de un periodo de balance entrando en imbalance
+
+en ese "price discovery", empujando el precio hacia arriba.
+
+Vemos que el precio vuelve a entrar en un cierto balance, una consolidación,
+
+y tenemos ese movimiento hacia el "low volume node" que nos había dejado este
+
+movimiento,
+
+ese tipo de imbalance o esa zona donde ha habido una menor
+
+negociación. Recordad que el precio tiende a ir a esas zonas
+
+para permitir que los participantes puedan volver a
+
+tener la oportunidad de negociar en ese
+
+rango. Y
+
+si hay agresión, de nuevo, por parte de los compradores, lo normal es que esta
+
+zona sea utilizada como soporte.
+
+Aquí en concreto lo que vamos a ver, como siempre, esto continuamente veis que es
+
+lo mismo,
+
+vamos a ver ventas, vendedores aquí abajo,
+
+sin ningún tipo de resultado. Y a la vez vamos a ver
+
+probablemente "big trades" compradores, delta,
+
+"footprint", CVD, incluso también podemos
+
+verlo.
+
+Por ejemplo, podríamos ver que
+
+en esta consolidación, donde
+
+tenemos al precio consolidando, podríamos ver que el
+
+CVD
+
+de alguna manera está bajando, que está habiendo agresión
+
+bajista.
+
+Con lo cual, si el precio nos da ese "low volume node", que es una zona de
+
+interés para los compradores,
+
+y el CVD empieza a mostrar agresión compradora, que es lo que estaríamos
+
+viendo aquí,
+
+lo normal es que lo que veamos
+
+es
+
+algo así en el CVD a medida que el precio se está consolidando,
+
+luego un "spike" muy fuerte en este pequeño movimiento y de aquí,
+
+de nuevo, una recuperación en V. Esta es la confirmación.
+
+Ese delta que está dándose la vuelta de forma tan
+
+brusca
+
+es la confirmación de que estos vendedores de aquí
+
+han hecho un esfuerzo brutal. Sin embargo, mirad
+
+la reacción en el CVD. Aquí está entrando
+
+agresión compradora en un "low volume node", que es una zona donde
+
+esperamos continuación de ese movimiento que había generado el "low
+
+volume node".
+
+Con lo cual, si vemos algo de agresión,
+
+"footprint", CVD, delta, "big trades",
+
+buscaremos la entrada en compra con el "stop loss" debajo de los
+
+vendedores atrapados o incluso podríamos entrar
+
+si vemos fuerza con el "stop loss" por debajo de los
+
+compradores que están agrediendo, porque en caso de haber cualquier retroceso van a
+
+intentar defender esa posición,
+
+y buscando precios más altos. Aquí
+
+os he puesto también el caso opuesto, que viene a ser lo mismo.
+
+Tenemos precio que viene bajando con fuerza,
+
+con velocidad, que eso es lo que genera ese "low volume node".
+
+Y ahí tenemos cierto
+
+balance, cierto acuerdo entre compradores y vendedores.
+
+Tenemos, de nuevo, un retesteo, una visita a ese "low volume
+
+node". Aquí probablemente veremos que están entrando compras muy fuertes,
+
+"big trades", delta, CVD también subiendo
+
+fuerte. Sin embargo, vemos que el precio no
+
+hace gran cosa y empieza a entrar la agresión bajista.
+
+Aquí, de nuevo, tenemos una entrada en corto con el "stop loss" aquí encima,
+
+buscando precios más bajos.Este es mi modelo de
+
+entrada favorito. Porque al final,
+
+en este modelo
+
+lo que tenemos es: el precio ha salido de balance, tenemos un movimiento
+
+direccional muy claro hacia una dirección, tenemos que el precio
+
+está consolidando,
+
+tenemos mucha presión bajista, sin embargo, el precio no está haciendo gran cosa.
+
+Vendedores superatrapados, empieza a entrar agresión en el
+
+"low volume node". Es una entrada que funciona muy bien.
+
+Lo mismo en el caso opuesto.
+
+Es la entrada más similar al típico FVG de ICT,
+
+que muchos conoceréis.
+
+En este caso, no es un FVG, sino un "low volume node".
+
+Vamos al siguiente modelo de entrada, número cinco, que a
+
+algunos también os sonará, que es el "inverse low
+
+volume node". Básicamente, es la inversión de ese "low volume node".
+
+El escenario es el mismo, es otra variación del modelo anterior.
+
+Tenemos
+
+que el precio venía subiendo
+
+con velocidad, dejando ese "low volume node", tenemos cierta consolidación.
+
+Luego tenemos
+
+una visita a ese "low volume node", donde esperamos, en principio,
+
+una reacción por parte de los compradores.
+
+Sin embargo, eso no lo tenemos.
+
+De ahí la importancia también siempre de
+
+tener ese "mindset" de: "Voy a ver en 'order flow' qué está pasando, voy a ver el
+
+libro de órdenes, voy a ver quién está apretando, voy a ver qué órdenes están
+
+lanzando". Porque si bien esto es una zona a priori de
+
+compra, si no hay presión compradora en esta zona y los vendedores
+
+empiezan a entrar fuerte, lo normal es que el precio siga bajando.
+
+Entonces, cuando eso ocurre,
+
+aquí estamos atentos. Si vemos que hay mucha
+
+agresión por parte de vendedores
+
+e
+
+incluso los compradores están entrando sin ningún tipo de
+
+resultado,
+
+esto ya es una indicación de decir: "Ojo, cuidado, que este 'low volume node' no
+
+está siendo respetado como esperábamos".
+
+A la que vemos que los
+
+vendedores están teniendo recompensa, están haciendo un esfuerzo
+
+enorme, pero también están siendo recompensados y ahora son los compradores
+
+los que están siendo absorbidos, porque están quedando atrapados continuamente,
+
+ahí tenemos una opción de entrar en short, stop loss aquí
+
+encima, buscando precios más bajos.
+
+El caso opuesto, lo mismo por el revés.
+
+Tenemos el precio
+
+bajando con velocidad, nos deja el "low volume node".
+
+Luego tenemos de nuevo retest a ese "low volume node", donde en principio, viendo
+
+la
+
+agresión con la que se había desplazado el precio hacia abajo, esperamos
+
+una continuación bajista. Sin embargo, vemos que con order flow,
+
+los vendedores están entrando aquí
+
+con mucha fuerza. Sin embargo, el precio no está
+
+siendo para nada empujado a la baja, sino todo lo contrario, los
+
+compradores están tomando control.
+
+Entonces, esperaremos un retest de esos big
+
+trades o de ese delta,
+
+probablemente, parte de vendedores
+
+que está siendo atrapado. Tenemos el precio por encima del delta, por encima de los
+
+big trades,
+
+y tenemos agresión por parte de compradores.
+
+Buscaremos una entrada en compra
+
+con un stop loss aquí debajo, buscando precios más altos.
+
+Es inverse low
+
+volume node. Un low volume node que no está siendo respetado en ese
+
+sentido y está entrando agresión en dirección opuesta a lo que esperábamos.
+
+Lo bueno de order flow, como os digo, es que
+
+no tenemos por qué predecir o adivinar.
+
+Aquí, probablemente,
+
+los compradores van a empujar precio hacia arriba.
+
+No lo sé, no lo sabemos. Vamos a ver, es una zona de interés.
+
+Cuando llega ahí el precio, atentos.
+
+Pero lo bueno es que no tenemos que
+
+adivinar. Nos vamos a nuestras herramientas, nuestros
+
+datos de flujo de órdenes y demás, y vamos a ver qué está ocurriendo, quién está
+
+empujando, quién está siendo absorbido. Absorción, agresión.
+
+Siempre es lo mismo.
+
+Al final, como veis, lo que cambia es un poco dónde ocurre o
+
+cómo ocurre. Pero siempre estamos buscando lo mismo.
+
+Es un participante del mercado que está siendo totalmente
+
+atrapado, que está haciendo mucho esfuerzo sin apenas resultado.
+
+Y luego el participante opuesto,
+
+el lado opuesto del mercado, que está apretando y
+
+está
+
+forzando a esos vendedores o compradores que están
+
+quedando atrapados a cerrar la posición y con ello acelera el movimiento en
+
+dirección opuesta. Esto ya lo hemos comentado mil veces, pero creo que es
+
+bueno que lo vaya repitiendo, porque es que si entendemos esto,
+
+lo vamos a tener todo muchísimo más sencillo.
+
+Luego tenemos el siguiente modelo, que es el high-low
+
+sweep
+
+más absorción.
+
+Es la típica toma de liquidez que conocemos muchos de ICT y demás.
+
+Es cuando el precio hace una barrida de
+
+máximos o de mínimos y ahí vemos una absorción.
+
+En este caso, tenemos esa
+
+consolidación. Vemos que el precio intenta hacer
+
+nuevos mínimos sin ningún éxito. Esto es lo que
+
+llamamos también "failed auction",
+
+que es un intento fallido de
+
+aceptar precios más bajos, es una subasta fallida.
+
+Y aquí lo que vemos es
+
+vendedores intentando empujar el precio sin ningún tipo de
+
+resultado.
+
+Siempre es lo mismo.
+
+Vendedores quedando atrapados en este caso y vemos cómo los compradores toman
+
+el control. Entrada, stop loss,
+
+TPEn el siguiente caso
+
+opuesto tenemos toma de máximos. Sin embargo, de nuevo "failed
+
+auction",
+
+el precio es incapaz de hacer nuevos máximos,
+
+porque tenemos aquí probablemente
+
+grandes ofertas, podemos verlo quizá en el "bookmap",
+
+y esas ofertas están absorbiendo todas esas
+
+compras por parte de esos compradores que están tratando de
+
+hacer nuevos
+
+máximos. Sin embargo, están siendo atrapados.
+
+Ahí tenemos de nuevo la entrada con el "stop loss" y precios
+
+más bajos. Vamos a por el siguiente modelo, número
+
+siete,
+
+que es el "protective delta continuation". Otro modelo de continuación.
+
+Básicamente, es un modelo en el que vemos muy claramente que hay
+
+un lado del mercado que está apretando y está teniendo mucho
+
+resultado. Vamos a tener probablemente "big trades" por
+
+aquí.
+
+"Big trades". Veremos que incluso
+
+tendremos también vendedores por aquí
+
+que no están siendo para nada recompensados, sino que venden, el precio sube.
+
+Entonces, eso son zonas donde
+
+vamos a estar atentos a
+
+retrocesos para buscar continuaciones.
+
+Porque ahí lo que estamos esperando es que si en esta zona,
+
+donde ha habido tantos vendedores atrapados y ha habido tanta
+
+agresión, vamos a hacer un poco más grande para que se vea,
+
+por parte de los compradores con recompensa.
+
+Fijaos, vendedores atrapados, compradores siendo
+
+recompensados. Si tenemos la oportunidad de un retroceso
+
+a esta zona,
+
+donde ha habido esa absorción más agresión, aquí lo que vamos a buscar
+
+es de nuevo precios más altos.
+
+Aquí, con nuestra confirmación con "big trades" o con "footprint", con delta y
+
+demás, buscaremos,
+
+idealmente, que haya de nuevo aquí abajo vendedores atrapados
+
+sin ningún tipo de resultado,
+
+que el precio sube. Ahí, si tenemos de nuevo ese "retest" a esos
+
+vendedores que habían sido atrapados en una zona, en principio de
+
+protección o de defensa de los compradores, entraremos aquí
+
+con el "stop loss" aquí, buscando precios más altos.
+
+Esto en el caso de tener una tendencia muy clara
+
+y precios arriba como "targets" que
+
+todavía no han sido tomados.
+
+También podemos ver "asks", ofertas
+
+en el "bookmap" y demás.
+
+Normalmente, cuando vemos esto también en "bookmap", lo que
+
+veremos serán grandes "bids".
+
+Eso nos mostraría interés en que hay
+
+grandes compradores que están interesados en
+
+acumular en esas zonas.
+
+En el caso opuesto, es lo mismo. Simplemente, el precio viene bajando de forma
+
+muy clara. Tenemos
+
+"big trades", vendedores, en este caso, dominando el mercado y
+
+probablemente veremos también que los compradores están siendo atrapados.
+
+Compradores atrapados, vemos que están comprando.
+
+Compradores compran, precio baja.
+
+Eso también lo repito mucho. Siempre estamos continuamente evaluando
+
+esa parte de quién está en control y quién está siendo atrapado.
+
+¿Quién está en control? ¿Quién está controlando el mercado?
+
+Cuando vemos esto, en este caso, compradores compran, precio baja.
+
+Aquí lo que está diciendo es que los vendedores pasivos
+
+están continuamente absorbiendo a la mínima que hay una compra y eso
+
+hace que el precio siga bajando. Entonces, en este caso,
+
+cuando vemos esa agresión, lo que esperamos es que el precio, si nos
+
+da la oportunidad de un "retest" a esa zona donde
+
+había habido cierta absorción más agresión,
+
+esperamos continuación de ese movimiento.
+
+Esto también, obviamente, tiene un mayor peso
+
+cuando tienes un contexto. Ahora mismo estamos simplemente analizando lo que es la
+
+ejecución, pero obviamente, si esto viene de un
+
+movimiento,
+
+podríamos también mezclarlo con uno que hemos visto ya inicialmente.
+
+Por ejemplo, veníamos de un mercado balanceado, "value area high", "value area
+
+low", el precio rompe el "value area low" y empieza a aceptar precios
+
+más abajo.
+
+Entonces, aquí lo que nos está diciendo es que cualquier retroceso que tengamos es
+
+una opción para vender, porque el precio está aceptando precios más bajos.
+
+La subasta es bajista, con lo cual buscamos vender.
+
+Aquí el contexto, lo mismo. Si tenemos por aquí el "VWAP",
+
+una confluencia extra. Tenemos agresión, absorción, tenemos "VWAP".
+
+Incluso podríamos tener un "low volume node" aquí.
+
+Ya os digo,
+
+cuantas más confluencias cumpla, mucho mejor.
+
+Pero en este caso, el caso aislado es simplemente, vemos que está
+
+habiendo
+
+agresión por parte de un lado del mercado, con lo cual buscamos
+
+sumarnos
+
+ahí donde ha habido agresión en el pasado.
+
+Vamos a por el modelo número ocho.
+
+"Momentum continuation". Esto básicamente es un modelo
+
+de continuación cuando tienes un momentum muy fuerte.
+
+Esto suele darse especialmente en momentos de la apertura de New York.
+
+Es algo que yo en Londres, por ejemplo, lo evitaría.
+
+Y quizá, cuando
+
+ya han pasado los primeros minutos de la apertura o de la
+
+sesión AM de New York, también lo evitaría. Aquí lo que busco es momentum.
+
+Ahí cuando está habiendo mucha velocidad y dices: "H*****s, es que la agresión aquí
+
+está siendo
+
+clarísima". Por ejemplo, en el caso de los compradores, aquí tenemos
+
+un movimiento muy fuerte al alza.
+
+Probablemente, aquí tenemos qué?
+
+Vendedores
+
+sin ningún tipo de efecto. En cambio, veremosQue el
+
+delta es positivo.
+
+Aquí tenemos delta negativo,
+
+siendo absorbido, tenemos el precio aquí arriba.
+
+Con lo cual, estos vendedores que estaban en venta,
+
+si no han cerrado la posición ya, la tendrán que cerrar y eso va a hacer que el
+
+precio se acelere.
+
+Entonces, aquí lo que buscaremos, en este caso, es probablemente muchas
+
+veces cuando el precio está subiendo muy fuerte, tiende a tener un pequeño
+
+periodo de
+
+consolidación.
+
+Entonces, ahí tenemos una opción de entrar.
+
+Podríamos tener por aquí un "big trade".
+
+Tenemos la posibilidad, si vemos ese momentum, vemos esa velocidad, vemos que los
+
+vendedores están siendo totalmente destrozados, podemos
+
+simplemente entrar aquí con el "stop loss" por debajo de los vendedores atrapados.
+
+¿Por qué? Porque sabemos que aquí hay compradores
+
+pasivos que están atrapando,
+
+están absorbiendo esas ventas. Con lo cual, si tenemos un "target"
+
+más arriba y vemos ese momentum, vemos que los compradores están agrediendo fuerte,
+
+están entrando
+
+con agresividad en el mercado, buscaremos entrar con el "stop loss" aquí debajo,
+
+buscando precios más altos. En este caso, como es una entrada
+
+más bien basada en momentum, aquí idealmente quieres salirte rápido.
+
+Aquí lo que buscas es un momento rápido.
+
+No buscas
+
+que el precio pueda tener cierta consolidación, aceptación,
+
+retroceso y demás, sino que estás viendo, quizá un poco más por una parte
+
+de experiencia, de intuición y demás,
+
+que el
+
+precio está muy fuerte, que no hay quien lo pare, con lo cual quieres a la mínima
+
+sumarte para, por lo menos,
+
+sacar una parte de ese movimiento.
+
+Como os digo, yo en este caso me gusta ser agresivo también a la hora de tomar
+
+beneficios. No intento aguantar demasiado este
+
+movimiento, porque sé que hay muchos compradores
+
+también en la parte inferior en este caso, y perfectamente
+
+podríamos tener algo así para luego continuar al alza.
+
+Entonces, aquí lo que hago es, con mis herramientas de order flow, delta,
+
+"footprint", incluso bookmap, viendo un poco el tape, el
+
+DOM y demás,
+
+intento sumarme a ese movimiento buscando sacar un pedazo de
+
+este movimiento,
+
+pero sin más. Intentando capitalizar lo que
+
+pueda, intentando aprovecharme de ese momentum que es
+
+obvio que está habiendo. Y en el caso bajista es lo mismo.
+
+Tenemos precio bajando. Entonces, aquí lo que queremos, tenemos muy claro que el
+
+precio está siendo controlado por los vendedores en este caso.
+
+Hay mucha agresión vendedora con recompensa.
+
+Estos vendedores están dominando el mercado de forma absoluta y los
+
+compradores además están siendo absorbidos.
+
+Vemos compras
+
+sin resultado, siendo destrozadas por los vendedores.
+
+Delta también dominando, veremos probablemente el CVD, que
+
+también está bajando. Con lo cual, si tenemos un "target" más abajo,
+
+esto viene de un contexto que favorece continuaciones todavía
+
+más bajistas y demás, y vemos ese momentum,
+
+¿qué podemos hacer? Ver dónde ha habido
+
+la última zona de
+
+absorción por parte de compradores que han sido absorbidos por vendedores
+
+pasivos,
+
+y ahí donde ha habido la última agresión.
+
+Entonces, ahí podemos sumarnos,
+
+incluso en el "retest" de esa agresión, con el "stop loss",
+
+realmente así de justo, por encima de la agresión o de los
+
+compradores, dependiendo un poco de nuestra aversión al riesgo,
+
+buscando precios más bajos. Aquí de nuevo, lo que buscamos es un movimiento rápido,
+
+intentando aprovecharnos de ese momentum con el que viene bajando el
+
+precio y salirnos rapidito.
+
+Esa es la idea, es un "trade" de momentum, "momentum continuation".
+
+Vamos a por el siguiente modelo de entrada, número nueve, que es el "initial
+
+balance reject and absorption".
+
+Este modo de entrada es muy similar al "value area high", "value area low",
+
+rechazo y absorción, si recordáis, de los primeros que hemos mencionado.
+
+Básicamente, la diferencia es que en lugar de fijarnos tanto en el "value area
+
+high" o "value area low" de la sesión o del rango que estamos viendo,
+
+nos vamos a fijar en el "initial balance".
+
+Recordad que es el rango de los primeros 60 minutos de la apertura.
+
+Entonces, muchas veces el precio reacciona muy
+
+bien a esas zonas. Al "initial balance high", que
+
+sería esto de aquí en este caso.
+
+Esto sería el "initial balance high", este sería "initial balance
+
+low", de 9:30 a 10:30.
+
+Entonces, vemos cuando el precio se acerca a esa zona, cuál
+
+es la reacción o la percepción que está habiendo por parte de los
+
+participantes del mercado. Si vemos que este máximo no está
+
+siendo respetado, o
+
+no está siendo aceptado, es muy probable que veamos
+
+movimientos hacia el mínimo de ese
+
+balance, el "initial balance". Entonces, aquí lo que queremos ver
+
+es compradores apretando muy fuerte con "big trades",
+
+CVD también subiendo muy fuerte.
+
+Sin embargo, el precio es incapaz de hacer nuevos
+
+máximos o hace nuevos máximos pero sin aceptarlos,
+
+y de nuevo reingresa el precio dentro de
+
+ese "initial balance range",
+
+entrando agresión vendedora.
+
+Entonces, aquí buscaremos entrada en corto, con el "stop loss" aquí arriba,
+
+buscando quizá el "initial balance low", o quizá algún mínimo que veamos,
+
+o alguna zona donde ha habido un delta fuerte,
+
+podríamos
+
+valorar salirnos ahí, donde ha habido cierta agresión compradora,
+
+porque quizá el precio, de aquí, vuelve a intentarlo.
+
+Eso es lo que vamos a buscar. En el caso opuesto, más de lo
+
+mismoTenemos el rango de 9:30 a 10:30.
+
+En este caso, el precio intenta hacer nuevos mínimos,
+
+pero no es capaz de hacerlo
+
+y se ve rechazado en esa zona. Aquí vemos grandes ventas,
+
+CVD cayendo en picado y delta
+
+negativo. También observamos que empieza a haber agresión
+
+por parte de los compradores, delta, big trades y CVD.
+
+Aquí buscaremos una compra con stop loss debajo, buscando
+
+precios más altos.
+
+Sencillo, ¿no? Vamos a por el siguiente modelo, que es el número 10,
+
+una variación del anterior: el initial balance
+
+breakout y continuación.
+
+Esto, en lugar de como habíamos visto con el value area high y value area low,
+
+donde el precio podía ser rechazado o bien aceptado y luego buscar continuaciones,
+
+aquí es lo mismo. La diferencia
+
+es que nos basamos en el rango del initial balance.
+
+En este caso, vemos que el precio sí es capaz de hacer
+
+nuevos mínimos, a diferencia del anterior, y vemos cierta
+
+aceptación en cuanto a
+
+tiempo y volumen. Con esto me refiero a que los
+
+vendedores van a estar entrando aquí en venta fuerte,
+
+con recompensa; el precio les está dando la razón y
+
+probablemente veremos compradores
+
+en una fase de
+
+consolidación o de parada en ese movimiento bajista, y veremos
+
+el CVD subiendo muy fuerte. Sin embargo, vemos el precio algo tal que así,
+
+retesteando esa agresión vendedora.
+
+Ya sabemos que a la mínima que el CVD se venga para abajo,
+
+entrará agresión bajista y trataremos de buscar precios más bajos.
+
+Luego tenemos el initial balance breakout
+
+hacia arriba. Cuando
+
+los compradores están tomando el control, logran
+
+hacer nuevos máximos y aceptar
+
+que el precio está alcanzándolos.
+
+Veremos cómo en el retest a
+
+ese initial balance high empiezan a entrar vendedores, tenemos
+
+CVD bajando
+
+y a la mínima que entre agresión, ya sabéis lo que va a pasar: el precio va a
+
+subir.
+
+Vamos a por los últimos dos modelos, que son los basados en la apertura, que
+
+son, por un lado, el gap fill,
+
+un gap en RTH. A esto nos referimos cuando tenemos
+
+el cierre del día anterior
+
+en RTH y la apertura aquí arriba. Tenemos este gap de aquí.
+
+En este caso, lo que buscaremos es ir a rellenar el gap.
+
+Vamos a buscar una operación en contra del gap
+
+e intentar rellenarlo. Buscaremos una
+
+dirección opuesta a la dirección del gap.
+
+Un gap alcista es donde el precio abre más arriba que el
+
+cierre del día anterior o de la sesión anterior.
+
+En
+
+cambio, en este caso, si vemos
+
+cierta agresión por parte de los vendedores,
+
+quizá estamos también en una zona clave.
+
+Sabemos un low volume node o
+
+el value area high de la sesión anterior de Londres podría
+
+ser. Si vemos que hay cierto interés en
+
+ver
+
+precios más bajos, buscaremos sumarnos a ese movimiento intentando
+
+rellenar el gap, por lo menos parcialmente.
+
+Hay que tener en cuenta que estamos un poco en contra de
+
+la dirección
+
+mayor. Estamos rellenando ese gap para, probablemente,
+
+continuar subiendo.
+
+En el caso opuesto es lo mismo. Tenemos que el precio nos cierra aquí
+
+arriba y en la apertura de la sesión nos abre aquí
+
+abajo, con lo cual nos deja este gap.
+
+Si tenemos cierto contexto aquí y vemos que los
+
+vendedores, en este caso,
+
+están haciendo mucho esfuerzo, quizá tenemos también el CVD bajando mucho
+
+y vemos que están quedando atrapados.
+
+Tenemos grandes bits en el bookmap y también
+
+big trades compradores, delta que empieza a ser
+
+positivo. Tenemos también quizá un delta flip, donde el delta pasa de negativo a
+
+positivo, podemos buscar una compra para rellenar este
+
+gap, por lo menos parcialmente, porque lo normal, o
+
+el siguiente modelo, de hecho, es que aquí veamos continuaciones.
+
+Pero si tenemos esa información, donde estamos viendo exactamente quién está
+
+agrediendo, qué órdenes están entrando, con qué tamaño,
+
+quién está siendo atrapado, podemos también aprovecharnos de estos
+
+movimientos si entendemos cómo se mueve el mercado y cuál es el
+
+contexto.
+
+Como ya os he dicho, el siguiente modelo de entrada, el último, es el número 12,
+
+el gap and go.
+
+Es cuando tenemos lo mismo: un gap, cierre del día anterior, apertura de la sesión
+
+aquí arriba.
+
+Nuestro contexto es alcista. Aquí es donde entra en
+
+juego el contexto. Recordad: contexto, zona, confirmación.
+
+El contexto aquí podría ser gap alcista, con lo cual nuestra predisposición es
+
+buscar compras si vemos que realmente hay agresión, porque
+
+también puede ser que el precio rellene el gap y no solo lo rellene, sino que
+
+luego veamos precios más bajos. Es que al final nunca tenemos la certeza y por
+
+eso utilizamos order flow, porque tenemos
+
+acceso a esa información y podemos ver qué ocurre, y podemos
+
+tomar un
+
+bando en el que creemos que va a haber una mayor probabilidad de que el precio
+
+vaya hacia ese lado.
+
+En
+
+este caso, lo que buscaremos es más bien continuar esa
+
+tendencia o ir a favor de ese gap, en este caso alcista.
+
+Lo que buscaremos aquí es
+
+que en la apertura veamos rápidamente un intento de ir a
+
+rellenar ese gapAunque sea parcialmente, veremos grandes ventas,
+
+pero veremos que los compradores rápidamente toman el control.
+
+Delta, ya sabéis, CVD. Aquí podemos tener también el CVD bajando,
+
+delta positivo, footprint y demás, y podemos buscar una entrada en compra,
+
+stops debajo de los big trades, buscando precios más altos.
+
+Lo mismo en el caso opuesto.
+
+Tenemos el cierre del día anterior aquí arriba, tenemos la
+
+apertura de la sesión actual aquí abajo, con lo cual ya tenemos una predisposición,
+
+en principio, bajista por el contexto.
+
+Buscaremos
+
+ver cuál está siendo la interacción entre compradores y vendedores, agresivos y
+
+pasivos. Aquí nos interesaría, si queremos buscar ventas, ver
+
+compradores que están
+
+tratando de empujar el precio,
+
+sin embargo, no tienen demasiado efecto y luego empiezan a entrar ventas.
+
+Aunque parezca que inicialmente se nos puede
+
+escapar, podemos esperar a un retesteo de esa
+
+agresión,
+
+entrar
+
+en la agresión vendedora con los stops por encima, buscando precios más bajos.
+
+Ese sería nuestro modelo número 12, "Gap and Go".
+
+Con esto tenemos ya todos los modelos
+
+que hemos hablado en esta "Adrianus
+
+Playbook".
+
+Ya habréis visto
+
+que siempre estamos buscando lo mismo.
+
+Es importante darse cuenta de eso, de que son 12 modelos, pero
+
+realmente siempre es lo mismo.
+
+Entonces, ¿por qué hay 12 modelos?
+
+Porque distinguimos un poquito entre si nos basamos en el
+
+perfil de volumen o nos basamos quizá un poquito más en
+
+un rango, como un "initial balance", buscamos más bien una continuación o estamos
+
+buscando quizá más bien rechazos en los extremos porque estamos en un mercado
+
+balanceado, buscamos quizá rellenar el gap,
+
+nos basamos quizás en los "low volume nodes" o en los "high volume nodes",
+
+"VWAP". Va a depender mucho de exactamente dónde ocurre.
+
+Recordad ese concepto del "context,
+
+location and confirmation",
+
+contexto, zona, confirmación.
+
+La diferencia en este caso
+
+realmente es la zona. Pero la confirmación
+
+siempre es absorción y agresión. Quién está siendo
+
+absorbido. Ahí donde hay dolor,
+
+hay beneficio. Recordad, eso lo decía mucho Carmen Rosato.
+
+Ahí donde hay traders que están siendo atrapados, están siendo
+
+absorbidos, es donde probablemente va a haber un mayor
+
+"risk reward".
+
+Es donde un mayor ratio riesgo-beneficio vamos a poder encontrar.
+
+Esos son los 12 modelos de entrada.
+
+Espero que os puedan ser de ayuda.
+
+
+--- FIN: 6.1 - Mis 12 Modelos de Entrada con Order Flow.txt ---
+

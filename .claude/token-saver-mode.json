@@ -1,0 +1,32 @@
+{
+  "name": "Token Saver Mode",
+  "description": "Modo de ahorro máximo de tokens usando análisis local previo",
+  "version": "1.0.0",
+  "enabled": true,
+  "workflow": {
+    "step1": "Usuario describe la tarea",
+    "step2": "Análisis local con Qwen Obrero (preprocessor.js)",
+    "step3": "Generación de brief estructurado",
+    "step4": "Generación de prompt optimizado para Kimi/Claude",
+    "step5": "Usuario pega el prompt en la conversación cloud"
+  },
+  "commands": {
+    "analyze": ".claude\\analyze-issue \"descripción de la tarea\"",
+    "full": "node .claude\\token-saver.js --task \"descripción\"",
+    "ultra": "node .claude\\token-saver.js --task \"descripción\" --mode ultra"
+  },
+  "estimated_savings": {
+    "standard_mode": "70-75%",
+    "ultra_mode": "80-85%"
+  },
+  "requirements": {
+    "ollama": "must be running",
+    "model": "qwen-obrero",
+    "gpu": "RTX 4060 Ti or equivalent"
+  },
+  "notes": [
+    "El análisis local toma 30-60 segundos dependiendo del tamaño del proyecto",
+    "Los briefs se guardan automáticamente en .claude/briefs/",
+    "El prompt optimizado se copia automáticamente al portapapeles (Windows)"
+  ]
+}

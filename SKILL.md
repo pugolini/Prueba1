@@ -16,10 +16,12 @@ El equipo utiliza una carpeta oculta en la raíz del proyecto para comunicarse:
 4. **Marketer**: Creación de marca, logos, copywriting y diseño de landing pages.
 5. **Investigador**: Búsqueda de información, documentación y análisis de mercado.
 6. **Revisor (Devil's Advocate)**: Busca fallos, bugs y problemas de seguridad.
-7. **Obrero (Local)**: Modelo de bajo coste (Ollama) para tareas repetitivas, boilerplate y tests.
+7. **Obrero (Local)**: Modelo de bajo coste (**qwen-obrero**) optimizado para una RTX 4060 Ti (16k ctx).
+        - **Nuevos Trabajos**: Analista de Consistencia, Fábrica de Boilerplate, Filtro de Logs y Sincronizador de Documentación.
+    - **REGLA DE ORO**: El Obrero **nunca** persiste código directamente en el filesystem. Genera borradores que el Arquitecto debe revisar y aprobar antes de guardar.
 
 
-## Protocolo de Orquestación Avanzada
+    ## Protocolo de Orquestación Avanzada
 
 ### 1. Modo de Planificación (Gatekeeping)
 Antes de realizar cambios significativos, cada agente debe enviar un **Plan de Acción** al buzón de Pugobot.
@@ -28,6 +30,7 @@ Antes de realizar cambios significativos, cada agente debe enviar un **Plan de A
 ### 2. Mensajería y Difusión (Broadcast)
 - **Mensaje Directo**: Coordinación 1 a 1 entre especialistas.
 - **Broadcast**: Pugobot puede escribir en `broadcast.msg` para dar nuevas directrices a todo el equipo simultáneamente.
+- **Idioma Oficial**: Toda comunicación interna entre agentes (mensajes, comentarios de código, documentación técnica) debe realizarse en **español**.
 
 ### 3. Sincronización de Tareas y Dependencias
 - Las tareas en `tasks.json` pueden tener una lista de `dependencies`. Una IA no debe reclamar una tarea si sus dependencias no están en estado `COMPLETED`.
@@ -35,8 +38,8 @@ Antes de realizar cambios significativos, cada agente debe enviar un **Plan de A
 ### 4. Enrutamiento Híbrido (Cost Optimization)
 Para maximizar la eficiencia y ahorrar tokens:
 - **Tareas de Arquitectura**: Siempre asignadas a modelos en la nube (Claude/Gemini).
-- **Tareas de "Fuerza Bruta"**: (Boilerplate, Tests Unitarios, Documentación extensa) -> Asignadas al **Obrero**.
-- El Obrero debe ejecutarse localmente (e.g., `ollama run qwen-obrero`).
+- **Tareas de "Fuerza Bruta" y Análisis Local**: Boilerplate, Tests, Documentación extensa, y **Resumen de Logs de error**.
+- El Obrero debe ejecutarse localmente usando el modelo personalizado: `ollama run qwen-obrero`.
 
 ## Reglas Críticas
 - NUNCA editar un archivo si existe un .lock activo en `.antigravity/team/locks/`.

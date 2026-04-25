@@ -1,14 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useMemo } from 'react'; // PUGOBOT-SYNC-V14.2.1
 import { createChart, ColorType, ISeriesApi, Time, LineStyle, IChartApi, ISeriesPrimitive } from 'lightweight-charts';
-import { useStore } from '../../store/useStore';
+import { useStore, BigTrade } from '../../store/useStore';
+import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
+import { DiamondPrimitive } from './plugins/DiamondPrimitive';
+import { OrderFlowAnalyzer } from '../../engine/orderflow/OrderFlowAnalyzer';
 import axios from 'axios';
 import OrderTicket from '../Sidebar/OrderTicket';
 import { executeVortexJS } from '../../engine/vortexEngine';
+import { FootprintChart } from '../footprint/FootprintChart';
+import { StorageManager, Tick } from '../../engine/footprint/StorageManager';
+import { POCEngine } from '../../engine/footprint/POCEngine';
 import FootprintOverlay from './FootprintOverlay';
 import OrderFlowStrategiesOverlay from './OrderFlowStrategiesOverlay';
 import { BigTradesOverlay } from './BigTradesOverlay';
 import { HeatmapOverlay } from './BookmapOverlay';
 import TradingOverlay from './TradingOverlay';
+import SessionZonesOverlay from './SessionZonesOverlay';
 import PositionsPanel from './PositionsPanel';
 import { TrendlinePrimitive } from './plugins/TrendlinePrimitive';
 import { RectanglePrimitive } from './plugins/RectanglePrimitive';
@@ -18,42 +26,101 @@ import { AnchoredVwapPrimitive } from './plugins/AnchoredVwapPrimitive';
 
 const ChartComponent: React.FC = () => {
     const chartContainerRef = useRef<HTMLDivElement>(null);
+    const subChartContainerRef = useRef<HTMLDivElement>(null);
     const chartRef = useRef<IChartApi | null>(null);
+    const subChartRef = useRef<IChartApi | null>(null);
     const seriesRef = useRef<ISeriesApi<"Candlestick"> | null>(null);
+    const subSeriesRef = useRef<ISeriesApi<"Line"> | null>(null);
+    const diamondPrimitiveRef = useRef<DiamondPrimitive | null>(null);
+    const analyzerRef = useRef<OrderFlowAnalyzer>(new OrderFlowAnalyzer(0.25));
+    const lastPriceRef = useRef<number>(0); 
+    const lastAggressorRef = useRef<'bid' | 'ask'>('ask');
+    const isCalibratedRef = useRef(false);
     const pineSeriesRef = useRef<{ [key: string]: ISeriesApi<'Line'>[] }>({});
-    const drawingsRef = useRef<Record<string, any>>({}); // id -> Primitive instance (including AVWAPs)
+    const drawingsRef = useRef<Record<string, any>>({}); 
     const tempDrawingRef = useRef<{ id: string, type: string, points: any[], plugin: any } | null>(null);
+    const pocEngineRef = useRef<POCEngine>(new POCEngine());
+    const deltaMarkersPersistRef = useRef<Map<number, any>>(new Map());
+    const lastUpdateRef = useRef<number>(0);
+    const lastDataLengthRef = useRef<number>(0);
+    const priceLinesRef = useRef<Record<string, any[]>>({});
+    const [draggingLine, setDraggingLine] = useState<{ ticket: number, type: string, isOrder: boolean } | null>(null);
+
+    // 📏 Estado de Paneles (Resizable) e Interfaz Adaptativa
+    const [mainPaneHeight, setMainPaneHeight] = useState(70);
+    const [isResizing, setIsResizing] = useState(false);
+    const [showDetailedMarkers, setShowDetailedMarkers] = useState(true);
+
+    const symbol         = useStore(s => s.symbol);
+    const timeframe      = useStore(s => s.timeframe);
+    const theme          = useStore(s => s.theme);
+    const activeTool     = useStore(s => s.activeTool);
+    const serverOffset   = useStore(s => s.serverOffset);
+    const chartRange     = useStore(s => s.chartRange);
+    
+    // Sincronización optimizada: Solo re-renderizar cuando cambia la LONGITUD (nueva vela),
+    // no por cada cambio de precio (update de la última vela).
+    const dataLength     = useStore(s => s.data.length);
+    const dataRef        = useRef<Bar[]>(useStore.getState().data);
+    const isFootprintEnabled     = useStore(s => s.isFootprintEnabled);
+    const isOrderTicketOpen      = useStore(s => s.isOrderTicketOpen);
+    const positions              = useStore(s => s.positions);
+    const pendingOrders          = useStore(s => s.pendingOrders);
+    const lastTickPrice          = useStore(s => s.lastTickPrice);
+    const defaultLot             = useStore(s => s.defaultLot);
+    const pineIndicators         = useStore(s => s.pineIndicators);
+    const selectedDrawingId      = useStore(s => s.selectedDrawingId);
+    const selectedAnchoredVwapId = useStore(s => s.selectedAnchoredVwapId);
+    const dashboardData          = useStore(s => s.dashboardData);
+    const drawingsBySymbol       = useStore(s => s.drawingsBySymbol);
+    const anchoredVwapsBySymbol  = useStore(s => s.anchoredVwapsBySymbol);
+    const footprintData          = useStore(s => s.footprintData);
+    const indicators             = useStore(s => s.indicators);
+    const isLimitMode            = useStore(s => s.isLimitMode);
+    const pendingLimitPrice      = useStore(s => s.pendingLimitPrice);
+    const isPendingLimitDragged  = useStore(s => s.isPendingLimitDragged);
+    const strategySignals        = useStore(s => s.strategySignals);
 
     const {
-        symbol, timeframe, setData, data,
-        indicators, pineIndicators, activeTool, isOrderTicketOpen,
-        serverOffset, theme, chartRange, setChartRange, isFootprintEnabled,
-        positions, pendingOrders, fetchTradingStatus, modifyTradingOrder, closeTradingPosition,
-        lastTickPrice, defaultLot, setDefaultLot,
-        isLimitMode, pendingLimitPrice, setPendingLimitPrice, isPendingLimitDragged,
-        drawingsBySymbol, anchoredVwapsBySymbol, addAnchoredVwap, removeAnchoredVwap, updateAnchoredVwap, setActiveTool,
-        selectedAnchoredVwapId, setSelectedAnchoredVwapId,
-        addDrawing, removeDrawing, updateDrawing, selectedDrawingId, setSelectedDrawingId
-    } = useStore();
+        setData, setChartRange, setDefaultLot, setActiveTool,
+        setSelectedDrawingId, setSelectedAnchoredVwapId,
+        addDrawing, removeDrawing, updateDrawing,
+        addAnchoredVwap, removeAnchoredVwap, updateAnchoredVwap,
+        fetchTradingStatus, modifyTradingOrder, closeTradingPosition,
+        setDashboardData, setIsLoadingFootprint,
+        injectHistoricalFootprint, setPendingLimitPrice
+    } = useStore(s => ({
+        setData: s.setData, setChartRange: s.setChartRange, setDefaultLot: s.setDefaultLot,
+        setActiveTool: s.setActiveTool, setSelectedDrawingId: s.setSelectedDrawingId,
+        setSelectedAnchoredVwapId: s.setSelectedAnchoredVwapId,
+        addDrawing: s.addDrawing, removeDrawing: s.removeDrawing, updateDrawing: s.updateDrawing,
+        addAnchoredVwap: s.addAnchoredVwap, removeAnchoredVwap: s.removeAnchoredVwap,
+        updateAnchoredVwap: s.updateAnchoredVwap,
+        fetchTradingStatus: s.fetchTradingStatus,
+        modifyTradingOrder: s.modifyTradingOrder,
+        closeTradingPosition: s.closeTradingPosition,
+        setDashboardData: s.setDashboardData,
+        setIsLoadingFootprint: s.setIsLoadingFootprint,
+        injectHistoricalFootprint: s.injectHistoricalFootprint,
+        setPendingLimitPrice: s.setPendingLimitPrice
+    }), shallow);
 
-    const drawings = drawingsBySymbol[symbol] || [];
-    const anchoredVwaps = anchoredVwapsBySymbol[symbol] || [];
-
-    const [dashboardData, setDashboardData] = useState<Record<string, string>>({});
-    const priceLinesRef = useRef<{ [ticket: string]: any[] }>({}); // ticket -> [entry, sl, tp] lines
-    const [draggingLine, setDraggingLine] = useState<{ ticket: number, type: 'price' | 'sl' | 'tp', isOrder: boolean } | null>(null);
-
+    const currentDrawings = useMemo(() => drawingsBySymbol[symbol] || [], [drawingsBySymbol, symbol]);
+    const currentAnchoredVwaps = useMemo(() => anchoredVwapsBySymbol[symbol] || [], [anchoredVwapsBySymbol, symbol]);
 
     // 1. Initial Chart & Series Setup
     useEffect(() => {
-        if (!chartContainerRef.current) return;
+        if (!chartContainerRef.current || !subChartContainerRef.current) return;
 
         const isDark = theme === 'dark';
-        const bgColor = isDark ? '#0a0e15' : '#ffffff';
-        const textColor = isDark ? '#c3c5d8' : '#6c757d';
-        const gridColor = isDark ? 'rgba(43, 46, 56, 0.3)' : 'rgba(0, 0, 0, 0.06)';
-        const borderColor = isDark ? 'rgba(43, 46, 56, 0.5)' : 'rgba(0, 0, 0, 0.1)';
+        const bgColor = '#999999'; // Deepcharts Neutral Gray
+        const textColor = '#000000'; // Contrast for gray background
+        const gridColor = 'rgba(0, 0, 0, 0.08)'; // Subtle dark grid
+        const borderColor = 'rgba(0, 0, 0, 0.15)'; 
 
+        // ═══════════════════════════════════════════════════════
+        // CHART PRINCIPAL (VELAS)
+        // ═══════════════════════════════════════════════════════
         const chart = createChart(chartContainerRef.current, {
             layout: {
                 background: { type: ColorType.Solid, color: bgColor },
@@ -61,192 +128,309 @@ const ChartComponent: React.FC = () => {
                 fontSize: 11,
                 fontFamily: "'Inter', sans-serif",
             },
+            localization: {
+                locale: 'es-ES',
+                timeFormatter: (timestamp: number) => {
+                    return new Intl.DateTimeFormat('es-ES', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZone: 'Europe/Madrid'
+                    }).format(new Date(timestamp * 1000));
+                },
+            },
             grid: {
                 vertLines: { color: gridColor, style: LineStyle.SparseDotted },
                 horzLines: { color: gridColor, style: LineStyle.SparseDotted },
             },
             crosshair: {
                 mode: 1,
-                vertLine: { width: 1, color: '#2962ff', style: LineStyle.LargeDashed, labelBackgroundColor: '#2962ff' },
-                horzLine: { width: 1, color: '#2962ff', style: LineStyle.LargeDashed, labelBackgroundColor: '#2962ff' },
+                vertLine: { width: 1, color: '#212121', style: LineStyle.LargeDashed, labelBackgroundColor: '#212121' },
+                horzLine: { width: 1, color: '#212121', style: LineStyle.LargeDashed, labelBackgroundColor: '#212121' },
             },
             timeScale: {
                 borderColor: borderColor,
                 timeVisible: true,
                 secondsVisible: false,
-                rightOffset: 15, // Espacio para dibujo futuro
+                rightOffset: 15,
                 barSpacing: 6,
                 minBarSpacing: 0.5,
+                tickMarkFormatter: (timestamp: number) => {
+                    return new Intl.DateTimeFormat('es-ES', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false,
+                        timeZone: 'Europe/Madrid'
+                    }).format(new Date(timestamp * 1000));
+                },
             },
             rightPriceScale: {
                 borderColor: borderColor,
-            },
-        });
-
-        const candlestickSeries = chart.addCandlestickSeries({
-            upColor: '#089981',
-            downColor: '#f23645',
-            borderVisible: false,
-            wickUpColor: '#089981',
-            wickDownColor: '#f23645',
-            lastValueVisible: false, // 🚀 Fusión Nativa: Ocultamos la nativa para usar la personalizada con timer
-        });
-
-        chart.applyOptions({
-            handleScroll: true,
-            handleScale: true,
-            rightPriceScale: {
                 autoScale: true,
-                borderVisible: true,
-                borderColor: theme === 'dark' ? '#2B2B43' : '#D6DCDE',
-                scaleMargins: {
-                    top: 0.1,
-                    bottom: 0.1,
-                },
-                alignLabels: true,
+                scaleMargins: { top: 0.1, bottom: 0.1 },
             },
         });
+
+        const series = chart.addCandlestickSeries({
+            upColor: '#757575',   // Gris más claro (Bull)
+            downColor: '#000000', // Negro (Bear)
+            borderVisible: true,
+            borderColor: '#000000',
+            borderUpColor: '#000000',
+            borderDownColor: '#000000',
+            wickVisible: true,
+            wickColor: '#000000',
+            wickUpColor: '#000000',
+            wickDownColor: '#000000',
+            priceLineColor: '#757575', // Etiqueta de precio gris
+            lastValueVisible: true,
+        });
+        
+        const diamondPrimitive = new DiamondPrimitive();
+        series.attachPrimitive(diamondPrimitive);
+        diamondPrimitiveRef.current = diamondPrimitive;
 
         chartRef.current = chart;
-        seriesRef.current = candlestickSeries;
+        seriesRef.current = series;
 
-        // 🟢 Resize Handling
+        // ═══════════════════════════════════════════════════════
+        // CHART SECUNDARIO (CVD / INDICADORES)
+        // ═══════════════════════════════════════════════════════
+        const subChart = createChart(subChartContainerRef.current, {
+            layout: {
+                background: { type: ColorType.Solid, color: bgColor },
+                textColor: textColor,
+                fontSize: 11,
+            },
+            localization: {
+                locale: 'es-ES',
+                timeFormatter: (timestamp: number) => {
+                    return new Intl.DateTimeFormat('es-ES', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false,
+                        timeZone: 'Europe/Madrid'
+                    }).format(new Date(timestamp * 1000));
+                },
+            },
+            grid: {
+                vertLines: { color: gridColor, style: LineStyle.SparseDotted },
+                horzLines: { color: gridColor, style: LineStyle.SparseDotted },
+            },
+            timeScale: {
+                visible: false, // El tiempo lo marca el de arriba
+            },
+            rightPriceScale: {
+                borderColor: borderColor,
+                autoScale: true,
+                scaleMargins: { top: 0.1, bottom: 0.1 },
+            }
+        });
+        subChartRef.current = subChart;
+
+        // Inicializar serie para el sub-gráfico (CVD / Esqueleto Sincro)
+        const subSeries = subChart.addLineSeries({
+            color: '#2962ff',
+            lineWidth: 2,
+            priceScaleId: 'right',
+        });
+        subSeriesRef.current = subSeries;
+
+        // ═══════════════════════════════════════════════════════
+        // SINCRONIZACIÓN MILIMÉTRICA
+        // ═══════════════════════════════════════════════════════
+        
+        let isSyncing = false;
+
+        // Sincronización MILIMÉTRICA por Rango Lógico (Guardia de Seguridad Pugobot v3)
+        // Usar LogicalRange evita el jitter y el zoom infinito en gráficos multi-panel.
+        chart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
+            if (isSyncing || !range) return;
+            try {
+                isSyncing = true;
+                subChart.timeScale().setVisibleLogicalRange(range);
+                
+                // --- DETECTOR DE ZOOM PARA DELTAS --- 
+                const spacing = chart.timeScale().options().barSpacing || 0;
+                setShowDetailedMarkers(prev => {
+                    if (spacing < 6 && prev) return false;   // Ocultar solo si está muy comprimido
+                    if (spacing >= 8 && !prev) return true;  // Mostrar si hay espacio razonable
+                    return prev;
+                });
+
+            } catch (e) {
+                // Recover
+            } finally {
+                isSyncing = false;
+            }
+        });
+
+        subChart.timeScale().subscribeVisibleLogicalRangeChange((range) => {
+            if (isSyncing || !range || !chartRef.current) return;
+            try {
+                isSyncing = true;
+                chart.timeScale().setVisibleLogicalRange(range);
+            } catch (e) {
+            } finally {
+                isSyncing = false;
+            }
+        });
+
+        // Sincronización de Crosshair
+        chart.subscribeCrosshairMove((param) => {
+            if (isSyncing) return;
+            isSyncing = true;
+            if (!param.point) {
+                subChart.setCrosshairPosition(null, null, null as any);
+            } else {
+                subChart.setCrosshairPosition(0, param.time as any, null as any);
+            }
+            isSyncing = false;
+        });
+
+        subChart.subscribeCrosshairMove((param) => {
+            if (isSyncing) return;
+            isSyncing = true;
+            if (!param.point) {
+                chart.setCrosshairPosition(null, null, null as any);
+            } else {
+                chart.setCrosshairPosition(0, param.time as any, null as any);
+            }
+            isSyncing = false;
+        });
+
+        // 📌 MOTOR DE MARCADORES DELTA (Normalización de Timestamps)
+        const updateDeltaMarkers = (timestamp: number, delta: number) => {
+            if (!seriesRef.current) return;
+            
+            const state = useStore.getState();
+            const serverOffset = state.serverOffset || 0;
+            const timeframeStr = state.timeframe || '1m';
+            const tfMatch = timeframeStr.match(/(\d+)([mhdw])/);
+            let tfSeconds = 60;
+            if (tfMatch) {
+                const val = parseInt(tfMatch[1]);
+                const unit = tfMatch[2];
+                if (unit === 'm') tfSeconds = val * 60;
+                else if (unit === 'h') tfSeconds = val * 3600;
+                else if (unit === 'd') tfSeconds = val * 86400;
+            }
+
+            const rawSec = timestamp > 2000000000 ? Math.floor(timestamp / 1000) : Math.floor(timestamp);
+            
+            // Bucket Time: Alineamos al inicio del timeframe (ej. cada minuto exacto)
+            const bucketTime = Math.floor(rawSec / tfSeconds) * tfSeconds;
+
+            const isPos = delta >= 0;
+            const deltaStr = (isPos ? '+' : '') + Math.round(delta).toLocaleString();
+
+            deltaMarkersPersistRef.current.set(bucketTime, {
+                time: bucketTime as Time,
+                position: 'belowBar',
+                color: isPos ? '#10B981' : '#EF4444',
+                shape: 'circle', 
+                text: deltaStr,
+                size: 0 
+            });
+        };
+
+        (chart as any)._updateDelta = updateDeltaMarkers;
+        (chart as any)._clearDeltas = () => {
+            deltaMarkersPersistRef.current.clear();
+            seriesRef.current?.setMarkers([]);
+        };
+
+        // Resize Handling
         const handleResize = () => {
             if (chartContainerRef.current && chart) {
-                chart.applyOptions({ 
-                    width: chartContainerRef.current.clientWidth,
-                    height: chartContainerRef.current.clientHeight 
-                });
+                chart.resize(chartContainerRef.current.clientWidth, chartContainerRef.current.clientHeight);
+            }
+            if (subChartContainerRef.current && subChart) {
+                subChart.resize(subChartContainerRef.current.clientWidth, subChartContainerRef.current.clientHeight);
             }
         };
 
         const resizeObserver = new ResizeObserver(() => handleResize());
         resizeObserver.observe(chartContainerRef.current);
+        if (subChartContainerRef.current) resizeObserver.observe(subChartContainerRef.current);
 
-        // 📡 Listen for high-performance resize events from App.tsx
-        const onDirectResize = () => handleResize();
-        window.addEventListener('resize-chart', onDirectResize);
+        window.addEventListener('resize-chart', handleResize);
 
         return () => {
             if (resizeObserver) resizeObserver.disconnect();
-            window.removeEventListener('resize-chart', onDirectResize);
-            if (chartRef.current) {
-                try {
-                    chartRef.current.remove();
-                } catch (e) {
-                    console.warn('[Chart] Error during chart removal:', e);
-                }
-                chartRef.current = null;
-            }
+            window.removeEventListener('resize-chart', handleResize);
+            if (chartRef.current) chartRef.current.remove();
+            if (subChartRef.current) subChartRef.current.remove();
+            chartRef.current = null;
+            seriesRef.current = null;
+            subChartRef.current = null;
+            subSeriesRef.current = null;
+            diamondPrimitiveRef.current = null;
+            subChartRef.current = null;
         };
-
     }, [theme]);
 
-    // 1.5 Auto-Zoom para el Footprint - REMOVED per user request to keep position
-    
-    // 🟢 WebSocket Institutional OrderFlow (dxFeed Mock/Integration)
+    // 📏 Lógica de Redimensionamiento
     useEffect(() => {
-        if (!symbol) return;
-        
-        let socket: WebSocket | null = null;
-        let reconnectTimeout: any = null;
-        let isIntentionallyClosed = false;
-        let connectTimeout: any = null;
+        if (!isResizing) return;
 
-        const connect = () => {
-            if (isIntentionallyClosed) return;
-            console.log(`[OrderFlow] Conectando a ws://127.0.0.1:8005/ws/orderflow/${symbol}`);
-            const ws = new WebSocket(`ws://127.0.0.1:8005/ws/orderflow/${symbol}`);
-            socket = ws;
-
-            ws.onopen = () => console.log("[OrderFlow] Conectado.");
+        const handleMouseMove = (e: MouseEvent) => {
+            if (!chartContainerRef.current?.parentElement) return;
+            const parentRect = chartContainerRef.current.parentElement.getBoundingClientRect();
+            const relativeY = e.clientY - parentRect.top;
+            const newHeight = (relativeY / parentRect.height) * 100;
             
-            ws.onmessage = (event) => {
-                const message = JSON.parse(event.data);
-                
-                // 1. BIG TRADES (Burbujas)
-                if (message.type === 'big_trade') {
-                    useStore.getState().addBigTrade(message);
-                } 
-                // 2. HEATMAP (Liquidación Institucional)
-                else if (message.type === 'heatmap') {
-                    const levels = message.data?.length || 0;
-                    if (levels > 0) {
-                        const state = useStore.getState();
-                        state.updateHeatmap(message.time, message.data);
-                    }
-                }
-                else if (message.type === 'heatmap_history') {
-                    if (message.data && message.data.length > 0) {
-                        const state = useStore.getState();
-                        state.setHeatmapHistory(message.data);
-                    }
-                }
-                // 3. ACTUALIZACIÓN DE VELA (Institucional Rithmic)
-                else if (message.type === 'price_update') {
-                    const state = useStore.getState();
-                    if (state.data.length > 0 && seriesRef.current) {
-                        const lastBar = state.data[state.data.length - 1];
-                        const price = message.price;
-                        
-                        // Solo actualizamos si el símbolo coincide y el tiempo es coherente con la última vela
-                        // Nota: El backend ya maneja el tiempo Unix correcto en rithmic_service
-                        const updatedBar = {
-                            ...lastBar,
-                            high: Math.max(lastBar.high, price),
-                            low: Math.min(lastBar.low, price),
-                            close: price,
-                        };
-                        
-                        // Actualizamos el store y la serie visual (Bypass para máxima fluidez)
-                        state.addBar(updatedBar);
-                        seriesRef.current.update(updatedBar as any);
-                        state.setLastTickPrice(price);
-                    }
-                }
-                // 4. ESTATUS / HEARTBEAT
-                else if (message.type === 'status_update') {
-                    if (message.ping) return; // Ignorar pings silenciosos
-                    if (message.source === 'rithmic') {
-                        useStore.getState().setRithmicConfig({ connected: message.connected });
-                    }
-                }
-            };
-
-            ws.onerror = (err) => console.error("[OrderFlow] Error:", err);
-            
-            ws.onclose = () => {
-                if (isIntentionallyClosed) return;
-                console.warn("[OrderFlow] Desconectado. Reintentando en 3s...");
-                reconnectTimeout = setTimeout(connect, 3000);
-            };
-        };
-
-        connectTimeout = setTimeout(connect, 100);
-
-        return () => {
-            isIntentionallyClosed = true;
-            if (connectTimeout) clearTimeout(connectTimeout);
-            if (reconnectTimeout) clearTimeout(reconnectTimeout);
-            if (socket) {
-                socket.onclose = null;
-                socket.onerror = null;
-                socket.close(1000, "Clean mount unmount");
+            // Límites de seguridad (20% - 80%)
+            if (newHeight > 20 && newHeight < 80) {
+                setMainPaneHeight(newHeight);
             }
         };
-    }, [symbol]);
+
+        const handleMouseUp = () => {
+            setIsResizing(false);
+        };
+
+        window.addEventListener('mousemove', handleMouseMove);
+        window.addEventListener('mouseup', handleMouseUp);
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isResizing]);
+
+    // Activador de resize forzado al cambiar el tamaño de los paneles
+    useEffect(() => {
+        if (chartRef.current && subChartRef.current && chartContainerRef.current && subChartContainerRef.current) {
+            chartRef.current.resize(chartContainerRef.current.clientWidth, chartContainerRef.current.clientHeight);
+            subChartRef.current.resize(subChartContainerRef.current.clientWidth, subChartContainerRef.current.clientHeight);
+        }
+    }, [mainPaneHeight]);
+
+
+    // 🟢 El WebSocket Institucional ahora se maneja de forma consolidada más abajo
+    // para evitar duplicidad en el procesamiento de ticks y deltas.
     
-    // Limpieza de datos cuando el símbolo cambia
     useEffect(() => {
         return () => {
             const state = useStore.getState();
             state.clearOrderFlowData();
-            // Desactivar bookmap al cambiar símbolo — se reactivará automáticamente
-            // cuando lleguen datos L2 del nuevo símbolo (ver handler heatmap arriba)
-            if (state.orderFlowStrategies.bookmap) {
-                state.toggleStrategy('bookmap');
-            }
         };
+    }, [symbol]);
+
+    useEffect(() => {
+        if (seriesRef.current) {
+            // 🧹 LIMPIEZA ATÓMICA DE SERIES (Visual)
+            // Esto mata la "vela fantasma" instantáneamente antes de que llegue el historial.
+            seriesRef.current?.setData([]);
+            subSeriesRef.current?.setData([]);
+            lastPriceRef.current = 0; // Reset memoria de precio
+            
+            console.log(`[Chart] Limpieza visual ejecutada para ${symbol}`);
+        }
+        // Limpiamos referencias de precio para que el primer tick no se compare con el anterior
+        lastPriceRef.current = 0;
     }, [symbol]);
 
     // 🟢 WebSocket de Precios (MT5 Principal)
@@ -255,15 +439,13 @@ const ChartComponent: React.FC = () => {
             const chart = chartRef.current;
             const container = chartContainerRef.current;
             const resize = () => {
-                chart.applyOptions({ 
-                    width: container.clientWidth,
-                    height: container.clientHeight 
-                });
+                chart.resize(container.clientWidth, container.clientHeight);
+                if (subChartRef.current && subChartContainerRef.current) {
+                    subChartRef.current.resize(subChartContainerRef.current.clientWidth, subChartContainerRef.current.clientHeight);
+                }
             };
             resize();
-            // Small delay to ensure CSS transitions have finished
             setTimeout(resize, 50);
-            setTimeout(resize, 150);
             setTimeout(resize, 300);
         }
     }, [isOrderTicketOpen]);
@@ -271,7 +453,7 @@ const ChartComponent: React.FC = () => {
     // 2. Poll Trading Status periodically
     useEffect(() => {
         if (!symbol) return;
-        const interval = setInterval(() => fetchTradingStatus(), 1000);
+        const interval = setInterval(() => fetchTradingStatus(), 3000);
         fetchTradingStatus();
         return () => clearInterval(interval);
     }, [symbol, fetchTradingStatus]);
@@ -333,6 +515,12 @@ const ChartComponent: React.FC = () => {
             if (o.tp > 0) createOrUpdateLine(key, 'tp', o.tp, '#089981', `TP`);
         });
     }, [positions, pendingOrders]);
+    
+    // 5. Native Signal Primitive Engine (V5 Solid)
+    useEffect(() => {
+        if (!diamondPrimitiveRef.current) return;
+        diamondPrimitiveRef.current.setSignals(strategySignals);
+    }, [strategySignals]);
 
     // 5. Drawing Rendering Engine (Reactive with Primitives API)
     useEffect(() => {
@@ -340,7 +528,7 @@ const ChartComponent: React.FC = () => {
         const series = seriesRef.current;
 
         // Limpiar dibujos eliminados
-        const currentIds = drawings.map((d: any) => d.id);
+        const currentIds = currentDrawings.map((d: any) => d.id);
         Object.keys(drawingsRef.current).forEach((id: string) => {
             if (!currentIds.includes(id)) {
                 const plugin = drawingsRef.current[id];
@@ -354,7 +542,7 @@ const ChartComponent: React.FC = () => {
         });
 
         // Dibujar/Actualizar cada dibujo
-        drawings.forEach((d: any) => {
+        currentDrawings.forEach((d: any) => {
             let plugin = drawingsRef.current[d.id];
             
             const isSelected = d.id === selectedDrawingId;
@@ -388,7 +576,7 @@ const ChartComponent: React.FC = () => {
                 plugin.updateAllViews();
             }
         });
-    }, [drawings, selectedDrawingId]);
+    }, [currentDrawings, selectedDrawingId]);
 
     // 4. Drag & Interaction Engine Logic
     useEffect(() => {
@@ -399,18 +587,19 @@ const ChartComponent: React.FC = () => {
 
         // Helper para obtener tiempo (Real o Extrapolado al futuro)
         const getChartTime = (x: number) => {
-            if (!chart || data.length === 0) return null;
+            const currentData = dataRef.current;
+            if (!chart || currentData.length === 0) return null;
             const timeScale = chart.timeScale();
             let t = timeScale.coordinateToTime(x);
             if (t === null) {
                 const logical = timeScale.coordinateToLogical(x);
                 if (logical !== null) {
-                    const lastData = data[data.length - 1];
-                    const lastLogical = data.length - 1;
+                    const lastData = currentData[currentData.length - 1];
+                    const lastLogical = currentData.length - 1;
                     const diff = logical - lastLogical;
                     let interval = 60;
-                    if (data.length >= 2) {
-                        interval = (data[data.length-1].time as number) - (data[data.length-2].time as number);
+                    if (currentData.length >= 2) {
+                        interval = (currentData[currentData.length-1].time as number) - (currentData[currentData.length-2].time as number);
                     }
                     return (lastData.time as number) + (diff * interval);
                 }
@@ -429,7 +618,7 @@ const ChartComponent: React.FC = () => {
 
             // --- Selection Logic (Cursor Mode) ---
             if (activeTool === 'cursor') {
-                const clickedDrawing = drawings.find(d => {
+                const clickedDrawing = currentDrawings.find(d => {
                     const seriesList = drawingsRef.current[d.id];
                     if (!seriesList || d.points.length < 2) return false;
 
@@ -477,12 +666,12 @@ const ChartComponent: React.FC = () => {
                 }
 
                 // AVWAP Selection (Check near anchor)
-                const clickedVwap = (anchoredVwaps || []).find(v => {
+                const clickedVwap = (currentAnchoredVwaps || []).find(v => {
                     const timeScale = chart.timeScale();
                     const xV = timeScale.timeToCoordinate(v.startTime as Time);
                     if (xV === null) return false;
                     
-                    const candle = data.find(d => (d.time as number) === v.startTime);
+                    const candle = dataRef.current.find(d => (d.time as number) === v.startTime);
                     if (!candle) return false;
                     const yV = series.priceToCoordinate(candle.high);
                     if (yV === null) return false;
@@ -523,13 +712,16 @@ const ChartComponent: React.FC = () => {
                     tempDrawingRef.current = { id: tempId, type: activeTool, points: initialPoints, plugin };
                 }
                 
-                chart.applyOptions({ handleScroll: false, handleScale: false });
+                // Solo bloqueamos si realmente empezamos un dibujo
+                if (tempDrawingRef.current) {
+                    chart.applyOptions({ handleScroll: false, handleScale: false });
+                }
                 return;
             }
 
             // --- Anchored VWAP Placement ---
             if (activeTool === 'anchoredVwap') {
-                const index = data.findIndex(d => (d.time as number) >= ts);
+                const index = dataRef.current.findIndex(d => (d.time as number) >= ts);
                 if (index !== -1) {
                     addAnchoredVwap({
                         startTime: ts,
@@ -649,7 +841,7 @@ const ChartComponent: React.FC = () => {
             window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [draggingLine, modifyTradingOrder, activeTool, data, anchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, drawings]);
+    }, [draggingLine, modifyTradingOrder, activeTool, dataLength, currentAnchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, currentDrawings, theme]);
 
     // Control de flujo y recuperación de errores
     const lastFetchTimeRef = useRef<number>(0);
@@ -664,8 +856,8 @@ const ChartComponent: React.FC = () => {
         const fetchFootprint = async (toTimestamp?: number) => {
             const now = Date.now();
             
-            // 1. Throttling: Máximo 1 petición cada 1.5s
-            if (now - lastFetchTimeRef.current < 1500) return;
+            // 1. Throttling: Máximo 1 petición cada 3s (v11.5) para dar aire a Rithmic
+            if (now - lastFetchTimeRef.current < 3000) return;
             
             // 2. Blacklist: Si falló recientemente para este timestamp, abortar
             if (toTimestamp && failedTimestampsRef.current.has(toTimestamp)) {
@@ -679,16 +871,19 @@ const ChartComponent: React.FC = () => {
             lastFetchTimeRef.current = now;
 
             try {
-                console.log(`[Footprint] Fetching history ${toTimestamp ? `before ${toTimestamp}` : 'initial'}...`);
-                const url = `http://127.0.0.1:8005/api/history-footprint/${symbol}?timeframe=${timeframe}&count=80000${toTimestamp ? `&to_timestamp=${toTimestamp}` : ''}`;
-                
-                // Añadimos timeout explícito de 15s para dar aire a MT5
+                const url = `http://127.0.0.1:8000/api/footprint/${symbol}?timeframe=${timeframe}&count=80000${toTimestamp ? `&to_timestamp=${toTimestamp}` : ''}`;
                 const response = await axios.get(url, { timeout: 15000 });
                 
-                if (response.data && Object.keys(response.data).length > 0) {
+                const dataCount = response.data ? Object.keys(response.data).length : 0;
+                console.log(`[Footprint] Recibidos ${dataCount} niveles de historial.`);
+
+                if (dataCount > 0) {
                     useStore.getState().injectHistoricalFootprint(response.data);
-                    // Si tiene éxito, limpiar blacklist para este TS por si acaso
                     if (toTimestamp) failedTimestampsRef.current.delete(toTimestamp);
+                } else if (toTimestamp) {
+                    // Si pedimos datos ANTERIORES a un punto y no vienen nada, es el fin del historial
+                    console.log(`[Footprint] Fin de historial alcanzado en ${toTimestamp}. Blacklisting permanente.`);
+                    failedTimestampsRef.current.add(toTimestamp);
                 }
             } catch (err) {
                 console.error('[Footprint] Error lazy loading:', err);
@@ -701,14 +896,14 @@ const ChartComponent: React.FC = () => {
                 
                 lastFetchTimeRef.current = Date.now() + 2000; 
             } finally {
-                useStore.getState().setIsLoadingFootprint(false);
+                 setIsLoadingFootprint(false);
             }
         };
 
         // Carga inicial
         const currentDataKeys = Object.keys(useStore.getState().footprintData);
         if (currentDataKeys.length === 0) {
-            fetchFootprint();
+            // fetchFootprint(); // B1: Eliminado
         }
 
         const handleVisibleRangeChange = () => {
@@ -731,64 +926,68 @@ const ChartComponent: React.FC = () => {
         return () => timeScale.unsubscribeVisibleTimeRangeChange(handleVisibleRangeChange);
     }, [isFootprintEnabled, symbol, timeframe]);
 
-    // 2. Fetch History when Symbol/TF changes
+    // 2. Inicialización de Datos al Montar (v14.0)
     useEffect(() => {
-        const fetchHistory = async () => {
-            if (!seriesRef.current || !chartRef.current) return;
+        const state = useStore.getState();
+        if (state.symbol && state.data.length === 0) {
+            console.log(`[Chart] 🚀 Disparando carga inicial para ${state.symbol}`);
+            state.fetchHistoricalFootprint();
+        }
+    }, []);
 
-            // REINICIO FORZOSO (AUTO-TOGGLE): Simulamos tu acción manual para
-            // destruir el canvas huérfano y resetear la comunicación puramente.
-            const storeState = useStore.getState();
-            const wasFootprintEnabled = storeState.isFootprintEnabled;
-            if (wasFootprintEnabled) {
-                storeState.setFootprintEnabled(false);
-                storeState.clearFootprint();
-            }
+    // 3. Sincronización Maestra de Datos (v14.2 - Non-Reactive Subscription)
+    useEffect(() => {
+        const unsub = useStore.subscribe(
+            state => state.data,
+            (newData) => {
+                const oldData = dataRef.current;
+                dataRef.current = newData;
 
-            try {
-                const response = await axios.get(`http://127.0.0.1:8005/api/history/${symbol}?timeframe=${timeframe}&count=1000`);
-                
-                const sortedData = response.data
-                    .map((d: any) => ({
-                        time: Number(d.time) as Time,
-                        open: Number(d.open),
-                        high: Number(d.high),
-                        low: Number(d.low),
-                        close: Number(d.close),
-                        volume: Number(d.tick_volume || d.volume || 0),
-                    }))
-                    .sort((a: any, b: any) => (a.time as number) - (b.time as number));
+                if (!seriesRef.current || !newData || newData.length === 0) return;
 
-                const formattedData = sortedData.filter((v: any, i: any, a: any) => 
-                    i === 0 || v.time !== a[i - 1].time
-                );
+                // Detectar si es una carga de historial o cambio de símbolo (cambio masivo de longitud)
+                const isInitialLoad = oldData.length === 0;
+                const isHistoryLoad = Math.abs(newData.length - oldData.length) > 2;
 
-                if (formattedData.length > 0) {
-                    seriesRef.current.setData(formattedData);
-                    setData(formattedData);
-                    chartRef.current.timeScale().fitContent();
+                if (isInitialLoad || isHistoryLoad) {
+                    console.log(`[Chart] 🔄 Carga masiva (v14.2): Actualizando series con ${newData.length} velas`);
+                    seriesRef.current.setData(newData);
+                    
+                    if (subSeriesRef.current) {
+                        subSeriesRef.current.setData(newData.map(d => ({ time: d.time, value: 0 })));
+                    }
 
-                    // TRAS DIBUJAR LAS VELAS EXITOSAMENTE -> REENCENDEMOS EL FOOTPRINT 
-                    // Esto emula al 100% que tú hayas presionado el botón.
-                    if (wasFootprintEnabled) {
-                        setTimeout(() => {
-                            useStore.getState().setFootprintEnabled(true);
-                        }, 200);
+                    if (isInitialLoad || (newData.length > 0 && newData.length < 2000)) {
+                        chartRef.current?.timeScale().fitContent();
                     }
                 }
-            } catch (error) {
-                console.error('[Chart] Error fetch OHLC:', error);
-            }
-        };
+            },
+            { fireImmediately: true }
+        );
 
-        fetchHistory();
+        return unsub;
+    }, []);
+
+
+    // 🔄 LIMPIEZA DE MARCADORES Y CALIBRACIÓN AL CAMBIAR DE SÍMBOLO
+    useEffect(() => {
+        if (!symbol) return;
+        deltaMarkersPersistRef.current.clear();
+        isCalibratedRef.current = false; // Forzar recalibración para el nuevo activo
+        if (chartRef.current) (chartRef.current as any)._clearDeltas?.();
     }, [symbol, timeframe]);
 
 
-    // 3. WebSocket Streaming (Updates Store) - FIX para BTCUSD (Agregación Pro)
+    // 3. WebSocket Streaming con Reconexión Automática Robusta
     useEffect(() => {
         if (!symbol) return;
-        const ws = new WebSocket(`ws://127.0.0.1:8005/ws/prices/${symbol}`);
+        
+        let ws: WebSocket | null = null;
+        let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+        let hasCalibrated = false;
+        let isEffectActive = true;
+        let reconnectAttempt = 0;
+        const MAX_RECONNECT_ATTEMPTS = 10;
         
         const getTimeframeSeconds = (tf: string) => {
             const unit = tf.slice(-1);
@@ -799,91 +998,352 @@ const ChartComponent: React.FC = () => {
             return 60;
         };
 
-        ws.onmessage = (event) => {
-            const message = JSON.parse(event.data);
-            const state = useStore.getState();
-            const timeframeSeconds = getTimeframeSeconds(state.timeframe);
+        // Definir scheduleReconnect primero (será usada por connect)
+        const scheduleReconnect = () => {
+            if (!isEffectActive) return;
+            const delay = Math.min(1000 * Math.pow(2, reconnectAttempt), 30000);
+            console.log(`[WS] Reconectando en ${delay}ms...`);
+            reconnectTimer = setTimeout(() => {
+                if (isEffectActive) connect();
+            }, delay);
+        };
 
-            // 🟢 Manejar tick_burst o heartbeat
-            if ((message.type === 'tick_burst' || message.type === 'heartbeat') && state.data.length > 0) {
-                const lastBar = state.data[state.data.length - 1];
+        const connect = () => {
+            if (!isEffectActive) return;
+            
+            if (reconnectAttempt >= MAX_RECONNECT_ATTEMPTS) {
+                console.error(`[WS] Máximo de reconexiones alcanzado para ${symbol}`);
+                return;
+            }
+            
+            if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) {
+                console.log(`[WS] Ya existe conexión activa para ${symbol}`);
+                return;
+            }
+            
+            try {
+                ws = new WebSocket(`ws://127.0.0.1:8000/ws/orderflow/${symbol}`);
+                reconnectAttempt++;
+                console.log(`[WS] Intentando conectar a ${symbol} (intento ${reconnectAttempt})`);
+            } catch (e) {
+                console.error(`[WS] Error creando WebSocket:`, e);
+                scheduleReconnect();
+                return;
+            }
+
+            ws.onopen = () => {
+                if (!isEffectActive) {
+                    ws?.close();
+                    return;
+                }
+                console.log(`[WS] Open for ${symbol}`);
+                reconnectAttempt = 0;
+            };
+
+            ws.onerror = (err) => {
+                console.error(`[WS] Error for ${symbol}:`, err.type);
+            };
+
+            ws.onclose = (ev) => {
+                console.log(`[WS] Closed for ${symbol} (code=${ev.code}, reason=${ev.reason}, wasClean=${ev.wasClean})`);
+                ws = null;
                 
-                // Determinar precio y tiempo del mensaje (Priorizamos datos del bróker)
-                let price = 0;
-                let messageTimeMs = 0;
-                let rawTicks: any[] = [];
+                if (isEffectActive && (!ev.wasClean || ev.code === 1006)) {
+                    scheduleReconnect();
+                }
+            };
 
-                if (message.type === 'tick_burst') {
-                    rawTicks = message.data;
-                    const lastTick = rawTicks[rawTicks.length - 1];
-                    price = lastTick.price;
-                    messageTimeMs = lastTick.time;
-                } else {
-                    price = message.price;
-                    messageTimeMs = message.time;
+            ws.onmessage = (event) => {
+                if (!isEffectActive) return;
+                
+                let message;
+                try {
+                    message = JSON.parse(event.data);
+                } catch (e) {
+                    console.error('[WS] Error parseando mensaje:', e);
+                    return;
+                }
+                
+                const state = useStore.getState();
+                const timeframeSeconds = getTimeframeSeconds(state.timeframe);
+
+                // 🔄 AUTO-CALIBRACIÓN DINÁMICA (UTC vs Broker Time)
+                if (!hasCalibrated && state.data.length > 0 && message.time) {
+                    const lastBar = state.data[state.data.length - 1];
+                    const barTime = lastBar.time as number;
+                    
+                    const messageSymbol = message.symbol || symbol;
+                    if (messageSymbol !== symbol) return;
+
+                    const tickTimeSec = (message.time > 2000000000 ? Math.floor(message.time / 1000) : message.time);
+                    const expectedBarTime = Math.floor(tickTimeSec / timeframeSeconds) * timeframeSeconds;
+                    
+                    if (!isCalibratedRef.current) {
+                        const calculatedOffset = barTime - expectedBarTime;
+                        console.log(`[TimeSync] Initial Calibration: ${calculatedOffset}s`);
+                        state.setServerOffset(calculatedOffset);
+                        isCalibratedRef.current = true;
+                    }
+                    hasCalibrated = true;
                 }
 
-                if (price <= 0 || messageTimeMs <= 0) return;
-
-                const messageTimeSec = Math.floor(messageTimeMs / 1000);
-                const candleTime = (Math.floor(messageTimeSec / timeframeSeconds) * timeframeSeconds);
-
-                // BLOQUEO DE SEGURIDAD: Solo procesar si el tiempo es >= a la última vela cargada
-                if (candleTime >= (lastBar.time as number)) {
-                    const isNewCandle = candleTime > (lastBar.time as number);
+                // 🟢 Manejar tick_burst, heartbeat o price_update (Rithmic Real-time)
+                if (message.type === 'tick_burst' || message.type === 'heartbeat' || message.type === 'price_update') {
+                    if (message.type === 'price_update') {
+                        console.log(`[WS] price_update recibido: ${message.price}`);
+                    }
                     
+                    let price = 0;
+                    let messageTimeMs = 0;
+                    let rawTicks: any[] = [];
+                    let volume = 0;
+
+                    if (message.type === 'tick_burst') {
+                        rawTicks = message.data;
+                        if (!rawTicks || rawTicks.length === 0) return;
+                        const lastTick = rawTicks[rawTicks.length - 1];
+                        price = lastTick.price;
+                        messageTimeMs = lastTick.time || Date.now();
+                        volume = rawTicks.reduce((acc: number, t: any) => acc + (t.volume || 1), 0);
+                    } else {
+                        price = message.price || message.close;
+                        messageTimeMs = message.time || Date.now();
+                        volume = message.volume || 1;
+                    }
+
+                    if (!price || price <= 0) return;
+
+                    const timeframeSeconds = timeframe.includes('m') ? parseInt(timeframe) * 60 : 3600;
+                    const normalizedMs = messageTimeMs < 2000000000 ? messageTimeMs * 1000 : messageTimeMs;
+                    const tickTimeSec = Math.floor(normalizedMs / 1000);
+                    
+                    // 🔄 AUTO-CALIBRACIÓN DINÁMICA (UTC vs Broker Time)
+                    if (!isCalibratedRef.current && state.data.length > 0) {
+                        const lastBar = state.data[state.data.length - 1];
+                        const barTime = lastBar.time as number;
+                        const expectedBarTime = Math.floor(tickTimeSec / timeframeSeconds) * timeframeSeconds;
+                        
+                        const calculatedOffset = barTime - expectedBarTime;
+                        console.log(`[TimeSync] Initial Calibration: ${calculatedOffset}s`);
+                        state.setServerOffset(calculatedOffset);
+                        isCalibratedRef.current = true;
+                    }
+
+                    const serverOffset = state.serverOffset || 0;
+                    const messageTimeSec = tickTimeSec + serverOffset;
+                    const candleTime = (Math.floor(messageTimeSec / timeframeSeconds) * timeframeSeconds);
+
+                    // Si el gráfico está vacío, creamos la primera vela para que "cobre vida"
+                    if (state.data.length === 0) {
+                        console.log(`[Chart] 🚀 Iniciando gráfico vacío con primer tick: ${price}`);
+                        const firstBar = {
+                            time: candleTime as Time,
+                            open: price, high: price, low: price, close: price, volume: volume || 1
+                        };
+                        state.addBar(firstBar);
+                        seriesRef.current?.setData([firstBar]);
+                        state.setLastTickPrice(price);
+                        return;
+                    }
+
+                    const lastBar = state.data[state.data.length - 1];
+
+                    // 🛡️ PRICE SANITY CHECK
+                    const priceDiff = Math.abs(price - lastBar.close);
+                    if (priceDiff > (lastBar.close * 0.1)) {
+                        console.warn(`[Chart] Ignorado tick outlier: ${price} (Último: ${lastBar.close})`);
+                        return;
+                    }
+
+                    // 🛡️ PROTECCIÓN CONTRA VELAS DEL PASADO (Lightweight Charts Error)
+                    if (candleTime < (lastBar.time as number)) {
+                        // Si el desfase es pequeño (< 2 bars), lo forzamos a la vela actual para no perder el tick
+                        if (Math.abs(candleTime - (lastBar.time as number)) <= timeframeSeconds) {
+                            // Update last bar even if slightly behind
+                        } else {
+                            console.warn(`[Chart] Tick ignorado (tiempo en el pasado): ${candleTime} < ${lastBar.time}`);
+                            return;
+                        }
+                    }
+
+                    // 📦 PROCESAMIENTO DE TICKS (Single o Burst)
+                    let currentOpen = lastBar.open;
+                    let currentHigh = lastBar.high;
+                    let currentLow = lastBar.low;
+                    let currentClose = lastBar.close;
+                    let currentVol = lastBar.volume || 0;
+                    
+                    const isNewCandle = candleTime > (lastBar.time as number);
+                    if (isNewCandle) {
+                        currentOpen = price;
+                        currentHigh = price;
+                        currentLow = price;
+                        currentClose = price;
+                        currentVol = 0;
+                    }
+
+                    const ticksToProcess = message.type === 'tick_burst' ? rawTicks : [{ price, volume: volume || 1 }];
+                    
+                    ticksToProcess.forEach((t: any) => {
+                        const p = t.price;
+                        const v = t.volume || 1;
+                        if (p <= 0) return;
+                        
+                        currentHigh = Math.max(currentHigh, p);
+                        currentLow = Math.min(currentLow, p);
+                        currentClose = p;
+                        currentVol += v;
+                    });
+
                     const updatedBar = {
-                        time: candleTime as Time,
-                        open: isNewCandle ? price : lastBar.open,
-                        high: isNewCandle ? price : Math.max(lastBar.high, price),
-                        low: isNewCandle ? price : Math.min(lastBar.low, price),
-                        close: price,
-                        volume: isNewCandle 
-                            ? (message.type === 'tick_burst' ? rawTicks.reduce((s, t) => s + (t.volume || 1), 0) : 1)
-                            : (lastBar.volume || 0) + (message.type === 'tick_burst' ? rawTicks.reduce((s, t) => s + (t.volume || 1), 0) : 1),
+                        time: (isNewCandle ? candleTime : lastBar.time) as Time,
+                        open: currentOpen,
+                        high: currentHigh,
+                        low: currentLow,
+                        close: currentClose,
+                        volume: currentVol,
                     };
 
+                    // 🔥 UPDATE CHART & STORE
                     state.addBar(updatedBar);
                     seriesRef.current?.update(updatedBar as any);
+                    subSeriesRef.current?.update({ time: updatedBar.time, value: 0 } as any);
+                    state.setLastTickPrice(currentClose);
                     
-                    // 🟢 ALIMENTAR EL STORE GLOBAL CON EL ÚLTIMO PRECIO (TASK #16)
-                    state.setLastTickPrice(price);
-                }
+                    if (isNewCandle) console.log(`[Chart] 🕯️ Nueva vela creada: ${new Date(candleTime * 1000).toLocaleTimeString()}`);
 
-                // Actualizar FOOTPRINT
-                if (state.isFootprintEnabled) {
-                    if (message.type === 'tick_burst') {
-                        state.addTicksToFootprint(rawTicks);
-                    } else {
-                        // Tratar heartbeat como un tick individual para no perder datos en baja volatilidad
-                        state.addTicksToFootprint([{
-                            time: messageTimeMs,
-                            price: price,
-                            bid: message.bid || price,
-                            ask: message.ask || price,
-                            volume: 1 // Volumen nominal para heartbeat
-                        }]);
+                    // Actualizar FOOTPRINT
+                    if (state.isFootprintEnabled) {
+                        const footprintTicks: any[] = [];
+                        if (message.type === 'tick_burst') {
+                            const formattedTicks = rawTicks.map((t: any) => {
+                                const serverOffset = state.serverOffset || 0;
+                                const tTime = t.time || Date.now();
+                                const normalizedMs = tTime < 2000000000 ? tTime * 1000 : tTime;
+
+                                let tType: 'bid' | 'ask';
+                                const tSide = (t.side || '').toLowerCase();
+                                const tLastP = lastPriceRef.current || t.price;
+
+                                if (tSide === 'buy' || tSide === 'ask') tType = 'ask';
+                                else if (tSide === 'sell' || tSide === 'bid') tType = 'bid';
+                                else if (t.bid && t.price <= t.bid) tType = 'bid';
+                                else if (t.ask && t.price >= t.ask) tType = 'ask';
+                                else if (t.price < tLastP) tType = 'bid';
+                                else if (t.price > tLastP) tType = 'ask';
+                                else tType = lastAggressorRef.current;
+
+                                lastAggressorRef.current = tType;
+                                lastPriceRef.current = t.price;
+
+                                return {
+                                    timestamp: normalizedMs, 
+                                    symbol: symbol,
+                                    price: t.price,
+                                    volume: t.volume || 1,
+                                    type: tType
+                                };
+                            });
+
+                            // Notificar al motor de Footprint y al Store
+                            formattedTicks.forEach(tick => {
+                                if ((pocEngineRef.current as any).processTick) (pocEngineRef.current as any).processTick(tick);
+                            });
+                            state.addTicksToFootprint(formattedTicks.map(t => ({
+                                time: t.timestamp,
+                                price: t.price,
+                                volume: t.volume,
+                                bid: t.type === 'bid' ? t.price : 0,
+                                ask: t.type === 'ask' ? t.price : 0
+                            })));
+                        } else {
+                            
+                            const normalizedMs = messageTimeMs < 2000000000 ? messageTimeMs * 1000 : messageTimeMs;
+                            
+                            let tickType: 'bid' | 'ask';
+                            const currentBid = message.bid;
+                            const currentAsk = message.ask;
+                            const lastP = lastPriceRef.current || state.lastTickPrice || price;
+
+                            const sideStr = (message.side || '').toLowerCase();
+                            if (sideStr === 'buy' || sideStr === 'ask') tickType = 'ask';
+                            else if (sideStr === 'sell' || sideStr === 'bid') tickType = 'bid';
+                            else if (currentBid && price <= currentBid) tickType = 'bid';
+                            else if (currentAsk && price >= currentAsk) tickType = 'ask';
+                            else if (price < lastP) tickType = 'bid';
+                            else if (price > lastP) tickType = 'ask';
+                            else tickType = lastAggressorRef.current;
+
+                            lastAggressorRef.current = tickType;
+                            lastPriceRef.current = price;
+
+                            const tick: Tick = {
+                                timestamp: normalizedMs, 
+                                symbol: symbol,
+                                price: price,
+                                volume: 1,
+                                type: tickType
+                            };
+                            footprintTicks.push(tick);
+                            pocEngineRef.current.processTick(tick);
+                        }
+                        
+                        if (footprintTicks.length > 0) {
+                            state.addTicksToFootprint(footprintTicks);
+                            const lastCandle = pocEngineRef.current.getLatestCandle('1m'); 
+                            if (lastCandle && (chartRef.current as any)._updateDelta) {
+                                (chartRef.current as any)._updateDelta(lastCandle.timestamp, lastCandle.totalDelta);
+                            }
+                        }
                     }
                 }
-            }
 
-            if (message.type === 'error') {
-                console.error('[WS] Error:', message.message);
-            }
+                if (message.type === 'big_trade') {
+                    state.addBigTrade(message);
+                }
+
+                if (message.type === 'heatmap') {
+                    const levels = message.data?.length || 0;
+                    if (levels > 0) {
+                        state.updateHeatmap(message.time, message.data);
+                    }
+                }
+                if (message.type === 'heatmap_history') {
+                    if (message.data && message.data.length > 0) {
+                        state.setHeatmapHistory(message.data);
+                    }
+                }
+
+                if (message.type === 'status_update') {
+                    if (message.ping) return;
+                    if (message.source === 'rithmic') {
+                        state.setRithmicConfig({ connected: message.connected });
+                    }
+                }
+
+                if (message.type === 'error') {
+                    console.error('[WS] Error:', message.message);
+                }
+            };
         };
 
-        ws.onclose = () => console.log(`[WS] Closed for ${symbol}`);
+        // Iniciar conexión
+        connect();
 
         return () => {
-            if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
-                try {
-                    ws.close();
-                } catch (e) {
-                    // Silenciar errores de cierre prematuro
-                }
+            isEffectActive = false;
+            if (reconnectTimer) {
+                clearTimeout(reconnectTimer);
+                reconnectTimer = null;
             }
+            if (ws) {
+                console.log(`[WS] Cleanup: cerrando conexión para ${symbol}`);
+                ws.close(1000, 'Component unmount');
+                ws = null;
+            }
+            isCalibratedRef.current = false;
         };
-    }, [symbol, timeframe]);
+    }, [symbol]);
 
     // Herramienta de Diagnóstico para el Subagente/Usuario
     useEffect(() => {
@@ -900,19 +1360,19 @@ const ChartComponent: React.FC = () => {
         };
     }, [symbol]);
 
-    const lastUpdateRef = useRef<number>(0);
-    const lastDataLengthRef = useRef<number>(0);
-    
-    // 4. Unified Sync Effect (Candles, Indicators, Markers, Dashboard)
-    useEffect(() => {
-        if (!chartRef.current || !seriesRef.current || data.length === 0) return;
 
-        const isHistoryFetch = Math.abs(data.length - (lastDataLengthRef.current || 0)) > 2;
-        lastDataLengthRef.current = data.length;
+    // 4. Unified Sync Effect (Candles, Indicators, Markers, Dashboard) - loadHistoricalDelta (doble pegada) ELIMINADO para usar solo rithmic
+
+    useEffect(() => {
+        const currentData = dataRef.current;
+        if (!chartRef.current || !seriesRef.current || currentData.length === 0) return;
+
+        const isHistoryFetch = Math.abs(currentData.length - (lastDataLengthRef.current || 0)) > 2;
+        lastDataLengthRef.current = currentData.length;
 
         // Throttling: Solo ejecutar scripts si ha pasado > 200ms o es una nueva barra
         const now = Date.now();
-        const lastBarTime = data[data.length - 1].time as number;
+        const lastBarTime = currentData[currentData.length - 1].time as number;
         const isNewBar = lastBarTime > (lastUpdateRef.current || 0);
         
         if (!isNewBar && (now - lastUpdateRef.current < 200)) return;
@@ -931,10 +1391,25 @@ const ChartComponent: React.FC = () => {
         let combinedDashboard: { [key: string]: string } = {};
         let finalBarColors = new Map<number, string>();
 
+        // 🧠 DEDUPLICACIÓN FINAL DE MARCADORES DELTA
+        // Filtramos para asegurar que solo haya un marcador por tiempo de vela
+        const deltaMarkersArray = Array.from(deltaMarkersPersistRef.current.values());
+        const uniqueDeltaMarkers: any[] = [];
+        const seenTimes = new Set<number>();
+        
+        // Priorizar el marcador más reciente en el mapa
+        deltaMarkersArray.reverse().forEach(m => {
+            const mTime = m.time as number;
+            if (!seenTimes.has(mTime)) {
+                uniqueDeltaMarkers.push(m);
+                seenTimes.add(mTime);
+            }
+        });
+
         // B. Ejecutar todos los scripts
         try {
             pineIndicators.forEach(ind => {
-                const results = executeVortexJS(ind.script, data, serverOffset, theme);
+                const results = executeVortexJS(ind.script, currentData, serverOffset, theme);
                 const { lineSeries, markers, barColors, dashboard } = results;
 
                 if (dashboard) combinedDashboard = { ...combinedDashboard, ...dashboard };
@@ -990,35 +1465,85 @@ const ChartComponent: React.FC = () => {
         // C. Aplicar colores y data a las velas (OPTIMIZADO OBRERO LOCAL)
         try {
             if (isHistoryFetch) {
-                const coloredData = data.map(d => ({
+                const coloredData = currentData.map(d => ({
                     ...d,
-                    color: finalBarColors.get(d.time as number) || (d.close >= d.open ? '#089981' : '#f23645')
+                    color: finalBarColors.get(d.time as number) || (d.close >= d.open ? '#757575' : '#000000')
                 }));
                 seriesRef.current.setData(coloredData as any);
             } else {
-                const lastBar = data[data.length - 1];
+                const lastBar = currentData[currentData.length - 1];
                 if (lastBar) {
-                    const color = finalBarColors.get(lastBar.time as number) || (lastBar.close >= lastBar.open ? '#089981' : '#f23645');
+                    const color = finalBarColors.get(lastBar.time as number) || (lastBar.close >= lastBar.open ? '#757575' : '#000000');
                     seriesRef.current.update({ ...lastBar, color } as any);
                 }
             }
             
             // D. Marcadores y Dashboard
-            setDashboardData(combinedDashboard);
-            seriesRef.current.setMarkers(allMarkers.sort((a, b) => (a.time as number) - (b.time as number)));
+            if (typeof setDashboardData === 'function') {
+                setDashboardData(combinedDashboard);
+            }
+            
+            // 🛡️ DEDUPLICACIÓN Y ALINEACIÓN INDUSTRIAL (Snapping a Velas Reales)
+            const finalMarkerMap = new Map<string, any>();
+            
+            // Helper para encontrar la vela que debe "contenier" este marcador
+            const getBestTime = (markerTime: number) => {
+                if (currentData.length === 0) return Math.floor(markerTime);
+                
+                // BÚSQUEDA BINARIA / LOOKUP: Buscamos la vela cuya hora sea <= tiempo del marcador
+                // Esto garantiza que si el marcador llega con 1-2 segundos de desfase, se pegue a su vela.
+                let bestT = currentData[0].time as number;
+                for (let i = currentData.length - 1; i >= 0; i--) {
+                    const candTime = currentData[i].time as number;
+                    if (candTime <= markerTime) {
+                        bestT = candTime;
+                        break;
+                    }
+                }
+                return bestT;
+            };
+
+            // 1. Procesar marcadores de indicadores (VortexJS/Pine)
+            allMarkers.forEach(m => {
+                const t = getBestTime(Number(m.time));
+                const key = `${t}_${m.position}`;
+                finalMarkerMap.set(key, { ...m, time: t as Time });
+            });
+            
+            // 2. Procesar y priorizar Deltas (Solo si el zoom lo permite)
+            if (showDetailedMarkers) {
+                uniqueDeltaMarkers.forEach(m => {
+                    const t = getBestTime(Number(m.time));
+                    const key = `${t}_${m.position}`;
+                    
+                    // Solo insertamos si no hay un marcador de indicador ya ocupando ese espacio
+                    // O si el marcador existente es un Delta antiguo para esa vela (Sobreescritura)
+                    const existing = finalMarkerMap.get(key);
+                    if (!existing || existing.shape === 'circle') { // 'circle' identifica nuestros deltas
+                        finalMarkerMap.set(key, { ...m, time: t as Time });
+                    }
+                });
+            }
+
+            const finalMarkers = Array.from(finalMarkerMap.values())
+                .sort((a, b) => (a.time as number) - (b.time as number));
+                
+            if (seriesRef.current) {
+                seriesRef.current.setMarkers(finalMarkers);
+            }
         } catch (e) {
-            console.error('[Chart] Final render step failed:', e);
+            console.warn('[Chart] Final render step recovered from:', e);
         }
 
-    }, [pineIndicators, data, serverOffset]);
+    }, [pineIndicators, dataLength, serverOffset, showDetailedMarkers]);
 
     // 7. Anchored VWAP Engine (Reactive with Primitive API)
     useEffect(() => {
-        if (!chartRef.current || !seriesRef.current || data.length === 0) return;
+        if (!chartRef.current || !seriesRef.current || dataLength === 0) return;
         const series = seriesRef.current;
 
         // Clean up / Hide deleted AVWAPs (Persistent plugins to avoid LWC V5 lag bug)
-        const currentIds = (anchoredVwaps || []).map(v => v.id);
+        const currentIds = (currentAnchoredVwaps || []).map(v => v.id);
         Object.keys(drawingsRef.current).forEach(id => {
             if (id.startsWith('avwap_')) {
                 const plugin = drawingsRef.current[id] as AnchoredVwapPrimitive;
@@ -1030,12 +1555,12 @@ const ChartComponent: React.FC = () => {
         });
 
         // Render/Update AVWAPs
-        (anchoredVwaps || []).forEach(v => {
+        (currentAnchoredVwaps || []).forEach(v => {
             const pluginId = `avwap_${v.id}`;
             let plugin = drawingsRef.current[pluginId] as AnchoredVwapPrimitive;
             
             if (!plugin) {
-                plugin = new AnchoredVwapPrimitive(v.startTime, data, { color: v.color, width: v.lineWidth }, v.bands || []);
+                plugin = new AnchoredVwapPrimitive(v.startTime, dataRef.current, { color: v.color, width: v.lineWidth }, v.bands || []);
                 series.attachPrimitive(plugin);
                 drawingsRef.current[pluginId] = plugin;
             } else {
@@ -1043,17 +1568,17 @@ const ChartComponent: React.FC = () => {
                 plugin.startTime = v.startTime;
                 plugin.parameters = { color: v.color, width: v.lineWidth };
                 plugin.bands = v.bands || [];
-                plugin.data = data; // Data setter handles internal update check and requestUpdate
+                plugin.data = dataRef.current; // Data setter handles internal update check and requestUpdate
             }
         });
-    }, [anchoredVwaps, data]);
+    }, [currentAnchoredVwaps, dataLength]);
 
     // 6. Handle Time Range Scaling
     useEffect(() => {
-        if (!chartRef.current || !chartRange || data.length === 0) return;
+        if (!chartRef.current || !chartRange || dataLength === 0) return;
 
         const timeScale = chartRef.current.timeScale();
-        const lastBar = data[data.length - 1];
+        const lastBar = dataRef.current[dataRef.current.length - 1];
         const to = (lastBar.time as number);
         let from = to;
 
@@ -1082,87 +1607,112 @@ const ChartComponent: React.FC = () => {
         }
         
         setChartRange(null);
-    }, [chartRange, data, setChartRange]);
+    }, [chartRange, dataLength, setChartRange]);
 
     return (
         <div className="flex flex-col h-full w-full bg-[#0a0e15] overflow-hidden">
             <div className="flex-1 flex min-h-0 relative">
-                <div className="flex-1 relative min-w-0">
-                    <div ref={chartContainerRef} className="w-full h-full relative" />
-                    
-                    {/* Quick Trading Buttons (SELL - LOT - BUY) */}
-                    <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
-                        <div className={`flex border rounded-[4px] overflow-hidden shadow-2xl items-center backdrop-blur-sm ${
-                            theme === 'dark' ? 'bg-[#1e222d]/40 border-gray-700/30' : 'bg-white/40 border-gray-300/30'
-                        }`}>
-                            {/* SELL BUTTON (LEFT) - Compressed */}
-                            <button 
-                                onClick={() => {
-                                    const params = {
-                                        symbol: symbol,
-                                        type: 'SELL',
-                                        lot: defaultLot || 0.01,
-                                        price: lastTickPrice || 0
-                                    };
-                                    useStore.getState().placeTradingOrder(params);
-                                }}
-                                className="bg-[#f23645] hover:bg-[#f23645]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-l-[4px]"
-                            >
-                                <span>SELL</span>
-                                <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
-                            </button>
-                            
-                            {/* Lot Size Input (Pure Crystal Background) */}
-                            <div className={`border-x h-full flex items-center px-1 ${
-                                theme === 'dark' ? 'bg-black/20 border-white/10' : 'bg-white/30 border-black/10'
-                            }`}>
-                                <input 
-                                    type="number" 
-                                    step="0.01"
-                                    min="0.01"
-                                    value={defaultLot || 0.01}
-                                    onChange={(e) => {
-                                        const val = parseFloat(e.target.value);
-                                        if (!isNaN(val) && val > 0) setDefaultLot(val);
-                                        else if (e.target.value === "") setDefaultLot(0.01);
-                                    }}
-                                    className={`bg-transparent text-[11px] font-bold w-12 text-center outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none ${
-                                        theme === 'dark' ? 'text-white' : 'text-black'
-                                    }`}
-                                />
-                            </div>
-
-                            {/* BUY BUTTON (RIGHT) - Compressed */}
-                            <button 
-                                onClick={() => {
-                                    const params = {
-                                        symbol: symbol,
-                                        type: 'BUY',
-                                        lot: defaultLot || 0.01,
-                                        price: lastTickPrice || 0
-                                    };
-                                    useStore.getState().placeTradingOrder(params);
-                                }}
-                                className="bg-[#089981] hover:bg-[#089981]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-r-[4px]"
-                            >
-                                <span>BUY</span>
-                                <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
-                            </button>
+                    <div className="flex-1 relative flex flex-col min-w-0 h-full overflow-hidden">
+                        {/* PANEL SUPERIOR (PRECIO) */}
+                        <div 
+                            ref={chartContainerRef} 
+                            className="w-full relative overflow-hidden" 
+                            style={{ height: `${mainPaneHeight}%` }}
+                        >
+                            {/* OPTIMIZED OVERLAYS (Relative to Main Pane) */}
+                            {chartRef.current && seriesRef.current && (
+                                <>
+                                    <HeatmapOverlay chart={chartRef.current} series={seriesRef.current} />
+                                    <BigTradesOverlay chart={chartRef.current} series={seriesRef.current} />
+                                    <OrderFlowStrategiesOverlay chart={chartRef.current} series={seriesRef.current} />
+                                    <TradingOverlay chart={chartRef.current} series={seriesRef.current} />
+                                    <SessionZonesOverlay 
+                                        chart={chartRef.current} 
+                                        subChart={subChartRef.current}
+                                        series={seriesRef.current} 
+                                    />
+                                </>
+                            )}
                         </div>
+
+                        {/* SEPARADOR AJUSTABLE (The Ribbon) */}
+                        <div 
+                            onMouseDown={() => setIsResizing(true)}
+                            className={`h-1.5 w-full cursor-ns-resize z-50 border-y transition-colors select-none ${
+                                theme === 'dark' 
+                                    ? (isResizing ? 'bg-[#2962ff] border-blue-600' : 'bg-[#1e222d] border-gray-800/50 hover:bg-gray-700') 
+                                    : (isResizing ? 'bg-blue-600 border-blue-700' : 'bg-gray-100 border-gray-200 hover:bg-gray-200')
+                            }`}
+                        >
+                            <div className="w-12 h-1 bg-white/10 rounded-full mx-auto mt-[1px]" />
+                        </div>
+
+                        {/* PANEL INFERIOR (CVD / INDICADORES) */}
+                        <div 
+                            ref={subChartContainerRef} 
+                            className="w-full relative overflow-hidden flex-1"
+                        />
+
+                        {/* Quick Trading Buttons */}
+                        <div className="absolute top-4 left-4 z-20 flex flex-col gap-2">
+                            <div className={`flex border rounded-[4px] overflow-hidden shadow-2xl items-center backdrop-blur-sm ${
+                                theme === 'dark' ? 'bg-[#1e222d]/40 border-gray-700/30' : 'bg-white/40 border-gray-300/30'
+                            }`}>
+                                <button 
+                                    onClick={() => {
+                                        const params = {
+                                            symbol: symbol,
+                                            type: 'SELL',
+                                            lot: defaultLot || 0.01,
+                                            price: lastTickPrice || 0
+                                        };
+                                        useStore.getState().placeTradingOrder(params);
+                                    }}
+                                    className="bg-[#f23645] hover:bg-[#f23645]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-l-[4px]"
+                                >
+                                    <span>SELL</span>
+                                    <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
+                                </button>
+                                
+                                <div className={`border-x h-full flex items-center px-1 ${
+                                    theme === 'dark' ? 'bg-black/20 border-white/10' : 'bg-white/30 border-black/10'
+                                }`}>
+                                    <input 
+                                        type="number" 
+                                        step="0.01"
+                                        min="0.01"
+                                        value={defaultLot || 0.01}
+                                        onChange={(e) => {
+                                            const val = parseFloat(e.target.value);
+                                            if (!isNaN(val) && val > 0) setDefaultLot(val);
+                                            else if (e.target.value === "") setDefaultLot(0.01);
+                                        }}
+                                        className={`bg-transparent text-[11px] font-bold w-12 text-center outline-none ${
+                                            theme === 'dark' ? 'text-white' : 'text-black'
+                                        }`}
+                                    />
+                                </div>
+
+                                <button 
+                                    onClick={() => {
+                                        const params = {
+                                            symbol: symbol,
+                                            type: 'BUY',
+                                            lot: defaultLot || 0.01,
+                                            price: lastTickPrice || 0
+                                        };
+                                        useStore.getState().placeTradingOrder(params);
+                                    }}
+                                    className="bg-[#089981] hover:bg-[#089981]/90 text-white px-4 py-1 text-xs font-bold transition-colors flex flex-col items-center min-w-[70px] rounded-r-[4px]"
+                                >
+                                    <span>BUY</span>
+                                    <span className="text-[9px] opacity-80">{lastTickPrice?.toFixed(2)}</span>
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
 
-                    {/* OPTIMIZED OVERLAYS (EVENT-DRIVEN) */}
-                    {chartRef.current && seriesRef.current && (
-                        <>
-                            <HeatmapOverlay chart={chartRef.current} series={seriesRef.current} />
-                            <BigTradesOverlay chart={chartRef.current} series={seriesRef.current} />
-                            <FootprintOverlay chart={chartRef.current} series={seriesRef.current} />
-                            <OrderFlowStrategiesOverlay chart={chartRef.current} series={seriesRef.current} />
-                            <TradingOverlay chart={chartRef.current} series={seriesRef.current} />
-                        </>
-                    )}
-            
-                    {/* AVWAP Property Panel */}
                     {selectedAnchoredVwapId && (
                         <div className={`absolute bottom-20 left-4 z-20 border p-4 rounded-xl shadow-2xl backdrop-blur-lg w-72 transition-all animate-in fade-in slide-in-from-bottom-2 ${
                             theme === 'dark' ? 'bg-[#1e222d]/90 border-gray-700/50 text-white' : 'bg-white/90 border-gray-200 text-gray-900'
@@ -1174,7 +1724,7 @@ const ChartComponent: React.FC = () => {
                                 <button onClick={() => setSelectedAnchoredVwapId(null)} className="text-xs opacity-50 hover:opacity-100 italic">Cerrar</button>
                             </div>
 
-                            {anchoredVwaps.find(v => v.id === selectedAnchoredVwapId) && (
+                            {currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId) && (
                                 <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                                     {/* Main Line Config */}
                                     <div className="space-y-2">
@@ -1182,12 +1732,12 @@ const ChartComponent: React.FC = () => {
                                         <div className="flex items-center gap-3">
                                             <input 
                                                 type="color" 
-                                                value={anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.color || '#ff9800'} 
+                                                value={currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.color || '#ff9800'} 
                                                 onChange={(e) => updateAnchoredVwap(selectedAnchoredVwapId, { color: e.target.value })}
                                                 className="w-8 h-8 rounded cursor-pointer bg-transparent border-none"
                                             />
                                             <select 
-                                                value={anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.lineWidth || 2}
+                                                value={currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.lineWidth || 2}
                                                 onChange={(e) => updateAnchoredVwap(selectedAnchoredVwapId, { lineWidth: parseInt(e.target.value) })}
                                                 className={`text-xs p-1 rounded bg-transparent border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'}`}
                                             >
@@ -1199,14 +1749,14 @@ const ChartComponent: React.FC = () => {
                                     {/* Bands Config */}
                                     <div className="space-y-3 pt-2">
                                         <div className="text-[10px] uppercase tracking-wider opacity-60 font-bold">Bandas Sigma ({"+/- 1, 2"})</div>
-                                        {anchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.bands.map((band: any, idx: number) => (
+                                        {currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId)?.bands.map((band: any, idx: number) => (
                                             <div key={idx} className="flex items-center justify-between gap-2 p-2 rounded bg-black/5">
                                                 <div className="flex items-center gap-2">
                                                     <input 
                                                         type="checkbox" 
                                                         checked={band.enabled} 
                                                         onChange={(e) => {
-                                                            const currentVwap = anchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
+                                                            const currentVwap = currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
                                                             if (!currentVwap) return;
                                                             const newBands = [...currentVwap.bands];
                                                             newBands[idx] = { ...band, enabled: e.target.checked };
@@ -1219,7 +1769,7 @@ const ChartComponent: React.FC = () => {
                                                     type="color" 
                                                     value={band.color} 
                                                     onChange={(e) => {
-                                                        const currentVwap = anchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
+                                                        const currentVwap = currentAnchoredVwaps.find(v => v.id === selectedAnchoredVwapId);
                                                         if (!currentVwap) return;
                                                         const newBands = [...currentVwap.bands];
                                                         newBands[idx] = { ...band, color: e.target.value };
@@ -1268,7 +1818,6 @@ const ChartComponent: React.FC = () => {
                     )}
                 </div>
             </div>
-        </div>
     );
 };
 

@@ -9,6 +9,9 @@ from datetime import datetime
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("MT5Service")
 
+import time
+from datetime import timezone
+
 class MT5Service:
     _instance = None
 
@@ -42,31 +45,83 @@ class MT5Service:
         self.initialized = True
         return True
 
+    def get_broker_offset(self, symbol: str = "NAS100.fs"):
+        """
+        Calcula el offset en segundos entre el broker y UTC.
+        Lógica: broker_time - utc_time.
+        """
+        if not self.initialized: self.initialize()
+        tick = mt5.symbol_info_tick(symbol)
+        if not tick:
+            # Fallback a un símbolo común si el solicitado falla
+            tick = mt5.symbol_info_tick("NQ.fs") or mt5.symbol_info_tick("BTCUSD")
+        
+        if not tick:
+            return 7200 # Fallback estándar (UTC+2)
+            
+        now_utc = time.time()
+        # El tick.time viene en hora del broker
+        diff = tick.time - now_utc
+        # Redondeamos a horas exactas ya que los offsets de broker suelen ser enteros (2h, 3h, etc)
+        return round(diff / 3600) * 3600
+
+    def translate_to_mt5_symbol(self, raw_symbol: str) -> str:
+        """Convierte un símbolo agnóstico o de CME al formato que usa el broker Axi."""
+        # Limpiar el sufijo .fs o .FS para homogeneizar la búsqueda
+        sym_upper = raw_symbol.upper().replace(".FS", "")
+        
+        if sym_upper == "ES" or sym_upper == "SP500":
+            # Prioridad absoluta al símbolo que el usuario confirmó que tiene precio
+            if mt5.symbol_select("S&P.fs", True):
+                return "S&P.fs"
+            if mt5.symbol_select("US500", True):
+                return "US500"
+            if mt5.symbol_select("S&P", True):
+                return "S&P"
+            return "US500.fs"
+        if sym_upper == "NQ" or sym_upper == "NDX" or sym_upper == "NAS100":
+            if mt5.symbol_select("NAS100", True):
+                return "NAS100"
+            return "NAS100.fs"
+        if sym_upper == "YM" or sym_upper == "DOW" or sym_upper == "US30":
+            if mt5.symbol_select("US30", True):
+                return "US30"
+            return "US30.fs"
+        if sym_upper == "RTY" or sym_upper == "US2000":
+            if mt5.symbol_select("US2000", True):
+                return "US2000"
+            return "US2000.fs"
+            
+        return raw_symbol
+
     def get_historical_data(self, symbol: str, timeframe: int, count: int = 500):
         """
-        Extrae velas históricas de MT5.
-        Timeframes: mt5.TIMEFRAME_M1, M5, M15, etc.
+        Extrae velas históricas de MT5 y las normaliza a UTC.
         """
         if not self.initialized:
             self.initialize()
 
+        # Traducción de símbolo CME -> Axi
+        actual_symbol = self.translate_to_mt5_symbol(symbol)
+
+        # Obtener offset para este broker
+        offset = self.get_broker_offset(actual_symbol)
+
         # Asegurar que el símbolo esté seleccionado en el Market Watch
-        if not mt5.symbol_select(symbol, True):
-            logger.error(f"No se pudo seleccionar el símbolo {symbol}: {mt5.last_error()}")
+        if not mt5.symbol_select(actual_symbol, True):
+            logger.error(f"No se pudo seleccionar el símbolo {actual_symbol}: {mt5.last_error()}")
             return []
 
         # Obtener rates
-        rates = mt5.copy_rates_from_pos(symbol, timeframe, 0, count)
-        if rates is None:
+        rates = mt5.copy_rates_from_pos(actual_symbol, timeframe, 0, count)
+        if rates is None or len(rates) == 0:
             logger.error(f"No se pudieron obtener datos históricos para {symbol}: {mt5.last_error()}")
             return []
 
-        # Convertir a DataFrame y formatear para lightweight-charts
+        # Convertir y normalizar a UTC
         df = pd.DataFrame(rates)
-        df['time'] = df['time'].astype(int) # Unix timestamp
+        df['time'] = df['time'].astype(int) - offset # <--- NORMALIZACIÓN A UTC
         
-        # lightweight-charts espera {time, open, high, low, close}
-        # En MT5: (time, open, high, low, close, tick_volume, spread, real_volume)
         result = df[['time', 'open', 'high', 'low', 'close', 'tick_volume']].to_dict('records')
         return result
 
@@ -74,15 +129,19 @@ class MT5Service:
         if not self.initialized:
             self.initialize()
             
-        if not mt5.symbol_select(symbol, True):
+        actual_symbol = self.translate_to_mt5_symbol(symbol)
+            
+        if not mt5.symbol_select(actual_symbol, True):
             return None
             
-        tick = mt5.symbol_info_tick(symbol)
+        tick = mt5.symbol_info_tick(actual_symbol)
         if tick is None:
             return None
         
+        offset = self.get_broker_offset(actual_symbol)
+        
         return {
-            "time": int(tick.time),
+            "time": int(tick.time) - offset, # <--- NORMALIZACIÓN A UTC
             "bid": tick.bid,
             "ask": tick.ask,
             "last": tick.last,
@@ -92,44 +151,46 @@ class MT5Service:
 
     def get_ticks_range(self, symbol: str, start_time: int, count: int = 1000):
         """
-        Obtiene una ráfaga de ticks para el cálculo del footprint.
+        Obtiene una ráfaga de ticks y los normaliza a UTC.
         """
         if not self.initialized: self.initialize()
         
-        # MT5 copy_ticks_from espera segundos (int). Si enviamos decimales, redondea.
-        # Estrategia robusta: Pedimos desde el segundo actual y filtramos por milisegundos.
-        # Margen de seguridad: Pedimos desde 1 segundo antes para compensar desincronizaciones de reloj,
-        # el filtrado posterior por t.time_msc > start_time asegura la unicidad de los datos.
-        start_time_s = (start_time / 1000.0) - 1.0 
-        ticks = mt5.copy_ticks_from(symbol, start_time_s, 2000, mt5.COPY_TICKS_ALL)
+        actual_symbol = self.translate_to_mt5_symbol(symbol)
+        offset = self.get_broker_offset(actual_symbol)
+        
+        # El start_time recibido del frontend es UTC (en ms). 
+        # Para pedirle a MT5, necesitamos sumarle el offset (volver a hora del broker).
+        start_time_s_broker = (start_time / 1000.0) + offset - 1.0 
+        
+        ticks = mt5.copy_ticks_from(actual_symbol, start_time_s_broker, 2000, mt5.COPY_TICKS_ALL)
         
         if ticks is None or len(ticks) == 0:
             return []
             
         result = []
         for t in ticks:
-            # Acceso ultra-robusto a numpy.void/tupla estructurada de MT5
             try:
-                # Intentamos acceso por atributo
-                t_time = t.time_msc
+                t_time_msc = t.time_msc
                 t_bid = t.bid
                 t_ask = t.ask
                 t_last = t.last
                 t_vol = t.volume
                 t_flags = t.flags
             except AttributeError:
-                # Fallback institucional: Acceso por nombre de campo
-                t_time = t['time_msc']
+                t_time_msc = t['time_msc']
                 t_bid = t['bid']
                 t_ask = t['ask']
                 t_last = t['last']
                 t_vol = t['volume']
                 t_flags = t['flags']
 
-            # Solo añadimos ticks que sean estrictamente posteriores a nuestro último puntero (en ms)
-            if t_time > start_time:
+            # Normalizamos el tiempo ms a UTC: (time_msc / 1000) - offset
+            # Pero para el filtrado comparamos con start_time (UTC ms)
+            t_time_utc_ms = int(t_time_msc - (offset * 1000))
+
+            if t_time_utc_ms > start_time:
                 result.append({
-                    "time": int(t_time),
+                    "time": t_time_utc_ms,
                     "bid": float(t_bid),
                     "ask": float(t_ask),
                     "last": float(t_last),
@@ -148,6 +209,8 @@ class MT5Service:
         if not self.initialized:
             self.initialize()
 
+        actual_symbol = self.translate_to_mt5_symbol(symbol)
+
         # Mapeo de tipos de orden
         types = {
             'BUY': mt5.ORDER_TYPE_BUY,
@@ -158,7 +221,7 @@ class MT5Service:
 
         # Determinamos precio para órdenes a mercado si no se provee
         if price <= 0 and 'LIMIT' not in order_type:
-            tick = mt5.symbol_info_tick(symbol)
+            tick = mt5.symbol_info_tick(actual_symbol)
             if not tick: return {"status": "error", "message": "No tick data for symbol"}
             price = tick.ask if order_type == 'BUY' else tick.bid
 
@@ -210,8 +273,10 @@ class MT5Service:
         """
         if not self.initialized:
             self.initialize()
+            
+        actual_symbol = self.translate_to_mt5_symbol(symbol)
         
-        info = mt5.symbol_info(symbol)
+        info = mt5.symbol_info(actual_symbol)
         if info is None:
             return False
             

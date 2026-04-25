@@ -1,43 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '../../store/useStore';
-import { X, ChevronDown, CheckSquare, Square } from 'lucide-react';
+import { X, ChevronDown, CheckSquare, Square, ShieldCheck, AlertTriangle } from 'lucide-react';
 
 const OrderTicket: React.FC = () => {
   const { 
     symbol, isOrderTicketOpen, setOrderTicketOpen, defaultLot, setDefaultLot, placeTradingOrder,
-    lastTickPrice, positions, rithmicConfig
+    lastTickPrice, positions, rithmicConfig, bigTradesData
   } = useStore();
   
   const [ocoEnabled, setOcoEnabled] = useState(false);
   const [serverMode, setServerMode] = useState('server');
+  const [dailyPnl, setDailyPnl] = useState(0);
+  const [tradesCount, setTradesCount] = useState(0);
+  const [riskMode, setRiskMode] = useState<'funded' | 'own'>('funded'); // 5 vs 10 balas
+  const [maxTradesPerSession] = useState(5);
+  const [maxDailyLoss] = useState(-2000);
+
+  const isLocked = tradesCount >= maxTradesPerSession || dailyPnl <= maxDailyLoss;
   const [slTicks, setSlTicks] = useState(10);
   const [tpTicks, setTpTicks] = useState(20);
+  const [suggestedSL, setSuggestedSL] = useState<{price: number, desc: string} | null>(null);
 
   // Derivados de cuenta falsos o simulados
-  const dailyPnL = 893.70;
   const openPnL = positions.reduce((acc, p) => acc + (p.profit || 0), 0);
   const openQty = positions.reduce((acc, p) => acc + p.volume, 0);
 
+  // Inteligencia de Order Flow para Stop Loss
+  useEffect(() => {
+    if (!lastTickPrice || bigTradesData.length === 0) return;
+    
+    // Buscar la absorción más cercana para proteger el SL (Tip del Mentor)
+    const recentTrades = bigTradesData.slice(-50);
+    const buyAbsorptions = recentTrades.filter(t => t.side === 'sell' && t.size > 100); // Vendedores absorbidos
+    const sellAbsorptions = recentTrades.filter(t => t.side === 'buy' && t.size > 100); // Compradores absorbidos
+
+    if (buyAbsorptions.length > 0) {
+        const closest = buyAbsorptions[buyAbsorptions.length - 1];
+        if (lastTickPrice > closest.price) {
+            setSuggestedSL({ price: closest.price - 0.50, desc: 'Protección bajo absorción vendedora' });
+        }
+    } else if (sellAbsorptions.length > 0) {
+        const closest = sellAbsorptions[sellAbsorptions.length - 1];
+        if (lastTickPrice < closest.price) {
+            setSuggestedSL({ price: closest.price + 0.50, desc: 'Protección sobre absorción compradora' });
+        }
+    }
+  }, [lastTickPrice, bigTradesData]);
+
   const handleExecute = async (side: 'buy' | 'sell', type: string) => {
+    if (isLocked) return;
     try {
         let orderType = type;
         if (type === 'MKT') orderType = side === 'buy' ? 'BUY_MKT' : 'SELL_MKT';
         if (type === 'LMT' || type === 'BID' || type === 'ASK') orderType = side === 'buy' ? 'BUY_LIMIT' : 'SELL_LIMIT';
         if (type === 'STP') orderType = side === 'buy' ? 'BUY_STOP' : 'SELL_STOP';
 
-        const price = lastTickPrice || 0; // Simplificado para simulación de MKT
+        const price = lastTickPrice || 0; 
+
+        // Si hay un SL sugerido y OCO activo, lo usamos
+        let finalSL = 0;
+        if (ocoEnabled) {
+            if (suggestedSL) {
+                finalSL = suggestedSL.price;
+            } else {
+                finalSL = side === 'buy' ? price - (slTicks * 0.25) : price + (slTicks * 0.25);
+            }
+        }
 
         await placeTradingOrder({
             symbol,
             type: orderType,
             lot: defaultLot,
             price: price,
-            sl: ocoEnabled ? price - (slTicks * 0.25) : 0, // asumiendo tickSize 0.25 para NQ
-            tp: ocoEnabled ? price + (tpTicks * 0.25) : 0
+            sl: finalSL,
+            tp: ocoEnabled ? (side === 'buy' ? price + (tpTicks * 0.25) : price - (tpTicks * 0.25)) : 0
         });
+        setTradesCount(prev => prev + 1);
     } catch (e) {
         console.error(e);
     }
+  };
+
+  const applySuggestedSL = () => {
+    if (!suggestedSL || !lastTickPrice) return;
+    const diffTicks = Math.abs(lastTickPrice - suggestedSL.price) / 0.25;
+    setSlTicks(Math.round(diffTicks));
+    setOcoEnabled(true);
   };
 
   if (!isOrderTicketOpen) return null;
@@ -47,7 +95,7 @@ const OrderTicket: React.FC = () => {
       {/* Header superior verde (Daily P/L Global) */}
       <div className="h-6 flex w-full">
          <div className="flex-1 bg-[#1a3a2a] text-[#00e676] font-bold flex items-center px-2 border-b border-black">
-           $ <span className="ml-auto">{dailyPnL.toFixed(2)}</span>
+           $ <span className="ml-auto">{dailyPnl.toFixed(2)}</span>
          </div>
       </div>
 
@@ -60,8 +108,40 @@ const OrderTicket: React.FC = () => {
           <ChevronDown size={14} className="text-gray-500" />
         </div>
 
+        {/* Risk Guardian Header */}
+        <div className={`p-2 rounded flex justify-between items-center text-xs mb-4 ${isLocked ? 'bg-red-900/40' : 'bg-slate-800'}`}>
+            <div className="flex flex-col">
+                <span className="text-slate-400">PNL DIARIO / TRADES</span>
+                <span className={`font-bold ${dailyPnl < 0 ? 'text-red-400' : 'text-green-400'}`}>
+                    ${dailyPnl.toFixed(2)} / {tradesCount}
+                </span>
+            </div>
+            <div className="flex flex-col items-end">
+                <span className="text-slate-400">ESTADO</span>
+                <span className={`font-bold ${isLocked ? 'text-red-500' : 'text-green-500'}`}>
+                    {isLocked ? 'BLOQUEADO (REGLAS)' : 'OPERATIVO'}
+                </span>
+            </div>
+        </div>
+
+        {/* Selector de Balas (Módulo 5) */}
+        <div className="flex gap-2 mb-4">
+            <button 
+               onClick={() => setRiskMode('funded')}
+               className={`flex-1 py-1 text-xs rounded border ${riskMode === 'funded' ? 'bg-orange-600/20 border-orange-500 text-orange-400' : 'border-slate-700 text-slate-500'}`}
+            >
+               Fondeada (5 Balas)
+            </button>
+            <button 
+               onClick={() => setRiskMode('own')}
+               className={`flex-1 py-1 text-xs rounded border ${riskMode === 'own' ? 'bg-blue-600/20 border-blue-500 text-blue-400' : 'border-slate-700 text-slate-500'}`}
+            >
+               Propio (10 Balas)
+            </button>
+        </div>
+
         {/* PnL Box */}
-        <div className="space-y-1">
+        <div className="space-y-4">
           <div className="flex justify-between items-center text-[11px]">
              <span className="text-gray-400">Open Qty</span>
              <span className="font-mono text-[#aaa]">{openQty}</span>
@@ -72,9 +152,25 @@ const OrderTicket: React.FC = () => {
           </div>
           <div className="flex justify-between items-center text-[11px] bg-[#1a3a2a] px-1 py-0.5 rounded text-[#00e676]">
              <span className="font-bold">Daily P/L</span>
-             <span className="font-mono font-bold">{dailyPnL.toFixed(2)} $</span>
+             <span className="font-mono font-bold">{dailyPnl.toFixed(2)} $</span>
           </div>
         </div>
+
+        {/* --- SMART AI SUGGESTION --- */}
+        {suggestedSL && (
+            <div className="bg-blue-500/10 border border-blue-500/30 p-2 rounded animate-pulse cursor-pointer" onClick={applySuggestedSL}>
+                <div className="flex items-center gap-2 text-blue-400 font-bold text-[10px]">
+                    <ShieldCheck size={14} />
+                    SMART SL SUGGESTION
+                </div>
+                <div className="text-[9px] text-gray-400 mt-1">
+                    {suggestedSL.desc}
+                </div>
+                <div className="text-[10px] text-blue-300 mt-1 font-mono">
+                    SL sugerido: {suggestedSL.price.toFixed(2)}
+                </div>
+            </div>
+        )}
 
         <div className="h-px bg-[#333]" />
 
@@ -98,45 +194,32 @@ const OrderTicket: React.FC = () => {
                  <span className="font-mono text-[#aaa]">********01</span><ChevronDown size={12}/>
                </div>
             </div>
-            <div className="flex items-center gap-2">
-               <button className="text-gray-400 hover:text-white" onClick={() => setOrderTicketOpen(false)}><X size={12} /></button>
-               <span className="text-gray-400 text-right flex-1">Ticks diff.</span>
-               <div className="w-16 bg-[#1e1e1e] border border-[#333] flex items-center px-2 py-1 rounded text-[#ddd]">0</div>
-            </div>
         </div>
 
-        {/* Execution Grid (Las Joyas de la Corona) */}
+        {/* Execution Grid */}
         <div className="pt-2">
             <div className="flex pb-1">
                 <div className="w-1/2 text-center text-gray-500 font-bold uppercase tracking-wider text-[10px]">Buy</div>
                 <div className="w-1/2 text-center text-gray-500 font-bold uppercase tracking-wider text-[10px]">Sell</div>
             </div>
             <div className="grid grid-cols-2 gap-[1px] bg-[#111]">
-                {/* MKT */}
                 <button onClick={() => handleExecute('buy', 'MKT')} className="bg-[#4caf50] hover:bg-[#388e3c] text-black font-extrabold py-2 border-t border-l border-b border-[#333]">MKT</button>
                 <button onClick={() => handleExecute('sell', 'MKT')} className="bg-[#9c27b0] hover:bg-[#7b1fa2] text-white font-extrabold py-2 border-t border-r border-b border-[#333]">MKT</button>
                 
-                {/* BID / ASK */}
                 <button onClick={() => handleExecute('buy', 'BID')} className="bg-[#4caf50] hover:bg-[#388e3c] text-black font-extrabold py-2 border-b border-l border-[#333]">BID</button>
                 <button onClick={() => handleExecute('sell', 'ASK')} className="bg-[#9c27b0] hover:bg-[#7b1fa2] text-white font-extrabold py-2 border-b border-r border-[#333]">ASK</button>
                 
-                {/* LMT */}
                 <button onClick={() => handleExecute('buy', 'LMT')} className="bg-[#4caf50] hover:bg-[#388e3c] text-black font-extrabold py-2 border-b border-l border-[#333]">LMT</button>
                 <button onClick={() => handleExecute('sell', 'LMT')} className="bg-[#9c27b0] hover:bg-[#7b1fa2] text-white font-extrabold py-2 border-b border-r border-[#333]">LMT</button>
 
-                {/* STP */}
                 <button onClick={() => handleExecute('buy', 'STP')} className="bg-[#4caf50] hover:bg-[#388e3c] text-black font-extrabold py-2 border-b border-l border-[#333]">STP</button>
                 <button onClick={() => handleExecute('sell', 'STP')} className="bg-[#9c27b0] hover:bg-[#7b1fa2] text-white font-extrabold py-2 border-b border-r border-[#333]">STP</button>
-
-                {/* STP LMT */}
-                <button onClick={() => handleExecute('buy', 'STP_LMT')} className="bg-[#4caf50] hover:bg-[#388e3c] text-black font-extrabold py-2 border-b border-l border-[#333] text-[10px]">STP LMT</button>
-                <button onClick={() => handleExecute('sell', 'STP_LMT')} className="bg-[#9c27b0] hover:bg-[#7b1fa2] text-white font-extrabold py-2 border-b border-r border-[#333] text-[10px]">STP LMT</button>
             </div>
             <div className="grid grid-cols-2 gap-1 mt-1">
                 <button className="bg-[#f57c00] hover:bg-[#e65100] text-black font-bold py-1.5 rounded-sm">Cancel</button>
                 <button className="bg-[#f57c00] hover:bg-[#e65100] text-black font-bold py-1.5 rounded-sm">Breakeven</button>
             </div>
-            <button className="w-full bg-[#f57c00] hover:bg-[#e65100] text-black font-bold py-2 mt-1 rounded-sm">Cancel and Flat</button>
+            <button className="w-full bg-[#f57c00] hover:bg-[#e65100] text-black font-bold py-2 mt-1 rounded-sm uppercase tracking-tighter">Cancel and Flat</button>
         </div>
 
         {/* OCO Strategy */}
@@ -178,14 +261,12 @@ const OrderTicket: React.FC = () => {
                 <span onClick={() => setServerMode('client')}>Client</span>
              </label>
         </div>
-        <button className="w-full border border-[#00e676] text-[#00e676] hover:bg-[#00e676] hover:text-black transition-colors py-1.5 font-bold uppercase rounded-sm">Link pending orders</button>
       </div>
 
       {/* DeepDOM Bottom Tabs */}
       <div className="flex bg-[#000] border-t border-[#333] h-6 items-center px-2">
-         <span className="text-[#888] font-bold mr-auto">DOM</span>
-         <span className="text-[#fff] mx-2 cursor-pointer font-bold border-b-2 border-white">T. Panel</span>
-         <span className="text-[#888] cursor-pointer hover:text-white font-bold ml-2">T&S</span>
+         <span className="text-[#888] font-bold mr-auto uppercase text-[9px]">Trading Terminal</span>
+         <span className="text-primary-tv mx-2 font-bold text-[9px]">Pugobot 1.0</span>
       </div>
     </div>
   );

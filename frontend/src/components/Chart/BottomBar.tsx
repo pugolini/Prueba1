@@ -23,7 +23,7 @@ const BottomBar: React.FC = () => {
   useEffect(() => {
     const fetchStatus = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8005/api/status/${symbol}`);
+        const response = await axios.get(`http://127.0.0.1:8000/api/status/${symbol}`);
         setMarketOpen(response.data.market_open);
         setMT5Connected(response.data.mt5_connected);
       } catch (error) {

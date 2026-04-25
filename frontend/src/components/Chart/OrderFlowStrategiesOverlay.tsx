@@ -2,14 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { IChartApi, ISeriesApi, Time } from 'lightweight-charts';
 import { useStore } from '../../store/useStore';
 
+import { OrderFlowAnalyzer } from '../../engine/orderflow/OrderFlowAnalyzer';
+
 interface OrderFlowStrategiesOverlayProps {
   chart: IChartApi;
   series: ISeriesApi<"Candlestick">;
 }
 
+const analyzer = new OrderFlowAnalyzer(0.25); // Instancia persistente
+
 const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({ chart, series }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { 
+    symbol,
     orderFlowStrategies, 
     theme, 
     isFootprintEnabled 
@@ -17,6 +22,10 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
 
   useEffect(() => {
     if (!canvasRef.current) return;
+
+    // Reset inicial del analizador cuando cambia el símbolo 
+    const tick = symbol.includes('ES') || symbol.includes('S&P') ? 0.25 : 0.25;
+    analyzer.reset(tick);
 
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
@@ -28,9 +37,14 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
 
       if (data.length < 2) return;
 
-      const width = canvas.width;
-      const height = canvas.height;
-      ctx.clearRect(0, 0, width, height);
+      const dpr = window.devicePixelRatio || 1;
+      const width = canvas.width / dpr;
+      const height = canvas.height / dpr;
+      // Limpiar con coordenadas absolutas de pixel
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.restore();
 
       const timeScale = chart.timeScale();
       const isDark = theme === 'dark';
@@ -39,7 +53,11 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
       const e1Signals: { time: number, poc: number, type: 'bull' | 'bear' }[] = [];
 
       // 1-3. Procesamiento de velas
-      for (let i = 1; i < data.length; i++) {
+      const visibleRange = chart.timeScale().getVisibleLogicalRange();
+      const from = Math.max(1, Math.floor(visibleRange?.from ?? 0));
+      const to   = Math.min(data.length, Math.ceil(visibleRange?.to ?? data.length));
+      
+      for (let i = from; i < to; i++) {
         const bar1 = data[i - 1];
         const bar2 = data[i];
         const f1 = footprintData[bar1.time as any];
@@ -50,15 +68,9 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
         const stats1 = calculateDeltaAndPoc(f1);
         const stats2 = calculateDeltaAndPoc(f2);
 
-        // --- Estrategia 3: Contexto Macro (Absorción/Distribución) ---
-        if (orderFlowStrategies.macroContext) {
-            const isAbsorption = bar2.close < bar2.open && stats2.delta > 0 && stats2.poc > bar2.open - (bar2.open - bar2.low) * 0.3;
-            const isDistribution = bar2.close > bar2.open && stats2.delta < 0 && stats2.poc < bar2.close + (bar2.high - bar2.close) * 0.3;
-            
-            if (isAbsorption || isDistribution) {
-                renderContextZone(ctx, timeScale, bar2.time as any, stats2.poc, isAbsorption ? 'bull' : 'bear', isDark);
-            }
-        }
+        // --- Estrategia ADRIANUS: Trap Detector (Movido a Plugin Nativo V5) ---
+
+        // --- Estrategia 3: Contexto Macro (Puntos Gorda) ---
 
         // --- Estrategia 1: Diferencial de Delta ---
         if (orderFlowStrategies.deltaDifferential || orderFlowStrategies.doubleDelta) {
@@ -95,9 +107,9 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
       }
 
       // --- Estrategia 5: Volume Profile Estructural ---
-      if (orderFlowStrategies.volumeProfile) {
-        renderStructuralVolumeProfile(ctx, timeScale, isDark);
-      }
+      // if (orderFlowStrategies.volumeProfile) {
+      //   renderStructuralVolumeProfile(ctx, timeScale, isDark);
+      // }
     };
 
     const detectDoubleDelta = (ctx: CanvasRenderingContext2D, timeScale: any, signals: any[], isDark: boolean) => {
@@ -203,6 +215,10 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
         ctx.restore();
     };
 
+    const renderTrapDiamond = (ctx: CanvasRenderingContext2D, timeScale: any, time: number, price: number, type: 'bull' | 'bear', isDark: boolean, isStacked: boolean = false) => {
+        // ELIMINADO: Movido a DiamondPrimitive.ts para máxima fluidez
+    };
+
     const renderContextZone = (ctx: CanvasRenderingContext2D, timeScale: any, time: number, poc: number, type: 'bull' | 'bear', isDark: boolean) => {
         const x = timeScale.timeToCoordinate(time as Time);
         
@@ -248,25 +264,21 @@ const OrderFlowStrategiesOverlay: React.FC<OrderFlowStrategiesOverlayProps> = ({
     timeScale.subscribeVisibleLogicalRangeChange(handleRangeChange);
     
     // Suscripción de alto rendimiento a ticks (bypasseando re-renders de React)
-    let lastDataLength = useStore.getState().data.length;
-    let lastFootprintData = useStore.getState().footprintData;
-    const unsubscribeStore = useStore.subscribe((state: any) => {
-        let needsRender = false;
-        if (state.data.length !== lastDataLength) {
-            lastDataLength = state.data.length;
-            needsRender = true;
-        }
-        if (state.footprintData !== lastFootprintData) {
-            lastFootprintData = state.footprintData;
-            needsRender = true;
-        }
-        if (needsRender) requestAnimationFrame(render);
-    });
+    const unsubscribeStore = useStore.subscribe(
+        (state: any) => state.lastTickTime,
+        () => { requestAnimationFrame(render); }
+    );
 
     const resizeCanvas = () => {
         if (canvas.parentElement) {
-            canvas.width = canvas.parentElement.clientWidth;
-            canvas.height = canvas.parentElement.clientHeight;
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = canvas.parentElement.clientWidth * dpr;
+            canvas.height = canvas.parentElement.clientHeight * dpr;
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.scale(dpr, dpr);
+            }
             render();
         }
     };

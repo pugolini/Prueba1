@@ -1,0 +1,4890 @@
+
+--- INICIO: 4.1 - Cómo determinar el bias diario.txt ---
+
+En este vídeo vamos a ver una manera de determinar el bias o la
+
+dirección con la que esperamos que se mueva el precio según el perfil de
+
+volumen. El perfil de volumen,
+
+recordad,
+
+se suele representar algo tal que así, más o menos, tenemos
+
+la típica representación con el value area
+
+high y el value area low, donde en un caso,
+
+donde esto es un perfil de volumen aislado, sin tener en cuenta un
+
+contexto mayor, sino simplemente, por ejemplo, el perfil de volumen de la sesión,
+
+en el value area high, que es esta zona de aquí,
+
+buscaremos
+
+ventas, mientras que en el value area low, que es esta área de aquí,
+
+buscaremos compras.
+
+Si el precio se acerca al value area high, buscaremos algún tipo de confirmación de
+
+absorción de compradores, agresión vendedora y demás, para buscar
+
+cortos a por el POC o a por el value area low,
+
+mientras que si el precio viene al value area low, buscaremos
+
+reacciones hacia el POC o el value area high.
+
+Esto de forma aislada. Es decir,
+
+nuestro bias, en este caso, sería: si viene aquí abajo, buscaré compras, si viene
+
+aquí arriba, buscaré ventas, básicamente, en una distribución donde es
+
+más o menos regular.
+
+Ahora bien, ¿cómo podemos determinar el bias para la sesión del
+
+día actual?
+
+Lo vamos a hacer de dos maneras.
+
+Por un lado, tenemos el perfil de volumen
+
+día anterior
+
+y el perfil de volumen
+
+composite. Vamos a poner aquí
+
+tres meses
+
+y
+
+10 días, es lo que suelo aconsejar yo.
+
+¿Qué quiero decir con esto?
+
+En el primero de los casos. La
+
+forma más sencilla de determinar el bias, que realmente funciona muy
+
+bien, es
+
+si en el
+
+perfil
+
+de volumen venimos bajando en los últimos días,
+
+donde esto es el value area low, value area high, value
+
+area high, value area low, estamos en el día actual y estamos
+
+aquí. ¿Qué es lo
+
+que podemos ver según los últimos dos días?
+
+Podemos ver que en este día, el día uno, este es el día dos, este es el día tres,
+
+el
+
+precio generó valor aquí abajo y en el día dos el precio
+
+aceptó el valor aquí abajo.
+
+El día uno aceptamos valor aquí dentro
+
+y en el día dos
+
+vemos cómo el precio
+
+tuvo un retesteo del valor, lo rechazó de nuevo y generó valor más abajo.
+
+Con lo cual, se está aceptando valor cada vez más abajo. ¿Eso qué quiere decir?
+
+Que para el día tres, lo normal es esperar que el precio siga aceptando valor más
+
+abajo. ¿Por qué? Porque la subasta ahora es bajista.
+
+El mercado
+
+no está aceptando esto como un valor justo, sino como un valor caro.
+
+Con lo cual, lo normal es que esto continúe yendo a la baja hasta que
+
+deje de aceptarse, hasta que
+
+haya suficientes compradores como para aceptar
+
+niveles más altos. De momento, viendo esto, podemos decir:
+
+el precio viene bajando y vemos cómo el precio cada vez es rechazado y
+
+el valor es generado cada vez más abajo.
+
+Me da igual el cierre del día, me da igual si el día fue alcista o fue bajista.
+
+¿Por qué? Porque puede ser que el día
+
+cierre
+
+con una vela superalcista. Digamos que esto es una vela alcista,
+
+pero el valor ha estado aquí abajo. Y ese día ha sido algo tal que así.
+
+En cuanto a perfil de volumen. Un segundo.
+
+Value area high, value area low. Entonces, ¿qué está pasando aquí?
+
+Que el precio ha cerrado aquí arriba porque,
+
+desde un punto de vista temporal, en el cierre del precio, hubo alguna noticia o
+
+algo que hizo que el precio cerrara aquí arriba, pero
+
+el negocio se hizo aquí abajo.
+
+Con lo cual, que el cierre haya sido aquí arriba me da igual.
+
+¿Dónde se generó el volumen? Aquí abajo.
+
+Aquí es donde se ha transaccionado.
+
+Con lo cual quiero ver qué es lo que pasa en función a esto.
+
+Si el precio está aceptando valor aquí abajo,
+
+lo normal es que,
+
+sin un contexto mayor, el día siguiente el precio
+
+siga aceptando valores más bajos y que el value area high de este día
+
+sea una zona en la que buscar ventas.
+
+Entonces, nos vamos a
+
+fijar en
+
+dónde estamos hoy respecto al valor de ayer.
+
+Esa es la pregunta, dónde estamos hoy respecto al valor de ayer.
+
+Y
+
+ayer el precio aceptó valor más abajo
+
+o más arriba.
+
+Si el precio está aceptando en el día dos
+
+un valor
+
+inferior al día anterior, en el día
+
+tres podemos decir: "Ahora estamos bajistas, vamos a buscar ventas".
+
+¿Dónde buscamos ventas? Tenemos
+
+varias opciones, en el POC del día anterior o en el value area high del día
+
+anterior.
+
+Esos son dos puntos en los que vamos a buscar shorts.
+
+Y opuesto, obviamente, al
+
+revés.Venimos subiendo.
+
+Perfecto.
+
+Día
+
+uno, día dos,
+
+día tres.
+
+Value area high, value area low.
+
+Con lo cual en el día tres decimos: "H****a, el valor se está aceptando cada vez
+
+más arriba", lo cual
+
+queremos buscar compras. La subasta es alcista.
+
+Me da igual el cierre, me da igual cómo es la vela diaria.
+
+No estoy viendo TradingView.
+
+Estoy viendo dónde se ha transaccionado el valor y
+
+qué se está aceptando y qué se está rechazando.
+
+Con lo cual, aquí lo que estoy viendo es que el valor se está aceptando cada vez en
+
+precios más altos, así que voy a buscar compras.
+
+Entonces, para el día tres, ¿qué haré?
+
+Me voy a fijar en el POC del día anterior y me voy a fijar en el value area low,
+
+que sería para mí el punto ideal para buscar compras.
+
+Si el precio viene al POC o al value area low
+
+y tenemos la confirmación de entrada, como siempre,
+
+será una
+
+oportunidad tremenda para buscar compras. ¿Por qué?
+
+Porque la subasta es alcista, porque el precio va para arriba, el valor es
+
+alcista, el valor va migrando hacia arriba.
+
+Tenemos que ver siempre hacia dónde migra el valor.
+
+Esta es una forma muy clara que funciona muy bien para
+
+determinar el bias del día.
+
+Ahora,
+
+nos vamos a
+
+ir a la plantilla que tengo de
+
+perfil de volumen
+
+y vamos a ver cómo realmente funciona bien.
+
+No siempre funciona; cuando no funciona, te comes el stop loss.
+
+Obviamente, no todos los días podemos ir en la dirección correcta.
+
+De hecho, ahora es un poco complicado porque llevamos unas condiciones de mercado
+
+algo complejas justo ahora.
+
+Pero es algo bastante simple. Podemos decir: "Mira, desde aquí".
+
+Vamos a decir:
+
+"En
+
+este punto de aquí vemos que el precio
+
+está subiendo". Fijaos cómo el valor lo generamos aquí
+
+abajo y justo con esta vela de aquí, el valor cambia.
+
+Empezamos a aceptar valor más arriba.
+
+Fijaos que estamos por encima del valor del día anterior.
+
+Con lo cual, para este día, el bias es alcista.
+
+Aquí vamos a buscar compras, básicamente.
+
+Buscaremos alguna oportunidad: POC, value area low del día anterior,
+
+el gap en RTH,
+
+quizá el overnight value area low, overnight POC.
+
+Buscaremos compras, básicamente.
+
+Aquí, en principio, si seguimos acumulando, generando valor aquí arriba para el día
+
+siguiente, seguimos buscando compras. ¿Qué pasa? Aquí nos la comemos.
+
+Stop loss.
+
+Aquí, ¿qué pasa? Fijaos, aquí tenemos la reversión.
+
+Obviamente, no siempre va a funcionar.
+
+Es una forma de determinar el bias en función al valor del día anterior.
+
+Aquí estábamos alcistas. Aquí, fijaos, tenemos de nuevo un
+
+cambio en el valor. Tenemos el valor
+
+aceptándose por debajo del día anterior, con lo cual desde este punto estamos
+
+bajistas de nuevo.
+
+Es así de simple: que el valor se genera más abajo, estamos bajistas.
+
+Vamos a buscar ventas para el día siguiente.
+
+POC, value area high,
+
+low volume node del día anterior, voy a buscar ventas.
+
+Me da una absorción, voy a buscar ventas. Aquí se hubiese dado.
+
+Día bajista.
+
+Aquí lo mismo.
+
+Fijaos, aquí seguimos generando valor más abajo, con lo cual vamos a seguir
+
+buscando ventas. Fijaos aquí cómo el valor realmente se da
+
+dentro del día anterior,
+
+pero fijaos cómo el precio reacciona en el value area high.
+
+Y aquí tenemos la oportunidad de capitalizar
+
+un movimiento en el precio. De nuevo, aquí seguimos aceptando valor más
+
+abajo.
+
+A ver, un segundo.
+
+Me voy a cargar esto.
+
+Seguimos aceptando valor más abajo.
+
+Seguimos sin superar
+
+esta zona. Vamos a seguir buscando ventas.
+
+Aquí tenemos una venta tremenda. Fijaos. Y de nuevo, valor más abajo.
+
+Aquí, como os digo, son condiciones algo complejas ahora mismo.
+
+Aquí de nuevo,
+
+se empieza a aceptar valor más abajo y aquí de nuevo tenemos esta vela que nos
+
+sorprende un poquito. De nuevo, tenemos valor generándose
+
+aquí arriba, lo cual en este punto es una zona de
+
+esas donde tenemos una indecisión.
+
+Eso pasa mucho en condiciones de rango, donde ahora parece que sube, ahora parece
+
+que baja, no hay un movimiento muy claro.
+
+Esas son las condiciones actuales.
+
+Pero bueno, ciñéndonos a esto,
+
+quizá podríamos empezar a buscar compras aquí.
+
+Teniendo un poco en cuenta también el contexto y lo que está pasando y demás,
+
+podríamos empezar a buscar compras.
+
+Sin embargo, aquí, de nuevo nos la comemos. Tenemos un nuevo cambio de régimen.
+
+Valor más abajo. Para el día siguiente, buscamos ventas.
+
+Perfecto. Aquí se cumple. Para el día siguiente, seguimos generando valor más
+
+abajo, seguimos buscando ventas.
+
+Value area high, POC
+
+o una confluencia que tengamos este día, pum, para abajo.
+
+Y de nuevo, valor más abajo.
+
+Y aquí de nuevo tenemos algo también muy curioso.
+
+Después de esta vela de aquí, tenemos el precio
+
+abriendo por encima del value area high y generando valor aquí arriba, con lo
+
+cual aquí de nuevo nos podemos plantear el decir: "Ojo, valor más arriba de
+
+nuevo, vamos a buscar compras". Aquí de nuevo para abajo.
+
+Hay que decir que estamos actualmente en condiciones que están siendo complicadas.
+
+Aquí, por ejemplo, tenemos varios días donde
+
+empezamos a migrar el valor. Fijaos, tenemos aquí
+
+el valor de este día y luego en el día siguiente ya de nuevo aceptando valor más
+
+abajo. Con lo cual, desde aquí podemos empezar de nuevo a buscar ventas.
+
+Tenemos un bias bastante claro hacia abajo.
+
+Fijaos cómo el precio
+
+genera valor más abajo y nos da una venta buenísima aquí.
+
+De nuevo, al día siguiente, lo mismo.
+
+Value area high el día anterior y para abajo.
+
+Y de nuevo, fijaos cómo seguimos generando valor más
+
+abajoAquí tenemos un día también de esos
+
+indecisos, de nuevo para arriba, parece.
+
+Sin embargo, fijaos aquí cómo el precio tiene
+
+dificultades en superar este valor de este día de
+
+aquí. Y de nuevo empezamos a migrar valor más
+
+abajo.
+
+Está siendo quizás unos días algo complejos, donde esto
+
+no sea ahora el mejor escenario.
+
+Funciona mucho mejor en un mercado tendencial, no tanto en rango.
+
+Fijaos aquí cómo empezamos a migrar valor de nuevo más abajo y
+
+tenemos oportunidades para buscar ventas continuamente.
+
+Valor más abajo.
+
+Aquí,
+
+este día nos lo hubiésemos comido, porque tenemos esta vela con un
+
+valor
+
+generado más arriba y de nuevo valor más abajo, de nuevo para arriba y
+
+aquí tenemos dos ventas
+
+bastante buenas. Para los
+
+próximos días, la clave va a estar en qué ocurre con este valor.
+
+¿Somos capaces de aceptar valor por encima?
+
+Si no, lo normal es
+
+buscar ventas. ¿Dónde? En POC,
+
+en value area high, en low volume nodes. Vamos a buscar ventas. ¿Por qué?
+
+Porque la subasta es bajista. Estamos aceptando valor cada más abajo.
+
+Fijaos que tenemos aquí un periodo de consolidación, que esto es complicado, pero
+
+veis como muchas veces se va a respetar.
+
+Por ejemplo, aquí, en estos días que empezamos a
+
+aceptar valor más arriba.
+
+Aquí.
+
+Todo esto son días que podemos aprovechar esos movimientos para buscar compras.
+
+Y aquí
+
+tenemos un cambio de valor también muy fuerte.
+
+Tenemos precios subiendo y en este punto deja de aceptarse más
+
+arriba y tenemos un cambio donde el valor vuelve a acumularse
+
+por debajo del día anterior. Aquí podemos empezar ya a buscar ventas.
+
+Es una manera muy simple. Como veis, no siempre funciona,
+
+es un bias, simplemente, es una dirección.
+
+Voy a buscar compras o voy a buscar ventas, qué espero del mercado.
+
+Eso por un lado, pero esto, como veis, muchas veces falla.
+
+¿Por qué? Porque
+
+realmente es una forma de ver el mercado de una manera bastante aislada.
+
+Estamos fijándonos en qué ha pasado ayer o el día anterior, los últimos dos o
+
+tres días. En función de eso, vemos un poco dónde está migrando el
+
+valor y decimos: "Cada vez se está aceptando valor más
+
+arriba, voy a buscar compras, la subasta es alcista.
+
+Cada vez se está aceptando valor más abajo, voy a buscar ventas".
+
+Es así de simple, tiene que ser simple.
+
+El siguiente
+
+punto que os he querido
+
+mostrar aquí es el perfil de volumen, el composite.
+
+Que es el que vemos representado a la
+
+derecha en Deep Charts, en mi caso, que es esto de aquí.
+
+Yo personalmente los que
+
+estoy utilizando son el de cinco días y el de tres meses.
+
+El de tres meses te da una visión un poco más de largo plazo y el de 10 días, más a
+
+corto plazo.
+
+Esto
+
+es nuestro perfil de volumen composite de tres meses.
+
+Como
+
+cualquier perfil de volumen
+
+que tratamos de forma aislada, lo que vamos a hacer es, en el value area high vamos
+
+a buscar ventas.
+
+En el value area low vamos a buscar compras.
+
+Mientras el precio esté aquí dentro,
+
+el bias va a estar
+
+realmente mucho menos claro.
+
+Esto que os he dicho de utilizar el bias en función al perfil de volumen del
+
+día anterior, los últimos dos días,
+
+aquí puede fallar mucho más. ¿Cuándo vamos a
+
+encontrar
+
+que esto va a funcionar? Cuando el
+
+precio viene de estar en el value area low
+
+y empezamos a
+
+aceptar precios por encima del POC, lo cual probablemente nos lleve a una expansión
+
+por encima del value area high de los últimos tres meses.
+
+Lo que quiero decir es que vamos a
+
+intentar
+
+utilizar esta manera de ver el bias según
+
+los últimos dos o tres días, pero vamos a utilizar también el perfil de
+
+volumen de los últimos tres meses, porque nos va a dar una visión un poco
+
+más global de dónde estamos. Y si estamos en el value area low
+
+y vemos que el precio empieza a migrar hacia arriba el valor, vamos a entrar con
+
+convicción.
+
+Si estamos en el value area high y vemos que el precio está empezando
+
+a aceptar valor cada vez más abajo,
+
+puede ser una buena oportunidad para buscar reversiones hacia el value area
+
+low de los tres meses, que no es poco, no estamos hablando de 10
+
+puntos, sino que estamos hablando de un rango realmente fuerte.
+
+Migración de valor a la baja. En zonas
+
+cercanas a value area high, buscamos ventas.
+
+Migración de valor al alza.
+
+Valor.
+
+En value area low, vamos a
+
+tener un bias relativamente alcista.
+
+Creo que combinando estos dos tipos
+
+de volúmenes, los de los últimos dos o tres días, junto con
+
+los últimos tres meses en composite.
+
+Esto, combinado de esta manera, justamente con esta
+
+plantillaPuede
+
+funcionar muy bien. Fijaos, venimos
+
+acumulando de los últimos tres meses esta acumulación
+
+enorme y fijaos cómo el precio ha sido rechazado en el value
+
+area high.
+
+Aquí empezamos a
+
+buscar migraciones o aceptación de valor
+
+abajo.
+
+Fijaos cómo el precio es incapaz de aceptar el valor aquí arriba.
+
+Sin embargo, es cierto que el precio se estaba consolidando bastante, pero
+
+lo que nos dice es: tenemos rechazo en la parte superior,
+
+vamos a ver si empezamos a aceptar valor más abajo.
+
+Si eso ocurre, vamos a empezar a buscar ventas.
+
+Como veis, muchas veces hay días que dices: "H****a, ahora sube.
+
+J***r, este día no he entendido lo que ha pasado".
+
+Pero fijaos cómo a la larga, la migración del valor te acaba
+
+dando la razón. Fijaos aquí, hemos tenido una bajada realmente fuerte.
+
+Ahora, ¿qué pasa? Yo aquí tendría cuidado. ¿Por qué?
+
+Porque fijaos dónde está el valor de los últimos tres meses, está aquí arriba.
+
+Estamos,
+
+en relación a los últimos tres meses, en una zona muy barata.
+
+Con lo cual, aquí esperar reacciones, quizá al value
+
+area low de los últimos tres meses es muy probable.
+
+Teniendo
+
+en cuenta esto, que en los últimos tres meses estamos muy abajo
+
+en el
+
+composite
+
+a largo plazo,
+
+y vemos que
+
+llevamos ya un tiempo aceptando valor más abajo.
+
+Ojo, porque si empezamos a aceptar valor más
+
+arriba, podemos empezar a tener una reversión
+
+y unos días
+
+alcistas muy fuertes a por el value area
+
+low del valor.
+
+Con lo cual, yo aquí no tendría muy claro el buscar ventas.
+
+Yo aquí arriba sí. Value area high, estamos siendo rechazados, hemos tenido
+
+varios setups ahí en venta, pero aquí abajo tendría cuidado, porque
+
+aquí una reversión, por lo menos, quizá testear lo que sería
+
+el value area low de los tres meses, es muy probable.
+
+Con lo cual, vamos a ver qué pasa aquí. De momento, estamos bajistas.
+
+Venimos de rechazar el value area high.
+
+Se nota cierto volumen.
+
+Fijaos aquí en el composite,
+
+tenemos una zona de aquí. Fijaos aquí a la derecha, estas montañitas.
+
+Tenemos uno, dos, tres, cuatro, cinco, seis días.
+
+Cinco o seis días aquí consolidando, donde se ha generado bastante valor, con
+
+lo cual
+
+este va a ser el
+
+punto importante ahora.
+
+Si el precio viene aquí, vamos a ver qué pasa.
+
+Lo normal, en mi opinión, es que aquí se vea rechazado, porque aquí es
+
+donde se estuvo generando valor,
+
+compradores y vendedores estuvieron de acuerdo en que era un precio
+
+justo. Sin embargo, el
+
+mercado empezó a aceptar valor más abajo, con lo cual
+
+la subasta es bajista. Esto, si el precio nos da un retest,
+
+sería una opción para empezar a buscar ventas, obviamente con una confirmación.
+
+Como os digo, este es el bias. El bias ahora mismo es: estamos bajistas.
+
+Vamos a ver si el precio nos da la oportunidad de llegar aquí arriba y aquí quizá
+
+buscar ventas. ¿Que el precio empieza a aceptar valor aquí arriba?
+
+Lo normal es que el precio,
+
+poco a poco, vaya migrando valor y vayamos por lo menos, al siguiente nivel, que
+
+sería el value area low de los últimos tres meses.
+
+Aquí veremos qué pasa, que lo normal es que
+
+sea rechazado o por lo menos veamos una
+
+consolidación.
+
+E ir viendo con el tiempo, con los días, hacia dónde está migrando el valor.
+
+Creo que esa manera de utilizar el perfil de los
+
+últimos días junto con el perfil a largo plazo,
+
+nos da una visión bastante más completa que lo que podemos ver con un gráfico
+
+en diario, en velas japonesas.
+
+Que hoy es día alcista.
+
+¿Qué te dice eso, que es un día alcista?
+
+Básicamente, que respecto a la apertura, el precio ha cerrado
+
+arriba. Es lo único que te dice.
+
+Es probable que el día siguiente tengamos pequeño retroceso y continuación
+
+alcista. Es probable, sí.
+
+Pero muchas veces veréis que eso no funciona.
+
+Sin embargo, si nos ceñimos más al volumen donde se ha transaccionado, donde ha
+
+habido negociación,
+
+y tratamos de definir una dirección en función a eso,
+
+veréis que
+
+vamos a fallar mucho menos.
+
+No voy a decir que no vamos a fallar, porque como habéis visto, hay varios días
+
+donde empezamos a migrar valor,
+
+aceptar valor más arriba y luego tenemos una vela que acaba bajando.
+
+¿Por qué? Por un lado, las condiciones de
+
+mercado tampoco están siendo ahora
+
+mismo
+
+óptimas. Y por otro lado, porque esto es una forma simple de decir: "Hoy voy a
+
+buscar compras o ventas, o mi predisposición es alcista o es bajista".
+
+No es: "Voy a comprar ahora ya". Es: "Voy a ver qué me dice el
+
+mercado, a ver si me da alguna oportunidad de entrar en compra o en venta",
+
+pero siempre con una confirmación.
+
+No es entrar porque el perfil de volumen
+
+fue alcista, sino que vamos a ver qué nos da el mercado.
+
+Pero realmente creo que es una forma muy top de ver
+
+la dirección del mercado,
+
+que de verdad podéis iros al gráfico.
+
+Os aconsejo que vayáis un poco más atrás, porque los últimos meses están siendo
+
+complicados este año en cuanto a dirección, pero si os vais a
+
+2025 vais a ver mucha más claridad y vais a ver que se respeta
+
+bastante bien. Otra forma
+
+que me gusta utilizar a mí,
+
+sobre todo en cuanto a
+
+operativa más intradía, es fijarme
+
+tanto en el perfil de la sesión actual como en los últimos cinco
+
+días. ¿Veis aquí arriba que pone cinco días?
+
+Esto es porque tengo aquí puesto el perfil de los últimos cinco días.
+
+En la derecha, en lugar del composite de los tres meses, tengo el de los cinco
+
+días. Con lo cual intento combinar tanto lo que pasó
+
+los últimos dos, tres díasCon el composite de los últimos tres meses,
+
+con el perfil de volumen actual el día de hoy, con el perfil
+
+de volumen composite de los últimos cinco días. Ahora mismo, ¿qué tenemos?
+
+El volumen de los últimos cinco días está aquí arriba.
+
+Coincide más o menos con el volumen que hemos visto,
+
+que os he marcado hace un momento,
+
+aquí.
+
+Fijaos en esta montañita, con lo cual es probable que el
+
+precio tienda a ir ahí de nuevo.
+
+Tenemos
+
+aquí el VWAP semanal
+
+de la semana pasada.
+
+Creo que es muy probable que tengamos un movimiento hasta esta zona de aquí, que es
+
+donde hemos visto la mayor negociación, y aquí veremos qué ocurre.
+
+Lo normal, estamos bajistas, el valor está siendo aceptado más abajo, con lo cual
+
+lo normal es que veamos rechazos y empecemos a buscar
+
+opciones de venta. Validar el
+
+high de días anteriores, POX,
+
+overnight validó el high.
+
+Tratemos de posicionarnos en lo que
+
+nos está diciendo el mercado, que es la subasta actual, que es bajista.
+
+Que luego el precio empieza a
+
+aceptar zonas más arriba, nos adaptamos y empezamos a buscar
+
+compras. Al
+
+final el mercado es muy dinámico.
+
+Es cuestión de ver hacia dónde está migrando el valor,
+
+dónde estamos en los diferentes perfiles de volumen, en cuanto a áreas.
+
+En función de eso, tomar una predisposición, luego esperar una
+
+confirmación de entrada y
+
+punto, no hay más.
+
+Esto en cuanto a formas
+
+de encontrar o determinar un bias o una
+
+dirección en el mercado en función del perfil de
+
+volumen.
+
+
+--- FIN: 4.1 - Cómo determinar el bias diario.txt ---
+
+
+--- INICIO: 4.2 - Cómo marcar zonas de interés.txt ---
+
+Durante toda la formación pongo mucho énfasis en la importancia de
+
+ejecutar, cuando veas tu setup de entrada,
+
+únicamente en una zona de interés.
+
+Luego está la pregunta: ¿qué es una zona de interés o cómo marco yo esas zonas de
+
+interés?
+
+Como traders de order flow, nos vamos a basar en el volumen.
+
+Por un lado,
+
+tenemos
+
+el clásico perfil de volumen, ya hemos hablado de ello,
+
+tenemos un vídeo específicamente para esto y lo vamos a estar
+
+hablando en toda la formación, en los directos y demás, pero tenemos el
+
+típico perfil balanceado, tenemos value area high
+
+y tenemos value area low,
+
+aquí tenemos el precio que tiende a consolidar.
+
+Muchas veces,
+
+lo que tenemos en el perfil son esas montañitas,
+
+que son los high volume nodes y los low volume nodes.
+
+Esto, en concreto, lo vemos de la siguiente forma.
+
+Tenemos nuestro perfil,
+
+que tiene
+
+algunas montañitas.
+
+Y ahí podemos identificar las zonas de
+
+mayor volumen y las zonas de menor volumen.
+
+Aquí hemos tenido
+
+una zona de mucho volumen, igual que aquí.
+
+Estos serían los high volume nodes.
+
+Y luego tenemos zonas de menor volumen, en concreto tenemos los low
+
+volume nodes.
+
+Esto lo voy a poner en azul.
+
+Son las zonas donde ha habido poca negociación.
+
+Entonces,
+
+estos dos elementos de cualquier perfil de volumen van a
+
+ser zonas en las que vamos a buscar
+
+reacciones, van a ser zonas de interés.
+
+¿Por qué? Porque en los high volume nodes, que son zonas donde ha habido
+
+negociación y el mercado ha estado de acuerdo en que es un precio
+
+justo, tanto compradores como vendedores han
+
+estado de acuerdo en que es un precio justo o atractivo para negociar, para
+
+transaccionar,
+
+con lo cual el mercado es muy posible que cuando vuelva aquí, vuelva a
+
+consolidar y a generar valor dentro de esta misma zona.
+
+Y luego tenemos los low volume nodes, que a la vez
+
+son zonas de interés, porque son zonas donde ha habido poca
+
+negociación y la
+
+función del mercado es habilitar o
+
+facilitar la negociación. Con lo cual, esas zonas donde ha habido
+
+poca negociación, son zonas donde el mercado va a tender a ir
+
+para rellenar esas ineficiencias, entre comillas, y permitir
+
+que los participantes del mercado puedan
+
+transaccionar en esas zonas en las que no han tenido demasiada oportunidad.
+
+Entonces, high volume nodes y low volume nodes,
+
+juntamente con el POC.
+
+El POC, que es el precio
+
+donde ha habido la mayor negociación en toda la
+
+sesión o en todo el rango sobre el que se coja ese perfil.
+
+Y el POC es importante no cogerlo como justo el punto en el nivel de precio,
+
+en el tick,
+
+que se da la mayor negociación, sino coger el nivel, porque el POC
+
+como tal no es relevante. Lo importante es el nivel en el que ha habido esa
+
+negociación. Lo digo porque muchas veces, muchos traders
+
+esperan a que el precio llegue justo al POC y ponen sus órdenes en el POC.
+
+Y muchas veces el precio no llega, porque es la zona en general, no es el POC como
+
+tal, sino es la zona.
+
+Entonces, high volume nodes, low volume nodes, POC.
+
+Eso en cuanto a perfil de volumen, son zonas clave.
+
+Obviamente, también,
+
+luego tenemos
+
+value area high
+
+y luego tenemos el value area low.
+
+Estas zonas son los principales elementos del perfil de volumen
+
+y van a ser superimportantísimos y van a ser
+
+zonas en las que vamos a buscar una confluencia con nuestras herramientas de order
+
+flow, big trades, delta, footprint, bookmap y demás,
+
+para buscar
+
+nuestras operaciones. Solo en estas zonas de interés,
+
+juntamente quizá con VWAP y demás, lo vamos a ir viendo poco a poco,
+
+van a ser zonas en las que
+
+nos va a interesar ejecutar siempre que veamos el setup.
+
+Esto en cuanto a perfil de volumen, que puede ser el perfil de
+
+volumen del día, el de sesión de Londres, la sesión de New
+
+York y demás. Pero también podemos tener en cuenta estos
+
+elementos en días anteriores y en concreto los últimos
+
+dos o tres días, son los días que nos van a ser más
+
+relevantes para nuestra operativa como day traders.
+
+Entonces, lo que podemos hacer es irnos a DeepCharts o cualquier plataforma de
+
+order flow, coger un perfil de volumen, en este
+
+caso vamos a buscar aquí Deep Profile,
+
+y lo vamos a anclar aquí y vamos a ver los últimos
+
+perfiles de volumen que tenemos. En este caso es el perfil de volumen del
+
+día. Podemos filtrar también entre del día
+
+o lo
+
+podemos poner también en que nos
+
+marque
+
+RTH, o que nos marque también
+
+tanto overnight como RTH.
+
+Nos va a marcar estos de aquí. Vamos a coger el ejemplo del día
+
+para
+
+tener una mayor muestra ahora mismo.
+
+Simplemente, podemos irnos a una temporalidad de 15 minutos, que se ve todo
+
+bastante bien.
+
+Podemos incluso hacer el perfil de volumen un poco más visible.
+
+Nos vamos a ir a
+
+Plot settings, Visual appearance.
+
+No, aquí a Width offset vamos a poner en lugar de 10,
+
+15.
+
+Lo que nos va a hacer un poco más ancho el perfil de volumen.
+
+ValeAquí lo que podemos identificar son el
+
+POC,
+
+value area high, value area low,
+
+zonas de mayor negociación, zonas de menor negociación.
+
+Estas son zonas que podemos
+
+proyectar en el tiempo y veremos que son
+
+zonas
+
+de reacción,
+
+incluso pasados varios días. Por ejemplo, en este día de aquí,
+
+¿qué es lo que vemos? Tenemos el value area low, tenemos el POC, que es en
+
+rosa en este caso. Me estaba confundiendo con el amarillo.
+
+Vamos
+
+a limpiar un poquito el perfil de volumen.
+
+Vamos a quitar el peak and valley y vamos a quitar también el VWAP.
+
+Vamos a dejar así, donde la línea rosa en este
+
+caso sería el POC.
+
+¿Qué tenemos aquí?
+
+Podría coger
+
+esta zona
+
+y proyectarla en el tiempo.
+
+Tenemos también
+
+por aquí algunos low volume nodes,
+
+y la proyectamos. Tenemos aquí también este low
+
+volume node de aquí.
+
+Solo fijaos en el día siguiente,
+
+como son zonas donde el precio
+
+viene. Low volume node del día anterior.
+
+Low volume node del día anterior de nuevo.
+
+Fijaos como aquí el precio se está consolidando, e inicialmente actúa como
+
+resistencia, luego el precio lo supera y actúa como soporte.
+
+Fijaos también en toda esta zona de aquí, obviamente, que es la zona
+
+donde había habido una mayor transacción el día anterior.
+
+Fijaos que es aquí donde el precio encuentra soporte.
+
+El value area low también sería importante,
+
+value area high también, obviamente.
+
+Luego, para el día siguiente hacemos lo mismo.
+
+Podemos coger varios días y proyectarlos, y quizá este mismo día.
+
+Estas zonas que hemos marcado, especialmente las que vemos que se respetan,
+
+si el precio viene aquí abajo, es posible también que tengamos una reacción.
+
+Porque si tuvo una reacción aquí en el pasado, por qué no la
+
+iba a tener en el futuro.
+
+Podemos hacer lo mismo para el día siguiente.
+
+Fijaos, aquí tenemos este low volume node.
+
+Qué casualidad que es el mínimo dos días más tarde.
+
+Este low volume node. Tenemos luego
+
+el value area low. Son
+
+zonas que podemos marcar incluso en gris, como yo hago.
+
+Me gusta tener esa higiene visual.
+
+No quiero tener demasiadas líneas, demasiados colores.
+
+Quiero tener ahí cierto orden en mi cabeza y me quiero
+
+sobre todo centrar en zonas importantes.
+
+Luego, mis herramientas de delta, big trades, footprint,
+
+book map y demás, que me digan lo que está pasando a tiempo real en el momento
+
+presente y ya. No quiero liarme con demasiadas
+
+líneas, colores, quiero ver lo realmente importante, con lo
+
+cual yo suelo marcarme las zonas en un gris, donde yo cuando el precio viene ahí
+
+digo: "Si reacciona aquí, me gusta. Si pierde la zona, cuidado".
+
+Son zonas de interés.
+
+Value area low, value area high
+
+del día anterior.
+
+Fijaos en el mismo value area high que acabo de marcar.
+
+Fijaos en este día de aquí como es un soporte.
+
+¿Qué más tenemos? Tenemos también en
+
+este high volume node, tenemos el POC.
+
+En este caso no tiene mucha más relevancia
+
+en el futuro, por lo menos en estos últimos dos o tres días, quizá sí en los
+
+próximos días. Puede ser una zona donde encontrar cierto soporte.
+
+Luego, ¿qué más tenemos?
+
+Este día de aquí, que es un poco más balanceado, como veis, es un
+
+perfil más bien en D.
+
+Balanceado. Tenemos el value area low,
+
+tenemos value area high.
+
+Luego tenemos el POC o la zona de
+
+mayor negociación, también la podemos proyectar.
+
+Y tenemos varios low volume nodes, que sin duda tengo que decir que son mis
+
+zonas favoritas. Fijaos en este ejemplo.
+
+Voy a quitar esto, que quizá tiene menos relevancia ahora
+
+mismo. Fijaos en este low volume node de aquí,
+
+donde el precio lo respeta en varias ocasiones.
+
+Una, aquí luego encuentra soporte,
+
+luego aquí de nuevo como resistencia, resistencia de nuevo el día siguiente,
+
+luego resistencia aquí de nuevo, el precio es incapaz de superarlo.
+
+Aquí de nuevo. Fijaos que los low volume nodes
+
+son puntos
+
+superinteresantes a tener en cuenta.
+
+¿Qué
+
+más? Este día de aquí, lo mismo. Al final el procedimiento es muy simple: marcar
+
+las áreas extremas, value area high y value area low.
+
+Van a ser zonas en las que buscamos reacciones.
+
+Fijaos aquí, este mechazo de aquí, este de aquí.
+
+Zonas de negociación, low volume nodes.
+
+Quizá podríamos
+
+definir aquí como un low volume node algo grande.
+
+Vamos a coger algo así.
+
+De nuevo, aquí es un soporte,
+
+donde también el precio ha encontrado aquí cierto soporte el día actual.
+
+Y zonas de mayor negociación. Que es donde el precio
+
+lleva aquí dos días prácticamente.
+
+Son zonas
+
+basadas en perfil de volumen. High volume nodes, low volume nodes,
+
+POC,
+
+value area high, value area low.
+
+Básicamente, esa es la forma en la que yo marco los
+
+puntos de interés. Luego también, tener en
+
+cuentaMáximos
+
+intradía, como el overnight high, el máximo de Londres o el
+
+mínimo de Londres.
+
+Máximo y mínimo de Asia, incluso,
+
+sobre todo para la sesión de Londres.
+
+Tenemos también el máximo del día anterior, mínimo del día anterior.
+
+Van a ser puntos que, obviamente, si el precio llega ahí, va a ser una zona en la
+
+que vamos a buscar una reacción.
+
+Máximo la semana pasada, mínimo la semana pasada.
+
+Esas son zonas que podemos tener en cuenta.
+
+Luego, incluso basándonos no tanto en volumen, sino también
+
+por price action puro,
+
+zonas donde vemos que el precio consolida, que al final va a tener
+
+cierta relación con el volumen. Pero ahí es donde vemos cierta
+
+consolidación.
+
+Esta zona de aquí, el precio consolida antes de iniciar esa caída.
+
+En esta zona de aquí consolida y luego cae.
+
+Si os fijáis, cuando vuelve a subir, encuentra cierto
+
+balance de nuevo.
+
+Esta
+
+pequeña caída antes de la subida, también podría ser lo que
+
+muchos traders ICT llaman order block o breaker.
+
+Esos order blocks o
+
+breakers que utilizan esos traders de smart money y demás,
+
+funcionan muchas veces, porque es otra forma de ver dónde ha habido
+
+volumen.
+
+No es por el order block como tal, es porque aquí ha habido volumen, aquí ha habido
+
+negociación, aquí ha habido un estado de balance previo a la
+
+salida del área de valor y previo a ese movimiento de
+
+imbalance. Pero no porque sea un order block.
+
+Esta zona también, esta zona de
+
+consolidación,
+
+en el futuro la podríamos proyectar y,
+
+si el precio llegara aquí abajo, podría encontrar cierto soporte.
+
+Aquí, por ejemplo, tenemos esta zona donde ha habido
+
+bastante consolidación.
+
+Aquí igual, veis cómo el precio cuando viene aquí, le cuesta
+
+superar con fuerza. Porque aquí es una zona donde el precio, donde
+
+los participantes,
+
+compradores y vendedores, estaban de acuerdo en que era un precio justo, con lo
+
+cual es un precio donde va a haber bastante interés.
+
+Como os digo, sobre todo zonas con mucha negociación y con poca
+
+negociación, high volume nodes y low volume nodes, junto con value area
+
+high y value area low, son zonas de mucho interés.
+
+Luego también podemos utilizar el perfil de volumen
+
+diario, que en
+
+lugar de ver el gráfico, vemos únicamente
+
+el perfil. También podemos ver muy claramente dónde están los low volume
+
+nodes. Podemos ver dónde está el value area high y value area low.
+
+Podemos ver los low volume nodes,
+
+de volume nodes y high volume nodes.
+
+Tenemos diferentes herramientas de marcar esas zonas
+
+y al final es cuestión de
+
+encontrar la que mejor nos funcione
+
+y sobre todo creo que es una cuestión de práctica.
+
+Cuando muchas veces lo ves y ves que se va respetando continuamente, dices:
+
+"H****a, esta zona hay que marcarla", porque incluso dos semanas más
+
+tarde sigue respetándose.
+
+Así que esta es la forma en la que yo marco mis zonas de interés.
+
+Recordad, eso es lo más importante.
+
+Un trade de forma aislada, una absorción de forma aislada,
+
+un
+
+agotamiento en bookmap o un
+
+delta enorme en footprint y demás, un big trade, es irrelevante cuando ocurre en
+
+una zona que no es interesante. Lo importante aquí es filtrar cuándo sí y cuándo
+
+no.
+
+
+--- FIN: 4.2 - Cómo marcar zonas de interés.txt ---
+
+
+--- INICIO: 4.3 - Cómo operar rangos.txt ---
+
+Familia, los rangos también se pueden operar.
+
+Las consolidaciones también se pueden operar si tenemos esa información y
+
+sabemos lo que estamos haciendo. Entonces, ¿cómo podemos
+
+operar esas fases de consolidación, esas fases de
+
+balance
+
+en perfil de volumen?
+
+Realmente es muy sencillo. Ya sabemos que solemos tener el perfil de volumen
+
+en un perfil balanceado donde el precio se está consolidando,
+
+tenemos el value area high y value area low.
+
+Esa es la zona donde tenemos aproximadamente el 70 % del volumen
+
+negociado. Y hay un 30 % que ocurre
+
+fuera de este valor, que se considera como anomalías.
+
+La zona de interés, el valor, se
+
+reduce aquí dentro. En un periodo de consolidación,
+
+lo que solemos tener es que el precio va de value area
+
+high a value area low
+
+y estamos rotando dentro de esta
+
+zona de valor. Luego, aquí tenemos el POC, que
+
+es un punto a tener en cuenta al 100 %.
+
+Entonces, ¿cómo vamos a operar esto?
+
+Si podemos identificar de alguna forma que estamos en un estado de balance
+
+y tenemos un perfil tan claramente en D, como es
+
+este caso, un perfil balanceado,
+
+identificamos dónde está el value area high y el value area low.
+
+Es muy sencillo operar esto. Sí que es verdad que tenemos que
+
+cambiar un poco nuestra forma de operar.
+
+No es tanto de buscar una expansión, sino vamos a buscar pequeños movimientos.
+
+Lo que vamos a buscar continuamente va a ser
+
+fadear. No sé cómo se dice esto en español.
+
+"To fade" es
+
+buscar ventas
+
+en la parte superior del value area high.
+
+Ventas. Y
+
+aquí
+
+buscaremos
+
+compras.
+
+Es así de sencillo. ¿Que
+
+tenemos el precio en value area low?
+
+Me interesa ver si puedo quizá buscar una compra, ¿hasta dónde?
+
+Principalmente, el POC
+
+y,
+
+incluso, por qué no, dependiendo un poco del contexto y demás, el value area high
+
+opuesto. Al final te darás cuenta y dirás: "Ah, pero es que es un
+
+trade muy corto".
+
+Corto, depende, porque depende si lo
+
+puedes ajustar bien con footprint y con herramientas de order flow
+
+y demás, puedes llegar a tener aquí más de 5 o 6
+
+R del value area low al POC perfectamente.
+
+Corto
+
+en cuanto a rango, sí, pero no en cuanto a ratio.
+
+Hay formas de ajustar ese stop de una
+
+forma objetiva y de una forma que tenga sentido.
+
+Y este trade del value area low al POC puede ser un
+
+muy buen trade.
+
+Yo aquí lo que suelo recomendar es buscar absorciones en la parte inferior hacia
+
+el POC y value area high y absorciones en la parte
+
+superior hacia el POC y value area low.
+
+Siempre recomiendo
+
+por lo menos tomar un parcial en el POC, porque
+
+aquí es una zona donde el precio muchas veces en el POC ya sabéis lo
+
+que hace.
+
+Cuando tenemos el precio en el POC, lo que suele hacer el precio es
+
+comportarse de una forma un poco errática antes de ir a value
+
+area high o antes de ir al value area low.
+
+A veces el POC puede ser un poco
+
+incómodo en el que mantener una posición, sobre todo si estamos en profit, si
+
+estamos en beneficio, con lo cual queremos tomar un parcial y cubrirnos ahí y
+
+poner el stop loss en break even. El objetivo es poner el stop loss en break even
+
+lo antes posible en este tipo de
+
+régimen de mercado. Pero eso es lo que haremos, buscar el
+
+POC como punto en el que quizá el precio podría
+
+racionar, con lo cual aquí voy a querer tomar parte de mi posición y luego
+
+buscaremos el value area opuesto
+
+como target final.
+
+Realmente es una
+
+forma
+
+en que se puede explotar así los rangos y puedes sacar
+
+muchos trades muy buenos.
+
+Hay días donde el precio está continuamente así y tú puedes aprovechar
+
+continuamente estos movimientos.
+
+No tienes que casarte con una idea de: "El precio es que va a subir".
+
+Va a subir, vamos a ver. Puede que suba, pero igual es mañana o igual es dentro de
+
+unas horas. Ahora estamos en balance, con lo cual, mientras el precio siga en
+
+balance,
+
+voy a seguir operando dentro de este balance.
+
+Si yo veo absorciones en la parte superior, voy a buscar ventas.
+
+Si veo absorciones en la parte inferior, voy a buscar compras.
+
+Estamos reaccionando a lo que nos está diciendo el mercado, que es que el mercado
+
+está
+
+percibiendo esta zona, este rango de precios, como una zona
+
+justa para las condiciones actuales, con lo
+
+cual, si quiero capitalizar esto, voy a tener que
+
+adaptarme a ello y operar de esta forma.
+
+Entonces, realmente hay que tener en cuenta que
+
+esto, como os digo, es el 70 % del volumen, ocurre
+
+dentro del value area, del área del valor.
+
+A la vez, el 70 u 80 % del tiempo, el precio se está
+
+comportando así. El
+
+periodo de tiempo en el que tenemos el precio expandiendo es entre un
+
+20 y un 15 %. El resto del tiempo
+
+suele estar consolidando.
+
+Saber operar consolidaciones es muy importante, porque si no, días
+
+positivos vamos a tener uno o dos a la semana.
+
+Obviamente, no hay nada malo en ello.
+
+Si tienes uno o dos días buenos a la semana, puedes hacer mucho dinero, 100 %.
+
+Sobre todo si coges una expansión muy fuerte, puedes hacer mucho dinero.
+
+Estamos viendo aquí cómo podemos profundizar un poco más y incluso
+
+aprovechar esas condiciones quePueden parecer muy complicadas
+
+para otro tipo de traders que no tienen acceso a order flow, porque esto
+
+sin order flow tú no puedes operarlo.
+
+Operar un rango
+
+sin esta información, con TradingView puramente, no vas a
+
+poder. Necesitas ver información, ver qué está ocurriendo,
+
+ver quién está agrediendo, quién está siendo absorbido.
+
+Eso lo vemos con order flow.
+
+Cuando el precio
+
+rompe y sale de valor, ahí
+
+ya podemos empezar a valorar otras cosas. Hablaremos de esto en otro vídeo, mejor.
+
+Pero cuando el precio de alguna forma sale
+
+y acepta en valor, volumen y
+
+tiempo,
+
+zonas más altas, aquí lo que esperaremos es
+
+algún tipo de retroceso o algún tipo de señal, que veremos en el siguiente vídeo,
+
+para buscar continuaciones en compra.
+
+Pero de forma general, cuando tenemos el precio en un estado de balance,
+
+con un mercado tan balanceado,
+
+lo normal es que cuando el precio
+
+se desvíe del value area,
+
+nos den opciones
+
+de compra.
+
+Tenemos que estar atentos
+
+a qué está pasando con herramientas de order flow.
+
+¿Está siendo aceptado o rechazado? ¿Está entrando volumen o no?
+
+¿Los compradores o vendedores están teniendo resultado o no?
+
+Eso son cosas que tenemos que valorar.
+
+Vamos a ver algún ejemplo. Esto fue ayer,
+
+y
+
+es un ejemplo perfecto, porque el precio aquí venía de balance.
+
+Ya sabéis que el precio suele hacer lo siguiente, de forma general,
+
+va de balance en balance hasta encontrar nuevo balance.
+
+Teníamos un precio en balance, luego tuvimos una expansión fuerte,
+
+que es un estado de imbalance en la
+
+apertura, y luego estuvimos varias horas de nuevo consolidando
+
+hasta el cierre del día. Esto ocurre mucho, movimientos expansivos en
+
+la apertura, donde luego se queda consolidando y se nos forma
+
+este valor en esta zona de aquí. Que esto, como os digo,
+
+también lo podemos aprovechar si queremos.
+
+Esto es un ejemplo. Fijaos, es justo lo que os decía, tenemos el
+
+precio aquí consolidando y desde la apertura, que es justo aquí, el
+
+precio pegó esta expansión brutal y luego se quedó aquí consolidando.
+
+Y fijaos cómo el valor está aquí arriba.
+
+Y tenemos el value area
+
+low
+
+y el value area high, que podemos coger no solo la
+
+línea como tal, el precio, el tick justo en el que es el value area high o el
+
+value area low, sino que podemos coger lo que sería ahí donde termina
+
+la negociación principal, ahí donde termina la montañita.
+
+Donde termina esa montañita, eso sería donde podríamos delimitar el value area.
+
+En
+
+este caso, fijaos, aquí tenemos algunas oportunidades bastante buenas.
+
+Aquí podríamos haber estado buscando ventas y aquí podríamos haber estado
+
+buscando compras, tanto aquí como aquí.
+
+Además, tenemos una mayor confluencia, que es el VWAP.
+
+Esto es el VWAP, la línea morada.
+
+No voy a entrar en esto ahora, pero
+
+tenemos
+
+otras herramientas, el delta y demás, que podemos
+
+utilizar como confluencia a la hora de buscar compras y ventas.
+
+Pero aquí lo que podríamos haber hecho es simplemente
+
+esperar a que el precio llegara o al value area high y buscar una absorción
+
+de compradores y
+
+agresión vendedora,
+
+o esperar a que el precio viniera al value area low
+
+para buscar vendedores atrapados, absorbidos y agresión
+
+compradora buscando el POC. El POC, fijaos, que es esta zona de aquí,
+
+que es donde el precio tiende a
+
+ser atraído y rechazado a la vez. Es una zona de
+
+atracción y es donde nos
+
+interesa tomar un parcial aquí, porque cuando el precio está
+
+balanceado, muchas veces de value area low no va directamente a value area
+
+high, sino que a veces va al POC, retrocede, vuelve
+
+value area low,
+
+vuelve al POC y quizá en un rato vuelve al value area high.
+
+Con lo cual, si somos capaces de tomar por lo menos una
+
+parte de ese movimiento, por lo menos del value area low al POC o del value
+
+area high al POC, nos interesa pagarnos, tomarnos un
+
+pequeño parcial. Como os digo,
+
+¿puede ser un pequeño trade? Depende.
+
+Si nosotros somos capaces de coger,
+
+por ejemplo, la compra aquí con el stop loss aquí y nos salimos aquí,
+
+que es posible, son 4,47 R.
+
+Luego quizá podemos entrar aquí con el stop loss aquí y salirnos de
+
+nuevo en el POC.
+
+Estos son 3,2 R.
+
+Que luego dejamos un parcial
+
+y el precio nos acaba dando el value area high.
+
+Pero fijaos también que hasta que el precio va al value area high,
+
+fijaos la de tiempo que
+
+se mantiene dentro del área de valor del POC.
+
+Esta es la forma en la que podemos aprovechar los
+
+rangos. Esto, obviamente, a mí me gusta utilizarlo con
+
+los big trades, con delta, con footprint y demás.
+
+Vamos a ver algún ejemplo que haya claro.
+
+Por ejemplo, aquí tenemos alguno.
+
+Esto estaría bien ver también el bookmap, delta y demás, pero aquí lo que buscamos
+
+es ver absorciones de vendedores que están quedando
+
+absorbidos y, idealmente, que entre algo de
+
+agresión. Esto quizá con footprint lo podemos ver un poco más preciso.
+
+Pero aquí lo que vemos es que tenemos estos vendedores en una zona clave,
+
+value area low, VWAP, y fijaos cómo están quedando
+
+totalmente atrapados. A la que el precio empieza a subir,
+
+estos vendedores de aquí están en negativo, tienen que cerrar esas posiciones.
+
+De hecho, estos vendedores de aquí, esto lo podemos ver también en
+
+bookmapPero estos vendedores de aquí, si están siendo
+
+atrapados, es porque tenemos un comprador pasivo muy fuerte que está absorbiendo
+
+todas esas ventas.
+
+Si tenemos un retorno a esta zona, ese
+
+comprador va a seguir ahí probablemente, con lo cual es muy posible que tengamos un
+
+retorno para continuar de nuevo ese movimiento alcista, en este
+
+caso. Porque ese comprador y esas compras van a estar
+
+intentando defender esa posición.
+
+Con lo cual, aquí un trade muy claro hubiese sido entrar
+
+a la que vemos que hay vendedores que están siendo
+
+atrapados en el value area low,
+
+esperar a que el precio nos diese alguna intención de subir.
+
+Esto podemos verlo sobre todo con bookmap, con footprint y demás, y
+
+esperar un retesteo quizá de
+
+esos big trades atrapados. Podríamos entrar aquí, en esta vela,
+
+con el stop loss aquí debajo y salirnos en el POC.
+
+Son 4R.
+
+Es un trade cortito, pero son
+
+4R. Arriesgando 1.000 dólares son 4.000 dólares.
+
+No está nada mal.
+
+Además, no solo eso, sino que lo puedes luego volver a coger porque entiendes
+
+el régimen en el que estamos.
+
+Tú te sales en el POC y dejas quizá un parcial en value area high, en este
+
+caso no nos lo da, y luego nos saca en break even. Perfecto, no hay problema.
+
+Aquí nos vuelve a dar el setup, podemos volver a entrar.
+
+En este caso no veo nada en cuanto a big trades, pero podríamos también consultar,
+
+como os digo, bookmap, delta, footprint y demás. Podríamos hacer lo mismo.
+
+De hecho, aquí, por ejemplo,
+
+tenemos cierta agresión. Podríamos esperar
+
+a ver esta agresión. Vemos que esta agresión tiene efecto y tenemos aceptando esa
+
+agresión, y podríamos buscar una compra
+
+aquí con el stop loss debajo del big trade comprador, buscando de nuevo el POC.
+
+Son 4R, y si dejamos un parcial a value area high, son 9R.
+
+Este tipo de trades son posibles y solo lo son
+
+cuando entiendes el estado en el que se encuentra el
+
+mercado. Eso nos lo dice el perfil de volumen.
+
+Podríamos hacer lo mismo en el value area high, por ejemplo, aquí.
+
+En este caso no se dio nada. Si encontrase yo algún perfil por aquí
+
+balanceado, ahora mismo no lo encuentro.
+
+Pero esa es la idea. En
+
+el caso de
+
+buscar ventas,
+
+esperaremos a que el precio nos llegue al value area high y aquí lo que buscaremos
+
+es
+
+compradores aquí arriba, sin ningún tipo de efecto, idealmente,
+
+que luego entre agresión vendedora. Eso es lo que queremos ver.
+
+Big trades compradores aquí arriba, sin efecto, y
+
+luego entra la agresión vendedora.
+
+También con footprint, bookmap y demás podemos consultarlo.
+
+Y aquí podemos buscar un trade, una entrada aquí, stop loss aquí, buscando el
+
+value area low. ¿Que el precio vuelve
+
+aquí? Vamos a buscar lo mismo, porque sabemos que el precio puede mantenerse aquí
+
+mucho tiempo. En concreto, el 70-80 % del tiempo va a estar aquí, con lo
+
+cual es muy clave el saber aprovechar este tipo de
+
+movimientos en balance, rangos y consolidaciones.
+
+
+--- FIN: 4.3 - Cómo operar rangos.txt ---
+
+
+--- INICIO: 4.4 - Cómo operar rupturas.txt ---
+
+En el vídeo anterior vimos cómo podíamos operar rangos,
+
+consolidaciones. Esto lo hicimos con este esquema que os
+
+dibujé y lo hacíamos con el perfil de volumen.
+
+Ahí donde teníamos un perfil de volumen, un mercado balanceado, un perfil en
+
+D, donde podíamos fácilmente identificar el value area low y el value area high,
+
+simplemente era cuestión de esperar que el precio llegara al value area
+
+high para buscar absorción de compradores, para buscar ventas
+
+hacia el POC y el value area low, y que el precio llegara al value area
+
+low para buscar absorción de vendedores más agresión compradora, para
+
+buscar compras hacia el POC y el value area high.
+
+Esto ocurre entre el 70-80 % del
+
+tiempo y es mucho más común que esos movimientos expansivos que son tan
+
+bonitos de coger, pero que ocurren mucho menos.
+
+Sin embargo, nosotros como traders de order flow,
+
+tenemos el acceso
+
+a esa información de lo que está ocurriendo en cada uno de los movimientos y
+
+tenemos información para entender si estamos en un
+
+estado de balance donde podemos operar así, o bien podemos
+
+empezar a pensar en una expansión.
+
+Esto es lo que vamos a ver en este caso.
+
+Es muy sencillo. Nosotros tenemos el perfil de
+
+volumen, que está siempre ahí,
+
+y digamos que tenemos inicialmente un perfil
+
+balanceado, donde tenemos aquí el 70 % de la
+
+negociación y tenemos que el precio tiende a ir del
+
+value area high al value area low.
+
+Suele tener alguna reacción en el POC
+
+y suele ir de parte superior a parte inferior.
+
+Pero muchas veces lo que ocurre es que el precio
+
+sale del área de valor y automáticamente vuelve a meterse dentro,
+
+y esto resulta que era una trampa. Y luego ocurre lo mismo,
+
+de parte superior a parte inferior.
+
+Este fake out
+
+es muy común, lo que hace es sacar muchos traders del mercado,
+
+recoger liquidez y absorber compradores
+
+para dar un movimiento a la baja.
+
+Esto es muy común. Luego también está la otra opción, que es la que vamos a ver en
+
+este caso, que es cuando el precio
+
+rompe y sale del área de valor y lo hace con
+
+fuerza, con volumen, y acepta
+
+precios más altos con volumen
+
+y tiempo. Aquí lo que buscamos
+
+es un retesteo del área de valor
+
+para sumarnos en un movimiento alcista.
+
+Es muy importante entender esto, que lo que buscamos, realmente con
+
+order flow,
+
+cuando hablamos de niveles en los que
+
+buscamos compras o ventas, lo que buscamos es si hay aceptación
+
+o hay rechazo.
+
+Porque si hay rechazo, aquí lo que ocurrirá es que el precio hará esto
+
+y luego se meterá de nuevo y seguirá de nuevo para abajo.
+
+Luego quizá, vuelve
+
+a salir del área de valor, pero con cierto rechazo y de nuevo vamos
+
+a ir a la parte superior. Ahí es cuando en el área de valor
+
+los extremos están siendo rechazados, con lo cual nos interesa operar de esa
+
+forma, operar en rangos. Buscamos absorciones en la parte inferior y absorciones en
+
+la parte superior.
+
+Pero no siempre es así. Hay una de esas veces en las que el precio va
+
+rotando, que sale del área de valor y lo hace con fuerza.
+
+Lo hace con
+
+volumen
+
+y tiempo. Es importante esto. Lo que queremos ver aquí,
+
+quizá esta es la parte un poco más subjetiva de la experiencia y además de ir
+
+viendo, de
+
+el precio lo está aceptando, pero cuánto tiempo está pasando
+
+aquí realmente.
+
+Queremos ver que el precio rompa con fuerza y se mantenga aquí arriba,
+
+entrando volumen, entrando delta y con cierto tiempo.
+
+Que el precio nos entre con volumen aquí durante un minuto
+
+no sirve de nada, porque puede ser perfectamente una absorción de compradores muy
+
+fuerte para luego meterse para adentro.
+
+Va a depender mucho del mercado, va a depender del
+
+contexto en general, pero queremos ver, por lo menos, que el precio está aquí
+
+encima cinco, 10 minutos. Idealmente, cinco, 10 minutos,
+
+que de alguna manera se acepte
+
+el área de valor y el mercado esté empezando a
+
+migrar el valor hacia arriba. Veremos que
+
+el
+
+perfil,
+
+que tenemos ahora mismo un perfil en D,
+
+poco a poco irá migrando
+
+hacia la parte superior. Esto irá migrando poco a
+
+poco
+
+hacia la parte superior. ¿Por qué?
+
+Porque aquí va a estar entrando mucho volumen, con lo cual el volumen, ya sabéis,
+
+el perfil de volumen, obviamente, es ahí donde se concentra el
+
+mayor volumen. Con lo cual, si aquí empieza a haber volumen,
+
+todo esto se va a ver
+
+reflejado en el propio perfil de volumen. Esto es lo que queremos ver.
+
+Que el precio rompa con fuerza, con volumen,
+
+big trades, delta positivo, big trades positivo,
+
+footprint entrando grandes compras y que pasa
+
+cierto tiempo aquí arriba, porque es lo que va a permitir que en el perfil de
+
+volumen, aquí se genere cierto valor.
+
+Esto lo que nos va a estar diciendo es que el precio está aceptando
+
+el value area high
+
+como una zona de soporte
+
+y que el mercado está listo para iniciar un movimiento alcista.
+
+Esto es lo que buscaremos en caso de
+
+buscar compras, cuando el precio rompe por la parte
+
+superior.Cuando tenemos
+
+al precio rompiendo por la parte inferior,
+
+exactamente lo mismo, pero de forma opuesta.
+
+Vamos a esperar
+
+a que el precio
+
+rompa
+
+por debajo del área de valor con volumen
+
+y con
+
+cierto tiempo. Queremos ver el
+
+mercado generando cierto volumen aquí abajo, de forma que
+
+el perfil de volumen irá migrando
+
+de esta forma. Esto de aquí lo veremos reflejado en el perfil de
+
+volumen, algo tal que así.
+
+De esta forma podemos
+
+identificar de forma objetiva que el mercado está percibiendo esto como un precio
+
+justo. Estamos saliendo de balance y esto está siendo ahora
+
+algo que el mercado está aceptando. El mercado está aceptando precios más bajos.
+
+Con lo cual, aquí tenemos dos tipos de setup.
+
+Tenemos un setup que es el value area high, value
+
+area low,
+
+break and retest, que es: tenemos ruptura, tenemos
+
+aceptación,
+
+tenemos retesteo del value area y ahí tenemos una posible venta.
+
+Esto deberíamos de consultar con otro tipo de herramientas como
+
+footprint, big trades, delta y demás, porque podemos tener trades
+
+con entrada aquí, con stop loss aquí y el TP
+
+aquí. Podemos sacar ratios muy buenos y este suele ser un movimiento bastante
+
+rápido. Cuando tenemos la ruptura con volumen y con tiempo,
+
+este movimiento suele ser bastante rápido.
+
+Este es el setup número uno.
+
+Espera, voy a escribirlo aquí.
+
+Vamos a poner
+
+número uno, va a ser value area
+
+break
+
+and retest. De todas formas, los setups los veremos en un vídeo
+
+aparte, ya os aviso, pero quiero explicaros un poquito cómo podemos operar
+
+esto. Siempre sería en este caso buscar
+
+dónde está rompiendo el precio, si está aceptando o no, con volumen y con
+
+tiempo, y ahí con big trades, footprint y demás, buscar un
+
+movimiento bajista o alcista en este caso.
+
+Y luego tenemos un momentum trade.
+
+¿Cómo podemos buscar un momentum trade en este caso?
+
+Cuando tenemos que el precio ya ha aceptado
+
+precios más abajo, ya está iniciando ese movimiento bajista.
+
+Sin embargo, no hemos sido capaces de coger esto de aquí, porque o bien no hemos
+
+estado atentos, o no nos ha dado tiempo, o se nos ha escapado o lo
+
+que sea,
+
+puede ser perfectamente.
+
+Podemos igualmente sumarnos en este movimiento si esperamos
+
+que, si realmente el precio ha salido de la zona de balance, lo normal es que
+
+inicie un movimiento de imbalance
+
+que sea relativamente
+
+expansivo. Si
+
+entendemos también el contexto, va a depender mucho de otros factores del mercado y
+
+demás, pero si esperamos que el precio va a seguir expandiendo, en este caso a la
+
+baja, lo que buscaremos aquí es algún tipo de
+
+absorción por parte de compradores.
+
+Queremos ver compradores entrando a mercado sin ningún tipo de efecto, que
+
+estén siendo completamente destrozados.
+
+Cuando vemos compradores que están siendo aquí destrozados y
+
+vemos que el precio sigue bajando, lo que esperaríamos es que el precio
+
+retestee
+
+esta zona donde hemos tenido compradores.
+
+Y aquí buscaremos de nuevo sumarnos en corto, con el stop loss aquí arriba,
+
+por ejemplo, buscando precios más bajos.
+
+¿Por qué buscaremos sumarnos aquí?
+
+Porque es muy probable que si tenemos aquí compradores
+
+que están siendo absorbidos, aquí tengamos unos
+
+vendedores pasivos enormes que van a querer proteger su
+
+posición. Con lo cual, si tenemos un retesteo de esta zona, podemos estar bastante
+
+tranquilos en que es una zona que quizás estamos en los mínimos del
+
+día. Y vas a decir: "H*****s, que entrar aquí en el mínimo no me hace mucha
+
+gracia. Voy a esperar a ver si me retrocede aquí arriba".
+
+Es muy probable que el precio no venga nunca aquí arriba.
+
+Porque si realmente hay agresividad y estamos saliendo de una zona de balance y
+
+estamos iniciando un movimiento de imbalance, el movimiento puede ser bastante
+
+fuerte, con lo cual
+
+tenemos que valorar la opción de entrar, incluso aquí abajo.
+
+Pero al final, lo bueno es que nosotros somos traders de order flow y tenemos
+
+datos, tenemos información. Todo esto lo estamos viendo con
+
+números, lo que está ocurriendo, lo que ha pasado aquí, si están siendo absorbidos
+
+o no, qué volumen está habiendo, qué fuerza está habiendo, cuál está siendo la
+
+velocidad. Todo esto lo vemos con datos, con lo cual,
+
+incluso estando en los mínimos del día, si entendemos el contexto y entendemos lo
+
+que está ocurriendo y somos capaces de leer lo que está habiendo detrás
+
+de esas velas japonesas, podemos intentar
+
+capitalizar ese movimiento a la baja cuando el trade ya se está dando.
+
+Sería el momentum trade.
+
+Esta es la forma en la que podemos operar
+
+rupturas y expansiones. Lo iremos viendo poco a poco, ya veréis, pero
+
+realmente es bastante básico.
+
+
+--- FIN: 4.4 - Cómo operar rupturas.txt ---
+
+
+--- INICIO: 4.5 - Initial Balance los primeros 60 minutos.txt ---
+
+Vamos a hablar sobre el Initial Balance, que es sin duda una de mis
+
+estrategias de "trading" favoritas para operar la sesión de New York.
+
+Esto aplica únicamente para la sesión de New York.
+
+El Initial Balance no es más que el rango
+
+formado en la primera hora de "trading", en los primeros
+
+60 minutos. Esa es la teoría. Os he puesto aquí también o 30 minutos,
+
+porque a mí personalmente, eso ya es un tema un poco más personal, también me gusta
+
+tener en cuenta el Initial Balance de los primeros 30 minutos o el
+
+rango formado en los primeros 30 minutos desde la apertura.
+
+La teoría, el
+
+Profile Market Theory
+
+nos dice que el Initial Balance es el rango de los primeros 60 minutos.
+
+Esa es la teoría, pero ya os digo que a mí también me gusta tener en cuenta el de
+
+los 30 minutos
+
+por mi forma de operar, un poco más a corto plazo y demás,
+
+y que me gusta operar
+
+más o menos cerca de la apertura.
+
+Entonces, no necesito esperar una hora para determinar
+
+ese rango. Pero que sepáis que la teoría es una
+
+hora y yo tengo en cuenta ambos. En
+
+este caso, si operamos los índices americanos como CP 500 o Nasdaq,
+
+tendríamos la apertura a las 09:30, con lo cual el Initial
+
+Balance sería
+
+de 09:30 a 10:30. En el caso de utilizar de los 30 minutos, pues de
+
+09:30 a 10:00.
+
+Esto es muy sencillo, es tan simple como decir:
+
+tenemos la apertura a las 09:30
+
+y tenemos que el precio
+
+tiene algún desarrollo
+
+hasta las 10:30.
+
+Y
+
+es tan simple como coger el máximo y el mínimo
+
+de este periodo. Esto lo vamos a llamar IBH, Initial Balance
+
+High, y esto lo vamos a llamar IBL,
+
+Initial Balance Low.
+
+Con esto tenemos un rango muy definido sobre el cual
+
+podemos definir
+
+una idea de "trading".
+
+Como os he dicho, a mí me gusta
+
+utilizar,
+
+sería algo tal que así,
+
+el rango de los primeros 30 minutos.
+
+Sería hacer lo mismo. Y podríamos determinarlo como
+
+IBH 30.
+
+O IBL
+
+30.
+
+Pero el concepto es el mismo. Tenemos un rango sobre el que,
+
+dependiendo de la información que nos está dando el order flow, podemos
+
+determinar qué es lo que vamos a buscar.
+
+Tenemos dos estrategias principales, que es el
+
+IB Breakout y el IB Rejection o
+
+rechazo. Vamos a poner aquí rechazo.
+
+Breakout vamos a dejarlo como está.
+
+Y esto va a ser IB en rechazo.
+
+Esto no es más que lo siguiente.
+
+Vamos a ver si podemos hacerlo aquí de una forma
+
+gráfica y luego nos iremos a un gráfico real.
+
+Vamos
+
+a partir de la idea de utilizar el Initial Balance
+
+real,
+
+de
+
+09:30 a 10:30.
+
+Tenemos ese Initial Balance high, Initial Balance low.
+
+Lo que vamos a hacer es esperar simplemente a que el precio interactúe
+
+con alguno de estos dos niveles. A nosotros, operar aquí dentro no nos
+
+interesa.
+
+Lo que vamos a hacer es esperar que el precio se venga aquí arriba o aquí abajo.
+
+En el caso de que el precio
+
+se venga aquí arriba, vamos a hacer un poco de zoom in y vamos a ver qué está
+
+pasando con order flow, qué está pasando con los big trades, qué está pasando con
+
+el bookmap, qué está pasando en footprint, delta.
+
+Y aquí vamos a ver qué es lo que ocurre.
+
+Aquí hay dos escenarios: uno, tenemos
+
+aceptación,
+
+o dos, tenemos rechazo.
+
+Perdonad mi letra.
+
+Aceptación o rechazo. Entonces, vamos a ver, cuando tenemos el precio aquí arriba,
+
+qué es lo que está ocurriendo con los participantes del mercado, qué se está
+
+percibiendo de la información a la que tenemos acceso.
+
+En el caso de ver aceptación, lo que haremos será
+
+buscar compras. En el caso de ver cierto rechazo, lo que haremos será
+
+buscar ventas.
+
+En el caso de ver aceptación, lo que queremos ver es
+
+agresión compradora,
+
+big trades que están entrando, delta
+
+positivo.
+
+Y queremos ver también que están entrando compras en el footprint,
+
+básicamente.
+
+Idealmente, también queremos ver que tengamos ventas, que podemos verlo con big
+
+trades
+
+o también con delta,
+
+que no está teniendo ningún tipo de resultado.
+
+Siempre hablamos de lo mismo, en order flow es
+
+esfuerzo contra resultado. Cuánto
+
+esfuerzo está habiendo, cuánta agresión está habiendo y cuál es el resultado que
+
+están obteniendo estos participantes.
+
+Si aquí arriba vemos que está entrando fuerza, está entrando
+
+volumen y vemos que los vendedores están
+
+entrando sin ningún tipo de recompensa,
+
+tenemos vendedores que están entrando, sin embargo, el precio se está consolidando
+
+en una zona clave, lo normal es que el precio acabe subiendo.
+
+Si empieza a entrar algo de agresión, estos vendedores, como ya sabéis,
+
+hemos hablado mucho con el CVD, con el bookmap y demás, van a tener que
+
+cerrar esa posición y eso va a hacer que el precio acabe subiendo.
+
+Este es el casoEn el que tenemos el precio rompiendo el
+
+IBH y estamos viendo cierta aceptación, con lo cual lo que
+
+haremos es buscar setups de compra.
+
+El caso opuesto es que el precio está rompiendo
+
+y podemos fijarnos, sobre todo si miramos "footprint", que está
+
+habiendo poco volumen,
+
+compradores
+
+perdiendo fuerza
+
+y compradores sin resultado.
+
+Esto es lo que vamos a ver en el caso de
+
+empezar a trazar una idea buscando ese rechazo.
+
+Poco volumen en la ruptura, compradores perdiendo fuerza, lo podemos ver con los
+
+"big trades", podemos verlo con el "footprint" y compradores sin
+
+resultado. Esto lo podemos ver también con el delta.
+
+En el caso de ver delta positivo,
+
+sin ningún tipo de
+
+movimiento en el precio, más bien consolidación, incluso
+
+desaceleración,
+
+eso es una indicación muy clara de que aquí los compradores están perdiendo el
+
+control y son los vendedores pasivos,
+
+todos esos vendedores que podemos ver en el "bookmap",
+
+que están absorbiendo todas esas
+
+compras y que podemos empezar a ver un movimiento a la baja.
+
+Esto lo podemos confirmar cuando entra agresión.
+
+En caso de ver un rechazo, estamos buscando un "reversal".
+
+Lo voy a
+
+hacer escribiendo mejor. Si
+
+buscamos un IBH rechazo, lo que buscamos es
+
+absorción más agresión.
+
+Realmente, esto es lo que buscamos siempre, pero en el caso de buscar un
+
+rechazo, lo que queremos ver es que los compradores
+
+están siendo absorbidos y que está empezando a haber agresión.
+
+Esa agresión la podemos ver representada en forma de "big trades",
+
+que entran posterior a la absorción de compradores.
+
+Y lo mismo, pero en caso opuesto, es lo que queremos ver
+
+en el IBL.
+
+En caso de que tengamos
+
+el rango del "initial balance" y
+
+tenemos esto de aquí, queremos enfocarnos en qué está
+
+ocurriendo aquí. Y lo haremos con nuestras herramientas de "order flow".
+
+En
+
+este punto,
+
+si tenemos
+
+vendedores
+
+que están entrando aquí fuerte,
+
+sin embargo, el precio no acaba de romper, le está costando bajar,
+
+ahí ya podemos intuir que estos vendedores están
+
+haciendo mucha fuerza sin ningún tipo de resultado.
+
+No están siendo capaces de tumbar al precio.
+
+Algo raro está pasando aquí. Hay compradores aquí
+
+que están absorbiendo estas ventas y a la mínima que haya algo de
+
+agresión compradora,
+
+esto se va a dar la vuelta, con lo cual aquí tendríamos el setup
+
+de IBL rechazo, donde, al igual que aquí,
+
+absorción más agresión, los vendedores están siendo
+
+absorbidos y empieza a haber agresión compradora.
+
+Aquí podemos buscar un setup en dirección
+
+opuesta
+
+al IBL. O, en el caso
+
+que esa ruptura esté siendo
+
+aceptada, lo que queremos ver aquí
+
+es,
+
+idealmente,
+
+fuertes ventas con resultado, con movimiento
+
+y no siempre lo va a haber, pero idealmente queremos
+
+ver compradores que no están teniendo ningún tipo de efecto.
+
+Compradores que están comprando aquí y están siendo totalmente
+
+destrozados. Si esto ocurre, un
+
+retorno a estos compradores que están quedando aquí atrapados será
+
+un setup muy bueno con la entrada aquí, el "stop loss" aquí, buscando
+
+precios más bajos. Ese sería nuestro setup de
+
+continuación o
+
+"initial balance
+
+breakout".
+
+Esos son los dos
+
+setups que podemos encontrar.
+
+Antes de ir al gráfico, otra cosa que hay que tener en cuenta, que mucha gente que
+
+opera con el "initial balance" no
+
+considera, es el tamaño del "initial balance".
+
+Cuando tenemos un "initial balance" muy estrecho, la probabilidad de expansión en
+
+la ruptura es muy alta.
+
+Cuando tenemos un "initial balance"
+
+muy amplio, esa probabilidad de expansión baja.
+
+No quiere decir que la ruptura no pueda continuar.
+
+Puede que continúe, pero con menos fuerza o con menor
+
+rango y acabe volviendo dentro del rango.
+
+La probabilidad de que vuelva al rango de nuevo es mayor.
+
+Cuando tenemos un "initial balance" estrecho, la probabilidad de que
+
+expanda y no vuelva a ese rango es mucho
+
+menor.
+
+La probabilidad de que expanda es muy alta y la de que vuelva al rango es muy baja.
+
+Realmente es una forma de
+
+trazar una estrategia para el día a día muy simple, que se da prácticamente todos
+
+los días. Aproximadamente en el 98 %
+
+se da esto. Tienes muy pocos días en los que el precio se mueve dentro
+
+de ese rango, en algún punto lo rompe.
+
+Y realmente es bastante fiable.
+
+Ahora, desconozco la
+
+estadística.
+
+De hecho, os quiero hacer un vídeo únicamente de estadísticas con
+
+estrategias probadas en el "trading" qué más.
+
+Pero hay una estadística que nos dice que creo que era aproximadamente cuando el
+
+precio rompe el
+
+IBHAproximadamente el 60 % de las
+
+veces es un día alcista.
+
+Y cuando el precio rompe el IBL,
+
+aproximadamente el 60 % o 58 %, o algo así, es
+
+un día bajista, con lo cual no es que sea una ventaja enorme de 80 a 90 %,
+
+pero ya te da una ventaja bastante mayor que el 50 %, lo
+
+cual es algo a tener en cuenta.
+
+Básicamente esto. Vamos a irnos a Deep Charts para ver
+
+algún ejemplo. He cogido esta semana.
+
+Esto fue el miércoles de esta semana.
+
+Tenemos un ejemplo muy claro aquí, donde el precio nos abre
+
+y nos forma el "initial balance high" y el "initial
+
+balance low".
+
+Esto es un indicador de Deep Charts, es algo diferente porque tiene en cuenta el
+
+volumen, pero básicamente viene a ser lo mismo.
+
+Esto lo podemos encontrar aquí. Vamos a
+
+poner Deep.
+
+A ver cómo se llamaba.
+
+Este indicador.
+
+El Deep M, me faltaba la M. Deep M
+
+IVB. Le vamos a dar aquí al más y automáticamente se nos va a
+
+poner este indicador, que de hecho también podemos configurar.
+
+Yo de hecho lo tengo, el tema de los colores y demás,
+
+algo personalizado.
+
+Y aquí en general veis que tenemos "opening range" minutos.
+
+Aquí está puesto como 60, que es lo estándar. También podemos ponerlo en 30.
+
+Esto, como os digo, cada uno
+
+tiene que ver qué es lo que mejor le funciona.
+
+Y tenemos colores para
+
+determinar proyecciones que nos hace este mismo
+
+indicador.
+
+Ahora mismo no salen aquí. No sé por qué, creo que es porque estamos en
+
+"backtesting",
+
+pero el indicador nos hace una proyección
+
+basada en desviaciones estándar desde el
+
+50 % al máximo o 50 % al mínimo, nos marca desviaciones
+
+estándar y nos la marca hacia arriba y hacia abajo.
+
+Que son puntos en los que podríamos buscar
+
+tomar parciales o salirnos de la posición.
+
+Básicamente, el
+
+indicador nos marca el máximo y el mínimo del "initial balance" de los
+
+primeros 30 minutos.
+
+Si fijaos aquí tenemos la apertura a las 9:30, como veis aquí abajo,
+
+y
+
+las 10:30, que son justo aquí. Entonces el
+
+máximo y el mínimo entre ese rango son estos dos puntos, que lo tenemos el
+
+50 %.
+
+Aquí lo que esperamos es ver cuando el precio
+
+interactúa con ese máximo, como por ejemplo es este caso de aquí.
+
+Vamos a ver qué está ocurriendo.
+
+Aquí en este caso vemos que tenemos un rechazo bastante grande.
+
+Sin embargo, el precio no va mucho más allá y luego lo vuelve a romper.
+
+Y fijaos aquí como una vez roto y tenemos cierta
+
+aceptación con volumen, probablemente, ahora lo vamos a ver,
+
+con volumen y tiempo.
+
+Tiempo es uno de los factores que la gente pasa por alto,
+
+pero creo que el tiempo,
+
+cuando tenemos una ruptura, es muy importante.
+
+El tiempo sobre el que
+
+se está aceptando ese precio. Cuando no hay tiempo
+
+o cuando están entrando mucho volumen, pero con muy poco tiempo y vuelve dentro
+
+del rango, para mí ya no es de fiar. Cuando tenemos cierto tiempo,
+
+cierto desarrollo, cierta negociación por encima de un máximo
+
+o debajo de un mínimo, es más probable que ese máximo
+
+aguante que si no está habiendo ese tiempo.
+
+Fijaos luego cómo el precio retestea ese "initial balance high"
+
+y de aquí tenemos cierto movimiento alcista.
+
+Luego es verdad que en el cierre, esto es en la PM, acaba de
+
+nuevo
+
+bajando.
+
+No siempre va a continuar subiendo hasta el cierre, pero si nosotros operamos
+
+sobre todo la AM, fijaos
+
+que el máximo se forma a la
+
+13:00, 13:30. Hasta ahora ya no estamos operando. Hora de New York.
+
+Yo suelo terminar de operar a las 11:00, 11:30, que esto
+
+sería justo
+
+en este máximo de aquí.
+
+Luego se viene el New York Lunch, tenemos un pequeño retroceso y luego la PM nos
+
+toma el máximo del
+
+AM y de ahí tenemos ese retroceso bastante profundo de
+
+cara al cierre. Pero podemos coger este setup.
+
+Lo suyo es que cuando tenemos al precio llegando a esta zona,
+
+nos fijemos en lo que está pasando con order flow.
+
+Esto no me voy a cansar de decirlo, pero es importante que
+
+tengamos en cuenta nuestros indicadores, que utilizamos herramientas como
+
+los big trades, footprint y demás, cuando estamos en una zona de interés.
+
+Esto os lo voy a repetir en toda la formación, porque mi mayor error
+
+inicialmente era
+
+ver una absorción, ver una agresión, ver volumen, ver delta,
+
+ver footprint y demás en cualquier lado.
+
+Y me llevaba a una "stop loss" increíble.
+
+Es importantísimo el tomar los
+
+trades de forma aislada,
+
+únicamente o exclusivamente cuando
+
+vemos nuestro setup en una zona de interés.
+
+Entonces, cuando tenemos la ruptura del "initial balance" y vemos
+
+cierta aceptación,
+
+big trades y demás, ahí es donde queremos entrar.
+
+No aquí
+
+en el medio. Queremos entrar cuando ya estamos por encima, porque el mercado nos
+
+está diciendo que
+
+esto se está empezando a aceptar.
+
+El mercado, que recordad, "auction market theory", es una subasta
+
+y los participantes del mercado están percibiendo esto como un precio
+
+justo, con lo cual es muy posible que si hay cierto interés, empecemos
+
+a ver
+
+precios más altos. Entonces aquí con big trades lo podemos ver muy claramente.
+
+Fijaos el esquema que os he hecho antes, un poco mal hecho.
+
+Este esquemaEn Initial Balance High o Initial Balance Low lo
+
+que buscábamos era, en el caso de buscar continuaciones, aquí
+
+tenemos cierta aceptación. Tenemos compradores,
+
+vemos que hay negociación aquí arriba, con lo cual
+
+podemos empezar a decir: "Voy a buscar compras, me gusta la idea de buscar
+
+compras". Si tenemos un retesteo en el Initial
+
+Balance High y vemos vendedores que no están teniendo ningún tipo de
+
+resultados y empezamos a ver agresión compradora, que es justo lo que ocurre aquí.
+
+Tenemos estos vendedores, casualidad,
+
+vendiendo justo en el Initial
+
+Balance
+
+High y vemos que no tienen ningún tipo de
+
+resultados. El precio no va más allá, literalmente es el mínimo.
+
+Y aquí tenemos precios más altos, con lo cual
+
+a la mínima que vemos que estos vendedores están siendo atrapados y vemos
+
+cierta agresión compradora, podemos entrar.
+
+Idealmente, queremos un retesteo de esta zona,
+
+de estos
+
+vendedores. De hecho, la podríamos haber metido
+
+aquí.
+
+Si somos más precisos con footprint, con delta y demás,
+
+podríamos entrar aquí buscando precios más altos,
+
+puede darse un trade muy bueno.
+
+Y eso es lo que vamos a estar buscando.
+
+Siempre que el precio rompe con fuerza y vemos
+
+aceptación, vemos volumen. Vamos a poner también el delta .
+
+Vemos que está habiendo, fijaos en la
+
+derecha,
+
+por un lado, tenemos esas ventas en esta zona de aquí que
+
+están siendo totalmente destrozadas, y luego vemos que en todo este rango de aquí,
+
+donde tenemos al precio de alguna forma consolidando después de la
+
+ruptura, está entrando agresión compradora.
+
+Entonces, aquí es cuestión de esperar y ver dónde podemos entrar.
+
+Y a la que veamos vendedores atrapados y vemos agresión compradora, ahí tenemos
+
+un setup muy bueno
+
+con un contexto muy favorable en el que sabemos que esto
+
+suele funcionar bastante.
+
+Y esa es la manera en la que utilizamos el Initial Balance.
+
+Es así de simple. De nuevo, repito, rango de 9:30 a 10:30.
+
+Si queréis también podéis probar de 9:30 a 10:00.
+
+Cogemos el máximo, cogemos el mínimo, vemos qué ocurre cuando el precio llega a ese
+
+máximo o a ese mínimo y buscamos aceptación o rechazo.
+
+Si buscamos aceptación, queremos ver, en el caso del Initial Balance High,
+
+vendedores
+
+sin ningún tipo de resultado y compradores entrando con agresión,
+
+con lo cual buscaremos entrar ahí buscando continuaciones para ver precios más
+
+altos. En el caso de que deba haber rechazo, vamos a
+
+intentar identificar si los compradores están
+
+intentándolo con mucho esfuerzo, sin ningún tipo de resultado.
+
+Queremos ver compras muy fuertes y que el precio no suba, sino que siga ahí
+
+consolidando, incluso bajando, y que empiece a haber agresión vendedora.
+
+Eso será una señal de que probablemente el precio va a revertir
+
+y podríamos buscar tanto el 50 %
+
+del Initial Balance, que como veis es un punto que luego
+
+reacciona al precio ahí.
+
+O directamente, si vemos que hay volumen, que hay fuerza en esa caída,
+
+podríamos buscar el Initial Balance Low o incluso
+
+precios más bajos. Como os digo, va a depender también un poco del contexto
+
+general, no solo del rango que nos da el Initial Balance.
+
+En el caso de que tenemos el precio en el Initial
+
+Balance Low, vamos a buscar lo mismo de forma opuesta si queremos buscar compras
+
+o, más bien dicho, si vemos que no está habiendo aceptación de este
+
+nivel porque vemos
+
+vendedores que no acaban de tener resultado, hay muchas ventas fuertes,
+
+delta muy negativo, Big Trades, footprint, muchísima agresión
+
+vendedora, pero el precio no cae. A la mínima que entra algo de agresión,
+
+probablemente el precio vaya a subir.
+
+Eso sería buscando el Initial Balance
+
+Rejection, el rechazo
+
+hacia el 50 % o el Initial Balance High.
+
+Y luego tenemos el caso de que está entrando mucha agresión, está habiendo efecto y
+
+los compradores están siendo totalmente destrozados, atrapados,
+
+lo que haremos será buscar continuaciones hacia precios más bajos, porque de alguna
+
+forma se está aceptando ese
+
+nivel más bajo. Así que esta es la manera en la que podemos
+
+utilizar esta sesión, repito, únicamente para New York.
+
+
+--- FIN: 4.5 - Initial Balance los primeros 60 minutos.txt ---
+
+
+--- INICIO: 4.6 - Los tres pilares (CZC).txt ---
+
+Una de las cosas que aprendí de Carmen Rosato, que es uno de los
+
+mentores
+
+de trading de "order flow" que tuve,
+
+fue que
+
+toda
+
+idea de trade debe cumplir con tres elementos,
+
+los tres pilares: contexto,
+
+zona
+
+y confirmación. Él hablaba de
+
+la CLC, "Context,
+
+Location and
+
+Confirmation",
+
+en inglés. Esto es importantísimo aplicarlo,
+
+porque ya sabéis, lo he comentado durante toda la formación,
+
+creo que uno de los mayores errores cuando alguien
+
+empieza a operar con "order flow" es
+
+ejecutar setups que se dan en
+
+cualquier zona.
+
+Es importantísimo saber filtrar dónde esto tiene una importancia y
+
+dónde no, dónde va a tener una mayor probabilidad y dónde
+
+quizá no es el mercado, el balance o el
+
+momento
+
+adecuado. Entender esto os prometo que nos
+
+va a dar muchísima más claridad y vamos a poder filtrar los trades muchísimo
+
+mejor. Es importante que cada trade
+
+pueda responder a esto de forma clara, sin dudas.
+
+Contexto, zona y confirmación. Vamos
+
+a escribirlo aquí.
+
+Contexto,
+
+zona
+
+y confirmación.
+
+El contexto
+
+básicamente
+
+viene a decir: estamos en un
+
+mercado balanceado
+
+o estamos en un mercado inbalanceado o en desequilibrio,
+
+estamos en un mercado alcista
+
+o estamos en un mercado bajista.
+
+Esto es nuestro contexto. Estamos en
+
+un contexto de balance o en un contexto de inbalance.
+
+El precio está consolidando o el precio está expandiendo,
+
+el precio está subiendo o está bajando.
+
+Ese es el contexto que tenemos
+
+como referencia mayor.
+
+Eso va a ser muy importante, tenemos que
+
+dedicarle todos los días un tiempo a identificar esto,
+
+el saber si estamos en balance o inbalance.
+
+Parece una tontería o parece algo supersimple, pero no lo es y realmente nos va
+
+a dar una claridad enorme en nuestra operativa.
+
+Si nosotros sabemos identificar cuándo un día va a ser de balance,
+
+vamos a poder aprovecharlo muchísimo y vamos a evitar un montón
+
+de "stop losses". Días donde el precio está así hay muchos, de hecho,
+
+la mayoría. Ya sabemos que
+
+el 70, 80 % del tiempo el mercado está
+
+consolidando.
+
+Tenemos que, de alguna forma, saber o poder,
+
+con cierta probabilidad, intuir cuándo
+
+podemos encontrarnos un escenario de este tipo
+
+y cuándo va a ser de inbalance, es decir, cuándo podemos esperar que el precio
+
+salga disparado.
+
+Y también, obviamente, identificar cuál es el contexto
+
+de temporalidad mayor. El precio está subiendo, la tendencia es alcista o la
+
+tendencia es bajista.
+
+Esto
+
+va a ser un
+
+elemento clave en nuestra operativa.
+
+Porque no es lo mismo ir a operar a la sesión de New York sabiendo que va a
+
+ser un escenario balanceado con un perfil en D,
+
+donde vamos a estar básicamente
+
+buscando "shorts" en la parte alta del valor y buscando "longs"
+
+en la parte baja, con absorciones y demás, con confirmaciones en
+
+"order flow", que es lo que viene aquí,
+
+y teniendo en cuenta el POC como punto en el que tomar un parcial.
+
+Eso es lo que buscaríamos, sobre todo en un escenario balanceado.
+
+Mientras que en un inbalanceado, lo que buscaríamos es que el precio rompa con
+
+fuerza y buscar sumarnos a ese movimiento
+
+buscando un rango bastante mayor.
+
+Esto también, obviamente, teniendo en cuenta si
+
+va a tener una mayor probabilidad el buscar compras o el buscar ventas.
+
+Esto es el contexto, sin entrar mucho más en dónde está el precio exactamente o qué
+
+ha pasado en la sesión anterior,
+
+qué
+
+tipo de participantes está dominando el mercado en este
+
+momento. Es simplemente el contexto, referencia, qué está pasando,
+
+dónde estamos, cómo estamos. Contexto.
+
+Luego entramos en la zona.
+
+La zona, como os he dicho antes,
+
+es importantísima, sobre todo cuando hablamos de
+
+"order flow", porque el "order flow" muchas veces te
+
+puede llevar a sobreoperar, porque en todo momento hay transacciones, en todo
+
+momento hay grandes instituciones o grandes
+
+participantes operando absorciones en "big trades",
+
+delta,
+
+volumen. Tenemos que saber
+
+cuándo nuestra operativa realmente entra en juego.
+
+Y debe ser únicamente cuando
+
+tenemos ciertas zonas de interés.
+
+Únicamente cuando el precio llega ahí,
+
+cuando está ahí,
+
+es cuando nos permitimos operar, no antes.
+
+No queremos operar en medio de un rango donde no tenemos nada.
+
+Entonces, cuando hablamos de "order flow", tenemos zonas en cuanto a
+
+perfil de volumen,
+
+"value area high", "value area low",
+
+"POC", "high volume nodes", "low volume nodes".
+
+El POC lo podríamos quitar en
+
+este caso, porque el POC, esto ya lo he comentadoEl POC
+
+es un punto o un
+
+rango de precios en el que no nos interesa operar.
+
+Sí que podemos buscar ciertas reacciones ahí o incluso
+
+TPS o parciales y demás, pero no es una zona en la que queramos
+
+exponernos demasiado a la hora de ejecutar.
+
+Entonces, a la hora de ejecutar vamos a quitar el POC y vamos a dejar estas de
+
+aquí: value area high, value area low, high volume nodes, low volume
+
+nodes. Son zonas en las que buscamos ver cómo reacciona el precio
+
+ahí. Luego tenemos otro tipo de
+
+zonas. Por
+
+un lado, tenemos el initial balance, ya hemos hablado de ello también en un vídeo.
+
+Luego tenemos el VWAP.
+
+Creo que no me dejo nada.
+
+Luego tenemos zonas
+
+donde
+
+ha habido un gran delta
+
+defensivo. Ya sea el día anterior o una sesión anterior.
+
+Ahí donde ha habido agresión
+
+anteriormente, es posible que esos participantes que agredieron en ese
+
+punto
+
+quieran defender la posición. Esto también lo
+
+podríamos
+
+anotar aquí. Básicamente, estas son las zonas que vamos a estar
+
+buscando.
+
+Estoy
+
+pensando, que no me deje nada.
+
+Voy a añadir también aquí
+
+el PDH/PDL, que son puntos importantes, obviamente.
+
+El previous week high y previous week low.
+
+Overnight high,
+
+overnight low.
+
+Creo que con esto lo tenemos todo en cuanto a zonas.
+
+Es decir, solo vamos a buscar operaciones cuando el precio llegue a
+
+alguna de estas zonas. Cuando digo VWAP, hablamos de
+
+VWAP
+
+diario, ETH,
+
+RTH y
+
+semanal. Los VWAP que yo tengo en cuenta.
+
+Y cuando hablamos de value area high, value area low, high volume nodes,
+
+low volume nodes, puede ser del perfil de volumen actual, el del perfil de volumen
+
+de overnight o el perfil de volumen del día anterior o de otro día en el
+
+pasado que haya sido relevante. Para no tener que escribirlo todo con
+
+los mismos nombres. Pero básicamente estas son las zonas que vamos a tener en
+
+cuenta. Siempre que el precio venga a uno de estos
+
+elementos,
+
+vamos a buscar una confirmación
+
+en la que quizás podemos capitalizar
+
+un movimiento. Esta confirmación vendrá
+
+sobre todo
+
+en base a big trades,
+
+CVD,
+
+delta
+
+perfil, que es el delta horizontal.
+
+Tenemos footprint,
+
+tenemos bookmap.
+
+Básicamente, eso es todo. En cuanto a confirmación, lo que vamos a buscar es
+
+algún tipo de confirmación de que nuestra idea de ventas, por
+
+ejemplo, en el value area high,
+
+tiene sentido, que se está dando, que tenemos datos, que está habiendo cierta
+
+agresión, que está habiendo absorción, que hay una divergencia con el
+
+CVD.
+
+Que podemos ver que en el footprint
+
+tenemos una cola de volumen, donde no
+
+hay ningún tipo de interés. Vemos en el bookmap cómo en el DOM,
+
+en el bid y en el ask está habiendo cierta presión
+
+compradora o vendedora. Podemos ver también la velocidad a la que se está dando
+
+esa idea de trade.
+
+De esta manera podemos confirmar.
+
+Entonces, ¿qué pasa? Cuando juntamos estos tres elementos, los tres pilares,
+
+nuestro trade va a tener una mayor probabilidad de funcionar y de
+
+salir bien. Obviamente, eso no quiere decir que no podamos
+
+perder. De hecho, mi win rate en los últimos meses con order
+
+flow está en torno al 58-59%. Es decir,
+
+casi la mitad de los trades son negativos.
+
+No pasa nada si tienes un RR positivo y tienes una buena gestión de riesgo y
+
+demás. De hecho, está muy bien. Muy poca gente
+
+que realmente viva de esto y lo haga de forma
+
+consistente, no uno o dos meses, sino de forma consistente en el
+
+tiempo, tenga un win rate por encima del 50%. Es una locura.
+
+Entonces,
+
+como os digo, no quiere decir que no vayamos a perder.
+
+Muchas veces veremos que incluso cuando tenemos el contexto
+
+adecuado,
+
+la zona adecuada y una buena confirmación, también podemos perder.
+
+Ya entraremos en esto en
+
+un vídeo de gestión de riesgo, psicología y demás, pero hay
+
+que tener en cuenta que incluso cuando todo parece perfecto, también puede fallar,
+
+porque eso es el trading.
+
+Pero 100 % que cuando tenemos un trade que cumple con esas tres
+
+condiciones, la probabilidad de acierto es mucho mayor.
+
+Vamos a repetir. Contexto. Vamos a ver en qué tipo de
+
+mercado estamos operando, cómo se está moviendo el precio, cómo
+
+viene
+
+siendo percibido por los participantes del mercado.
+
+Estamos en un mercado balanceado, donde compradores y vendedores están de acuerdo
+
+que es un precio justo.
+
+Estamos en un mercado inbalanceado, donde hay fuerte agresividad por parte de uno
+
+de los participantes y hay fuertes movimientos hacia una dirección.
+
+Es un mercado inbalanceado donde buscaremos trades más largos.
+
+Estamos en un mercado alcista o estamos en un mercado bajista.
+
+Eso, contexto. Zona. Estamos en el
+
+perfil de
+
+volumen actual en el value area high.
+
+Cuidado, porque esto es una zona que puede ser
+
+percibida como una zona cara en relación al día de hoy.
+
+O estamos en el value area low del día anteriorCuidado, porque aquí
+
+el día anterior fue percibido como una zona
+
+barata donde hubo una gran absorción de vendedores, con lo cual es posible que
+
+hoy ocurra lo mismo, que tengamos vendedores absorbidos y
+
+gran presión compradora. Tenemos nodos de alto
+
+volumen donde hay mucha negociación.
+
+Vamos a buscar
+
+alguna reacción, porque en el pasado la hubo.
+
+Tenemos nodos de bajo volumen, "low volume nodes".
+
+Vamos a buscar ahí también posibles
+
+reacciones, porque sabemos que son zonas donde ha habido poca
+
+negociación y el precio va a tender a ir a esas zonas
+
+para permitir que haya de nuevo negociación
+
+en esos niveles y ahí quizá iniciar de nuevo un movimiento.
+
+Luego, ¿qué pasa con el "initial balance"? ¿Estamos por encima?
+
+¿Estamos por debajo? ¿El precio está aceptando? ¿Está rechazando?
+
+¿Dónde está el VWAP? El VWAP de ETH, el de RTH.
+
+¿Estamos muy lejos del VWAP semanal o estamos cerquita?
+
+¿Ha habido zonas con un gran delta por
+
+parte de compradores o vendedores?
+
+Cuidado, porque es posible que esas zonas sean defendidas por esos mismos
+
+participantes.
+
+Luego, puntos más
+
+esenciales de liquidez,
+
+PDH y PDL. Sabemos que son zonas donde se concentra
+
+gran cantidad de liquidez y
+
+liquidez cuando hablamos de "stop loss" de mucha gente posicionada y
+
+sin duda, mucho interés institucional.
+
+"Previous week high" y "previous week low", más de lo mismo.
+
+"Overnight high" y "overnight low", también una zona muy importante
+
+cuando operamos en New York, ver qué ha pasado en "overnight", dónde está el
+
+máximo, dónde está el mínimo, porque ahí podemos encontrar reacciones muy
+
+potentes.
+
+Y luego la confirmación, que es esa parte que
+
+es algo más mecánica, en el sentido de
+
+dónde está la absorción, dónde está la agresión, hay alguna
+
+divergencia, qué nos está diciendo el "footprint", qué está pasando con el
+
+"bookmap".
+
+Son herramientas de "order flow" que nos pueden dar cierta
+
+precisión. También tenemos que acertar en el "timing".
+
+Quizá aquí faltaría un extra, que sería "timing",
+
+porque muchas veces, incluso con una buena confirmación y demás, puede que entres
+
+un poco
+
+antes de tiempo.
+
+Puede que no sea la mejor entrada y estés
+
+persiguiendo el precio,
+
+intentando sumarte a ese movimiento.
+
+El "timing", en cuanto a esa confirmación, también va a ser importante,
+
+porque probablemente va a influenciar el
+
+resultado de nuestro "trade". E incluso
+
+puede ser que nos precipitemos, nos toque "stop loss" y luego el precio se vaya en
+
+nuestra dirección. También podría ser.
+
+Sabéis que es algo muy común, que esto no siempre lo
+
+podemos evitar. Al final el "trading" es algo imperfecto.
+
+Tenemos que ser conscientes también de
+
+esta parte.
+
+Dicho esto, 100%, os aseguro, esto os lo puedo garantizar,
+
+que si empezáis a aplicar esto,
+
+vuestro "trading" va a mejorar al 100%.
+
+
+--- FIN: 4.6 - Los tres pilares (CZC).txt ---
+
+
+--- INICIO: 4.6 - Plan de trading Londres.txt ---
+
+Plan de trading para operar el S&amp;P 500 o el Nasdaq durante la sesión
+
+europea o sesión
+
+de Londres.
+
+A mí personalmente la sesión de Londres me gusta mucho, sinceramente.
+
+Creo que a pesar de estar operando un activo que es propiamente
+
+estadounidense, donde
+
+la sesión principal es New York, en Londres se
+
+mueve bastante y se mueve bastante bien. No siempre, obviamente.
+
+Igual que en New York, muchas veces el precio se está consolidando y tampoco hace
+
+mucha cosa, en Londres también muchas veces
+
+tenemos una acción del precio un poco errática, un poco lenta, de consolidación.
+
+Y otras veces tenemos movimientos muy buenos.
+
+A mí es una sesión que me gusta operar.
+
+Además, yo me dedico "full time" a esto y la opero, con lo cual he dicho: "¿Por qué
+
+no vamos a operar la sesión de Londres?" Vamos a explicar
+
+cómo lo enfoco yo.
+
+Además, vivimos en un contexto mundial donde hay tanta globalización que,
+
+con todas las tecnologías, la IA y demás,
+
+Europa realmente tiene mucho peso institucional.
+
+Ahora mismo, incluso activos estadounidenses en
+
+una ventana europea tienen igualmente un peso enorme
+
+en el mercado y siguen moviéndose.
+
+Para traders que vivimos en Europa, que somos
+
+unos
+
+afortunados
+
+por poder operar tanto Londres como New York, creo
+
+que puede estar bien el
+
+saber aprovecharse de este tipo de sesión.
+
+Aun así, no es necesario. Yo opero dos sesiones
+
+porque me gusta, porque puedo y porque lo sé gestionar, pero en muchos
+
+casos a mucha gente le irá mucho mejor operando únicamente una sesión, ya sea de
+
+Londres o New York.
+
+Dicho esto, vamos a ir a cómo lo suelo encarar yo,
+
+qué es lo que busco y demás. Tampoco me quiero enrollar mucho más,
+
+porque todo esto lo iremos viendo en las operaciones en directo.
+
+Básicamente,
+
+el foco de la sesión lo pongo a partir de las 9:00, hora española, o las
+
+3:00, hora de New York.
+
+3:00 a. m. New York Time.
+
+Lo voy a poner aquí.
+
+Esto serían las
+
+5:00 a. m. Las 11:00 son las
+
+5:00
+
+a. m. New York Time.
+
+Mi foco operativo es de 9:00 a 11:00 hora española, de 3:00 a 5:00
+
+hora de New York.
+
+Para ello, lo que tenemos que evitar, sobre todo los que
+
+vivimos en Europa, sé que hay algunos de Sudamérica también,
+
+a la hora de operar Londres es levantarnos y ya ponernos con el gráfico.
+
+Esta es una parte muy importante, y es que si vas a empezar a operar a las 9:00, no
+
+te levantes a las 8:00 u 8:30. Intenta levantarte a las 6:30 o 7:00 como muy
+
+tarde, para que tengas cierto tiempo de preparación,
+
+que estés tranquilo, que no vayas con prisa, que te arregles, que te
+
+despiertes,
+
+que te dé tiempo a analizar, a ponerte al día, con tus
+
+correos, otras cosas, lo que sea.
+
+Luego, cuando tienes todo hecho,
+
+foco en la operativa. Al final tenemos que entender que
+
+cuando estamos operando estamos gestionando dinero y esto no es ninguna broma.
+
+No podemos gestionar una cuenta de
+
+miles de dólares a la vez que estamos viendo la tele, o estamos viendo
+
+noticias, o estamos hablando con un compañero, o estamos trabajando.
+
+Foco en lo que estamos haciendo. Eso requiere una
+
+rutina y unos tiempos que tenemos que respetar.
+
+A
+
+las 9:00 el foco está 100 % en
+
+ejecutar.
+
+Es importante hacer nuestro análisis por lo menos media hora antes.
+
+Si puede ser antes, mejor, pero 8:30 es suficiente como para ponerse con el gráfico
+
+y ponerse a analizar, porque realmente tampoco se necesita muchísima preparación.
+
+Para ver dónde está el precio, dónde nos encontramos, qué pasó el día
+
+anterior, cómo cerró el precio y demás.
+
+8:30, hora española, análisis; 9:00 empezamos, 11:00 cerramos. Y ahí cerramos.
+
+Tenemos que evitar quedarnos enganchados.
+
+Sobre todo si vamos a operar New York, que es el caso, operamos Londres y New York,
+
+hay que intentar tener ciertos horarios que
+
+mantengan
+
+un descanso suficiente entre ambas operativas
+
+para poder mantener el foco en ambas.
+
+Porque el "trading" no es operar desde la playa
+
+superrelajado, sino que tenemos que mantener la concentración
+
+y tiene también cierto desgaste mental. Importante esto.
+
+A las 11:00 cerramos, 11:30 máximo, si tenemos que tener un buen trade o lo que
+
+sea, pero es importante cerrar y decir: "Suficiente,
+
+cierro el ordenador y me voy".
+
+A mí me ha pasado, y he aprendido con el tiempo a
+
+generar esos hábitos,
+
+de quedarme enganchado. 12:00, 13:00, 14:00, va a abrir New York, sigo en un
+
+trade,
+
+voy ya supercansado, desgastado mentalmente, ya voy influenciado, que eso es
+
+algo que hablaremos luego en el plan de trading de New York.
+
+Voy ya influenciado por lo que ha pasado en Londres.
+
+Lo dicho, no quiero ser muy pesado con esto, pero es importante que sepamos ahí,
+
+que tengamos un horario claro. A
+
+las 11:00 pararemos, punto.
+
+En cuanto al análisis, es muy simple.
+
+Tenemos dos referencias: el día anterior y overnight. El día anterior y Asia.
+
+El día anterior marcaremos
+
+el value area high, value area low y el POC.
+
+El POC es la zona donde hubo mayor negociación, value
+
+area high y value area low, la zona donde hubo cierto rechazo.
+
+Luego tenemos high volume nodes, low volume nodes, también va a ser
+
+importante de cara a operar Londres,
+
+y el VWAP de
+
+RTHMe falta aquí
+
+tener en cuenta.
+
+No, está bien así. VWAP de RTH y el VWAP
+
+semanal. Vamos a ver qué
+
+pasó en esas zonas y tenerlas en cuenta, marcarlas y tenerlas
+
+en cuenta para ver en Londres si el precio llega a esas zonas, qué es lo que
+
+ocurre. Luego vamos a fijarnos un poquito más en el
+
+perfil overnight, que es básicamente lo que ha ocurrido en Asia.
+
+Vamos a fijarnos dónde está el perfil overnight en el momento
+
+presente. Overnight es tanto
+
+Asia como Londres. Engloba el periodo asiático y el
+
+de Londres.
+
+Esto es algo dinámico que va a estar continuamente cambiando.
+
+A la hora de operar Londres, vamos a ver dónde tenemos el value area high de Asia,
+
+dónde tenemos el value area low, cuál ha sido el POC, si tenemos algún low volume
+
+node importante que veamos claramente en el perfil,
+
+dónde está el VWAP TH
+
+y
+
+qué big trades o qué deltas
+
+se han visto con agresividad durante la sesión asiática.
+
+Esto es lo que tenemos que tener en cuenta a la hora de operar Londres.
+
+El perfil de
+
+Asia tiende a ser un perfil balanceado, no siempre,
+
+pero muchas veces lo es.
+
+Como os digo, muchas veces tenemos algún tipo de perfil
+
+donde tenemos un low volume node claramente definido, como sería este
+
+caso. Vamos a ver value area
+
+high,
+
+value area low,
+
+low volume node.
+
+Todo esto son zonas que vamos a marcar en nuestro
+
+gráfico de cara a la sesión de Londres y vamos a ver qué pasa cuando el precio
+
+llega a esas zonas. VWAP.
+
+Tampoco queremos tener muchas más líneas.
+
+Esto es todo lo que necesitamos.
+
+Elementos de perfil de volumen del día anterior y de la sesión overnight, VWAP
+
+y big trades delta que ha
+
+podido
+
+haber en la sesión asiática. El
+
+objetivo
+
+en Londres, esto es importante, a
+
+diferencia de New York, vamos a tener una predisposición
+
+más bien balanceada, independientemente de cómo esté el
+
+precio, de lo que pasó ayer y demás,
+
+nuestro enfoque a la hora de operar Londres es balance.
+
+Porque muchas veces la sesión de Londres lo que tiende es a acumular.
+
+Aun así, se puede aprovechar y puede dar unos trades maravillosos, pero el
+
+objetivo no es tanto comprar en value area low buscando
+
+una expansión increíble, sino
+
+ver qué zonas tenemos, dónde está habiendo agresión,
+
+qué zona nos interesa para buscar compras y qué zona para buscar ventas,
+
+y ver qué podemos sacar. Nuestra idea es más bien buscar algo así
+
+y tratar de capitalizar esta acción del
+
+precio, que si la sabes aprovechar, puedes hacer mucho dinero aquí dentro.
+
+Esto es lo que vamos a intentar hacer en Londres.
+
+Eso no quiere decir
+
+que el precio se nos salga de valor y tengamos una
+
+expansión enorme. Estamos en abril ahora, y os
+
+diría que en marzo la sesión de Londres fue bastante mejor que New York.
+
+Muchas veces en los índices americanos yo he tomado trades muy buenos en
+
+Londres, mucho mejores que en New York, en ocasiones.
+
+Hay días,
+
+lo puedo ver en mi calendario, donde en Londres,
+
+casi la mitad del
+
+mes, hago más dinero que en New York.
+
+Por eso os digo que, en mi opinión, es una sesión infravalorada, porque a mí se me
+
+da bastante bien Londres. No quería decirlo así, pero es la realidad.
+
+Quería
+
+simplemente mostraros cómo lo enfoco yo.
+
+Muchas veces sí que tendremos algo así, donde en el precio tenemos una sesión
+
+expansiva. Podría ser.
+
+Todo esto es cuestión de verlo en el mercado y tratar
+
+de adaptarnos. De forma general, nuestra predisposición no es
+
+tanto de esperar una expansión, sino más bien una acumulación, donde hay
+
+instituciones que están preparando sus posiciones,
+
+porque tienen una información que nosotros no tenemos, quizá, y quieren prepararse
+
+para la sesión de New York.
+
+Es luego, en la sesión de New York, donde muchas veces tenemos este movimiento, y
+
+ese es el problema también que ocurre con New York.
+
+Muchas veces esto es muy complicado cogerlo, porque ocurre directamente desde la
+
+apertura y si no eres hábil y tienes una buena
+
+zona de entrada con una invalidación adecuada que te
+
+permita tener un buen ratio, te quedas fuera.
+
+Eso ocurre porque esa acumulación de órdenes, muchas veces que se
+
+da
+
+antes del mercado, muchas veces se ejecuta en la apertura del mercado y es
+
+lo que provoca que el precio
+
+se mueva tan rápido
+
+que incluso a veces no podamos cogerlo.
+
+A veces, el saber aprovechar Londres nos puede dar una ventaja enorme.
+
+Otra cosa que me gusta de Londres, que lo aprendí de Fabio Valentini,
+
+yo ya lo hacía indirectamente, en parte,
+
+pero no lo había nunca enfocado de esta manera, es utilizar Londres como una
+
+forma de hacer un colchón. Utilizar Londres como una
+
+manera de intentar
+
+ir a New York ya con cierto colchón, de forma que en New York lo que haces
+
+es arriesgar Londres.
+
+En New York, en el caso de que Londres haya salido bien, obviamente,
+
+el objetivo es: "Voy a arriesgar el profit de Londres".
+
+Con lo cual, lo peor que puede pasar es quedar break even,
+
+pero ya descartas la idea de que ese día vaya a ser negativo.
+
+Si no operas Londres y no tienes la posibilidad de capitalizar algo
+
+antes de la apertura de New York, esa posibilidad de:
+
+"Hoy, sea como sea el día, ya no va a ser negativo",
+
+es brutal. Ir a la sesión con mayor
+
+volumen del día,
+
+que quizá más puedes aprovechar, y ya vas con la idea de: "Hoy, en el
+
+peor de los casos, no voy a perder.
+
+En el peor de los casos,
+
+no voy ni a ganar ni a perder". Eso es muy potente.
+
+Me gusta utilizar Londres
+
+un poco con ese objetivo, de tener ese colchón previo a New York, de
+
+$1.500. Entonces digo: "Voy a hacer un máximo de tres o cuatro
+
+operaciones,
+
+voy a arriesgar unos 500, 400 por trade, en el peor de los casos,
+
+quedo en break even o incluso en profit".
+
+Es lo que me
+
+llama bastante de Londres
+
+y esta es la forma en la que lo suelo utilizar.
+
+No es que sea complejo, para nada. Es simplemente marcar
+
+zonas de interés
+
+y luego ver con order flow qué
+
+está pasando, dónde tenemos agresión, dónde tenemos absorción.
+
+Siempre es lo mismo. No paro de repetirlo porque siempre es lo mismo en la
+
+realidad.
+
+Siempre lo que es la ejecución es absorción y agresión.
+
+Qué participantes están siendo absorbidos, están siendo atrapados, y
+
+qué participantes están tomando el control en el mercado.
+
+Esta es la forma en la que vamos a estar operando la sesión europea.
+
+
+--- FIN: 4.6 - Plan de trading Londres.txt ---
+
+
+--- INICIO: 4.7 - Plan de trading NY.txt ---
+
+Plan de trading para operar el SP 500 o el Nasdaq durante la sesión de New
+
+York. Si bien en el vídeo anterior ya vimos cómo podíamos
+
+enfocar o encarar y operar la sesión de Londres, que es
+
+una sesión que a mí me gusta mucho, también vamos
+
+a explicar cómo podemos operar la sesión de New York, que es la sesión
+
+principal, que yo también opero
+
+en este tipo de activos.
+
+Ya veréis que es algo un poco más complejo, hay que tener algunas cosas más en
+
+cuenta que en Londres,
+
+pero lo vamos a ver a continuación.
+
+Antes de esto,
+
+quiero hacer mención especial de nuevo al tema de la rutina, al tema de
+
+los horarios, con lo que ya os mencioné en el vídeo anterior de Londres, pero
+
+creo que es importantísimo el tener ciertos límites, ciertas horas en las
+
+que vamos a estar operando, en las que vamos a estar más concentrados y ciertas
+
+horas en las que quizá podemos relajarnos un poco más.
+
+A la hora de operar la sesión de New York, que empieza a las
+
+9:30, hora de New York, que es las 3:30 en España, vamos a intentar
+
+estar a las 2:45 delante del ordenador para
+
+tener tiempo
+
+suficiente para poder hacer nuestro análisis y
+
+demás.
+
+3:30 en España, vamos a empezar nuestra
+
+ventana operativa, donde vamos a poder ejecutar nuestros trades y
+
+5:30, es 11:30 de New York, vamos a
+
+dar por finalizada la sesión.
+
+Vamos a evitar operar la PM, en este caso.
+
+También se puede hacer, pero yo personalmente no la estoy operando, por lo menos a
+
+día de hoy. Entonces, no tiene mucho sentido que
+
+os muestre cómo operarla, porque ahora mismo no la estoy operando.
+
+Pero también es cierto que es una sesión que se puede operar.
+
+No es la sesión principal, pero al igual que Londres,
+
+suele tener un comportamiento similar.
+
+Pero es una ventana que también se puede operar.
+
+La PM, que sería de
+
+7:00, 7:30 al cierre, a las 10:00. O 9:30 a
+
+10:00, que sería en hora de New York, sería más o menos de 1:30 a
+
+4:00.
+
+En el caso de la sesión principal de New York, la sesión AM,
+
+vamos a tener en cuenta varios rangos
+
+temporales. Por un lado, vamos a empezar por el día anterior.
+
+El previous day.
+
+Vamos a tener en cuenta el perfil de volumen del día anterior,
+
+importantísimo en cuanto a elementos del perfil de volumen, como son el value
+
+area high, value area low, el POC, high volume nodes y low
+
+volume nodes.
+
+Ya sabéis, value area high y value area low, zonas donde el precio se consideró
+
+caro o barato y hubo cierto rechazo.
+
+POC, zona donde ha habido mayor negociación.
+
+High volume nodes, zona donde ha habido un gran interés, con lo cual es posible que
+
+el precio tienda a volver ahí. Y zonas low volume node,
+
+donde ha habido poca negociación, con lo cual es posible que el precio ahí
+
+dé algún tipo de reacción. Nos vamos
+
+a fijar, en este caso también, en cómo fue la forma del
+
+perfil de volumen del día anterior.
+
+Esto también lo hablamos en un vídeo anteriormente.
+
+Si recordáis, tenemos
+
+diferentes formas que podemos identificar en los diferentes perfiles.
+
+Tenemos el típico
+
+perfil balanceado, que suele ser algo tal que
+
+así, value area high, value area low.
+
+Tenemos el típico perfil en P,
+
+que suele ser
+
+algo así.
+
+Y luego tenemos value area low, value area high.
+
+Luego tenemos también el perfil en V,
+
+que suele ser algo así.
+
+Value area high, value area low.
+
+Y luego tenemos también un perfil de doble distribución, que es
+
+probablemente más complicado,
+
+que suele ser algo así.
+
+Value area high y value area low.
+
+Esto va a ser
+
+importante que lo podamos identificar. ¿Por qué?
+
+Porque si el día anterior
+
+tuvo un perfil balanceado, ya nuestra predisposición
+
+inicialmente, ahora también hablaremos un poco sobre esto,
+
+cómo abre el precio respecto el perfil anterior.
+
+Pero vamos a decir que si tenemos un perfil balanceado, nuestra
+
+predisposición es que el precio siga moviéndose en esta zona,
+
+porque en las horas más recientes
+
+ha sido un rango de precios en el que ha habido cierto acuerdo entre compradores y
+
+vendedores
+
+y el precio se ha movido dentro de este rango, con lo cual es posible que en el
+
+día presente, justo un día más tarde, el precio siga
+
+moviéndose dentro de este rango, sin tener en cuenta ahora dónde
+
+vamos a abrir, que lo hablaremos luego.
+
+En el caso que tengamos un perfil en P, de forma aislada,
+
+nuestra predisposición va a ser de buscar compras.
+
+Va a ser enfocarnos sobre todo mucho en el value area low
+
+y vamos a tratar de buscar retrocesos a esta zona para buscar compras.
+
+Lo mismo pero opuesto en caso de tener un perfil en
+
+V, donde el mayor
+
+volumen se concentró abajo en
+
+el día anterior, con lo cual nuestra idea
+
+inicialmente, sin tener en cuenta un mayor contexto, va a ser de
+
+buscar ventas en el value area high.
+
+Entonces aquí buscaremos absorción de compradores y, idealmente,
+
+agresión de vendedores.
+
+Como veis, siempre es lo mismo, absorción y agresión.
+
+Y en el caso de que tengamos
+
+un perfil de volumen de doble distribución,
+
+sobre todo nos vamos a fijar en el low volume node,
+
+probablemente hay uno claramente diferenciado y esta va a ser nuestra
+
+zona clave, al igual que el value area high y el value area low.
+
+Y aquí vamos a tener un sesgo más bien neutro, algo así como en
+
+el día
+
+balanceado,
+
+dondeEste va a ser el punto clave y donde podemos
+
+encontrar cierta negociación en estos "high volume nodes".
+
+Nuestra idea será movernos dentro de ese
+
+rango. Esto en cuanto a la
+
+forma. Vamos a identificar cómo fue la forma del día
+
+anterior y luego vamos a ver dónde cierra, porque no es lo mismo un perfil en P,
+
+donde el precio cierra aquí arriba, que un perfil en P
+
+en el que durante la última hora de "trading", en el cierre, el precio cierra aquí
+
+abajo.
+
+Si el precio cierra aquí arriba, nuestra predisposición
+
+será de buscar retrocesos al "value area low" del día anterior en
+
+RTH para usar compras. Si el precio cierra aquí arriba, es
+
+posible que esta zona donde se negoció el mayor
+
+volumen en el día anterior, ahora
+
+sea una zona donde el precio encuentre cierta resistencia.
+
+Podemos cambiar
+
+o invertir esa direccionalidad y buscar ventas.
+
+Lo mismo en un perfil en B,
+
+donde si el precio
+
+concentró el mayor volumen aquí abajo, pero por lo que sea en el cierre, en la
+
+última hora, por alguna noticia o lo que sea, cierra aquí arriba, se da algún tipo
+
+de "short squeeze",
+
+es posible que el "value area low"
+
+empiece a actuar como soporte si tenemos algún
+
+tipo de retroceso. "Value area low", que coincidiría con la zona de volumen.
+
+El perfil de doble
+
+distribución es un poco más complicado, es algo más neutro, de la
+
+misma forma que en un perfil balanceado.
+
+Pero nos vamos a fijar mucho en
+
+la forma de ese perfil de volumen y en el cierre, porque en función de eso
+
+vamos a poder tomar ciertas conclusiones.
+
+Luego, en cuanto al perfil "overnight",
+
+esto lo voy a dejar aquí dibujado.
+
+En cuanto al perfil "overnight",
+
+nos vamos a fijar en
+
+cómo ha sido el perfil de volumen, básicamente.
+
+Lo de siempre, "value area high", "value area low", "POC", "high volume node", "low
+
+volume node". A
+
+medida
+
+que voy explicando, también voy
+
+pensando. Tenemos el "overnight
+
+high",
+
+"overnight low", también lo vamos a marcar, porque son puntos donde el precio
+
+tiende a reaccionar bastante bien.
+
+El
+
+VWAP de ETH. Os voy a
+
+dar aquí un tip. Cuando tenemos una sesión de Londres que ha sido expansiva,
+
+muchas veces el VWAP de ETH, el VWAP del
+
+día, no tanto el de New York, sino el del día,
+
+que incluye Asia y Londres,
+
+tiene mayor peso que el de RTH. De forma general, el VWAP de RTH es el VWAP
+
+principal. Si operamos la sesión de New York, nos vamos a fijar en el VWAP de RTH.
+
+Pero si Londres ha sido un movimiento fuerte, es muy
+
+posible que el VWAP de ETH tenga un mayor peso.
+
+Luego tenemos los "big trades" o
+
+delta
+
+que ha podido ver en esa sesión "overnight", que si hemos tenido una zona
+
+claramente dominada por compradores o vendedores, vamos a tenerla en cuenta
+
+también, porque es posible que tenga algún
+
+efecto también en la sesión de New York.
+
+Esto en cuanto a la sesión de
+
+"overnight", puntos que tenemos que tener en cuenta.
+
+Luego, en cuanto a la sesión actual, en cuanto a la apertura de las
+
+9:00, 9:30,
+
+¿hay algún gap en RTH?
+
+Respecto el cierre del día anterior, ¿tenemos
+
+algún gap respecto la apertura y el cierre
+
+del día anterior? Ahí podemos trazar dos tipos de
+
+"setups", que lo explicaré en el vídeo de los "setups",
+
+de los modelos y demás, que es el "setup"
+
+con el RTH gap, que es RTH gap, "fill and go", que el
+
+precio rellene el gap y continúe en esa dirección, o bien
+
+ver cierto rechazo y que vayamos a hacer un "trade"
+
+en contra del gap para rellenar el gap.
+
+Si hay un gap, hay que tenerlo en cuenta, 100 %.
+
+Luego, también vamos a tener en cuenta
+
+la apertura respecto el "volume profile",
+
+respecto el perfil de volumen del día anterior.
+
+Es decir, el día anterior, como hemos dicho, podemos tener un
+
+día balanceado, un día con un perfil en P, perfil B
+
+o doble distribución.
+
+¿Cómo
+
+abre la sesión actual en RTH
+
+respecto el perfil de volumen del día anterior?
+
+Porque si el precio abre aquí dentro
+
+de un perfil balanceado, lo normal o nuestra predisposición
+
+es: día balanceado.
+
+Lo que haremos será
+
+fadear, no sé cómo se dice esto en español, buscar
+
+ventas en el "value area high" del día anterior, buscar compras en el "value area
+
+low" del día anterior. Típico día balanceado donde el precio abre dentro
+
+del valor, buscaremos que el precio se mueva dentro de valor.
+
+Ahora bien, si el precio abre por encima
+
+del "value area high",
+
+hay una mayor probabilidad de que el
+
+día sea alcista. Con lo cual, aquí nuestra idea
+
+es ver, esperar, si el precio
+
+viene al "value area high" del día anterior,
+
+nuestra predisposición será: vamos a ver si encontramos cierto soporte aquí
+
+y puedo buscar una compra.
+
+Pero siempre con una confirmación, que o traemos conHerramientas de
+
+order flow. Si tenemos de nuevo rechazo y el precio
+
+reingresa dentro del valor, eso no es una señal para
+
+nada alcista en este caso. Entonces buscaremos ventas
+
+hacia el value area low
+
+del día anterior. Y lo mismo, pero puesto, si el precio
+
+abre debajo del value area low,
+
+nuestra idea será buscar ventas. A menos que el precio reingrese dentro del valor.
+
+Entonces ahí nos plantearemos buscar operaciones
+
+dentro del valor o hacia el value
+
+area high. Si el
+
+precio, en el caso de un perfil en P, abre aquí
+
+debajo,
+
+en un perfil donde la mayor negociación se concentró aquí arriba,
+
+lo normal es que tengamos un movimiento hacia el volumen, porque esto va a tender
+
+a utilizarse como un imán.
+
+Es muy posible que esto actúe como una zona de atracción y aquí
+
+veremos qué ocurre. Pero si tenemos una apertura por debajo de valor, eso no es
+
+alcista. Entonces, aquí nuestra predisposición es: vamos a ver si aquí encontramos
+
+cierto rechazo para buscar ventas.
+
+Y aquí lo mismo, pero puesto.
+
+Si el precio abre aquí
+
+arriba, lo que haremos es, probablemente, tenemos un movimiento hacia el
+
+valor, porque aquí es donde se transaccionó la mayor parte del
+
+volumen el día anterior, y aquí podamos tener cierto rechazo de nuevo.
+
+Muy diferente a si abrimos dentro o
+
+arriba. En el caso de un perfil en P, si abrimos aquí dentro,
+
+la predisposición es claramente alcista, la predisposición
+
+es de buscar value area low para buscar compras.
+
+Porque seguimos dentro de valor, se está aceptando
+
+ese valor aquí arriba, con lo cual, si tenemos
+
+algún retroceso, tenemos la oportunidad de ver precios cerca al
+
+value area low,
+
+junto con algún contexto, alguna confluencia y demás, podemos buscar una
+
+gran compra. Y lo mismo si tenemos una
+
+apertura por encima del
+
+value area high en un perfil en P, lo que buscaremos es
+
+retrocesos al POC,
+
+idealmente, o incluso el value area high.
+
+Si tenemos fuerza en el precio, es posible que el
+
+propio value area high del día anterior sea un soporte e iniciemos un
+
+movimiento fuerte al alza.
+
+Lo mismo, pero puesto en el perfil en B.
+
+Para no explicarlo todo de nuevo, porque
+
+si no el vídeo se nos va a alargar bastante, pero es exactamente lo mismo.
+
+Si abrimos
+
+encima de value area high, la predisposición en principio es
+
+alcista y es de utilizar esto como soporte.
+
+Si abrimos dentro o debajo, la predisposición es más bien bajista.
+
+Operando a favor de ese volumen transaccionado en la parte baja el
+
+día anterior.
+
+Y luego tenemos el perfil de doble distribución, que es el más complejo y el
+
+que más cuesta de alguna forma predecir o lo
+
+que podríamos esperar. El foco, como os he dicho antes,
+
+es el low volume node y las zonas donde ha habido una alta negociación.
+
+Siempre que abrimos por encima del value area high, ya tenemos una
+
+predisposición inicialmente alcista.
+
+Si abrimos debajo del value area low,
+
+predisposición bajista. Entonces también tenemos en cuenta el POC,
+
+que puede que esté aquí o puede que esté aquí,
+
+como zonas en las que podríamos buscar ciertas
+
+reacciones. Esto es cómo
+
+podemos utilizar la apertura de la sesión actual
+
+respecto al perfil de volumen anterior. Punto superimportante.
+
+Ya veis que he tardado un poco en explicarlo, pero creo que es importante
+
+que entendamos cómo podemos aprovechar esto.
+
+Luego, obviamente, high volume nodes y low volume nodes y VWAP,
+
+que esto es algo dinámico, que se va
+
+creando durante la sesión. Es el perfil de
+
+volumen de la sesión que abre a las 9:30, con lo cual estas son cosas
+
+que se van a ir formando. Y todo esto también vamos a tener que estar atentos.
+
+Si se forma algún low volume node, pues ojo, aquí me gustaría quizá
+
+buscar algún trade en
+
+dirección a este movimiento
+
+y demás. VWAP de RTH también importantísimo.
+
+Y luego utilizaremos como siempre este tipo de herramientas para
+
+buscar
+
+nuestras entradas. Esto es un poco el contexto cuando hablamos
+
+del
+
+vídeo que os hice
+
+anteriormente sobre el contexto, zona y confirmación.
+
+Esto es un poco el contexto y la zona, tema de perfil de volumen del día anterior y
+
+demás, formaría parte de lo que es el contexto.
+
+Esperamos un día balanceado, inbalanceado, estamos alcistas, estamos bajistas, eso
+
+es el contexto.
+
+Y luego, todo este tipo de zonas, value area high, value area
+
+low, el POC, low volume nodes,
+
+el overnight high, overnight low.
+
+Todo esto son zonas donde van a ser de interés para
+
+ejecutar nuestros trades. Y luego tenemos la confirmación, que la basamos sobre
+
+todo en herramientas de order flow, como los big
+
+trades, CVD, Delta, footprint, bookmap, donde vamos a
+
+estar viendo información
+
+de lo que está pasando detrás de esas velas japonesas que podemos ver en un
+
+gráfico tradicional.
+
+Esta es la forma en la que vamos a operar
+
+New York. Aquí la idea, a diferencia de la sesión de Londres,
+
+sí que vamos a buscar tener trades con un mayor recorrido.
+
+Si recordáis, en Londres buscábamos más bien algo
+
+tal
+
+que así. Tenemos un perfil
+
+más bien balanceado y buscamos
+
+tratar de capitalizar una acumulación o una
+
+distribución.
+
+Mientras que en la sesión de New York lo que buscamos
+
+es tener una zona muy
+
+determinada en la que nos interesaría buscar
+
+compras o ventas en función del contexto.
+
+Y aquí vamos a buscar
+
+alguna especie de confirmación con big trades y demás
+
+para poder
+
+ejecutar un trade de un mayor recorrido que en Londres.
+
+La idea aquí es de buscar un trade
+
+que tenga un mayor recorrido, que podamos tomar parciales,
+
+añadir a la posición y de alguna forma
+
+dejarlo correr mucho más que, por
+
+ejemplo, en Londres. Y como os digo,
+
+si vas a operar también Londres juntamente
+
+con New York, la idea es intentar hacer algo de profit en Londres para
+
+ir risk free en New York e intentar tener un día
+
+que realmente dices: "H****a, qué buen día".
+
+Que puedas capitalizar. Esa es un poco la idea.
+
+Así que esta va a ser la forma en la que vamos a operar New York.
+
+Lo dicho, lo vamos a ir viendo en los directos día a día, así que ahí nos
+
+vemos.
+
+
+--- FIN: 4.7 - Plan de trading NY.txt ---
+

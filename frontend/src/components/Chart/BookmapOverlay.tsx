@@ -143,6 +143,20 @@ export const HeatmapOverlay: React.FC<HeatmapOverlayProps> = ({ chart, series })
         const t2 = Number(visibleRange.to);
         const pps = (x1 !== null && x2 !== null && t2 > t1) ? (x2 - x1) / (t2 - t1) : 0;
 
+        // --- SOLDADURA DE PÍXELES (v6.4): Cálculo de coordenadas reales para trades ---
+        const bTrades = state.bigTradesData || [];
+        const minTSize = Number(state.minTradeSize || 20);
+        const mappedTrades = bTrades
+            .filter(t => {
+                const tAdj = t.time + timeOffset;
+                return tAdj >= t1 - 10 && tAdj <= t2 + 10 && t.size >= minTSize;
+            })
+            .map(t => {
+                const x = timeScale.timeToCoordinate(t.time + timeOffset);
+                return { ...t, x };
+            })
+            .filter(t => t.x !== null);
+
         // Delegar RENDER al worker
         worker.postMessage({
             type: 'RENDER',
@@ -154,7 +168,11 @@ export const HeatmapOverlay: React.FC<HeatmapOverlayProps> = ({ chart, series })
                 t1_vis: t1,
                 t2_vis: t2,
                 timeOffset,
-                pixelsPerSecond: pps
+                pixelsPerSecond: pps,
+                heatmapFilter: state.heatmapFilter,
+                minTradeSize: state.minTradeSize,
+                showBigTrades: state.orderFlowStrategies.bigTrades,
+                bigTrades: mappedTrades // Enviamos trades con X real inyectada
             }
         });
     };
@@ -237,7 +255,11 @@ export const HeatmapOverlay: React.FC<HeatmapOverlayProps> = ({ chart, series })
         const unsubStore = useStore.subscribe((state, prev) => {
             if (
                 state.heatmapData !== prev.heatmapData ||
-                state.orderFlowStrategies.bookmap !== prev.orderFlowStrategies.bookmap
+                state.bigTradesData !== prev.bigTradesData ||
+                state.orderFlowStrategies.bookmap !== prev.orderFlowStrategies.bookmap ||
+                state.orderFlowStrategies.bigTrades !== prev.orderFlowStrategies.bigTrades ||
+                state.heatmapFilter !== prev.heatmapFilter ||
+                state.minTradeSize !== prev.minTradeSize
             ) {
                 dirtyRef.current = true;
             }

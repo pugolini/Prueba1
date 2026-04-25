@@ -1,0 +1,136 @@
+{
+  "task_summary": "```json\n{\n  \"task_summary\": \"El WebSocket se cierra inmediatamente (code=1006) y el precio no se actualiza. El WS se cierra antes de establecer conexión.\",\n  \"relevant_files\": [\n    {\n      \"path\": \"a",
+  "relevant_files": [
+    {
+      "path": "archives\\backend_diagnostics\\test_websocket_btcusd.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_3010.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_direct.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_logic.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_real.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\rithmic_config.json",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\diagnostico_rithmic.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\app\\services\\rithmic_service.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\rithmic_diagnostic.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\scripts\\debug_rithmic_fields.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "rithmic_config.json",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "scratch\\stress_test_rithmic.ts",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "scratch\\test_rithmic_history.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "AGENTS.md",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "SKILL.md",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\app\\main.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_puerto_11000.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_service.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_symbol_resolve.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\diagnose_mt5.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    }
+  ],
+  "current_logic": "No se pudo analizar automáticamente. Revisar archivos listados.",
+  "potential_issues": [],
+  "suggested_approach": "Revisar los archivos relevantes manualmente.",
+  "code_snippets": {},
+  "_metadata": {
+    "files_analyzed": 20,
+    "estimated_tokens_saved": 0,
+    "processing_time_ms": 24329,
+    "model": "qwen-obrero",
+    "fallback": true
+  }
+}

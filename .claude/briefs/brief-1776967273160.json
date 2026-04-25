@@ -1,0 +1,136 @@
+{
+  "task_summary": "WebSocket se cierra con code=1006 inmediatamente. Logs: [WS] Cerrando conexión limpia -> WebSocket is closed before connection -> [WS] Error -> [WS] Closed (code=1006). Luego [WS] Open. Pero precio NO",
+  "relevant_files": [
+    {
+      "path": "archives\\backend_diagnostics\\test_websocket_btcusd.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_logic.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\BigTradesOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\BookmapOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\FootprintOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\OrderFlowStrategiesOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\SessionZonesOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "frontend\\src\\components\\Chart\\TradingOverlay.tsx",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "scratch\\verify_integrated_delta.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "AGENTS.md",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "SKILL.md",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\app\\main.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_puerto_11000.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_3010.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_direct.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_rithmic_real.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_service.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\test_symbol_resolve.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "backend\\rithmic_config.json",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    },
+    {
+      "path": "archives\\backend_diagnostics\\diagnose_mt5.py",
+      "relevance": "Archivo relevante identificado",
+      "key_functions": [],
+      "dependencies": []
+    }
+  ],
+  "current_logic": "No se pudo analizar automáticamente. Revisar archivos listados.",
+  "potential_issues": [],
+  "suggested_approach": "Revisar los archivos relevantes manualmente.",
+  "code_snippets": {},
+  "_metadata": {
+    "files_analyzed": 20,
+    "estimated_tokens_saved": 0,
+    "processing_time_ms": 120082,
+    "model": "qwen-obrero",
+    "fallback": true
+  }
+}

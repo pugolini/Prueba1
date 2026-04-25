@@ -1,0 +1,652 @@
+
+--- INICIO: 7.2 - Introducción al mercado de Opciones y Gamma.txt ---
+
+En este vídeo voy a hablar de opciones y gamma.
+
+Este es un tema muy interesante,
+
+que se sale un poco de lo que es puramente "order flow",
+
+pero he decidido explicar un poco en
+
+qué consiste,
+
+cómo funciona y cómo podemos utilizarlo a nuestro favor en nuestro "trading" de
+
+"order flow", porque es
+
+literalmente
+
+la razón por la que se mueve el mercado, o una de las razones o de los factores que
+
+más influencian el movimiento de los mercados de los
+
+futuros, el SP500, Nasdaq y demás.
+
+Antes que nada, decir que yo tampoco soy un experto en esto.
+
+He estudiado mucho sobre
+
+esto
+
+y lo he utilizado también en mi operativa, más a modo "swing", no tanto a
+
+nivel intradía,
+
+pero quiero decir, siendo totalmente transparente, tampoco soy
+
+superexperto en esto.
+
+No tengo demasiada experiencia en esto, básicamente un año.
+
+Pero creo que es interesante
+
+que os lo presente y lo conozcáis y veamos cómo lo podemos
+
+utilizar en nuestra operativa.
+
+Esto básicamente va de mercado de opciones.
+
+El mercado de opciones es, al igual que el mercado de futuros, un mercado
+
+financiero de derivados.
+
+Una opción es un contrato que nos da derecho a
+
+comprar o vender. Comprar es lo que sería una opción
+
+"call" o vender, que es una opción "put".
+
+Esto lo compramos o vendemos a un precio determinado que llamamos
+
+"strike". El "strike" es el precio al que se compra o vende en
+
+un tiempo determinado.
+
+Básicamente, es algo así como apostar.
+
+Cuando yo apuesto que el precio va a subir, puedo
+
+comprar una opción "call".
+
+Tengo varias opciones, de hecho por eso se llaman opciones, porque puede ser en
+
+función de la volatilidad, del tiempo.
+
+No quiero entrar demasiado en cómo funciona el tema opciones, pero sí
+
+quiero explicar cómo nos afecta esto a nosotros como "traders".
+
+Y en el caso de que yo piense que el precio va a bajar, compraré una opción "put".
+
+Básicamente, esto en cuanto a opciones.
+
+Luego, sí que hay un concepto interesante que es el gamma, o gamma
+
+exposure.
+
+Esto se representa como GEX,
+
+gamma exposure.
+
+Básicamente,
+
+el gamma es una medida de
+
+cómo va cambiando la cobertura de los "market makers", ahora veremos,
+
+cuando el precio se mueve.
+
+Los "market makers" son los que nos venden las opciones.
+
+Cuando tú compras una opción, si yo compro una opción en "call", el "market maker"
+
+me está vendiendo la opción en "call".
+
+Es mi contrapartida, es el que me vende la opción.
+
+Tenemos que entender que los "market
+
+makers"
+
+no quieren exponerse a ningún tipo de movimiento direccional.
+
+Ellos no ganan
+
+dinero con los movimientos del mercado, sino que ganan con otros
+
+factores, como por ejemplo el "spread",
+
+transacciones, el theta, que es el
+
+elemento
+
+que mide
+
+cómo las opciones van perdiendo valor
+
+a medida que pasa el tiempo. Se benefician de
+
+otros factores fuera del movimiento del precio.
+
+Con lo cual los "market makers" son participantes que
+
+venden las opciones y para no incurrir en ningún tipo
+
+de pérdida ni ganancia,
+
+necesitan cubrirse.
+
+Porque si no, ¿qué pasa? Si yo compro una opción "call"
+
+porque creo que el precio va a subir,
+
+el
+
+"market maker" me está vendiendo esa opción "call".
+
+Con lo cual, si el mercado sube, yo gano dinero, pero si el mercado
+
+sube,
+
+a la vez el "market maker" estará perdiendo dinero.
+
+Con lo cual,
+
+el "market maker" tiene que cubrirse ante esa posible
+
+subida. ¿Cómo hace esto el "market maker? Comprando.
+
+¿Comprando dónde? En el futuro del activo subyacente, en el futuro del
+
+SP500 o en el futuro del Nasdaq.
+
+Eso es lo que tenemos que entender.
+
+Si yo compro una opción "call",
+
+el "market maker" me está vendiendo una opción "call".
+
+Con lo cual, si el precio sube,
+
+el "market maker" tiene que cubrirse y esto lo hace comprando el
+
+futuro del SP500 o del activo.
+
+De forma opuesta, si en opciones "put", básicamente es que yo
+
+espero que el precio baje, con lo cual si el precio baja,
+
+el "market maker", que es el que me está vendiendo esa opción "put", estaría en
+
+pérdidas, con lo cual la forma que tiene de cubrirse ante una potencial
+
+bajada es vendiendo el futuro del
+
+SP500.
+
+Si ellos venden el futuro,
+
+ya sea que el precio suba o baje,
+
+el beneficio va a ser cero. O no es cero exactamente, sino que van a ganar
+
+el "spread" y demás,
+
+pero no tienen ningún beneficio por el movimiento del precio, porque se están
+
+cubriendo con la opción que han vendido y con el
+
+futuro que han comprado o vendido.
+
+No sé si me estoy explicando. Si es la primera vez que escuchas
+
+esto, recomiendo que vayas atrás al vídeo y lo vuelvas a escuchar
+
+unas cuantas veces hasta que quede claro.
+
+Pero básicamente,
+
+es lo que os he puesto aquí. Los "market makers" tienen que
+
+comprar o vender para
+
+cubrirseSi cada vez que hay una
+
+transacción con una opción, el "market maker" tiene que comprar o
+
+vender en los futuros. Con lo cual, el movimiento de los futuros, en
+
+gran parte, viene determinado por las opciones.
+
+Por cada transacción que
+
+hay por opciones, que las venden los "market
+
+makers", estos
+
+se ven obligados a comprar o vender el futuro
+
+del activo.
+
+Cuando alguien compra opciones, el "market maker" se
+
+pone en el lado contrario y tiene que cubrir su riesgo en el futuro.
+
+Eso es lo que
+
+os he dicho.
+
+Si esto está claro, vamos al siguiente
+
+paso, que es lo que
+
+nos interesa con este
+
+mercado.
+
+Lo que al final nos interesa en nuestro "trading" es cómo nos afecta esto,
+
+qué relevancia tiene. Está bien saberlo, pero de qué me sirve esto.
+
+Aquí es donde entra el gamma positivo o el gamma
+
+negativo, o el gamma "exposure".
+
+También lo vamos a ver así. El gamma es de forma individual,
+
+de una opción, y el gamma "exposure" es el total de todas
+
+las opciones que hay en ese
+
+mercado. La forma más correcta es verlo
+
+con este concepto: gamma "exposure".
+
+Un gamma negativo lo que quiere decir es que los
+
+"market makers" se ven obligados a comprar cuando el precio baja
+
+y a vender cuando el precio sube. Con lo
+
+cual, esto lo que genera es un régimen
+
+balanceado, consolidación, rango.
+
+Es decir, el
+
+típico
+
+mercado balanceado. Tenemos nuestro perfil, "value area high", "value
+
+area low".
+
+De forma general, en un régimen así, vamos a buscar
+
+este tipo de transacciones.
+
+Nos vamos a poder aprovechar de este tipo de
+
+mercado balanceado.
+
+Esto, de nuevo, es el contexto. Ya hemos hablado de
+
+"context, location, confirmation", contexto, zona y
+
+confirmación. Antes de entrar en si estamos en una buena zona o si
+
+el
+
+"footprint", "big trades" o lo que sea nos está confirmando el "trade", tenemos que
+
+pensar cuál es el contexto. Si no, lo que puede ocurrir es
+
+que tengamos unos "trades" que aparentemente por ejecución parecen perfectos, pero
+
+no salen bien porque no estamos teniendo en cuenta el contexto en el que estamos.
+
+He hablado de la importancia que tiene para mí el entender el contexto,
+
+y esto es algo que con "order flow" lo podemos
+
+identificar bastante bien.
+
+Gamma positivo, precio sube,
+
+"market makers" venden. Si el precio baja, "market makers" compran, con lo
+
+cual, de alguna forma, el precio se mantiene.
+
+Cuando vemos que el precio está contenido, es cuando tenemos un
+
+gamma positivo. Luego tenemos el gamma negativo, que es el que
+
+hay que tomar con especial atención.
+
+Es cuando tenemos esos movimientos superexplosivos.
+
+Eso se da porque los "market makers", para cubrirse
+
+con el mercado de opciones, se ven obligados a comprar cuando el precio
+
+sube y a vender cuando el precio baja.
+
+Con lo cual,
+
+cuando tenemos el mercado subiendo, que ya está habiendo agresividad de forma
+
+orgánica en el mercado por los participantes del mercado,
+
+a esto súmale que tenemos
+
+un escenario de gamma negativo, donde los "market makers",
+
+para cubrirse ante una subida del precio, tienen que comprar más.
+
+Con lo cual, esas compras van a hacer que el precio se acelere todavía más y cree
+
+esos supermovimientos que dices: "H*****s, que lleva toda la sesión de
+
+inicio a fin subiendo o bajando sin ningún tipo de retroceso".
+
+No lo sabías, pero probablemente es porque
+
+ese día teníamos un gamma negativo y esa subida del
+
+precio hizo que se forzara a los "market makers" a comprar
+
+todavía más y acelerar todavía más esa subida.
+
+O, de forma opuesta,
+
+si el precio baja,
+
+los "market makers" se van a ver obligados a vender una y otra vez para
+
+cubrirse,
+
+con lo cual es cuando vemos esos movimientos superexplosivos de
+
+2-3 % en el SP 500 y en Nasdaq.
+
+Hay que estar muy atentos a esto, sobre todo en el gamma negativo,
+
+porque al final un gamma positivo es algo más fácil de leer
+
+o de operar, incluso. Cuando tienes un gamma negativo,
+
+es cuando tenemos esos días, hay pocos al mes,
+
+pero esos días supertendenciales que te quedas fuera o que a
+
+veces son complicados,
+
+que estás todo el rato buscando reversiones, porque no entiendes por qué.
+
+No entiendes que está el precio subiendo y no se va a dar la vuelta porque
+
+estamos en un gamma negativo.
+
+Entender el contexto es superimportante y por eso creo que
+
+es necesario que os explique esto, porque está directamente correlacionado con
+
+el precio del futuro.
+
+Por lo que os he dicho,
+
+por cada transacción que hay en el mercado de opciones va a haber una transacción
+
+en el mercado de futuros.
+
+Con lo cual está superrelacionado y muy
+
+influenciado, por lo que creo que es necesario conocerlo,
+
+porque de esa forma vamos a poder aprovecharnos también nosotros.
+
+Algunos conceptos que debemos conocer,
+
+por lo menos que nos suenen un poco, son el gamma flip, zero gamma,
+
+call wall y put wall. El gamma flip es, como quizá podéis suponer,
+
+cuando el gamma pasa de positivo a negativo o viceversa, de negativo a
+
+positivo.
+
+Es importante saberlo, cuándo se da ese gamma flip, porque el escenario
+
+cambia de forma radical.
+
+Cuando tenemos un gamma positivo, tenemos un escenario balanceado.
+
+Aquí, que me he olvidado de ponerosCuando tenemos un
+
+escenario de gamma negativo, tenemos un
+
+mercado inbalanceado o
+
+esperamos
+
+expansiones, movimientos
+
+superexplosivos, tendenciales.
+
+Eso es cuando tenemos el gamma flip, cuando cambiamos
+
+de forma radical
+
+de
+
+escenario. Está muy bien tenerlo en cuenta.
+
+Luego tenemos el zero gamma, que es cuando tenemos un gamma neutral, cuando el
+
+precio se
+
+mueve más libremente, cuando el precio nos da tanto movimientos balanceados
+
+como inbalanceados. Es cuando tenemos una acción del precio bastante
+
+limpia, donde ni está consolidando
+
+tan "heavily" como esto,
+
+ni está expandiendo tan explosivamente, sino que tenemos ciertos
+
+movimientos que podemos capitalizar de forma
+
+probablemente más fácil. Hay menos presión por parte
+
+de los "market makers" y los movimientos son más orgánicos, en el sentido de
+
+que son más de la agresión que está habiendo por
+
+parte de los participantes del mercado y por los
+
+eventos, noticias derivadas de la macroeconomía.
+
+Digamos que hay tres factores principales que mueven el mercado, que son: la
+
+agresividad de los participantes,
+
+el mercado de opciones y el gamma,
+
+y la macroeconomía.
+
+Para mí, son los tres principales factores que
+
+tienen un efecto sobre el movimiento del precio.
+
+Este, que es uno de ellos, creo que es necesario
+
+conocerlo. Luego tenemos las "call walls" y las "put
+
+walls".
+
+La "call wall", por ejemplo,
+
+es un nivel de precio en el que hay un interés
+
+abierto muy alto
+
+de
+
+opciones call, con lo cual
+
+va a actuar como resistencia.
+
+Esto
+
+actúa como resistencia y, de forma opuesta a los "put wall", es ahí donde hay
+
+muchísimo
+
+interés abierto de opciones "put" y va a actuar como soporte.
+
+Esto es bueno
+
+saberlo, porque si sabemos dónde hay "call walls" o "put wall", si sabemos
+
+dónde hay grandes "call walls", vamos a poder, de alguna forma,
+
+identificar zonas de resistencia donde nosotros, con una confirmación
+
+utilizando "order flow", podemos buscar movimientos a la
+
+baja o, en caso de ver zonas de soporte, los
+
+"put walls",
+
+si vemos cierta interacción con "order flow", donde, en este caso,
+
+en el caso de una "put wall",
+
+un soporte
+
+generado por los "market
+
+makers", van a tener que cubrirse ahí.
+
+Si empezamos a ver, por ejemplo, muchas ventas que
+
+son absorbidas y empieza a entrar agresión
+
+compradora, ahí vamos a poder capitalizar un movimiento
+
+alcista. Aquí, con otras herramientas como el delta, por ejemplo, tenemos aquí un
+
+delta negativo
+
+y empieza a entrar bastante
+
+agresión, dejando a estos vendedores como
+
+vendedores absorbidos, atrapados, eso va a provocar un movimiento a la alza.
+
+O de forma opuesta, en una "call wall",
+
+que es donde podemos esperar cierto rechazo.
+
+Esto
+
+es lo que os digo, es
+
+una manera también de tener un mayor contexto.
+
+Es únicamente contexto. No es "order flow", que
+
+"order flow" sería más lo que es la zona y la ejecución, y
+
+opciones es, juntamente con los perfiles de volumen y demás, es lo que
+
+para mí forma lo que sería
+
+un contexto de alta probabilidad.
+
+No es lo mismo ir al mercado
+
+sabiendo todo esto que sin saberlo.
+
+Tan solo el saber si el gamma es positivo o negativo ya es
+
+muchísimo, o ya es mucho más que la mayoría
+
+de los traders que operan con TradingView.
+
+Esto en cuanto al
+
+mercado de opciones y cómo podemos utilizar nosotros el
+
+gamma.
+
+Hay varias herramientas, podéis buscar en Internet.
+
+La más conocida probablemente es el SpotGamma, que es una que yo tengo.
+
+Yo tengo este plan mensual, que es bastante caro,
+
+tengo que decirlo, son $300 cada mes.
+
+Por eso creo que mucha gente no lo va a
+
+utilizar. Tampoco es que sea supernecesario.
+
+Estoy seguro de que también hay opciones más baratas, incluso hay alguna opción
+
+gratuita únicamente para saber si el gamma es positivo o negativo.
+
+Si tampoco queremos entrar en detalles
+
+en los diferentes gamma levels y demás.
+
+Con saber si el gamma es positivo o negativo ya nos da una ventaja de decir: "Vale,
+
+espero".
+
+Esto, además, si encaja también con los perfiles de volumen, nuestro contexto y
+
+demás, perfecto. Es simplemente una confluencia más
+
+a nivel contexto.
+
+Esperamos un mercado balanceado o más bien esperamos movimientos
+
+superexplosivos. Eso también en cuanto a la hora de gestión de riesgo,
+
+tomar parciales,
+
+dejar parciales corriendo. Al final, lo va a determinar el
+
+contexto. Por lo menos creo que es interesante.
+
+Yo os animo a que investiguéis sobre esto y si
+
+por casualidad hubiese más interés en esto, podría mirar de profundizar un
+
+poco. Ya os digo, repito, no soy superexperto.
+
+De hecho, llevo un año, menos de un año, que llevo
+
+estudiando sobre esto y empezando a utilizarlo y demás.
+
+Siendo totalmente sincero, creo que para mí lo más útil
+
+es ver si estamos en un escenario gamma
+
+positivo o gamma negativo y dónde están quizá esos niveles
+
+donde los "market makers" probablemente se van a ver obligados a reaccionar y eso
+
+va a provocar algún movimiento, alguna reacción en el mercado.
+
+Sin más, creo que es
+
+algo interesante y os animo de verdad a que investiguéis más sobre
+
+esto.
+
+
+--- FIN: 7.2 - Introducción al mercado de Opciones y Gamma.txt ---
+

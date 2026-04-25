@@ -7,16 +7,18 @@
  * Este script delega tareas repetitivas al LLM local para ahorrar tokens cloud.
  */
 
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const OLLAMA_URL = 'http://localhost:11434/api/generate';
+const OLLAMA_HOST = 'localhost';
+const OLLAMA_PORT = 11434;
+const OLLAMA_PATH = '/api/generate';
 const MODEL = 'qwen-obrero';
 const CONTEXT_SIZE = 16384;
 
 async function generateCode(prompt, options = {}) {
-    const body = {
+    const body = JSON.stringify({
         model: MODEL,
         prompt: prompt,
         stream: false,
@@ -25,12 +27,18 @@ async function generateCode(prompt, options = {}) {
             temperature: options.temperature || 0.3,
             top_p: options.top_p || 0.8,
         }
-    };
+    });
 
     return new Promise((resolve, reject) => {
-        const req = https.request(OLLAMA_URL, {
+        const req = http.request({
+            hostname: OLLAMA_HOST,
+            port: OLLAMA_PORT,
+            path: OLLAMA_PATH,
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'Content-Length': Buffer.byteLength(body)
+            }
         }, (res) => {
             let data = '';
             res.on('data', chunk => data += chunk);
@@ -45,7 +53,7 @@ async function generateCode(prompt, options = {}) {
         });
 
         req.on('error', reject);
-        req.write(JSON.stringify(body));
+        req.write(body);
         req.end();
     });
 }

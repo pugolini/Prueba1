@@ -1,0 +1,3072 @@
+
+--- INICIO: 2.1 Auction Market Theory simplificada.txt ---
+
+En este vídeo voy a hablar muy brevemente de la "Auction Market Theory", que es
+
+una parte teórica que puede ser algo aburrida para algunos, pero lo voy a hacer
+
+breve. En este caso creo que es necesario, porque cuando operamos en
+
+base al "order flow", estamos operando en base a esta teoría,
+
+la "Auction Market Theory". He decidido dejarlo en inglés porque en
+
+español me sonaba un poco raro, pero básicamente la "Auction Market Theory" es una
+
+teoría que dice que el mercado es una subasta.
+
+El mercado no es
+
+un algoritmo, una línea de tendencia, soporte, resistencia,
+
+ni las instituciones que van a cazar tu "stop loss".
+
+A veces se nos ha metido ese pensamiento a algunos,
+
+que no es realmente la realidad. La realidad es que el mercado es una subasta,
+
+como podemos tener una subasta de un
+
+cuadro, de un coche, de una casa, lo que sea.
+
+Es simplemente un activo
+
+que está siendo de alguna forma comercializado y tenemos compradores y
+
+vendedores que están interesados en comprar o vender a ciertos niveles, y
+
+que puede haber ciertos eventos
+
+externos que pueden presionar a compradores o vendedores a
+
+tomar decisiones de forma más agresiva, como sería el caso de las noticias.
+
+Ahora iremos a eso.
+
+Pero básicamente, el foco de esta teoría es que el mercado es una subasta.
+
+Tenemos compradores y vendedores que van a comprar o vender en función de lo que
+
+pueda pasar en un contexto relacionado con
+
+ese activo, mercado o lo que sea.
+
+Vamos a poner el ejemplo, que de hecho os puse ya en un vídeo
+
+que veréis en el futuro
+
+del iPhone. El típico teléfono móvil.
+
+Digamos que tenemos
+
+un iPhone, que puede tener un precio, por hacerlo fácil, de
+
+1.000 €.
+
+Digamos que este es el precio estándar.
+
+Es el precio
+
+base a mercado de un iPhone.
+
+¿Qué pasa? Si tenemos algún
+
+evento o noticia que, por lo que fuera,
+
+hace bajar este precio de 1.000 a
+
+800 €, por lo que sea. Imaginaos que
+
+China ha sacado un mejor producto con materias primas más
+
+económicas y hace que el iPhone se vea,
+
+por lo menos a corto plazo,
+
+depreciado en cuanto a precio.
+
+Lo que nos está diciendo realmente el mercado es que los participantes del mercado
+
+están viendo este precio, el precio anterior, como un
+
+precio caro en función al contexto de mercado
+
+actual. ¿Qué pasa? Que si
+
+hay una noticia posteriormente en la que
+
+Apple saca un nuevo producto y se cree que los accionistas van a verse
+
+revalorizados y demás, esto puede hacer que el
+
+precio suba a 1.200 €, por ejemplo.
+
+Aquí está ocurriendo exactamente lo opuesto.
+
+Los participantes del mercado, en base a las nuevas
+
+condiciones o contexto de mercado,
+
+estamos considerando los 800 € como un precio
+
+extremadamente barato para lo que realmente está ofreciendo el
+
+producto o las expectativas que se creen que puede llegar a tener
+
+ese producto.
+
+Esto es un intercambio continuo de
+
+precios más altos y precios más bajos, aceptación y rechazo,
+
+muy importante este concepto,
+
+de precios por parte de los participantes de ese
+
+mercado. Ese es el foco de la teoría, que es el
+
+mercado es una subasta, no es un algoritmo.
+
+Es una subasta donde hay compradores y vendedores que están
+
+interesados, por lo que sea, en comprar o vender ese activo y
+
+están de alguna forma presionados por
+
+eventos externos que tienen
+
+un fuerte efecto sobre ese
+
+producto. Esto en cuanto al mercado como
+
+subasta. Luego tenemos el concepto de
+
+balance versus imbalance, que lo
+
+vais a ver en el futuro en un vídeo que os
+
+he hecho en profundidad sobre el perfil de volumen, que es un elemento clave.
+
+Va a ser clave y no me voy a cansar de repetirlo en toda la formación,
+
+porque lo vamos a ver continuamente.
+
+El perfil de volumen. Voy a
+
+hacer rápidamente aquí una pequeña explicación.
+
+El perfil de volumen lo que dice es que el precio tiende a hacer algo así.
+
+Vemos periodos de consolidación y periodos
+
+de expansión.
+
+Ahí donde tenemos cierta consolidación, donde tenemos el precio que
+
+está
+
+rangueando de forma lateral,
+
+este periodo de aquí se suele ver como
+
+algo así en cuanto al perfil de volumen, donde
+
+el 70 % del volumen se concentra en esta zona de aquí.
+
+Aquí se encuentra el 70 % del volumen y el 30 %
+
+restante se da en los extremos.
+
+Esto en el caso de un mercado balanceado donde está
+
+consolidando. Luego tenemos
+
+esa acción del precio que ocurre cuando el precio sale del
+
+valor. Esto es el valor.
+
+Voy a hacer un dibujo un poco mejor.
+
+Esto, como os digo, lo toco en profundidad en un vídeo sobre el
+
+perfil de volumen, pero creo que es necesario que lo toque aquí también ahora.
+
+Voy a intentar no
+
+enrollarme demasiado con esto.
+
+Pero esto es el típico perfil de volumen de un mercado que
+
+está
+
+balanceado.
+
+Esto es lo que llamamos el "value area
+
+high".Esta
+
+parte superior de ese valor del 70 % es lo que
+
+llamamos el "value area low".
+
+Está bien que lo explique varias veces, porque es importante entender
+
+esto desde el inicio.
+
+El precio va, de forma general, de value area high a value area low, y cuando
+
+tenemos un contexto de mercado donde
+
+tanto compradores como vendedores están de acuerdo en que esto es un precio
+
+justo,
+
+el
+
+precio va a tender a moverse de value area high a value area low.
+
+Esto lo que nos está diciendo es que el precio o el contexto del mercado, los
+
+participantes del mercado, están de acuerdo en que esto es un precio justo.
+
+Eso es cuando tenemos el precio en el valor.
+
+De forma que,
+
+cuando tenemos al precio en las mismas condiciones que
+
+sale de esta zona de valor,
+
+ya sea por encima
+
+o por debajo,
+
+se considera que el precio está
+
+en cotizaciones que no son justas para lo que es
+
+ese producto. Muchas veces, cuando realmente no
+
+hay ninguna noticia que vaya a hacer que el
+
+precio
+
+suba o baje de valor,
+
+normalmente cuando tenemos el precio que sale del
+
+valor, va a tender a volver a valor dentro de esta
+
+zona donde tenemos el 70 % del volumen negociado.
+
+El ejemplo que os he hecho con el iPhone podría ser
+
+perfectamente, donde tenemos un precio estándar que va
+
+fluctuando entre 995 y
+
+1050.
+
+Podríamos decir
+
+que va fluctuando entre estos dos niveles.
+
+Si tenemos que de golpe, por lo que fuera, hay un
+
+evento que hace mandar el precio a
+
+885,
+
+si no hay nada mucho más
+
+fuerte aparte de eso, probablemente lo que hará es que va a haber aquí muchos
+
+compradores y el precio va a volver a valor,
+
+porque realmente este precio no es un precio justo.
+
+Igual en el caso opuesto, en el caso de que, por lo que fuera, empezamos a ver
+
+el precio a 1150.
+
+Vamos a ver que el precio, si no hay nada más que eso,
+
+va a tender a volver a valor, porque este es un precio que está considerado como
+
+injusto o caro.
+
+El perfil de volumen,
+
+lo que nos está diciendo
+
+es que tenemos periodos de
+
+consolidación donde tenemos, como os he dicho,
+
+ese contexto,
+
+donde tenemos 70 % del valor negociado en un
+
+rango.
+
+Y luego tenemos zonas o
+
+momentos del
+
+mercado donde el precio sale
+
+de valor. Y aquí hay dos escenarios, una de dos.
+
+O bien este precio es considerado como un precio caro o
+
+injusto y el precio tiende a volver a valor.
+
+Lo mismo en el caso de que el precio rompa
+
+por debajo del value area low. Tenemos el caso de que el
+
+precio sea considerado por parte de los participantes del mercado como un precio
+
+muy barato y tienda a volver a valor, o bien,
+
+el mercado va a aceptar. Recordad antes el concepto de aceptar o
+
+rechazar. Va a aceptar
+
+estos nuevos precios
+
+y va a continuar en esa fase de inbalance.
+
+Eso es una fase de inbalance en el caso de a la baja.
+
+Tenemos que entender, básicamente, es muy sencillo, cuando el precio está
+
+consolidando, esto es balance, cuando el precio está expandiendo,
+
+es inbalance. Eso es un concepto
+
+importantísimo, esa teoría
+
+que nos dice que el mercado está continuamente buscando balance.
+
+Es importante entender esto, que el mercado está constantemente
+
+buscando balance, porque al final
+
+el objetivo del mercado no es más que facilitar el trade, facilitar el
+
+negocio, facilitar la transacción.
+
+Y eso se da cuando tenemos un mercado
+
+en balance. Porque realmente,
+
+cuando tenemos el precio consolidando, que mucha gente dice: "Es que no hay
+
+volumen, porque no se está moviendo como tal",
+
+realmente es al revés. Cuando tenemos el precio consolidando, aquí es donde más
+
+volumen hay.
+
+Cuando no hay volumen es cuando el precio está subiendo o cuando el precio está
+
+bajando.
+
+Eso mucha gente no lo entiende. Yo tampoco lo sabía hace un par de años.
+
+Aquí es donde hay volumen, aquí no hay volumen.
+
+Aquí tenemos muchísimo volumen, aquí no hay volumen.
+
+Aquí tenemos un mercado eficiente donde compradores y vendedores están
+
+continuamente transaccionando.
+
+Aquí tenemos un mercado poco eficiente, donde no tenemos un
+
+acuerdo entre compradores y vendedores, y tan solo una parte del mercado está
+
+siendo
+
+de alguna forma beneficiada a corto plazo, de forma
+
+agresiva.
+
+El mercado siempre tiende a buscar el balance.
+
+De hecho, por eso a veces en el trading hay que entender que aproximadamente, si
+
+bien os he dicho que el 70 % del volumen ocurre en zonas de balance,
+
+también el 70 % del tiempo el
+
+trading tiende a estar en rango. Entre
+
+el 70 y 80 % del tiempo, el
+
+mercado tiende a estar consolidando.
+
+Y luego tienes un 20, 30 % donde tienes una expansión,
+
+que si la coges, genial, la vas a poder capitalizar, y si no, se te
+
+escapó. Entonces, por eso muchas veces hay que
+
+intentarSaber
+
+capitalizar esto. No porque el precio
+
+esté rangueando quiere decir que no pueda superar.
+
+No porque el precio esté consolidando puede decir: "No, voy a esperar a que salga
+
+de esa consolidación".
+
+Es una de las cosas
+
+que tiene "order flow", si entendemos los diferentes contextos del mercado,
+
+incluso podemos capitalizar esto, porque entendemos el régimen en el que estamos,
+
+entendemos las fases de balance y imbalance, y entendemos que si tenemos un perfil
+
+de volumen, esto nos lo va a decir sobre todo el perfil de volumen,
+
+que se ve tal que así. Perdón, no lo he hecho del todo bien.
+
+Tenemos un perfil de volumen que se ve tal que así, esto es el value area high,
+
+esto es el value area low.
+
+Si entendemos lo que está ocurriendo, podemos
+
+capitalizar
+
+operaciones en los extremos de ese rango, porque sabemos que el 70 % del
+
+volumen va a estar aquí dentro. Con lo cual, si tenemos una desviación por encima
+
+del valor, vamos a esperar y vamos a ver
+
+información con otras herramientas que tenemos de "order flow" para ver si quizá
+
+estamos realmente saliendo de la zona de valor o es una oportunidad
+
+para
+
+mandar al precio a una zona justa. Pero es importante
+
+entender que el mercado está continuamente buscando balance porque es donde hay
+
+trade, es donde están las negociaciones, en el balance, no en el imbalance, es
+
+donde hay volumen.
+
+No me quiero enredar mucho más con esto.
+
+El tema de perfil de volumen lo vais a ver en detalle, todos los elementos, cómo
+
+utilizarlo en el trading y qué más, en un vídeo que os he hecho más adelante.
+
+También os quería hablar de los
+
+traders responsive y initiative.
+
+No sabía muy bien cómo ponerlo en español, no me salía la palabra.
+
+Sería traders de iniciación y traders de respuesta o
+
+algo así, que sería
+
+básicamente los responsive traders,
+
+son los traders que tienden a
+
+capitalizar en fases de rango, en fases de
+
+balance. Y luego tenemos los initiative
+
+traders, los traders de iniciación, que son los que suelen
+
+entrar al mercado de forma agresiva.
+
+Y al final son estos los que mueven el mercado.
+
+Hay que entender que realmente lo que está moviendo el mercado, esto es importante
+
+también,
+
+son las órdenes a mercado, las órdenes que están entrando de forma
+
+agresiva en el mercado.
+
+Recordad,
+
+liquidez agresiva son todas esas órdenes de compra o venta a mercado,
+
+liquidez pasiva son esas órdenes límite que están colocadas en el bid
+
+o en el ask, esperando a que el precio suba para vender o esperando que el precio
+
+baje para comprar.
+
+Entonces, ¿qué pasa? Que si todos fuéramos liquidez pasiva, si todos tuviéramos
+
+nuestras órdenes límite colocadas, el precio no se movería,
+
+sería una línea recta.
+
+Al
+
+final, hay que entender que lo que realmente está moviendo el mercado son las
+
+órdenes agresivas, las órdenes a mercado, gente que está dispuesta a pagar
+
+un premium, que es el spread,
+
+para poder participar en el mercado de forma inmediata, ahora ya, sin esperar.
+
+Esos compradores o vendedores agresivos son los que
+
+están consumiendo la liquidez pasiva, esas órdenes límite
+
+por parte de compradores o vendedores pasivos.
+
+Entonces, esos traders de iniciación, que son los que
+
+entran con agresividad al mercado, porque ha habido una noticia, ha
+
+habido lo que sea, que
+
+es percibido por el mercado como una noticia positiva y
+
+debería hacer subir el precio en el mercado,
+
+esos traders van a entrar de forma agresiva en compras de forma inmediata, porque
+
+no quieren quedarse fuera, y van a entrar en el mercado y van a crear todo
+
+este movimiento. Esos son los traders de iniciación.
+
+Y luego los traders de
+
+respuesta, que son los que operan en rangos.
+
+Tenemos balance, imbalance. El mercado es
+
+continuamente balance,
+
+aceptamos nuevos precios
+
+y entramos en una fase de imbalance.
+
+Hasta que encontramos de nuevo una fase de balance, donde el
+
+mercado vuelve a ponerse de acuerdo en que es un precio
+
+justo. Esto es un precio justo.
+
+Y luego quizá tenemos una noticia y entramos de nuevo en
+
+un estado de imbalance, que puede seguir bajando,
+
+hasta que hay un punto en el que el mercado crea que esto es un
+
+precio justo.
+
+Y luego, de nuevo, podemos empezar a aceptar precios
+
+más arriba
+
+y empezar de nuevo una fase de imbalance
+
+hacia precios más altos. El precio está continuamente haciendo esto, balance,
+
+imbalance, no hay más.
+
+Dicho esto, ¿dónde tengo yo ahora
+
+lo que os había puesto? Aquí está.
+
+Entonces,
+
+la manera de utilizar esta teoría, más que la manera de utilizarlo,
+
+creo que es teoría, que es necesaria.
+
+A veces nos vamos directamente a la práctica, no entendemos el porqué
+
+o realmente qué es, qué estamos haciendo, qué estamos viendo.
+
+Creo que a veces también es necesario.
+
+Entonces, la idea es de el Auction Market Theory, sobre todo a
+
+través del perfil de volumen, que es un elemento importantísimo,
+
+nos da el contexto. ¿El precio está en
+
+un régimen de balance o imbalance?
+
+¿El precio está caro o barato?
+
+¿El mercado está aceptando precios más altos o precios más bajos?
+
+Todo esto lo veremos con el perfil de volumen y lo veremos con otras herramientas
+
+de order flow que nos van a dar esa información.
+
+Al final, es información que podemos ver, porque todo eso se ve
+
+reflejado en el libro de órdenes. Entonces, el Auction Market Theory es
+
+simplemente contexto. Dónde estamos, por qué estamos aquí,
+
+cómo podemos capitalizarlo. Y order flow,
+
+las diferentes herramientas que tenemos de order flow,
+
+es más lo que sería el timing, la ejecución.
+
+Decir: "Estamos en esta zona, el mercado está en balance o imbalance, podemos
+
+capitalizarlo de tal forma. Con lo cual, voy a ver qué herramientas tengo para
+
+tratar de capitalizar esto".
+
+Así que nada, hasta aquí esta parte teórica
+
+del Auction Market Theory.
+
+
+--- FIN: 2.1 Auction Market Theory simplificada.txt ---
+
+
+--- INICIO: 2.2 - Por qué deberias utilizar Order Flow.txt ---
+
+¿Qué tal familia? ¿Cómo estáis? Si ven, estáis viendo de fondo a Bookmap, que es
+
+una de mis herramientas de "order flow" favoritas.
+
+Hoy no vengo a hablaros sobre esto, no vengo a hablaros de nada técnico como tal,
+
+sino que quiero daros mi opinión sobre por qué deberías
+
+utilizar "order flow" en tu operativa, en tu "trading".
+
+Y es que, siendo totalmente sincero,
+
+no creo que haya nada tan preciso para entender lo que está ocurriendo en el
+
+mercado como con "order flow".
+
+Y al final, después de prácticamente siete años que llevo ya operando, seis años
+
+y medio,
+
+en
+
+este tiempo he estado utilizando un montón de estrategias, he aprendido un montón
+
+de sistemas, he estado también en un montón de formaciones, he
+
+leído muchísimo, he investigado mucho y puedo decir con total seguridad que no hay
+
+nada que se acerque a "order flow" en cuanto a información
+
+que podemos obtener del mercado y en cuanto a una ventaja que realmente
+
+podemos
+
+utilizar a nuestro favor en nuestro "trading".
+
+Y al final creo que todo se reduce a
+
+eso, a tener una ventaja en el mercado, porque si bien el
+
+"trading" ya es complejo como tal, porque estamos compitiendo contra,
+
+literalmente, las mentes más brillantes del planeta, hedge
+
+funds, fondos de inversión,
+
+instituciones. Ahora también con la IA, la inteligencia artificial.
+
+Realmente nuestros contrincantes, por así decirlo,
+
+en cuanto a capacidades y herramientas,
+
+están muy por encima de nosotros. Entonces, si no tenemos una ventaja
+
+en el mercado, estamos muy j*****s.
+
+Y en el "trading", que además es un negocio muy salvaje,
+
+si no entendemos lo que está ocurriendo y
+
+vamos sin una
+
+estrategia que realmente nos dé una ventaja
+
+real, a la larga vamos a perder mucho dinero.
+
+Creo que "order flow"
+
+es una herramienta increíble
+
+y que cualquier persona
+
+se puede beneficiar de ella. Pero también quiero dejar muy claro
+
+que
+
+tampoco es el santo grial, es decir, no es una estrategia mágica.
+
+Hay otros factores
+
+que también están involucrados en el "trading", que son temas, por ejemplo,
+
+de gestión de riesgo,
+
+psicología, incluso características
+
+personales de cada uno, como el tema de la paciencia, de la impulsividad, que son
+
+más características innatas. Todo esto son factores que sí o sí
+
+van a influenciar nuestro "trading" y 100 % que son incluso
+
+más importantes que cualquier estrategia.
+
+Da igual si operas "order flow", da igual si operas ICT, da igual si operas
+
+cualquier otra estrategia que puedas encontrar.
+
+Que si todo esto que he mencionado falla, si no sabes gestionar bien el riesgo,
+
+si no sabes controlarte a ti mismo a la hora de sobreoperar,
+
+de no tomar malas decisiones, de buscar revancha en
+
+el mercado. Si eso falla,
+
+absolutamente ninguna estrategia va a funcionar.
+
+Eso también lo quiero dejar muy claro, que "order flow" yo creo que es
+
+probablemente la mejor manera que existe de entender lo que está
+
+ocurriendo y que realmente puedes beneficiarte de ello, pero tampoco es
+
+algo mágico. Si eso falla, "order flow" no te va a proteger sobre eso.
+
+Y al final, "order flow"
+
+no es más que una herramienta, un conjunto de herramientas institucionales,
+
+además, realmente utilizada por instituciones,
+
+que bien utilizadas nos pueden
+
+dar mejores resultados en
+
+el "trading".
+
+Yo creo que cualquier persona
+
+con cierta experiencia o que quiera profundizar un poco
+
+más en por qué
+
+se mueve el precio, el porqué de los movimientos del mercado,
+
+va a acabar en "order flow", porque es que realmente "order flow" es la forma
+
+más pura de leer el mercado. Es el
+
+mecanismo principal o previo incluso a la
+
+formación de las velas japonesas que vemos en un gráfico convencional.
+
+Creo que entenderlo nos va a dar una ventaja brutal que pocos conocen.
+
+Como he dicho, son herramientas institucionales y a nivel "retail",
+
+poca gente
+
+sabe utilizar este tipo de herramientas.
+
+Y al final debo decir que
+
+yo durante mucho tiempo he estado utilizando sistemas de acción del precio, de
+
+"price action", y he sido rentable con ellas.
+
+Muchos conoceréis ICT, tema de Smart Money Concepts y demás, y yo
+
+durante mucho tiempo he estado
+
+operando de esta manera y ganando mucho dinero. Me ha ido muy bien.
+
+Yo dejé el trabajo
+
+operando con este sistema y me fui a Dubai a vivir
+
+operando de esta manera. No fue hasta un poco más tarde que empecé
+
+a conocer esto de "order flow" y empecé a investigar mucho más y
+
+empecé a implementarlo y actualmente es todo lo que hago.
+
+Pero con esto tampoco quiero decir que otro tipo de
+
+estrategias no funcionen, porque como ya he mencionado, hay otro tipo
+
+de factores que son incluso más importantes y una estrategia muy simple
+
+con una buena gestión de riesgo también puede funcionar.
+
+Pero probablemente "order flow" sea la forma más
+
+precisa de leer lo que realmente ocurre y la forma más
+
+cercana a operar como las instituciones.
+
+Y esto lo puedo decir con una experiencia personal, porque a
+
+principios de 2025, tuve una entrevista
+
+con una empresa en Dubai para gestionar capital real,
+
+capital institucional. Y te piden ciertos requisitos de "track record",
+
+ciertos años de experiencia y demás.
+
+Tuvimos una entrevista para ver un poco cómo
+
+operaba yo, qué herramientas utilizaba y demás.
+
+Y yo en ese momento todavía estaba con un sistema de "price action", de ICT, fair
+
+value gaps, FVG, equal highs, equal lows.
+
+Y
+
+eso al final, en el mundo institucional, la realidad es que no sirve.
+
+Eso no es Smart Money como tal. O no es que no sirva, pero
+
+No es lo que se utiliza en la práctica.
+
+Puedo decir con total seguridad que lo que realmente utilizan las instituciones son
+
+este tipo de herramientas que estáis viendo aquí, como por ejemplo Bookmap,
+
+o herramientas de
+
+flujo de órdenes, como el tema del volume profile,
+
+footprint. Todo esto que iremos viendo poco a poco
+
+es lo que realmente es utilizado por instituciones, que realmente son
+
+los participantes, los individuos que mueven el mercado.
+
+Nosotros idealmente queremos operar o
+
+acercarnos a la forma de operar que tiene este tipo de gente.
+
+Order Flow, al final, no es más que un análisis de
+
+datos, es información, es una forma objetiva de ver el
+
+mercado. A diferencia de ICT, Smart Money y
+
+otros sistemas, sobre todo de acción del precio, muy conocidos que
+
+tenemos actualmente en Internet,
+
+Order Flow no se basa tanto en intentar adivinar o
+
+predecir lo que va a hacer el precio, sino en reaccionar a información
+
+real, objetiva, a la que tenemos acceso y que estamos viendo.
+
+Tenemos acceso por un precio relativamente bajo, que es el tema del data
+
+feed, Bookmap y demás. Este tipo de herramientas y
+
+data de profundidad de mercado tienen
+
+un coste, en mi opinión, relativamente bajo para todo lo que le podemos llegar a
+
+sacar. No
+
+necesitamos adivinar, no necesitamos predecir dónde va a
+
+haber liquidez, porque lo estamos viendo con datos reales.
+
+No necesitamos saber si este VBG va a aguantar o no, porque lo podemos ver.
+
+Básicamente, Order Flow viene a ser algo así como operar utilizando unas gafas
+
+de rayos X, porque literalmente lo que estamos haciendo es ver lo que está
+
+ocurriendo detrás o dentro de esas
+
+velas japonesas.
+
+Hay una analogía muy buena que expliqué el otro día por
+
+Instagram, que gustó mucho, y es que
+
+imagínate que eres una persona que tiene un accidente y se da un golpe en el brazo
+
+y decides ir al hospital.
+
+Hay dos opciones: que un doctor
+
+te palpe un poco el brazo y te diga:
+
+"Por mi experiencia y con lo que tú me
+
+dices,
+
+creo que tienes el hueso roto o creo que tienes el hueso fisurado".
+
+Otra opción es que ese mismo doctor diga: "Creo que podrías tener esto, pero no
+
+estoy del todo seguro. Voy a utilizar una máquina de rayos X
+
+y voy a ver exactamente qué es lo que tienes".
+
+De esta forma te va a decir exactamente: "Tienes el hueso fisurado con
+
+un diámetro de un milímetro y
+
+va a tener un tiempo de recuperación de tres semanas".
+
+Estamos dando datos objetivos, reales, información
+
+objetiva. No es yo creo, yo pienso, yo espero.
+
+Quitamos esa parte subjetiva de la operativa.
+
+Otra forma de verlo es, por ejemplo, en un
+
+contexto de guerra o de lucha, el
+
+típico arco de flecha
+
+o
+
+un sniper, un francotirador con la última tecnología.
+
+Order Flow sería el francotirador y price, una acción
+
+del precio u otra estrategia, cualquier estrategia del mercado
+
+que no tenga acceso a este tipo de herramientas, sería el
+
+arco de madera.
+
+Aquí está en cada uno ver
+
+quién quieres ser tú, el francotirador o el que va con
+
+el arco y la flecha, o el doctor con rayos X o el que se basa un
+
+poco en
+
+lo que él cree, en su experiencia.
+
+Definitivamente, yo creo que cualquier persona puede aprovecharse de Order
+
+Flow y
+
+tengo ganas de que veáis cada una de esas herramientas, cómo utilizarlo, cómo
+
+aplicarlo, y yo creo que sí, que 100 %
+
+os va a ser de utilidad y
+
+será un honor por mi parte que sea yo esa persona que os introduzca,
+
+os enseñe a utilizar esto más en profundidad y os haga dar ese
+
+salto adicional en el trading. Así que
+
+vamos a por ello.
+
+
+--- FIN: 2.2 - Por qué deberias utilizar Order Flow.txt ---
+
+
+--- INICIO: 2.3 - Qué es la liquidez en realidad.txt ---
+
+¿Qué es la liquidez? ¿Qué es realmente la
+
+liquidez? Tenemos que empezar a quitarnos de la cabeza esa idea de que la
+
+liquidez es el stop loss de la gente.
+
+En parte sí, en parte es una forma también de liquidez, pero eso no es todo.
+
+La liquidez es
+
+prácticamente cualquier nivel de precio, ahí donde hay compradores o vendedores
+
+interesados en participar en el mercado.
+
+Ahí donde hay participantes que quieren comprar o vender,
+
+ahí hay liquidez.
+
+Incluso
+
+en zonas donde tenemos
+
+mucha negociación, zonas de balance,
+
+donde tenemos mucho volumen. Esto ya lo expliqué en el
+
+vídeo de la Auction Market Theory.
+
+Mucha gente cree que cuando tenemos un precio que está lateral, rangueando de forma
+
+lenta y demás, que ahí no hay volumen, pero es todo lo contrario.
+
+Aquí es donde hay realmente volumen, porque aquí es donde transaccionan
+
+los market makers. Ahora hablaremos también sobre esto.
+
+Pero aquí es donde está habiendo mucho volumen y cuando tenemos el precio subiendo
+
+fuerte o bajando fuerte, ahí es donde hay muy poco volumen realmente.
+
+Entonces, todas estas zonas donde hay mucho volumen, aquí ha
+
+habido mucha liquidez. Y aquí va a haber liquidez también en el futuro,
+
+probablemente, porque es una zona donde tanto compradores como vendedores
+
+han considerado que es una zona justa para transaccionar y se ha
+
+negociado muchísimo y ha habido muchísimas transacciones, se ha cambiado de
+
+mano muchísimo dinero. Entonces, ahí donde tenemos precio
+
+consolidando, hay mucha liquidez.
+
+De igual forma que ahí donde tenemos
+
+rangos del precio, donde ha habido muy poca negociación, que es en
+
+tema de perfil de volumen, también lo veréis posteriormente, son
+
+los "low volume nodes", los nodos de bajo volumen, son zonas
+
+con muy bajo volumen, también hay liquidez. ¿Por qué?
+
+Porque el mercado va a tender a
+
+permitir o fomentar el trade en
+
+esas zonas donde no ha habido negociación.
+
+Va a intentar
+
+que esas zonas donde no ha habido negociación sean negociadas o
+
+permitan a los participantes negociar también en ese rango de precios.
+
+Con lo cual, ¿qué es la liquidez? Prácticamente todo.
+
+Ahí donde hay compradores o vendedores que están interesados en
+
+comprar o vender. Y en concreto,
+
+zonas de mucho volumen y zonas de bajo volumen, que esto lo
+
+vamos a ver representados
+
+en forma de low volume nodes
+
+en el perfil de volumen. Recordad, tenemos perfil de volumen
+
+balanceado, tenemos la botaca así con el value area high, value area low.
+
+Esto no me voy a cansar de repetirlo.
+
+Y luego tenemos también, cuando tenemos
+
+una acción del precio no tan balanceada, sino donde ha
+
+habido algo más de participación o interés en
+
+zonas diversas en un mismo rango de precio, muchas veces lo que tenemos
+
+es lo siguiente.
+
+Donde
+
+aquí tenemos una zona con muy poca negociación y aquí tenemos otra zona con
+
+poca negociación. Esto es lo que llamamos los low volume nodes.
+
+Y aquí también son zonas donde vamos a encontrar probablemente
+
+gran liquidez, porque son zonas que el mercado va a tender
+
+a
+
+llevar el activo subyacente para que los participantes del
+
+mercado también puedan negociar en estas zonas en los que el
+
+mercado apenas ha dado ninguna oportunidad a negociar.
+
+Tanto zonas de gran negociación
+
+como zonas de poca negociación, son zonas donde hay
+
+liquidez y en general, en cualquier zona donde
+
+tengamos compradores o vendedores dispuestos a comprar o vender,
+
+va a haber liquidez. Fijaos en el bookmap, todo esto es liquidez.
+
+Eso de toma de liquidez, ¿qué es toma de liquidez?
+
+Que probablemente había mucha gente que tenía el stop loss ahí, es posible, pero
+
+no es la única forma de liquidez. También tenemos
+
+liquidez a veces en
+
+zonas donde tú por acción del precio, por price action, no estás viendo nada.
+
+Tenemos quizá una FVG,
+
+pero no tenemos ningún máximo, ningún mínimo y tenemos justo en esta
+
+zona de aquí, por ejemplo, ¿qué hay aquí? Aquí no hay nada.
+
+Quizá podríamos tener aquí una orden enorme en
+
+el ask, esperando que el precio llegue aquí para vender. ¿Y esto qué es?
+
+Aquí no hay nada.
+
+La gente no tiene el stop loss colocado aquí, o la mayoría.
+
+Es una zona en la que hay un vendedor
+
+o unos vendedores que
+
+quieren proveer aquí la liquidez porque están interesados en vender en este
+
+precio. Esto también es liquidez.
+
+Esto lo podemos ver en el bookmap perfectamente.
+
+La liquidez, como os digo, es cualquier nivel de
+
+precio
+
+en el que hay compradores o vendedores dispuestos a comprar o vender.
+
+Antes también os he comentado el tema de que el mercado,
+
+realmente cuando se está moviendo así
+
+en un perfil balanceado
+
+y lo tenemos consolidando, es
+
+una acción del precio que a mucha gente le puede parecer algo errática
+
+y complicado de operar. Aquí es donde está habiendo el mayor volumen.
+
+No cuando el precio expande, no cuando el precio baja.
+
+Es aquí cuando está habiendo un mayor volumen.
+
+Y es porque es aquí donde los market makers
+
+están haciendo su trabajo. Los market makers son participantes del mercado
+
+que están en el mercado
+
+para proveer liquidez. Son proveedores de liquidez a cambio de
+
+ganar el spread.
+
+Esto también lo tocamos bastante cuando hablamos de bookmap y
+
+el DOM y demás. Inevitablemente, en todos los vídeos tengo que repetir lo
+
+mismo, casi, porque al final el order flow
+
+hay que entender todo cómo funciona y siempre estamos viendo
+
+y tocando lo mismo.
+
+Tenemos que entender que
+
+el precio,
+
+esto lo vemos también en bookmap,
+
+voy a ponerlo aquí para que lo veáis bien.
+
+En este caso, en la parte izquierdaTenemos el current order book
+
+o lo que sería el DOM,
+
+donde tenemos tanto el ask como el bid.
+
+El ask aquí arriba, representado en color rojo y el bid aquí abajo.
+
+Todo esto es liquidez pasiva.
+
+Son participantes del mercado que tienen puesta su orden
+
+esperando a que el precio llegue ahí para vender, en el caso del ask, o en el caso
+
+del bid, son participantes del mercado que están esperando que el precio llegue
+
+aquí abajo para comprar. Eso es liquidez pasiva.
+
+Ellos tienen sus órdenes puestas, están esperando simplemente a que el precio
+
+llegue ahí para ejecutar sus órdenes.
+
+Y luego tenemos la liquidez agresiva, que es lo que vemos en Bookmap en forma de
+
+burbujas, que son todos esos participantes del mercado que entran de forma
+
+agresiva en el mercado,
+
+de
+
+forma inmediata. Por lo que sea,
+
+ven alguna entrada, ven un setup o creen que ese precio es correcto,
+
+con lo cual deciden entrar al mercado.
+
+Y no saben que realmente cuando ellos están entrando en el precio
+
+6.603, realmente la orden no se ejecuta en
+
+6.603, sino que probablemente es en 6.603.25
+
+o 6.603.50.
+
+¿Por qué? Porque lo que tú estás
+
+sacrificando, lo que estás pagando a la hora de ejecutar
+
+una orden a mercado es el spread. El spread, que es
+
+lo que realmente están ganando estos participantes del
+
+mercado, los market makers, que son los que proveen la liquidez.
+
+Los market makers donde están ganando dinero
+
+es en acciones del precio de este estilo.
+
+Porque aquí ellos pueden transaccionar tranquilamente y ellos están
+
+proveyendo la liquidez.
+
+Tenemos aquí el bid
+
+con esas órdenes en venta
+
+y luego tenemos aquí el ask.
+
+Y este es el precio
+
+actual.
+
+Cuando
+
+un participante del mercado decide entrar a mercado y decide
+
+vender
+
+a ese precio actual, que podría ser
+
+los
+
+6.005,
+
+realmente lo que está haciendo
+
+este vendedor es consumir las órdenes que tenemos en el
+
+bid hasta poder rellenar sus órdenes.
+
+Por ejemplo,
+
+si esta orden de venta son 16 contratos,
+
+me está quedando bastante mal el tema de los números hoy.
+
+16 contratos.
+
+Y tenemos aquí cinco
+
+contratos, aquí tenemos
+
+tres contratos,
+
+aquí tenemos
+
+seis contratos,
+
+aquí tenemos
+
+12 contratos.
+
+Este vendedor lo que va a hacer
+
+es consumir o ser la contrapartida de
+
+esas órdenes
+
+que está viendo en el bid, en este caso, que son esos
+
+compradores pasivos que están esperando a que haya vendedores al mercado para
+
+ejecutar sus órdenes. Estos 16
+
+contratos no se van a ejecutar en los 6.006,
+
+sino que se van a ejecutar cinco
+
+en los 6.002,
+
+tres
+
+en los 6.001.
+
+Eso son cinco más tres, son ocho.
+
+Más seis serían 14.
+
+Seis en los 6.000.
+
+Y luego, de estos 12 también se van a consumir dos para llegar a esos, con
+
+estos son 14, cinco, tres, seis, 14.
+
+Más
+
+dos, que me faltan para llegar a 16, que cogeremos de estos 12.
+
+Se habrán ejecutado unas órdenes en los
+
+6.002, otros los 6.001, otras más en los
+
+6.000 y otros en los 5.999. Con lo cual el precio
+
+medio aquí va a ser de,
+
+6.001, por ejemplo.
+
+Entonces, este vendedor que está entrando aquí en mercado,
+
+es un participante que quiere
+
+participar en el mercado de forma inmediata, que no quiere esperar porque no
+
+quiere que se le escape, porque ahí viene una noticia y quiere entrar ya.
+
+Esta persona está pagando el spread.
+
+Ese spread
+
+que tenemos entre el best bid y el best ask.
+
+El best bid es el mejor precio.
+
+En ese precio actual que tenemos,
+
+este es el best ask y este es el best bid.
+
+Son los mejores precios
+
+que tenemos a la hora de entrar a mercado, donde esto podría ser los
+
+6.000 y esto podría ser los
+
+6.000.00
+
+y estos los 6.050.
+
+Tenemos en este caso unos
+
+0.50
+
+ticks, valor, que son dos ticks.
+
+Esos 0.50 puntos son dos ticks. Ese es el spread que ese
+
+participante que está entrando a mercadoestá
+
+de alguna forma perdiendo. Y este mismo "spread" es lo que están
+
+ganando este tipo de participantes, los "market makers".
+
+Dirás: "Es que esto no es nada, son dos 'ticks' en el S500, no es nada".
+
+Ya, realmente no es nada, pero no lo es cuando hablamos de una o dos
+
+transacciones. Ahora, cuando se están ejecutando
+
+cientos de millones de transacciones,
+
+creedme que es mucho dinero. Y es ahí donde los "market makers" están ganando
+
+dinero. Por eso el precio tiende a consolidar tanto,
+
+porque es donde está el negocio de los "market makers".
+
+No es porque no haya volumen, no es porque no haya interés.
+
+Es porque
+
+simplemente los "market makers" es aquí donde hacen
+
+dinero y hacen muchísimo dinero. Entonces, es aquí
+
+donde hay cierto interés por parte de los grandes participantes del mercado en que
+
+el precio consolide.
+
+Dicho esto, estos
+
+participantes del mercado, obviamente, entenderéis que donde hacen
+
+dinero es en zonas de consolidación, pero en zonas
+
+expansivas, en acción del precio expansiva,
+
+aquí no están siendo beneficiados.
+
+De hecho, pueden llegar a perder dinero, porque
+
+no hay tanta liquidez. El "spread" aquí puede ser algo
+
+más grande.
+
+Puede haber saltos de
+
+liquidez, en el sentido de que quizá tenemos
+
+una gran orden aquí,
+
+otra orden aquí,
+
+otra aquí, y luego aquí tengamos un salto donde tenemos tres, cuatro "ticks"
+
+en la que no tenemos órdenes. Con lo cual, aquí tenemos un
+
+"spread" enorme
+
+y en caso de que los "market makers" aquí estuvieran transaccionando, lo estarían
+
+haciendo de forma ineficiente. Y en este rango de precios, que es típico
+
+de acción del precio, donde tenemos movimientos expansivos, donde hay
+
+grandes saltos de liquidez,
+
+estos participantes van a estar perdiendo dinero.
+
+Con esto me estoy enrollando demasiado.
+
+Lo que quiero decir con esto es que
+
+ahí donde está habiendo períodos de consolidación, de rango y demás,
+
+es donde los "market makers" están haciendo dinero.
+
+Y es por eso que
+
+la mayoría del tiempo el precio tiende a consolidar y no tanto a expandir.
+
+Es más, os voy a decir una cosa:
+
+cuando hay una noticia, justo unos
+
+segundos antes de la noticia y unos segundos después, si os fijáis en el libro de
+
+órdenes,
+
+que es esto que tenemos aquí a la izquierda, en este caso,
+
+desaparece.
+
+Los "market makers" eliminan absolutamente todas sus órdenes del
+
+libro de órdenes. ¿Por qué? Porque saben que cualquier movimiento
+
+agresivo que se dé les va a hacer perder dinero.
+
+Es muy importante entender esto. De hecho, lo podemos ver cuando haya noticias y
+
+demás, cómo se vacía el libro de órdenes y el "bookmap" muchas veces
+
+se queda en negro. No se ven estas
+
+franjas de colores y demás. Se queda en negro porque los "market
+
+makers"
+
+deciden retirar sus órdenes y esa es la razón por la cual el precio se mueve tan
+
+rápido.
+
+El precio no sube por la noticia. En parte
+
+sí, pero el precio sube
+
+tanto porque los "market makers" han decidido
+
+retirar sus órdenes del libro de órdenes.
+
+Con lo cual el mercado, como sabéis, lo que hace es que tiende a buscar la liquidez
+
+más próxima. Con lo cual, si de forma general tenemos
+
+libro de órdenes, que lo tenemos con todo esto, son asks,
+
+son órdenes pendientes de ejecutar, que lo tenemos lleno en
+
+cada "tick" con un montón de órdenes, si
+
+en el caso de que haya una noticia y los "market makers", que son los principales
+
+proveedores de liquidez,
+
+retiran todas esas órdenes que proveen la liquidez y el
+
+mercado se queda con
+
+órdenes que quedan pendientes, que están realmente así alejadas,
+
+lo que está ocurriendo es que aquí no está habiendo liquidez.
+
+Aquí no hay órdenes. Entonces, el precio va a tender a escalar
+
+de este punto de precio a este nivel de precio de forma prácticamente
+
+inmediata. No porque sea la noticia, no, porque aquí
+
+no están habiendo órdenes, porque los "market makers" aquí estarían perdiendo
+
+dinero, con lo cual han decidido retirar sus órdenes.
+
+Entonces, el precio siempre tiende a buscar la liquidez.
+
+Entonces, si de este nivel de precios donde
+
+tenemos grandes órdenes al siguiente nivel de precio tenemos varios
+
+puntos, el precio va a volar. Se va
+
+a fulminar todos esos puntos,
+
+para ir hacia el siguiente nivel de precio. ¿Qué pasa?
+
+Que si además a esto le añades que muchas veces cuando tenemos un evento, una
+
+noticia,
+
+tenemos muchos participantes agresivos que están entrando a mercado,
+
+súmale que en el libro de
+
+órdenes no hay órdenes, con lo cual no hay liquidez y el mercado salta niveles de
+
+forma superrápida. A esto súmale que están entrando
+
+muchísimas compras a mercado,
+
+que no tienen contrapartida en el rango de precios
+
+más próximo.
+
+Estas compras que están entrando a mercado
+
+no tienen
+
+asks
+
+en el libro de órdenes,
+
+en el DOM no hay asks a los que puedan
+
+consumir esas órdenes. Con lo cual
+
+aquí el "spread" para todas esas compras agresivas, os podéis
+
+fijar, si
+
+queréis hacer alguna prueba, os recomiendo que la hagáis en demo.
+
+Cuando entráis en un momento una noticia como podría ser el CPI y demás,
+
+y entráis en los 6.005 y la orden se os rellena en los
+
+6.009, es porque el precio desde que le das a ejecutar hasta
+
+que emparejaesa compra con una
+
+venta
+
+puede haber varios ticks de diferencia, precisamente por lo
+
+que os estoy diciendo.
+
+Es muy curioso esto, yo no lo
+
+sabía hasta hace un par de años,
+
+y es muy curioso ver cuál es el comportamiento del libro de
+
+órdenes en las noticias.
+
+Simplemente es por eso, porque aparte de
+
+la velocidad que puede ser provocada por la noticia, porque ha sido una
+
+noticia positiva o negativa y está habiendo muchos compradores o vendedores que
+
+quieren entrar de forma inmediata en el mercado, que no tienen órdenes límite, sino
+
+que están entrando en este momento, ahora, porque creen que
+
+ha sido una noticia positiva o negativa.
+
+La razón principal es porque no hay órdenes en libro de órdenes
+
+y el mercado,
+
+como ya os he dicho,
+
+tiende
+
+a buscar la liquidez, con lo cual, si no hay órdenes en los
+
+6.585 y el siguiente nivel es en los
+
+6.595, el precio irá de
+
+forma prácticamente inmediata a ese nivel, porque es el
+
+siguiente punto donde tenemos liquidez y donde
+
+tenemos
+
+la facilidad para poder emparejar las órdenes.
+
+Ya sabéis que el
+
+objetivo del mercado es facilitar el "trade", el comercio.
+
+Para terminar, quería mencionar, que creo que también es importante saber
+
+esto,
+
+que mucha gente no sabe, pero es que realmente los "stop loss", cuando nosotros
+
+colocamos nuestro "buy stop" o nuestro "sell stop",
+
+estas órdenes son órdenes a mercado, no son órdenes pendientes,
+
+no son órdenes límite, son órdenes que se ejecutan a mercado como
+
+cualquier persona que está entrando de forma agresiva, entrando en compra
+
+o venta a mercado. El "stop loss", en caso de estar
+
+en venta, será una orden agresiva en compra, será una burbuja verde,
+
+y en caso de estar en venta, nuestro "stop loss" será una burbuja
+
+verde, una orden ejecutada
+
+de compra. Y cuando estamos en compra, nuestro "stop loss"
+
+será una orden
+
+a mercado de venta, una burbuja roja.
+
+Es importante entender esto, porque
+
+por eso también muchas veces tenemos ese "slippage".
+
+Porque si tenemos un movimiento muy fuerte, por ejemplo, con una noticia que
+
+nos lleva a "stop loss"
+
+y nuestro "stop loss" es en los 6.620, veréis que muchas veces
+
+no se ejecuta realmente en los 6.620, sino en los
+
+6.622,5, por ejemplo. Esto, si fuera una
+
+orden límite, una orden pendiente,
+
+la orden se ejecutaría
+
+exactamente en el precio en el que nosotros lo ponemos en el "order book".
+
+Como os digo, los "stop loss" no aparecen en el libro de órdenes.
+
+Son órdenes
+
+que, cuando el precio llega ahí, le envía una señal al "broker"
+
+para ejecutar esa orden al precio de mercado.
+
+Con lo cual, si ahí hay mucha volatilidad, tendremos ese "slippage".
+
+Hasta aquí el vídeo
+
+sobre la liquidez. Recordad, las instituciones no van a por
+
+tu "stop loss".
+
+
+--- FIN: 2.3 - Qué es la liquidez en realidad.txt ---
+
+
+--- INICIO: 2.4 - Absorción y agotamiento.txt ---
+
+La absorción es, sin duda, una de las palabras que más voy a
+
+mencionar en toda la formación, porque literalmente mi trading y mi
+
+operativa se basan en la absorción.
+
+Lo vamos a ir viendo.
+
+Voy a ir hablando mucho de ello en cada uno de los vídeos, así que no os
+
+preocupéis, pero quería presentaros un poquito qué es esto de la
+
+absorción. Antes que nada, tenemos que entender que en order flow,
+
+una cosa que también voy a repetir mucho, siempre estamos buscando
+
+cuánto esfuerzo está habiendo y cuánto resultado está habiendo.
+
+Siempre voy a comparar el esfuerzo con el resultado.
+
+Esfuerzo con recompensa. Eso es lo que vamos a estar continuamente comparando y es
+
+lo que con order flow, de alguna forma, podemos ver de forma
+
+objetiva con datos, porque con las velas japonesas no somos capaces de ver
+
+absolutamente nada.
+
+Vamos a poder ver datos objetivos en los que vamos a
+
+poder ver cuánto realmente se está comprando, cuánto se está vendiendo,
+
+cuánto esfuerzo está habiendo por comprar, por subir el precio o por
+
+bajarlo, y realmente cuánto resultado están teniendo esos
+
+compradores o vendedores.
+
+Entonces, ¿qué ocurre? Ocurre que cuando tenemos
+
+muchas compras,
+
+pero el precio no sube,
+
+eso es una absorción
+
+de compradores por parte de los vendedores pasivos.
+
+Compradores agresivos. Recordamos, esto también lo explico en
+
+profundidad,
+
+tenemos liquidez agresiva y tenemos liquidez pasiva.
+
+La liquidez agresiva son todas esas compras y ventas que se dan a
+
+mercado, que quieren participar en el mercado de forma
+
+inmediata. Y luego tenemos la liquidez pasiva, que son esas órdenes
+
+límite que tenemos en el bid y en el ask.
+
+Son órdenes pendientes a ejecutar.
+
+Simplemente, los participantes están esperando a que el precio llegue a
+
+X zona para comprar o vender.
+
+Entonces, ¿qué ocurre cuando tenemos muchas compras, o sea, transacciones
+
+ya ejecutadas, pero vemos que el precio no está subiendo?
+
+O en el caso opuesto, tenemos
+
+muchas ventas,
+
+pero el precio
+
+no cae.
+
+Esos son los dos tipos de
+
+absorciones que tenemos. Cuando está habiendo mucha presión compradora, pero el
+
+precio no sube, o cuando está habiendo mucha presión vendedora, o el precio no cae,
+
+¿eso por qué es? Eso es porque, en el caso de que haya
+
+muchas compras, pero el precio no sube, está habiendo
+
+muchos vendedores pasivos con sus órdenes límite que están absorbiendo esas
+
+compras y están interesados en mantener el precio
+
+abajo.
+
+En el caso de ver muchas ventas, vamos a verlo de forma representada.
+
+Podría
+
+ocurrir esto,
+
+que es un
+
+caso en el que tenemos el precio cayendo
+
+y hay un momento en el que
+
+siguen entrando muchísimas ventas.
+
+Estos son big trades vendedores, grandes trades
+
+ejecutados en venta.
+
+Vemos también el CVD, que también hablo mucho de esto en la
+
+master class del bookmap y con el CVD.
+
+Como os digo, lo vamos a ir viendo poco a poco, pero veremos que
+
+el CVD hace algo tal que así,
+
+que está cayendo realmente, pues CVD al final lo que hace es
+
+representar la diferencia entre compradores y vendedores agresivos.
+
+Entonces, cuando están habiendo muchísimas ventas, que lo podemos ver con los big
+
+trades, lo podemos ver con el delta, con herramientas de order flow,
+
+y
+
+vemos que el CVD también está cayendo muchísimo.
+
+Sin embargo, vemos que el precio no cae.
+
+¿Eso qué quiere decir? Que realmente aquí hay un comprador pasivo
+
+en el DOM.
+
+En el libro de órdenes,
+
+tenemos
+
+en el bid
+
+un comprador, aquí abajo,
+
+que está manteniendo el precio a precios más arriba, o que está
+
+impidiendo que el precio caiga, mejor dicho.
+
+Eso es lo que pasa en el caso de que
+
+estamos viendo mucha presión vendedora, pero el precio no cae.
+
+Y como he dicho antes, también en el caso de que
+
+está entrando
+
+muchísima compra,
+
+pero vemos que el precio no sube, o está
+
+consolidando o subiendo un poquito, pero realmente estamos viendo
+
+muchísima compra en esta zona de aquí y tenemos el CVD subiendo
+
+muy fuerte.
+
+¿Por qué el precio no sube tan fuerte?
+
+Esto es porque tenemos aquí un vendedor,
+
+que podemos ver también en el bookmap, un vendedor pasivo que está absorbiendo
+
+todas esas compras. Entonces, cuando vemos que hay
+
+mucho esfuerzo por parte de compradores sin ningún
+
+tipo de resultado,
+
+o tenemos mucho esfuerzo por parte de vendedores sin ningún tipo de resultado,
+
+eso lo que nos avisa es que va a haber un reversal, va a haber una reversión,
+
+porque a la mínima que entre un poco de agresión, en este caso, el primer caso
+
+de todos,
+
+a la mínima que haya un poco de agresión vendedora y estos
+
+compradores decidan rendirse,
+
+el precio lo que va a hacer es esto.
+
+Tenemos muchísimas compras que están siendo absorbidas
+
+y todos estos compradores que están entrando aquí sin ningún tipo de resultado
+
+van a quedar atrapados, van a quedar absorbidos.
+
+Y estos compradores se van a ver forzados a salirse
+
+de la posición, por lo cual, una posición en compra,
+
+si deben cerrar esa posición en compra, van a tener que vender.
+
+Y esas ventasVan a hacer que el precio acelere
+
+a la baja. Lo mismo en el caso opuesto,
+
+si tenemos muchísimas ventas, a la mínima que haya un poco de agresión
+
+y las ventas dejen de presionar tanto y empiecen a entrar compras a
+
+mercado,
+
+lo que va a hacer el precio es lo siguiente. ¿Por qué?
+
+Porque estas ventas que hay aquí abajo
+
+van a quedar atrapadas, ya que están siendo absorbidas por los compradores pasivos.
+
+Y cuando el precio empiece a cotizar por niveles más
+
+altos, estos vendedores van a estar en negativo, con lo cual van a tener que
+
+salirse de la posición. No van a poder aguantar siempre esa posición.
+
+Con lo cual, cuando cierren esa posición de
+
+venta, van a tener que comprar. Y esas compras masivas,
+
+sumado a la agresión que ya está habiendo de por sí por compradores agresivos
+
+y compradores pasivos, va a hacer que el precio
+
+se acelere hacia arriba. Eso es la absorción.
+
+Podemos ver un par de ejemplos muy rápidamente, pero ya os digo que esto lo vamos a
+
+ir viendo continuamente. Literalmente, esto es
+
+el "core" del "order flow". Entender esto es
+
+importantísimo, porque
+
+hay una cosa que aprendí de Karma Enrosato, que es uno de mis
+
+mentores que he tenido en "order flow", que decía: "Ahí donde hay dolor,
+
+hay ganancia".
+
+Los mejores "trades" se dan cuando hay gente que está sufriendo.
+
+Es un poco duro, pero los mejores "trades" se dan cuando estos
+
+vendedores están j*****s, cuando están diciendo: "H****a, tengo que
+
+salirme", "H****a, tengo que aceptar la pérdida".
+
+O cuando estos compradores se están dando cuenta de que no están teniendo ningún
+
+tipo de resultado y tienen que cerrar en negativo realizando una pérdida.
+
+Ahí es donde se dan los mejores "trades", porque son movimientos muy agresivos.
+
+Un par de ejemplos. Esto lo podemos ver en Bookmap.
+
+Ahora está el mercado cerrado, pero lo podemos ver igualmente.
+
+Aquí tenemos un ejemplo.
+
+Fijaos aquí. Ahora, no estoy teniendo en cuenta ningún tipo de
+
+análisis de contexto, no tengo ni idea de dónde está el precio, pero
+
+imaginaos aquí abajo que tenemos
+
+bastantes ventas.
+
+De esto hablo en profundidad en la master class de Bookmap.
+
+Por favor, mirárosla las veces que necesitéis.
+
+Fijaos, estas ventas están entrando aquí abajo
+
+y están siendo absorbidas por compradores
+
+pasivos en este nivel de aquí que tenemos en el DOM.
+
+Estas ventas no tienen ningún tipo de resultado.
+
+Está
+
+consolidando. Entonces, si está habiendo tanta venta
+
+agresiva, si hay tanto interés por parte de los participantes agresivos
+
+en vender, ¿por qué el precio no cae?
+
+Porque tenemos un comprador pasivo que está
+
+consumiendo. Fijaos cómo tenemos esta línea de aquí, que
+
+aquí deja de aparecer, porque ya ha consumido esas
+
+órdenes de venta.
+
+Básicamente, aquí tenemos esos vendedores en la parte baja,
+
+que están siendo absorbidos por los
+
+compradores pasivos. Y esto hace que a la mínima que haya un poco de agresión, como
+
+vemos en este movimiento de aquí, el
+
+precio inicie un movimiento al alza, que luego puede seguir más o menos.
+
+Como os digo, no estoy teniendo en cuenta el contexto como tal, pero aquí vemos lo
+
+mismo. Vemos una gran zona de demanda
+
+y entran vendedores agresivos. Fijaos, este
+
+vendedor de aquí ya ha quedado atrapadísimo y, a la mínima que entra algo de
+
+agresión, el precio inicia un movimiento a la alza.
+
+Esto lo podemos ver también en el caso opuesto.
+
+Mira, este es un ejemplo muy bueno.
+
+Fijaos,
+
+en toda esta zona de aquí tenemos muchísimos compradores
+
+en la parte superior,
+
+sin ningún tipo de resultado en este punto.
+
+En esta zona sí, el precio está subiendo, pero estos compradores de aquí
+
+arriba, ¿qué están haciendo aquí arriba comprando?
+
+Fijaos que cuando el precio
+
+se va debajo de estos compradores y estos compradores empiezan a estar en negativo,
+
+aquí están reconociendo: "H****a, me he equivocado. Tengo que salirme de aquí".
+
+Y es cuando estos compradores, que tienen que cerrar la posición, o sea, están
+
+vendiendo,
+
+provocan este movimiento a la baja. Fijaos.
+
+Estas compras a mercado están siendo absorbidas por vendedores.
+
+Fijaos aquí con estas ventas que tenemos en el DOM, en el Ask.
+
+Esto lo podemos ver incluso de forma más visual
+
+que en Bookmap, en
+
+Deep charts. En Deep charts, con los big trades,
+
+donde vemos únicamente los trades grandes que podemos filtrar.
+
+Hoy es un día raro porque era festivo en Estados Unidos.
+
+Vamos a ver
+
+esto en los deep trades, vamos a poner que nos marque los últimos dos días.
+
+Voy a subir un poco el
+
+filtro.
+
+Me pone aquí 150.
+
+Vamos a ir al día anterior.
+
+Fijaos,
+
+por un lado,
+
+tenemos varios ejemplos aquí.
+
+Fijaos, aquí tenemos el precio en una zona clave.
+
+Esto también lo voy a repetir continuamente, porque es muy importante.
+
+Lo más importante con order flow es ver esos setups cuando están en una
+
+zona de interés,
+
+cuando están en una zona que es
+
+una zona clave para buscar compras o ventas.
+
+Cuando nosotros vemos una absorción en tierra de nadie, en medio de un rango,
+
+fuera de hora, nos da igual.
+
+Creo que es uno de los errores, hablaremos de ello también, a la hora de operar con
+
+order flow y demás, que te puede llevar incluso a operar más, porque
+
+continuamente estás viendo movimiento, transacciones y demás.
+
+Entonces, tienes que saber filtrar cuándo sí y cuándo no.
+
+Y el cuándo sí es únicamente cuando se dan en ciertas zonas que tú tienes
+
+marcadas como puntos de interés. Aquí, fijaos que estamos en el
+
+VWAPTambién hablamos de ello en profundidad en un vídeo, pero
+
+esta línea morada es el VWAP de RTH.
+
+Fijaos cómo aquí entran estas ventas, estos big trades vendedores
+
+en la parte baja, que no tienen ningún tipo de efecto.
+
+Están vendiendo aquí y el precio no baja,
+
+de hecho, sube.
+
+A medida que el precio va subiendo, estos vendedores tienen que salirse de la
+
+posición.
+
+Cualquier retesteo a estos vendedores
+
+va a ser una opción buenísima para comprar.
+
+Podríamos comprar aquí,
+
+con stop loss debajo de los vendedores
+
+y buscar precios más arriba.
+
+Es un caso de
+
+vendedores absorbidos por compradores pasivos.
+
+Podríamos ver otro caso
+
+aquí,
+
+donde tenemos compradores que están
+
+siendo absorbidos aquí arriba. Fijaos, tenemos
+
+grandes compras sin ningún tipo de efecto, sobre todo en este último
+
+comprador.
+
+Estos compradores, a la mínima que entre algo de
+
+agresión bajista, van a quedar atrapados,
+
+absorbidos. Eso es la
+
+absorción.
+
+Luego también tenemos un concepto quizá algo menos útil o menos
+
+fácil de identificar, que es el agotamiento.
+
+El agotamiento
+
+lo podemos ver también con bookmap.
+
+Vamos a irnos
+
+a
+
+la pizarra.
+
+El agotamiento es cuando tenemos una tendencia que es
+
+claramente muy definida, pero empieza a
+
+mostrar
+
+síntomas de debilidad.
+
+Por ejemplo, tenemos el precio que viene subiendo,
+
+el precio que está en balance, salimos del balance, empezamos una
+
+expansión
+
+y el precio empieza a agotarse. Esto nos indica que es
+
+probable que empiece a haber un reversal.
+
+Esto de aquí, que es el
+
+agotamiento como tal, lo podemos ver.
+
+No lo podemos ver con TradingView, no lo podemos ver con un gráfico
+
+tradicional. Sí que podemos de alguna forma intuirlo cuando vemos que
+
+hay menos fuerza y menos velocidad.
+
+No hay la misma velocidad aquí que aquí.
+
+De alguna forma, sí que se puede intuir o
+
+predecir, pero ya sabemos que con order flow no buscamos el
+
+intuir o esa parte subjetiva, sino que
+
+queremos datos objetivos que nos digan: "Aquí está habiendo agotamiento,
+
+porque tengo datos que me lo respaldan".
+
+Esto lo podemos ver con footprint, con bookmap, con big trades, con
+
+delta,
+
+con un montón de herramientas que iremos viendo paso a paso en los vídeos.
+
+Tampoco quiero entrar demasiado en esto ahora, pero básicamente veremos que cuando
+
+hay
+
+volumen
+
+reduciéndose
+
+y
+
+delta
+
+perdiendo fuerza también. Volumen y delta bajando.
+
+En el caso de compradores que están
+
+mostrando
+
+agotamiento,
+
+y en el caso de
+
+vendedores
+
+que están mostrando síntomas de agotamiento y de
+
+debilidad, lo vamos a ver
+
+con
+
+volumen
+
+reduciéndose también
+
+y delta
+
+perdiendo
+
+fuerza. Vamos a ver exactamente lo mismo.
+
+Solo que el delta será opuesto,
+
+pero efectivamente es lo mismo. En el
+
+caso de los compradores, vamos a ver que el volumen va a bajar y el delta
+
+positivo, hablaremos de ello,
+
+quizá no pasará a
+
+negativo. No es que vayan a entrar ventas como
+
+tal, sino que los compradores van a estar presionando con menos fuerza.
+
+El delta va a estar también perdiendo tamaño.
+
+Y en el caso de vendedores que están mostrando síntomas de
+
+agotamiento, veremos lo mismo. Hay menos volumen por parte de los
+
+vendedores y veremos también que el delta, negativo en este caso,
+
+va a dejar de ser tan negativo. No llegará a estar a un
+
+positivo,
+
+o no es necesario, pero sí que veremos que el delta poco a poco va aflojando
+
+y va acercándose a la positividad
+
+en ese sentido.
+
+Esto lo podemos ver sobre todo muy claro con el footprint,
+
+donde veremos números directamente.
+
+Con footprint, con big trades, con bookmap también, incluso lo podemos ver
+
+con el bookmap,
+
+simplemente con el tamaño de las
+
+burbujas, que es quizá algo incluso más visual, que no tenemos que estar
+
+continuamente analizando números.
+
+Lo que veremos en este caso es que si tenemos aquí grandes
+
+compras,
+
+que están entrando aquí grandes compras, y aquí empezamos a ver quizá menos big
+
+trades, menos burbujas y de menor tamaño,
+
+vamos a decir: "Cuidado, que aquí estaba
+
+habiendo gran agresividad compradora, pero aquí
+
+fíjate que las compras son de menor
+
+tamaño, ya no hay la misma fuerza que antes". Y lo mismo en las ventas.
+
+Veremos que aquí están entrando grandes
+
+ventas agresivas y vamos a empezar a ver
+
+cómo esas ventas agresivas van perdiendo
+
+fuerza y tamaño. Así que esta es otra de las maneras
+
+en las que podemos identificar el
+
+agotamiento, que juntamente con la absorción que hemos visto, son
+
+dos de los comportamientos de order flow que son imprescindibles.
+
+
+--- FIN: 2.4 - Absorción y agotamiento.txt ---
+
+
+--- INICIO: 2.5 - Spoofing así manipulan el mercado.txt ---
+
+Hay un concepto que creo que es importante que conozcáis, que es
+
+el llamado "spoofing". El spoofing es una
+
+práctica de manipulación de mercado ilegal.
+
+Es una práctica que es ilegal, pero que sigue encontrándose en el mercado porque
+
+realmente no es tan fácil de controlar por parte de las autoridades
+
+como la SEC.
+
+Pero sí que es cierto que suele
+
+darse más en mercados más pequeños
+
+o activos menos líquidos, como por ejemplo el Nasdaq,
+
+el petróleo o
+
+el oro, donde el spoofing ocurre con mucha más frecuencia que, por
+
+ejemplo, en el S&amp;P 500 o los bonos estadounidenses,
+
+donde es menos frecuente ver este tipo de prácticas.
+
+Básicamente, es una práctica ilegal.
+
+Si de
+
+alguna forma te
+
+identifican como alguien que está
+
+utilizando prácticas de spoofing,
+
+la multa que te puedes llevar es enorme.
+
+Ha habido casos, podéis buscar e investigar, de multas de
+
+varios millones,
+
+cárcel y demás. No es cualquier tontería.
+
+No es fácil tampoco hacerlo, necesitas mucha capacidad para
+
+ello y también tiene sus peligros.
+
+Básicamente, el spoofing es una
+
+manera de manipular el mercado por parte de los grandes
+
+participantes,
+
+que consiste en
+
+colocar órdenes que en ningún momento tienen
+
+intención de ejecutar. Son grandes órdenes que
+
+se colocan en el bid o en el ask, pero que en ningún momento se ejecutan.
+
+Esto lo hacen para intentar, de alguna forma, crear una falsa
+
+expectativa de lo que está ocurriendo en el
+
+mercado. Obviamente,
+
+esto lo podemos ver en Bookmap. Ya lo iremos viendo poco a poco, pero os
+
+quiero presentar un poquito el concepto.
+
+Todo ese tipo de órdenes que vemos con diferentes colores y demás,
+
+recomiendo ver 100 % la master class de Bookmap, pero
+
+todo esto son órdenes
+
+colocadas en el bid y en el ask,
+
+que están pendientes de que el precio
+
+llegue ahí para comprar o para vender.
+
+Muchas veces lo que puede ocurrir es que el mercado coloque
+
+órdenes y que no lleguen a ejecutarse.
+
+Este es un caso que acabo de encontrar.
+
+En S&amp;P 500 no sea tan común, pero fijaos aquí en estas grandes
+
+órdenes, fijaos en el ask, aquí, 40, 55,
+
+57. Tenemos grandes órdenes aquí arriba.
+
+Sin embargo, fijaos que no
+
+llegan a consumirse en ningún momento.
+
+Sí que es verdad que el precio llega a estar en este nivel, pero
+
+estas órdenes ya se han retirado. A las
+
+13:09
+
+ya no existen estas órdenes. Son órdenes que se han colocado en el mercado,
+
+en el libro de órdenes, pero han sido retiradas.
+
+Esto puede crear una falsa expectativa de
+
+las intenciones de los grandes participantes en el mercado.
+
+Porque los traders que operamos con este tipo de
+
+herramientas, al ver este muro,
+
+vemos una zona donde hay grandes contratos esperando a
+
+vender, lo que pensamos es que aquí hay gente que sabe algo,
+
+instituciones, individuos, lo que sea.
+
+Hay gente con información que está diciendo que quiere vender este
+
+mercado porque espera precios más bajos.
+
+Si tú aquí estás en compra, vas a querer salirte.
+
+Vas a decir: "Ojo, que hay una ballena aquí que quiere vender".
+
+Si tú ves una orden así de grande,
+
+que esto también lo puedes ver en el order book,
+
+no vas a querer estar ahí en compra.
+
+De hecho, quizá te planteas entrar en venta.
+
+Es una forma que tienen estos participantes de manipular el
+
+mercado como ellos quieren
+
+y no sabemos muy bien cuál es el objetivo.
+
+El objetivo puede ser, en este caso, imaginaos que tenemos aquí
+
+un participante que mete esta orden en el libro de órdenes sin intención
+
+de ejecutarla. Puede ser que sea porque
+
+esa persona o esa entidad va en
+
+corto, va en una venta, va en short desde arriba del todo, desde hace varias
+
+horas y quiere seguir empujando el precio más abajo, podría
+
+pensar en
+
+colocar varias órdenes grandes en
+
+venta para asustar un poco al mercado y mandar el precio más abajo.
+
+De hecho, es lo que suele ocurrir normalmente cuando tenemos
+
+una orden grande, aunque el precio no llega aquí arriba,
+
+aunque sea un pequeño movimiento de pocos ticks,
+
+suele tener una pequeña reacción, porque de alguna forma hay algoritmos
+
+que al ver esto, automáticamente ya crean una orden a
+
+mercado en venta.
+
+Un caso podría ser que este vendedor está en corto desde hace
+
+varias horas y quiere continuar empujando el precio a la baja.
+
+Entonces, lo que hará será
+
+crear esa falsa expectativa de que hay gente aquí interesada en continuar
+
+vendiendo,
+
+que luego, como veis, retira.
+
+Otro caso es que este
+
+participante de aquí lo que está intentando conseguir con esto es
+
+precios más bajos para poder comprar.
+
+Quizá el objetivo no es tanto de voy en corto, quiero que siga bajando, sino
+
+de quiero comprar, pero quiero un mejor precio.
+
+Voy a intentar asustar al mercado a ver si puedo tumbar un poco el
+
+mercado y puedo tener un mejor precio de compra.
+
+Son diferentes formas que tienen
+
+estos participantes de manipular el mercado.
+
+Tenemos varias opciones, varios casos,
+
+tendría que buscarlos ahora en concreto.
+
+En el S&amp;P 500 es un poco menos común, en el Nasdaq
+
+lo es un poco más,
+
+pero aquí fijaos que lo normal es que las órdenes lleguen a ejecutarse.
+
+Por ejemplo, vemos aquí cómo tenemos
+
+estaEstas grandes órdenes en el bid de 34,
+
+32, 12. Fijaos cómo se ejecutan
+
+y el precio va un poco más allá.
+
+En este caso, tenemos otro caso aquí, donde tenemos grandes órdenes
+
+aquí arriba,
+
+que en este punto son retiradas.
+
+Muchas veces lo que veremos también es cuando tenemos una
+
+gran orden en el bid o en el ask que tiende,
+
+al menos inicialmente, a actuar como soporte o resistencia.
+
+En el momento en el que es retirada esa orden del libro de órdenes,
+
+puede hacer que el precio se acelere. Voy a hacer un esquema gráfico.
+
+Esto lo iremos viendo en el día a día.
+
+Cuando vaya habiendo ejemplos en el tiempo real, los iré mencionando.
+
+Tenemos
+
+al precio
+
+con
+
+sus
+
+órdenes agresivas a mercado,
+
+órdenes de venta y demás. En el momento en el que
+
+vemos aquí
+
+una gran orden en el ask buscando precios más
+
+bajos,
+
+esto
+
+inicialmente puede crear una pequeña reacción en el mercado, decir: "Cuidado que
+
+hay una ballena que quiere vender.
+
+Me voy a salir de las posiciones en compra, incluso voy a buscar ventas".
+
+Esto podría crear,
+
+inicialmente,
+
+un pequeño movimiento a la baja. ¿Qué
+
+pasa? Que si esta orden de aquí es retirada por la razón que
+
+sea, porque al final, cuando tienes una orden límite, no estás obligada a dejarla,
+
+en cualquier momento puedes quitarla.
+
+En el momento en el que esta orden es retirada,
+
+esta resistencia inicial deja de ser una resistencia
+
+y muchas veces lo que veréis es que el precio,
+
+cuando se retira, hace lo siguiente.
+
+De forma muy rápida,
+
+rompe este
+
+rango de precios que había
+
+actuado como una zona que había asustado al mercado y había mandado el precio un
+
+poquito más abajo.
+
+Veréis que a veces ocurre este tipo de comportamientos, con lo cual aquí
+
+podría ser el caso de que había un trader que quería
+
+comprar porque tiene información o porque sabe algo y
+
+quería entrar en el mercado, pero no quería entrar a este precio,
+
+sino quería entrar un poco más abajo.
+
+Lo que ha hecho es crear esa falsa expectativa de que hay
+
+interés por bajar los precios,
+
+entrar aquí abajo y
+
+luego retirar la orden límite y de
+
+ahí provocar ese movimiento al alza.
+
+Esto son prácticas ilegales, pero
+
+que siguen ocurriendo. Creo que es importante, por lo
+
+menos conocerlo. Yo personalmente tampoco es que me fije demasiado en eso.
+
+Yo
+
+lo que busco es entender lo que está ocurriendo en el momento presente
+
+y por eso también soy más partidario de fijarme más en la liquidez
+
+agresiva. Porque la liquidez agresiva son todas esas
+
+burbujas que vemos, son compras y ventas a mercado.
+
+Eso al final son órdenes ejecutadas y eso no se puede de ninguna forma manipular,
+
+no se puede spoofear. El spoofing, ¿qué pasa?
+
+La liquidez pasiva, todo lo que vemos, esas órdenes límite,
+
+órdenes pendientes que vemos o en el bookmap o en el libro de órdenes,
+
+muchas veces funcionan muy bien como zonas de referencia y
+
+ver cómo interacciona
+
+para identificar absorciones, agotamiento y demás.
+
+Pero muchas veces el problema es que cualquier orden se
+
+puede eliminar rápidamente, porque al final, no estás
+
+obligado a
+
+mantener la orden cuando la pones, sino que si
+
+tu análisis cambia o te lo piensas mejor y decides
+
+no mantener esa orden, la puedes quitar perfectamente.
+
+Es mucho más
+
+dinámico, tienes que estar muy atento a ver esta orden, si se mantiene, a ver si
+
+tal. Yo personalmente tampoco me fijo demasiado en el spoofing.
+
+Sí que me gusta ver esas zonas donde hay mayor liquidez y ver cómo reacciona el
+
+precio, pero para mí tiene mayor peso.
+
+Todas esas órdenes a mercado, esas
+
+compras o ventas que están habiendo, sobre todo a nivel de big trades, órdenes
+
+grandes y demás, porque eso son órdenes ejecutadas.
+
+Eso no es mentira, eso no se puede manipular, no se puede echar atrás.
+
+Son órdenes que se están ejecutando.
+
+Con lo cual yo, personalmente, soy más partidario de
+
+fijarme más en toda esa parte de liquidez agresiva y no tanto
+
+en la pasiva, donde podemos tener este tipo de prácticas como el
+
+spoofing.
+
+
+--- FIN: 2.5 - Spoofing así manipulan el mercado.txt ---
+
+
+--- INICIO: 2.6 - Icebergs así ocultan sus órdenes.txt ---
+
+Hay un concepto muy interesante, muy curioso y que dice mucho de
+
+cómo operan realmente las instituciones:
+
+los icebergs, las órdenes iceberg.
+
+Un iceberg, supongo que sabéis lo que es, es esta masa
+
+de hielo,
+
+donde aparentemente solo se ve una parte, pero debajo de todo eso
+
+tenemos sumergida
+
+la mayoría de esa masa.
+
+Solo vemos una parte, pero realmente es mucho más.
+
+Con el mercado también tenemos un concepto similar,
+
+que con order flow lo podemos llegar a identificar.
+
+Es una práctica utilizada por instituciones, no por "retail", porque por
+
+capacidad tienes que tener cuentas muy grandes,
+
+de decenas, cientos de millones, para poder hacer esto.
+
+Básicamente, es una forma que tienen este tipo de participantes de
+
+ocultar sus órdenes,
+
+mostrando
+
+esas órdenes únicamente parcialmente.
+
+Muestran parcialmente órdenes que
+
+ellos quieren ejecutar, pero detrás de eso que están mostrando en el
+
+libro de órdenes, hay una orden mucho más grande.
+
+Lo hacen con algunos mecanismos automatizados,
+
+utilizados por instituciones.
+
+Lo que vemos en el libro de órdenes es muy curioso, sobre todo cuando lo ves.
+
+Al final, es un tipo de absorción.
+
+Imaginaos que tenemos el
+
+precio, está subiendo o bajando,
+
+y tenemos el bid y el
+
+ask.
+
+Tenemos el
+
+ask
+
+y luego tenemos el bid.
+
+Imaginaos que tenemos el
+
+precio que está empezando a bajar un poquito, están entrando ventas,
+
+y llega a un
+
+nivel de precio, que es esta zona de aquí,
+
+donde
+
+vamos a ver que aquí tenemos siempre
+
+102. Por decir un número, lo acabo de inventar,
+
+102 contratos en el DOM o en el libro de órdenes, en el
+
+bid.
+
+Tenemos 102 contratos,
+
+lo cual es una orden grande. Vemos que empieza a entrar
+
+muchísima presión vendedora, que lo podemos ver
+
+con
+
+las órdenes que hay, con las burbujas en el bookmap, por ejemplo,
+
+lo podemos ver también con el CVD, que veríamos ahí una
+
+gran presión bajista en el CVD también.
+
+Sin embargo, veremos que el precio realmente no es capaz de
+
+bajar.
+
+Vemos que está entrando muchísima presión vendedora; sin embargo, el precio
+
+hace algo así.
+
+A la vez, tenemos el CVD cayendo.
+
+Y no solo eso, sino que vamos a ver que tenemos muchísimas ventas que están
+
+entrando, pero
+
+aquí, en este nivel de precio, se mantienen los 102.
+
+Vemos que de 102 pasa a 90 y vuelve a 102,
+
+95, 102, 98, 102,
+
+101, 102, 105, 102,
+
+90, 102. ¿Por qué? Porque tenemos aquí un mismo
+
+participante que está continuamente recargando.
+
+Lo que realmente está ocurriendo es que en el libro de
+
+órdenes estamos viendo
+
+esto de aquí, cuando realmente ese participante
+
+lo que va a ejecutar es todo esto de aquí.
+
+Y lo hace con un mecanismo que va automáticamente
+
+recargando esto de aquí, sin llamar demasiado la
+
+atención, con contratos fijos en el
+
+mismo tick, en el mismo precio.
+
+De esta forma, lo que está consiguiendo es evitar mostrar
+
+aquí una
+
+orden enorme, que eso asustaría al
+
+precio y probablemente haría que el precio no llegara nunca
+
+aquí. Si nosotros vemos,
+
+como participantes del mercado,
+
+una orden compradora,
+
+esto significaría que aquí tenemos una ballena, que está muy interesada en comprar
+
+y que probablemente esto va a actuar como soporte.
+
+Hay mucho interés, hay alguien aquí que tiene información, que quiere mandar el
+
+precio hacia arriba.
+
+Si vemos esto, lo que ocurriría es que probablemente el precio subiría sin llegar
+
+aquí, porque todas esas ventas o participantes interesados
+
+en vender automáticamente cancelarían la orden, porque saben que
+
+pronto esa venta se va a terminar, porque aquí tenemos alguien muy interesado en
+
+comprar.
+
+Si
+
+una gran
+
+institución o un gran participante quiere comprar grandes
+
+cantidades, porque está esperando un gran movimiento alcista
+
+y mete esta orden tan grande, esto el mercado lo va a ver.
+
+El mercado "retail" que opera dentro de Inview 100 % no lo va a ver.
+
+Pero aquellos que tenemos más herramientas y podemos ver un poco más allá de lo que
+
+está pasando detrás de estas velas y tenemos esa información,
+
+porque pagamos para ello,
+
+vamos a poder ver esto. Esto es algo que las instituciones saben, que hay
+
+participantes que tienen esas herramientas en las que pueden ver esto.
+
+Si ellos hacen esto,
+
+el mercado no va a llegar aquí
+
+y esto va a hacer que el mercado suba sin que esta ballena
+
+rellene sus órdenes. Con lo cual, esta ballena se va a quedar con
+
+cara de tonto.
+
+La forma que tienen ellos de evitarlo
+
+esComo os he dicho,
+
+tienen un sistema
+
+bastante complejo, utilizado únicamente por instituciones,
+
+en el que
+
+cada vez que van entrando ventas, ellos van recargando esas
+
+compras, además con cantidades fijas, contratos fijos,
+
+mismos precios,
+
+mismo nivel de tick. Van recargando todas esas órdenes,
+
+pero aparentemente nosotros lo que vemos es una orden grande y sin
+
+más.
+
+Cuando lo que está ocurriendo detrás es que no paran de
+
+cargar órdenes una tras otra. Si viéramos realmente todo lo que se
+
+está ejecutando,
+
+fliparíamos. Es una forma de absorción, porque todas estas compras que están
+
+entrando aquí con el CVD bajando de forma descarada,
+
+están
+
+siendo absorbidas por este comprador.
+
+Y eso va a hacer que, en algún momento, cuando
+
+estos vendedores dejen de vender o empiece a entrar agresión
+
+compradora, porque va a haber gente que va a identificar que aquí hay un
+
+"iceberg", como va a ser nuestro caso,
+
+estos
+
+vendedores van a verse obligados a cerrar las
+
+órdenes de venta, con lo cual van a tener que empezar a comprar
+
+esas posiciones. Estas compras de
+
+estos vendedores
+
+atrapados, sumado a la agresión que está entrando por esos participantes
+
+que estamos identificando, que aquí está habiendo un "iceberg" que está recargando
+
+posiciones y por lo cual les gusta la idea de comprar aquí,
+
+va a provocar que el precio
+
+inicie un movimiento alcista.
+
+Esto son las órdenes "iceberg" utilizadas por las
+
+instituciones.
+
+
+--- FIN: 2.6 - Icebergs así ocultan sus órdenes.txt ---
+

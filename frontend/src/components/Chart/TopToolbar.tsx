@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../../store/useStore';
-import { ChevronDown, BarChart3, Activity, Settings, Maximize2, CandlestickChart, FileCode } from 'lucide-react';
+import { ChevronDown, BarChart3, Activity, Settings, Maximize2, CandlestickChart, FileCode, Plus, Minus } from 'lucide-react';
 import { executeVortexJS } from '../../engine/vortexEngine';
 
 const TopToolbar: React.FC = () => {
@@ -26,7 +26,11 @@ const TopToolbar: React.FC = () => {
     setPineEditorOpen,
     activePlatform,
     setActivePlatform,
-    setSettingsOpen
+    setSettingsOpen,
+    heatmapFilter,
+    setHeatmapFilter,
+    minTradeSize,
+    setMinTradeSize
   } = useStore();
   
   const tfList = ['1m', '5m', '15m', '30m', '1h', '4h', '1d'];
@@ -191,6 +195,29 @@ const TopToolbar: React.FC = () => {
 
           <div className="h-[1px] bg-[#363a45] my-1 opacity-50" />
           
+          {/* Adrianus Playbook — Session Zones */}
+          <div className="px-3 py-1 text-[10px] font-bold text-orange-500 uppercase tracking-wider">🏛️ Adrianus Playbook</div>
+          <button 
+            className={`w-full text-left px-4 py-2 text-[13px] flex items-center justify-between hover:bg-[#2a2e39] ${useStore.getState().isSessionZonesEnabled ? 'text-orange-400 font-bold' : 'text-[#d1d4dc]'}`}
+            onClick={() => useStore.getState().setSessionZonesEnabled(!useStore.getState().isSessionZonesEnabled)}
+          >
+            <span>📍 Session Zones</span>
+            <div className="flex items-center gap-2">
+              {useStore.getState().sessionZonesData?.bias?.direction && useStore.getState().sessionZonesData?.bias?.direction !== 'neutral' && (
+                <span className={`text-[9px] px-1.5 py-0.5 rounded font-black ${
+                  useStore.getState().sessionZonesData?.bias?.direction === 'bullish' 
+                    ? 'bg-green-500/20 text-green-400' 
+                    : 'bg-red-500/20 text-red-400'
+                }`}>
+                  {useStore.getState().sessionZonesData?.bias?.direction === 'bullish' ? '▲ ALCISTA' : '▼ BAJISTA'}
+                </span>
+              )}
+              {useStore.getState().isSessionZonesEnabled && <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />}
+            </div>
+          </button>
+
+          <div className="h-[1px] bg-[#363a45] my-1 opacity-50" />
+          
           {/* Vortex Library */}
           <div className="px-3 py-1 text-[10px] font-bold text-[#787b86] uppercase tracking-wider">Biblioteca Vortex</div>
           {savedScripts.length === 0 ? (
@@ -328,7 +355,58 @@ const TopToolbar: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex-1" />
+      <div className="flex items-center gap-3 px-3 py-1 bg-[#1e222d] border border-[#363a45] rounded-md ml-auto mr-1 shadow-inner">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-bold text-[#787b86] leading-none mb-1 uppercase tracking-tighter">Mín. Liquidez (L2)</span>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center bg-[#2a2e39] rounded border border-[#363a45] overflow-hidden">
+                <button 
+                  onClick={() => setHeatmapFilter(Math.max(0, heatmapFilter - 10))}
+                  className="px-1.5 py-1 text-[#787b86] hover:text-white hover:bg-[#363a45] transition-colors"
+                >
+                  <Minus size={10} />
+                </button>
+                <input 
+                  type="number" 
+                  value={heatmapFilter} 
+                  onChange={(e) => setHeatmapFilter(Math.max(0, parseInt(e.target.value) || 0))}
+                  className="w-14 bg-transparent text-[11px] font-mono font-bold text-blue-400 text-center focus:outline-none border-x border-[#363a45] py-0.5 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                />
+                <button 
+                  onClick={() => setHeatmapFilter(heatmapFilter + 10)}
+                  className="px-1.5 py-1 text-[#787b86] hover:text-white hover:bg-[#363a45] transition-colors"
+                >
+                  <Plus size={10} />
+                </button>
+            </div>
+            <span className="text-[9px] font-bold text-[#4c505b] uppercase">Qty</span>
+          </div>
+        </div>
+        <div className="w-[1px] h-6 bg-[#363a45] mx-1" />
+        <button 
+          className={`p-1.5 rounded hover:bg-[#2a2e39] transition-colors ${heatmapFilter > 50 ? 'text-orange-500' : 'text-blue-500'}`}
+          onClick={() => setHeatmapFilter(heatmapFilter === 80 ? 20 : 80)}
+          title="Toggle Modo Ballenas (80%) / Normal (20%)"
+        >
+          <Activity size={14} />
+        </button>
+      </div>
+
+      {/* Big Trades Multi-Filter (Numeric Input) */}
+      <div className="flex items-center gap-3 px-3 py-1 bg-[#1e222d] border border-[#363a45] rounded-md mr-auto group">
+        <div className="flex flex-col">
+          <span className="text-[9px] font-bold text-[#787b86] leading-none mb-1 uppercase tracking-tighter">Min. Trade</span>
+          <div className="flex items-center gap-2">
+            <input 
+              type="number" 
+              value={minTradeSize} 
+              onChange={(e) => setMinTradeSize(Math.max(1, parseInt(e.target.value) || 0))}
+              className="w-16 h-5 bg-[#2a2e39] border border-[#434651] rounded px-1 text-[11px] font-mono text-cyan-400 focus:outline-none focus:border-[#2962ff] transition-all"
+            />
+            <Activity className="text-cyan-400/50" size={10} />
+          </div>
+        </div>
+      </div>
 
       {/* Right Tools */}
       <div className="flex items-center gap-3">

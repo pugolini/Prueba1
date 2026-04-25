@@ -24,6 +24,7 @@ class RithmicService:
         self._last_heatmap_ts = {}  # {symbol: float} - throttle heatmap broadcasts
         self._order_books = {}  # {symbol: {price_str: size}} - book acumulado
         self._heatmap_histories = {} # {symbol: deque(maxlen=600)} - Buffering historical depth
+        self._last_bbo = {} # {symbol: {'bid': float, 'ask': float}} - Para detectar agresión en trades
         self.config_file = "rithmic_config.json"
         
         self.app_name = "RTraderPro"
@@ -64,6 +65,8 @@ class RithmicService:
             # Índices (CME)
             "NAS100": ("NQ", "CME"),
             "US100":  ("NQ", "CME"),
+            "USTEC":  ("NQ", "CME"),
+            "NASDAQ": ("NQ", "CME"),
             "NQ":     ("NQ", "CME"),
             "US30":   ("YM", "CBOT"),
             "DOW":    ("YM", "CBOT"),
@@ -99,6 +102,10 @@ class RithmicService:
         
         # En 1.5.9, el status se mira en las plantas individuales o en el socket
         try:
+            # Prioridad 1: Flag interno de sesión activa (más confiable para evitar cierres prematuros)
+            if self.connected:
+                return True
+
             # Opción A: tiene plantas (ticker, history, etc)
             if hasattr(self._client, 'plants') and self._client.plants:
                 return any(getattr(p, 'is_connected', False) for p in self._client.plants.values())
@@ -107,7 +114,7 @@ class RithmicService:
             if hasattr(self._client, 'ws') and self._client.ws:
                 return not self._client.ws.closed
                 
-            return self.connected
+            return False
         except:
             return False
 
@@ -141,6 +148,9 @@ class RithmicService:
                 await self._client.connect(plants=[SysInfraType.TICKER_PLANT, SysInfraType.HISTORY_PLANT])
                 self.connected = True
                 self.running = True
+                
+                # BUGFIX: Dar un pequeño margen para que las plantas reporten is_connected
+                await asyncio.sleep(0.5)
                 
                 logging.info(f"[RITHMIC] SESION MAESTRA ACTIVA")
                 return True
@@ -181,6 +191,311 @@ class RithmicService:
         # 3. Fallback: Si falla el ticker, intentamos una deducción manual común (NQ -> NQM6 para Jun 25/26)
         # Esto es solo un salvavidas por si el TickerPlant de Rithmic tarda en responder
         return symbol
+
+    async def get_historical_data_dual(self, symbol: str, timeframe_minutes: int = 1, since_ts: int = 0):
+        """
+        Arquitectura de Doble Capa para Rithmic:
+        
+        1. Barras Agregadas (Capa Light): Todo el rango desde since_ts.
+           Devuelve OHLCV + netDelta por vela. Ideal para gráfico y contexto histórico.
+           
+        2. Footprint Maps (Capa Detalle): SOLO últimas 48h.
+           Devuelve {precio: {bid, ask}} por minuto. Necesario para Order Flow / Diamantes.
+           
+        Esto evita sobrecargar Rithmic con miles de ticks para el pasado lejano.
+        """
+        try:
+            # BUGFIX: No forzar reconexion si ya hay sesion activa (evita matar el stream en vivo)
+            if not self.connected or not self._is_client_connected():
+                if not await self.connect():
+                    return {"bars": {}, "footprintMaps": {}}
+
+            base_symbol, exchange = self.translate_symbol(symbol)
+            target_symbol = await self._resolve_rithmic_symbol(base_symbol, exchange)
+            
+            import pytz
+            from datetime import timedelta
+            
+            ny_tz = pytz.timezone('America/New_York')
+            now_ny = datetime.now(ny_tz)
+            now_utc = datetime.utcnow()
+            
+            # --- VENTANA TEMPORAL ---
+            if since_ts > 0:
+                start_utc = datetime.utcfromtimestamp(since_ts)
+                # Seguridad: no pedir más de 90 días
+                min_start = now_utc - timedelta(days=90)
+                if start_utc < min_start:
+                    start_utc = min_start
+            else:
+                start_utc = now_utc - timedelta(days=90)
+            
+            end_utc = now_utc
+            
+            logging.info(f"[RITHMIC-DUAL] {target_symbol}: barras desde {start_utc}, footprint desde max({start_utc}, {now_utc - timedelta(hours=48)})")
+            
+            # === CAPA 1: BARRAS AGREGADAS (todo el rango) ===
+            bars_task = self._get_bar_history(
+                target_symbol, exchange, timeframe_minutes, 
+                start_utc, end_utc
+            )
+            
+            # === CAPA 2: FOOTPRINT MAPS (solo últimas 48h) ===
+            footprint_cutoff = max(start_utc, now_utc - timedelta(hours=48))
+            footprint_task = self._get_tick_footprints(
+                target_symbol, exchange, timeframe_minutes,
+                footprint_cutoff, end_utc
+            ) if (end_utc - footprint_cutoff).total_seconds() > 60 else asyncio.sleep(0)
+            
+            bars, footprint_maps = await asyncio.gather(bars_task, footprint_task)
+            
+            logging.info(
+                f"[RITHMIC-DUAL] {symbol}: {len(bars)} barras, "
+                f"{len(footprint_maps)} footprint maps (últimas 48h)"
+            )
+            
+            return {
+                "bars": bars,
+                "footprintMaps": footprint_maps if isinstance(footprint_maps, dict) else {}
+            }
+            
+        except Exception as e:
+            logging.error(f"[RITHMIC-DUAL] Fallo crítico: {e}", exc_info=True)
+            return {"bars": {}, "footprintMaps": {}}
+
+    async def _get_bar_history(self, symbol: str, exchange: str, tf_minutes: int, start: datetime, end: datetime):
+        """
+        Obtiene barras históricas agregadas de Rithmic (History Plant).
+        Mucho más eficiente que pedir ticks: 1 petición = miles de velas.
+        Retorna: { timestamp_segundos: { open, high, low, close, volume, netDelta } }
+        """
+        history = self._client.plants.get('history')
+        if not history:
+            logging.error("[RITHMIC] History Plant no disponible para barras")
+            return {}
+        
+        bars_dict = {}
+        
+        try:
+            # get_historical_time_bars espera bar_type según TimeBarType
+            # 1 = 1 minute, 2 = 5 minutes, etc.
+            bar_type_map = {1: 1, 5: 2, 15: 3, 30: 4, 60: 5, 240: 6, 1440: 7}
+            bar_type = bar_type_map.get(tf_minutes, 1)
+            
+            bars = await history.get_historical_time_bars(
+                symbol=symbol,
+                exchange=exchange,
+                bar_type=bar_type,
+                start_time=start,
+                end_time=end
+            )
+            
+            if not bars:
+                logging.warning(f"[RITHMIC] No se recibieron barras para {symbol}")
+                return {}
+            
+            for b in bars:
+                try:
+                    ts = int(b.get('open_ssboe', 0))
+                    if ts <= 0:
+                        dt = b.get('datetime')
+                        if dt:
+                            ts = int(dt.timestamp())
+                    
+                    if ts <= 0:
+                        continue
+                    
+                    # Normalizar al inicio del timeframe
+                    ts_norm = int(ts / (tf_minutes * 60)) * (tf_minutes * 60)
+                    
+                    open_p = float(b.get('open_price', 0))
+                    high_p = float(b.get('high_price', 0))
+                    low_p = float(b.get('low_price', 0))
+                    close_p = float(b.get('close_price', 0))
+                    vol = float(b.get('volume', 0))
+                    
+                    # Delta neto desde Rithmic: ask_volume - bid_volume
+                    bid_vol = float(b.get('bid_volume') or 0)
+                    ask_vol = float(b.get('ask_volume') or 0)
+                    net_delta = ask_vol - bid_vol
+                    
+                    bars_dict[ts_norm] = {
+                        'open': open_p,
+                        'high': high_p,
+                        'low': low_p,
+                        'close': close_p,
+                        'volume': vol,
+                        'netDelta': net_delta
+                    }
+                except Exception as e:
+                    continue
+                    
+        except Exception as e:
+            logging.error(f"[RITHMIC] Error en _get_bar_history: {e}")
+        
+        return bars_dict
+
+    async def _get_tick_footprints(self, symbol: str, exchange: str, tf_minutes: int, start: datetime, end: datetime):
+        """
+        Reconstruye footprint maps REALES agregando ticks de 1 trade.
+        Solo para ventanas cortas (máx 48h) para no saturar Rithmic.
+        Retorna: { timestamp_segundos: { precio_str: {bid, ask} } }
+        """
+        history = self._client.plants.get('history')
+        if not history:
+            return {}
+        
+        footprint_by_minute = {}
+        chunk_hours = 2
+        current_start = start
+        
+        while current_start < end:
+            current_end = min(current_start + timedelta(hours=chunk_hours), end)
+            
+            try:
+                ticks = await history.get_historical_tick_data(
+                    symbol=symbol,
+                    exchange=exchange,
+                    start_time=current_start,
+                    end_time=current_end
+                )
+                
+                if ticks:
+                    for t in ticks:
+                        try:
+                            dt = t.get('datetime')
+                            if not dt:
+                                continue
+                            
+                            ts_raw = dt.timestamp()
+                            ts_min = int(ts_raw / (tf_minutes * 60)) * (tf_minutes * 60)
+                            
+                            price = float(t.get('close_price') or t.get('open_price') or 0)
+                            if price == 0:
+                                continue
+                            
+                            bid_vol = float(t.get('bid_volume') or 0)
+                            ask_vol = float(t.get('ask_volume') or 0)
+                            
+                            # Fallback: si ask_vol es null, inferir
+                            if ask_vol == 0 and bid_vol > 0:
+                                total_vol = float(t.get('volume') or 0)
+                                ask_vol = max(0, total_vol - bid_vol)
+                            
+                            p_key = f"{price:.2f}"
+                            
+                            if ts_min not in footprint_by_minute:
+                                footprint_by_minute[ts_min] = {}
+                            
+                            if p_key not in footprint_by_minute[ts_min]:
+                                footprint_by_minute[ts_min][p_key] = {'bid': 0, 'ask': 0}
+                            
+                            footprint_by_minute[ts_min][p_key]['bid'] += bid_vol
+                            footprint_by_minute[ts_min][p_key]['ask'] += ask_vol
+                            
+                        except Exception:
+                            continue
+                            
+            except Exception as e:
+                logging.warning(f"[RITHMIC] Fallo chunk {current_start}: {e}")
+            
+            current_start = current_end
+        
+        return footprint_by_minute
+
+    async def get_historical_deltas(self, symbol: str, timeframe_minutes: int = 1, since_ts: int = 0):
+        """
+        Obtiene el Delta exacto histórico desde Rithmic (History Plant).
+        Si since_ts > 0, solo solicita desde ese timestamp hasta ahora.
+        Soporta hasta 3 meses (90 días) máximo por limitación de Rithmic.
+        Retorna: { timestamp_segundos: delta_valor }
+        """
+        try:
+            # 1. Asegurar conexion
+            if not await self.connect():
+                return {}
+
+            # 2. Traducir símbolo y resolver contrato front month
+            base_symbol, exchange = self.translate_symbol(symbol)
+            target_symbol = await self._resolve_rithmic_symbol(base_symbol, exchange)
+            
+            # 3. Calcular ventana temporal: Desde hace X días hasta ahora
+            import pytz
+            from datetime import timedelta
+            
+            ny_tz = pytz.timezone('America/New_York')
+            now_ny = datetime.now(ny_tz)
+            
+            if since_ts > 0:
+                # Si nos pasan un timestamp, empezamos desde ahí
+                start_time_utc = datetime.utcfromtimestamp(since_ts)
+                # Seguridad: No pedir más de 90 días atrás
+                min_start = datetime.utcnow() - timedelta(days=90)
+                if start_time_utc < min_start:
+                    start_time_utc = min_start
+            else:
+                # Calculamos inicio: Hace 90 días a las 00:00 NY (Default)
+                start_time_ny = (now_ny - timedelta(days=90)).replace(hour=0, minute=0, second=0, microsecond=0)
+                start_time_utc = start_time_ny.astimezone(pytz.UTC).replace(tzinfo=None)
+            
+            end_time_utc = datetime.utcnow()
+
+            logging.info(f"[RITHMIC] Solicitando Delta Histórico para {target_symbol} desde {start_time_utc} UTC")
+
+            history = self._client.plants.get('history')
+            if not history:
+                logging.error("[RITHMIC] History Plant no disponible")
+                return {}
+
+            deltas_by_minute = {}
+            current_start = start_time_utc
+            chunk_hours = 2 # Paginar solicitando ticks en ventanas de 2 horas para eludir el estrangulamiento del broker
+            
+            while current_start < end_time_utc:
+                current_end = min(current_start + timedelta(hours=chunk_hours), end_time_utc)
+                logging.info(f"[RITHMIC] Fetching tick chunk: {current_start} -> {current_end}")
+                
+                try:
+                    ticks = await history.get_historical_tick_data(
+                        symbol=target_symbol,
+                        exchange=exchange,
+                        start_time=current_start,
+                        end_time=current_end
+                    )
+                except Exception as loop_e:
+                    logging.warning(f"[RITHMIC] Fallo al recuperar chunk {current_start}: {loop_e}")
+                    ticks = []
+
+                if ticks:
+                    for t in ticks:
+                        try:
+                            dt = t.get('datetime')
+                            if not dt: continue
+                            
+                            ts_raw = dt.timestamp()
+                            import math
+                            ts_min = int(math.floor(ts_raw / (timeframe_minutes * 60))) * (timeframe_minutes * 60)
+                            
+                            vol = float(t.get('volume', 0))
+                            bid_vol = float(t.get('bid_volume', 0))
+                            # Debug: Verificar si Rithmic envía bid_volume
+                            if vol > 0 and bid_vol > 0:
+                                logging.debug(f"[RITHMIC] Tick Delta Debug: vol={vol}, bid={bid_vol}")
+                                
+                            tick_delta = (vol - bid_vol) - bid_vol 
+                            
+                            deltas_by_minute[ts_min] = deltas_by_minute.get(ts_min, 0) + tick_delta
+                        except Exception as e:
+                            pass
+                
+                current_start = current_end
+
+            logging.info(f"[RITHMIC] Delta histórico procesado: {len(deltas_by_minute)} velas para {symbol}")
+            return deltas_by_minute
+
+        except Exception as e:
+            logging.error(f"[RITHMIC] Fallo crítico en get_historical_deltas: {e}")
+            return {}
 
     async def stream_data(self, symbol, callback):
         """Agrega un suscriptor al flujo compartido con diagnostico extendido."""
@@ -235,16 +550,32 @@ class RithmicService:
 
             # 5. Bucle de vitalidad con Heartbeat (Ping)
             ping_count = 0
-            while self.connected and self._is_client_connected():
+            disconnect_counter = 0
+            # BUGFIX: Permitir hasta 3 ciclos sin _is_client_connected() antes de matar el stream
+            # para evitar cierres prematuros por latencia en el reporte de plantas
+            while self.connected:
+                if not self._is_client_connected():
+                    disconnect_counter += 1
+                    if disconnect_counter >= 3:
+                        logging.warning(f"[RITHMIC] stream_data para {symbol}: cliente desconectado tras 3 intentos")
+                        break
+                    await asyncio.sleep(1)
+                    continue
+                else:
+                    disconnect_counter = 0
+
                 await asyncio.sleep(1)
                 ping_count += 1
                 if ping_count >= 5: # Enviar status cada 5 segundos para mantener vivo el socket
-                    await callback({
-                        "type": "status_update", 
-                        "source": "rithmic", 
-                        "connected": True, 
-                        "ping": True
-                    })
+                    try:
+                        await callback({
+                            "type": "status_update", 
+                            "source": "rithmic", 
+                            "connected": True, 
+                            "ping": True
+                        })
+                    except Exception:
+                        break
                     ping_count = 0
                     
         except Exception as e:
@@ -272,12 +603,23 @@ class RithmicService:
 
     async def _broadcast(self, symbol, message):
         """Envía un mensaje a todos los suscriptores de un símbolo de forma segura."""
-        if symbol in self._subscribers:
-            for cb in list(self._subscribers[symbol]):
-                try:
-                    await asyncio.wait_for(cb(message), timeout=0.5)
-                except:
-                    pass
+        if symbol not in self._subscribers:
+            logging.warning(f"[RITHMIC] _broadcast: no hay suscriptores para {symbol}")
+            return
+            
+        subscriber_count = len(self._subscribers[symbol])
+        logging.info(f"[RITHMIC] _broadcast: enviando {message.get('type', 'unknown')} a {subscriber_count} suscriptor(es) de {symbol}")
+        
+        success_count = 0
+        for cb in list(self._subscribers[symbol]):
+            try:
+                await asyncio.wait_for(cb(message), timeout=0.5)
+                success_count += 1
+            except Exception as e:
+                logging.debug(f"[RITHMIC] _broadcast fallo para {symbol}: {e}")
+        
+        if success_count > 0:
+            logging.info(f"[RITHMIC] _broadcast: {success_count}/{subscriber_count} mensajes enviados exitosamente")
 
     async def _on_tick_received(self, data):
         """
@@ -287,7 +629,8 @@ class RithmicService:
                             best_bid_price, best_ask_price, data_type, datetime
         """
         try:
-            logging.debug(f"[RITHMIC] TICK recibido: type={type(data)}, keys={list(data.keys()) if isinstance(data, dict) else '?'}")
+            # BUGFIX: Usar INFO para poder debuggear en producción (el root logger está en INFO)
+            logging.info(f"[RITHMIC] TICK recibido: type={type(data)}, keys={list(data.keys()) if isinstance(data, dict) else '?'}")
 
             # data SIEMPRE llega como dict en template 150/151
             if not isinstance(data, dict):
@@ -296,31 +639,94 @@ class RithmicService:
 
             # 1. Mapeo de símbolo
             r_symbol = data.get('symbol')
+            # BUGFIX: Manejar symbol@exchange igual que en _on_order_book_received
+            if r_symbol and '@' in r_symbol:
+                r_symbol = r_symbol.split('@')[0]
             symbol   = self._rithmic_to_ext.get(r_symbol)
             if not symbol and len(self._subscribers) == 1:
                 symbol = next(iter(self._subscribers))
             if not symbol or symbol not in self._subscribers:
+                logging.info(f"[RITHMIC] TICK descartado: sin mapeo para r_symbol={r_symbol}, subscribers={list(self._subscribers.keys())}")
                 return
 
-            # 2. Extraer precio (LastTrade tiene last_trade_price, BBO tiene best_bid/ask)
-            price = (data.get('last_trade_price') or
-                     data.get('best_bid_price') or
-                     data.get('best_ask_price'))
-            if price is None:
-                return
+            # 2. Extraer BBO (Actualizar memoria de BBO para detectar agresiones)
+            best_bid = data.get('best_bid_price')
+            best_ask = data.get('best_ask_price')
+            
+            if best_bid or best_ask:
+                if symbol not in self._last_bbo:
+                    self._last_bbo[symbol] = {'bid': 0.0, 'ask': 0.0}
+                if best_bid: self._last_bbo[symbol]['bid'] = float(best_bid)
+                if best_ask: self._last_bbo[symbol]['ask'] = float(best_ask)
 
+            # 3. Extraer precio de trade y volumen
+            price = data.get('last_trade_price') or data.get('trade_price')
             volume = data.get('last_trade_size') or data.get('trade_size') or 0
+            
+            if price is None:
+                # Si es un tick solo de BBO, emitimos sin volumen solo para actualizar el precio actual
+                if best_bid or best_ask:
+                    mid_price = (best_bid + best_ask) / 2 if (best_bid and best_ask) else (best_bid or best_ask)
+                    await self._broadcast(symbol, {
+                        "type": "price_update",
+                        "symbol": symbol,
+                        "price": float(mid_price),
+                        "volume": 0,
+                        "time": int(data.get('datetime').timestamp() if data.get('datetime') else __import__('time').time()),
+                        "source": "rithmic"
+                    })
+                return
 
-            logging.debug(f"[RITHMIC] Tick -> {symbol}: {price} vol={volume}")
+            # 4. Determinar SIDE (Agresión) - Lógica de Prioridad Pugobot
+            side = "unknown"
+            bbo = self._last_bbo.get(symbol)
+            
+            # Prioridad 1: Comparación contra el Spread (BBO)
+            if bbo and bbo['ask'] > 0 and bbo['bid'] > 0:
+                if float(price) >= bbo['ask']:
+                    side = "buy"
+                elif float(price) <= bbo['bid']:
+                    side = "sell"
+            
+            # Prioridad 2: Tick Rule (Comparación con el precio anterior) como fallback radical
+            if side == "unknown":
+                last_p = getattr(self, f"_last_p_{symbol}", 0)
+                if last_p > 0:
+                    if float(price) > last_p: side = "buy"
+                    elif float(price) < last_p: side = "sell"
+                    else:
+                        # Si es igual, hereda la agresión del anterior (Tick Rule estándar)
+                        side = getattr(self, f"_last_side_{symbol}", "buy")
+            
+            # Guardar estado para el próximo tick
+            setattr(self, f"_last_p_{symbol}", float(price))
+            setattr(self, f"_last_side_{symbol}", side)
 
-            await self._broadcast(symbol, {
+            logging.info(f"[RITHMIC] Trade detectado -> {symbol}: {price} vol={volume} agresión={side}")
+
+            # 4. Enviar Actualización de Precio (Para velas y UI)
+            price_msg = {
                 "type": "price_update",
                 "symbol": symbol,
                 "price": float(price),
                 "volume": int(volume),
+                "side": side,
                 "time": int(data.get('datetime').timestamp() if data.get('datetime') else __import__('time').time()),
                 "source": "rithmic"
-            })
+            }
+            await self._broadcast(symbol, price_msg)
+
+            # 5. Enviar Big Trade (Para motor de burbujas de Bookmap)
+            if volume > 0:
+                big_trade_msg = {
+                    "type": "big_trade",
+                    "symbol": symbol,
+                    "price": float(price),
+                    "size": int(volume),
+                    "side": side, # buy / sell / unknown
+                    "time": price_msg["time"]
+                }
+                await self._broadcast(symbol, big_trade_msg)
 
         except Exception as e:
             logging.error(f"[RITHMIC] Error en tick: {e}", exc_info=True)
@@ -387,12 +793,20 @@ class RithmicService:
                 return
             self._last_heatmap_ts[symbol] = now
 
-            # 6. Emitir el book COMPLETO acumulado
-            heatmap_rows = list(book.values())
+            # 6. Throttle y Recorte de Heatmap (Solo enviar precios cercanos para ahorrar ancho de banda)
+            current_p = getattr(self, f"_last_p_{symbol}", 0)
+            heatmap_rows = []
+            if current_p > 0:
+                # Solo enviar niveles a +/- 50 puntos del precio actual
+                margin = 50.0 
+                heatmap_rows = [v for v in book.values() if abs(v['p'] - current_p) <= margin]
+            else:
+                heatmap_rows = list(book.values())[:300] # Fallback si no hay precio
+            
             if not heatmap_rows:
                 return
 
-            logging.info(f"[RITHMIC] Heatmap snapshot -> {symbol}: {len(heatmap_rows)} niveles totales")
+            logging.info(f"[RITHMIC] Heatmap optimizado -> {symbol}: {len(heatmap_rows)} niveles (de {len(book)} totales)")
 
             # 7. Guardar en Historial y Emitir el book COMPLETO acumulado
             snapshot = {
@@ -414,6 +828,20 @@ class RithmicService:
 
 
 
+
+    def get_last_price(self, symbol):
+        """Retorna el ultimo precio conocido para un simbolo (mapeado si es necesario)."""
+        # Intentar con el simbolo original y con el mapeado
+        p = getattr(self, f"_last_p_{symbol}", None)
+        if p is not None: return p
+        
+        # Si no lo encuentra, buscar en el mapa de rithmic_to_ext a la inversa
+        for r_sym, ext_sym in self._rithmic_to_ext.items():
+            if ext_sym == symbol:
+                p = getattr(self, f"_last_p_{r_sym}", None)
+                if p is not None: return p
+        
+        return None
 
     async def disconnect(self):
         """Cierra la sesion maestra."""

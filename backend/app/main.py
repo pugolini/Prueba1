@@ -1,4 +1,5 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from app.services.mt5_service import mt5_service
 from app.services.mt4_service import mt4_service
@@ -8,6 +9,8 @@ import MetaTrader5 as mt5
 import asyncio
 import json
 import logging
+import time
+import random
 from datetime import datetime
 
 # Configuración de logging global con salida a archivo (FORCED FLUSH)
@@ -27,17 +30,37 @@ logging.getLogger('websockets').setLevel(logging.INFO)
 logging.getLogger('app.services.rithmic_service').setLevel(logging.DEBUG)
 
 from contextlib import asynccontextmanager
+import traceback
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Inicio: Conexión a MetaTrader 5
-    if not mt5_service.initialize():
-        logging.error("No se pudo conectar a MetaTrader 5 al iniciar.")
+    # Ya no inicializamos MT5 aquí para evitar bloqueos en el arranque (lifespan hang).
+    # La conexión se realizará bajo demanda en los servicios correspondientes.
     yield
-    # Cierre: Desconexión limpia
-    mt5_service.shutdown()
+    # Cierre: Desconexión limpia si estaba activo
+    if mt5_service.initialized:
+        mt5_service.shutdown()
+
 
 app = FastAPI(title="Pugobot Trading API", lifespan=lifespan)
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logging.error(f"GLOBAL ERROR: {exc}\n{traceback.format_exc()}")
+    return JSONResponse(
+        status_code=500,
+        content={"error": str(exc), "traceback": traceback.format_exc()},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*",
+        }
+    )
+
+@app.get("/api/ping")
+async def ping():
+    return {"status": "ok", "time": time.time()}
+
 
 # CORS para el frontend
 app.add_middleware(
@@ -48,7 +71,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Mapeo de temporalidades de texto a MT5
+# Mapeo de temporalidades de texto a MT5 (Estándar Global)
 TF_MAP = {
     "1m": mt5.TIMEFRAME_M1,
     "1": mt5.TIMEFRAME_M1,
@@ -59,22 +82,14 @@ TF_MAP = {
     "30m": mt5.TIMEFRAME_M30,
     "30": mt5.TIMEFRAME_M30,
     "1h": mt5.TIMEFRAME_H1,
+    "1H": mt5.TIMEFRAME_H1,
     "4h": mt5.TIMEFRAME_H4,
+    "4H": mt5.TIMEFRAME_H4,
     "1d": mt5.TIMEFRAME_D1,
     "D": mt5.TIMEFRAME_D1,
 }
 
-def resolve_symbol(symbol: str):
-    """Prueba el símbolo original y variantes con sufijos comunes."""
-    if mt5.symbol_select(symbol, True):
-        return symbol
-    
-    base = symbol.split('.')[0]
-    for suffix in [".pro", ".fs", ""]:
-        test_sym = f"{base}{suffix}"
-        if mt5.symbol_select(test_sym, True):
-            return test_sym
-    return None
+# resolve_symbol eliminada en favor de mt5_service.translate_to_mt5_symbol (Centralizado)
 
 @app.get("/api/all_symbols")
 async def list_all_symbols():
@@ -83,25 +98,98 @@ async def list_all_symbols():
     if not symbols: return []
     return [s.name for s in symbols]
 
+@app.get("/api/session-zones/{symbol}")
+async def get_session_zones(symbol: str, timeframe: str = "1m"):
+    """Calcula zonas institucionales: POC/VAH/VAL día anterior, IB, Overnight, Gap, Bias."""
+    from app.services.zone_calculator import calculate_session_zones
+    
+    target = mt5_service.translate_to_mt5_symbol(symbol)
+    if not target:
+        return {"error": f"Symbol {symbol} not found"}
+    
+    # Obtener velas de 1m de los últimos días (~5000 velas para cubrir sesiones previas)
+    count = 5000
+    
+    if target == "DEMO":
+        from app.services.virtual_feed import virtual_feed
+        candles = virtual_feed.get_history(count)
+    else:
+        mt5.symbol_select(target, True)
+        tf = mt5.TIMEFRAME_M1
+        # Usar el servicio normalizado para asegurar UTC en el cálculo de zonas
+        candles = mt5_service.get_historical_data(target, tf, count)
+        if not candles:
+            logging.error(f"[Zones] Error: No se pudieron obtener velas para {target}")
+            return {"error": "Failed to fetch history"}
+    
+    info = mt5.symbol_info(target)
+    tick_size = 0.25
+    if info and info.trade_tick_size > 0:
+        tick_size = info.trade_tick_size
+    
+    zones = calculate_session_zones(candles, tick_size)
+    return zones
+
+
 @app.get("/status/{symbol}")
 @app.get("/api/status/{symbol}")
 async def get_status(symbol: str):
-    target = resolve_symbol(symbol)
-    if not target:
-        return {"status": "error", "message": f"Symbol {symbol} (and variants) not found"}
-    
-    info = mt5.symbol_info(target)
-    return {
-        "status": "connected",
-        "symbol": target,
-        "market_open": info.visible,
-        "mt5_connected": True,
-        "tick_size": info.trade_tick_size,
-        "tick_value": info.trade_tick_value,
-        "contract_size": info.trade_contract_size,
-        "currency": info.currency_base,
-        "profit_currency": info.currency_profit
-    }
+    try:
+        target = mt5_service.translate_to_mt5_symbol(symbol)
+        if not target:
+            raise ValueError("Symbol mapping failed")
+            
+        if target == "DEMO":
+            return {
+                "status": "connected",
+                "symbol": "DEMO",
+                "market_open": True,
+                "mt5_connected": True,
+                "tick_size": 0.25,
+                "tick_value": 5.0,
+                "contract_size": 1.0,
+                "profit_currency": "USD"
+            }
+        
+        info = mt5.symbol_info(target)
+        if not info:
+            # Safe Fallback: Símbolo no cargado aún en el broker
+            return {
+                "status": "connected",
+                "symbol": target,
+                "market_open": True,
+                "mt5_connected": True,
+                "tick_size": 0.25,
+                "tick_value": 1.0,
+                "contract_size": 1.0,
+                "currency": "USD",
+                "profit_currency": "USD"
+            }
+
+        return {
+            "status": "connected",
+            "symbol": target,
+            "market_open": info.visible,
+            "mt5_connected": True,
+            "tick_size": info.trade_tick_size,
+            "tick_value": info.trade_tick_value,
+            "contract_size": info.trade_contract_size,
+            "currency": info.currency_base,
+            "profit_currency": info.currency_profit
+        }
+    except Exception as e:
+        logging.error(f"Error silencioso en get_status para {symbol}: {e}")
+        # Retorno de emergencia para evitar 500
+        return {
+            "status": "partial",
+            "symbol": symbol,
+            "market_open": True,
+            "mt5_connected": False,
+            "tick_size": 0.25,
+            "tick_value": 1.0,
+            "contract_size": 1.0,
+            "currency": "USD"
+        }
 
 @app.post("/api/rithmic/config")
 async def set_rithmic_config(config: dict):
@@ -115,6 +203,53 @@ async def set_rithmic_config(config: dict):
     await rithmic_service.disconnect()
     
     return {"status": "success"}
+
+@app.get("/api/rithmic/historical-delta/{symbol}")
+async def get_rithmic_historical_delta(symbol: str, timeframe: str = "1m", since: int = 0):
+    """
+    [DEPRECATED] Usar /api/rithmic/historical-data/{symbol} para nueva arquitectura dual.
+    Obtiene el Delta exacto por vela desde Rithmic (History Plant).
+    """
+    try:
+        import re
+        match = re.search(r'(\d+)', timeframe)
+        tf_mins = int(match.group(1)) if match else 1
+        
+        deltas = await rithmic_service.get_historical_deltas(symbol, tf_mins, since)
+        logging.info(f"[API] Exportando {len(deltas)} puntos de Delta historico para {symbol} (TF: {tf_mins}m, Since TS: {since})")
+        return deltas
+    except Exception as e:
+        logging.error(f"Error en endpoint historical-delta: {e}")
+        return {}
+
+@app.get("/api/rithmic/historical-data/{symbol}")
+async def get_rithmic_historical_data(symbol: str, timeframe: str = "1m", since: int = 0):
+    """
+    Arquitectura de Doble Capa para Rithmic:
+    
+    Retorna:
+    {
+      "bars": { timestamp: { open, high, low, close, volume, netDelta } },
+      "footprintMaps": { timestamp: { price_str: { bid, ask } } }
+    }
+    
+    - bars: Cubre todo el rango desde since (máx 90 días). Velas agregadas, eficientes.
+    - footprintMaps: SOLO últimas 48h. Mapas de precios reales para Order Flow.
+    """
+    try:
+        import re
+        match = re.search(r'(\d+)', timeframe)
+        tf_mins = int(match.group(1)) if match else 1
+        
+        result = await rithmic_service.get_historical_data_dual(symbol, tf_mins, since)
+        logging.info(
+            f"[API-DUAL] {symbol}: {len(result.get('bars', {}))} barras, "
+            f"{len(result.get('footprintMaps', {}))} footprint maps"
+        )
+        return result
+    except Exception as e:
+        logging.error(f"Error en endpoint historical-data: {e}")
+        return {"bars": {}, "footprintMaps": {}}
 
 @app.post("/api/order")
 async def place_order(order_data: dict):
@@ -174,7 +309,7 @@ async def get_watchlist_prices(symbols: str):
     sym_list = symbols.split(',')
     results = {}
     for s in sym_list:
-        target = resolve_symbol(s)
+        target = mt5_service.translate_to_mt5_symbol(s)
         if target:
             tick = mt5.symbol_info_tick(target)
             if tick:
@@ -225,51 +360,30 @@ async def websocket_prices(websocket: WebSocket, symbol: str):
     logging.info(f"== WS CONNECTION REQUEST: {symbol} ==")
     
     try:
-        # Normalización robusta de símbolo
-        target_symbol = symbol
+        # 🛡️ NORMALIZACIÓN CENTRALIZADA (v12.1)
+        target_symbol = mt5_service.translate_to_mt5_symbol(symbol)
+        
+        # Asegurar selección en Market Watch
         mt5.symbol_select(target_symbol, True)
         info = mt5.symbol_info(target_symbol)
         
         if not info:
-            logging.warning(f"Símbolo {target_symbol} no encontrado inicialmente. Probando variantes...")
-            # Extraer base sin sufijo
-            base = symbol.split('.')[0]
-            for suffix in [".fs", ".pro", ""]:
-                test_sym = f"{base}{suffix}"
-                if mt5.symbol_select(test_sym, True):
-                    info = mt5.symbol_info(test_sym)
-                    if info:
-                        target_symbol = test_sym
-                        logging.info(f"Símbolo LOCALIZADO y SELECCIONADO: {target_symbol}")
-                        break
-        
-        if not info:
-            logging.error(f"Símbolo IMPOSIBLE de encontrar: {symbol}")
-            await websocket.send_json({"type": "error", "message": f"Symbol {symbol} not found in MT5"})
+            logging.error(f"Símbolo IMPOSIBLE de encontrar: {symbol} (Mapeado a: {target_symbol})")
+            await websocket.send_json({"type": "error", "message": f"Symbol {symbol} (mapped to {target_symbol}) not found in MT5"})
             await websocket.close()
             return
 
-        logging.info(f"Conectado a stream institucional: {target_symbol}")
+        logging.info(f"Conectado a stream institucional: {target_symbol} (Original: {symbol})")
         
-        # Sincronización inicial ultra-robusta
-        tick = mt5.symbol_info_tick(target_symbol)
-        last_emitted_time = int(datetime.now().timestamp() * 1000)
+        # Sincronización inicial ultra-robusta (Normalizado a UTC)
+        tick_data = mt5_service.get_last_tick(target_symbol)
+        last_emitted_time = int(time.time())
         last_price = 0
         
-        if tick is not None:
-            # Convertimos a diccionario para evitar líos de numpy.void
-            try:
-                t_dict = tick._asdict() if hasattr(tick, "_asdict") else {
-                    "time_msc": getattr(tick, "time_msc", last_emitted_time),
-                    "last": getattr(tick, "last", 0),
-                    "bid": getattr(tick, "bid", 0),
-                    "ask": getattr(tick, "ask", 0)
-                }
-                last_emitted_time = t_dict.get("time_msc", last_emitted_time)
-                last_price = t_dict.get("last", 0)
-                if last_price <= 0: last_price = t_dict.get("bid", t_dict.get("ask", 0))
-            except:
-                last_emitted_time = int(datetime.now().timestamp() * 1000)
+        if tick_data:
+            last_emitted_time = tick_data.get("time", last_emitted_time)
+            last_price = tick_data.get("last", 0)
+            if last_price <= 0: last_price = tick_data.get("bid", tick_data.get("ask", 0))
         
         logging.info(f"Stream institucional activo: {target_symbol} @ {last_emitted_time}")
         
@@ -279,39 +393,34 @@ async def websocket_prices(websocket: WebSocket, symbol: str):
             ticks = mt5_service.get_ticks_range(target_symbol, last_emitted_time, 500)
 
             if ticks:
+                # Convertir ráfaga a segundos si el servicio devolvió milisegundos
+                for t in ticks:
+                    if t["time"] > 2000000000: t["time"] = int(t["time"] / 1000)
+                
                 last_emitted_time = ticks[-1]["time"] + 1
                 last_price = ticks[-1]["price"]
                 await websocket.send_json({"type": "tick_burst", "data": ticks})
             else:
-                # Heartbeat garantizado
+                # Heartbeat garantizado (Normalizado a UTC)
                 if iteration % 10 == 0:
-                    current_tick = mt5.symbol_info_tick(target_symbol)
-                    price = last_price
-                    bid, ask, last = 0, 0, 0
+                    tick_data = mt5_service.get_last_tick(target_symbol)
                     
-                    if current_tick is not None:
+                    if tick_data:
+                        price = tick_data["last"] if tick_data["last"] > 0 else (tick_data["bid"] if tick_data["bid"] > 0 else tick_data["ask"])
+                        if price > 0: last_price = price
+                        
+                        hb_time = tick_data["time"]
+                        last_emitted_time = hb_time
+                        
                         try:
-                            # Acceso seguro para heartbeat
-                            c_dict = current_tick._asdict() if hasattr(current_tick, "_asdict") else {}
-                            bid = c_dict.get("bid", getattr(current_tick, "bid", 0))
-                            ask = c_dict.get("ask", getattr(current_tick, "ask", 0))
-                            last = c_dict.get("last", getattr(current_tick, "last", 0))
-                            price = last if last > 0 else (bid if bid > 0 else ask)
-                            if price > 0: last_price = price
-                            
-                            # Usamos last_emitted_time + 1 para garantizar orden ascendente estricto
-                            # Evitamos usar datetime.now() porque puede haber colisiones con MT5
-                            hb_time = max(int(datetime.now().timestamp() * 1000), last_emitted_time + 1)
-                            last_emitted_time = hb_time
-                            
                             await websocket.send_json({
                                 "type": "heartbeat",
                                 "symbol": symbol,
                                 "time": hb_time,
                                 "price": price,
-                                "bid": bid,
-                                "ask": ask,
-                                "last": last
+                                "bid": tick_data["bid"],
+                                "ask": tick_data["ask"],
+                                "last": tick_data["last"]
                             })
                         except Exception as e:
                             if "close message" not in str(e).lower():
@@ -337,29 +446,68 @@ async def websocket_prices(websocket: WebSocket, symbol: str):
 async def websocket_orderflow(websocket: WebSocket, symbol: str):
     await websocket.accept()
     target_symbol = symbol
+    connection_start_time = asyncio.get_event_loop().time()
+    reconnect_count = 0
+    MAX_RECONNECTS = 5
+    MIN_CONNECTION_DURATION = 10  # segundos mínimos para considerar una conexión exitosa
 
     async def send_msg(msg):
+        """Envía mensaje al frontend de forma segura.
+        
+        Solo lanza ClientDisconnected si el WebSocket está realmente cerrado.
+        Errores transitorios (timeout, buffer) se loguean pero no rompen la conexión.
+        """
         try:
             await websocket.send_json(msg)
             return True
         except Exception as e:
-            raise RuntimeError("ClientDisconnected")
+            error_str = str(e).lower()
+            # Solo propagar ClientDisconnected si el socket está realmente muerto
+            if any(k in error_str for k in ['close', 'disconnect', '1006', '1001', '1000']):
+                raise RuntimeError("ClientDisconnected")
+            # Errores transitorios: loguear pero no romper conexión
+            logging.debug(f"[OrderFlow] Error transitorio enviando mensaje: {e}")
+            return False
 
     try:
         # Bucle de persistencia institucional
-        while True:
+        while reconnect_count < MAX_RECONNECTS:
+            loop_start_time = asyncio.get_event_loop().time()
+            
+            if target_symbol == "DEMO":
+                from app.services.virtual_feed import virtual_feed
+                await virtual_feed.stream_data(target_symbol, send_msg)
+                break
+                
             # Pequeña espera para asegurar que el servicio ha cargado la config del disco
             if not rithmic_service.user:
                 await asyncio.sleep(0.5)
             
             if rithmic_service.user and rithmic_service.password:
-                logging.info(f"[OrderFlow] Intentando flujo REAL Rithmic para {target_symbol}...")
+                logging.info(f"[OrderFlow] Intentando flujo REAL Rithmic para {target_symbol} (intento {reconnect_count + 1}/{MAX_RECONNECTS})...")
                 try:
                     await rithmic_service.stream_data(target_symbol, send_msg)
+                    # Si stream_data termina normalmente, verificar duración
+                    connection_duration = asyncio.get_event_loop().time() - loop_start_time
+                    if connection_duration < MIN_CONNECTION_DURATION:
+                        logging.warning(f"[OrderFlow] Conexión muy corta ({connection_duration:.1f}s), posible problema")
+                        reconnect_count += 1
+                    else:
+                        # Conexión exitosa y duradera, resetear contador
+                        reconnect_count = 0
                 except RuntimeError as e:
                     if str(e) == "ClientDisconnected":
+                        logging.info(f"[OrderFlow] Cliente desconectado limpiamente")
                         break
-                await asyncio.sleep(5) 
+                    raise
+                except Exception as e:
+                    logging.error(f"[OrderFlow] Error en stream_data: {e}")
+                    reconnect_count += 1
+                    
+                if reconnect_count < MAX_RECONNECTS:
+                    wait_time = min(5 * reconnect_count, 30)  # Backoff exponencial
+                    logging.info(f"[OrderFlow] Reintentando en {wait_time}s...")
+                    await asyncio.sleep(wait_time)
             else:
                 logging.info(f"[OrderFlow] Usando simulador DXFeed para {target_symbol}")
                 try:
@@ -368,6 +516,14 @@ async def websocket_orderflow(websocket: WebSocket, symbol: str):
                     if str(e) == "ClientDisconnected":
                         break
                 await asyncio.sleep(1)
+                
+        if reconnect_count >= MAX_RECONNECTS:
+            logging.error(f"[OrderFlow] Máximo de reconexiones alcanzado para {target_symbol}")
+            try:
+                await websocket.send_json({"type": "error", "message": "Max reconnection attempts reached"})
+            except:
+                pass
+                
     except WebSocketDisconnect:
         logging.info(f"[OrderFlow] Desconexión controlada para {target_symbol}")
     except Exception as e:
@@ -378,61 +534,74 @@ async def websocket_orderflow(websocket: WebSocket, symbol: str):
             await websocket.close()
         except:
             pass
-        logging.info(f"[OrderFlow] Canal finalizado para {target_symbol}")
+        total_duration = asyncio.get_event_loop().time() - connection_start_time
+        logging.info(f"[OrderFlow] Canal finalizado para {target_symbol} (duración total: {total_duration:.1f}s)")
 
 @app.get("/history/{symbol}")
 @app.get("/api/history/{symbol}")
 async def get_history(symbol: str, timeframe: str = "1m", count: int = 100):
-    target = resolve_symbol(symbol)
-    if not target:
-        logging.error(f"Símbolo no encontrado (Historial): {symbol}")
-        return []
-
-    tf = TF_MAP.get(timeframe, mt5.TIMEFRAME_M1)
+    # 🛡️ NORMALIZACIÓN CENTRALIZADA
+    target = mt5_service.translate_to_mt5_symbol(symbol)
     
-    # Aseguramos que el símbolo esté seleccionado
+    if target == "DEMO":
+        from app.services.virtual_feed import virtual_feed
+        return virtual_feed.get_history(count)
+
+    # 🚀 ACTIVACIÓN FORZOSA: MetaTrader descarga datos si el símbolo está seleccionado
     mt5.symbol_select(target, True)
     
-    bars = mt5.copy_rates_from_pos(target, tf, 0, count)
-    if bars is None:
-        error = mt5.last_error()
-        logging.error(f"Fallo al obtener historial para {target}: {error}")
-        return []
+    # Usar el servicio normalizado para asegurar UTC
+    tf = TF_MAP.get(timeframe, mt5.TIMEFRAME_M1)
     
-    return [
-        {
-            "time": int(bar[0]),
-            "open": float(bar[1]),
-            "high": float(bar[2]),
-            "low": float(bar[3]),
-            "close": float(bar[4]),
-            "tick_volume": int(bar[5])
-        } for bar in bars
-    ]
+    logging.info(f"[History] Cargando {count} velas de {timeframe} para {target} (Origen: {symbol})")
+    data = mt5_service.get_historical_data(target, tf, count)
+    
+    if not data or len(data) == 0:
+        logging.warning(f"[History] El broker no ha devuelto velas para {target}. Reintentando una vez...")
+        # Pequeña espera por si MetaTrader está subscribiendose en caliente
+        await asyncio.sleep(0.5)
+        data = mt5_service.get_historical_data(target, tf, count)
+
+    return data if data else []
 
 import math
 
-@app.get("/api/history-footprint/{symbol}")
-async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int = 100000, to_timestamp: int = None):
+@app.get("/api/footprint/{symbol}")
+async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int = 1000, to_timestamp: int = None):
     """
-    Motor Retroactivo de Footprint para Frontend Lazy-Loading.
-    Consume hasta 100k ticks de MT5, emula lógica L2 Heurística y devuelve Celdas Footprint.
+    Motor Retroactivo de Footprint para Frontend.
+    Soporta símbolos reales (MT5) y sintéticos (DEMO).
     """
+    target = mt5_service.translate_to_mt5_symbol(symbol)
+    if not target:
+        return {}
+
     tf_seconds_map = {
         "1m": 60, "5m": 300, "15m": 900, "30m": 1800,
-        "1H": 3600, "4H": 14400, "1D": 86400
+        "1h": 3600, "4h": 14400, "1d": 86400
     }
     tf_seconds = tf_seconds_map.get(timeframe, 60)
+
+    # 🟢 CASO ESPECIAL: Símbolo DEMO (Generación Sintética)
+    if target == "DEMO":
+        from app.services.virtual_feed import virtual_feed
+        candles = virtual_feed.get_history(count if count else 100)
+        return _generate_mock_footprint(candles, 0.25)
+
+    mt5.symbol_select(target, True)
+    offset = mt5_service.get_broker_offset(target)
     
-    mt5.symbol_select(symbol, True)
+    # Determinar punto de anclaje (Anchor)
     
     # Determinar punto de anclaje (Anchor)
     timeframe_mt5 = TF_MAP.get(timeframe, mt5.TIMEFRAME_M1)
     try:
         if to_timestamp:
             logging.info(f"[Footprint] Paginando al pasado desde {datetime.fromtimestamp(to_timestamp)}")
-            # 1. Obtener los timestamps de las 50 velas previas (Chunking Seguro)
-            rates = mt5.copy_rates_from(symbol, timeframe_mt5, to_timestamp, 50)
+            # 1. Ajustar el timestamp de búsqueda a hora del broker
+            broker_to_timestamp = to_timestamp + offset
+            # 2. Obtener los timestamps de las 50 velas previas (Chunking Seguro)
+            rates = mt5.copy_rates_from(symbol, timeframe_mt5, broker_to_timestamp, 50)
             
             if rates is not None and len(rates) > 0:
                 start_time = datetime.fromtimestamp(rates[0][0])
@@ -443,8 +612,9 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
                 logging.error(f"[Footprint] No se encontraron velas previas para ancla {to_timestamp}")
                 ticks = None
         else:
-            # PARA EL PRESENTE
-            ticks = mt5.copy_ticks_from(symbol, datetime.now(), count, mt5.COPY_TICKS_ALL)
+            # PARA EL PRESENTE: Usamos la hora actual del broker para pedir ticks
+            broker_now = datetime.now().timestamp() + offset
+            ticks = mt5.copy_ticks_from(symbol, int(broker_now), count, mt5.COPY_TICKS_ALL)
 
     except Exception as e:
         logging.exception(f"Error crítico en el puente MT5 al procesar ticks: {e}")
@@ -455,10 +625,25 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
         logging.error(f"Fallo al obtener ticks históricos Footprint para {symbol}: {error}")
         return {}
 
+    # 🔄 SINCRONIZACIÓN DE PRECIOS (UNIFICACIÓN RITHMIC)
+    # Si Rithmic esta activo, usamos su precio actual como ancla para desplazar el historial de MT5
+    from app.services.rithmic_service import rithmic_service
+    price_offset = 0.0
+    if rithmic_service.connected:
+        rith_price = rithmic_service.get_last_price(symbol)
+        if rith_price and len(ticks) > 0:
+            # Obtener el ultimo precio de MT5 para comparar
+            mt5_last = ticks[-1]['last'] if ticks[-1]['last'] > 0 else (ticks[-1]['bid'] or ticks[-1]['ask'])
+            if mt5_last > 0:
+                price_offset = rith_price - mt5_last
+                logging.info(f"[Footprint] Sincronizando precio: Rithmic({rith_price}) - MT5({mt5_last}) = Offset({price_offset})")
+
     def get_tick_size(p: float) -> float:
-        if p > 10000: return 5.0
-        if p > 1000: return 1.0
-        if p > 100: return 0.05
+        # 🟢 Optimización Pugobot: NAS100 requiere precisión de 0.25
+        # ES/NQ (CME) comúnmente operan en centavos o cuartos
+        if p > 10000: return 0.25 # NASDAQ / US Tech
+        if p > 1000: return 0.25  # S&P 500 / Indices
+        if p > 100: return 0.01   # Acciones
         if p > 5: return 0.01
         return 0.0001
     
@@ -471,6 +656,9 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
         price = tick['last']
         if price <= 0:
             price = tick['bid'] if tick['bid'] > 0 else tick['ask']
+        
+        # Aplicar Sincronización
+        price += price_offset
         
         if price <= 0: continue
             
@@ -486,8 +674,8 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
             
         last_price = price
         
-        # Geometría Temporal (Binning por Vela)
-        candle_time = math.floor((tick['time_msc'] / 1000) / tf_seconds) * tf_seconds
+        # Geometría Temporal (Binning por Vela) - Normalizado a UTC
+        candle_time = math.floor(((tick['time_msc'] - (offset * 1000)) / 1000) / tf_seconds) * tf_seconds
         
         # Geometría de Precios (Binning por TickSize del Frontend)
         t_size = get_tick_size(price)
@@ -506,7 +694,53 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
 
     return footprint
 
+def _generate_mock_footprint(candles, tick_size):
+    """Genera un perfil de volumen bid/ask para velas sintéticas."""
+    footprint = {}
+    for c in candles:
+        t = c['time']
+        footprint[t] = {}
+        
+        # Determinar niveles de precio entre Low y High
+        levels = []
+        curr = c['low']
+        while curr <= c['high'] + (tick_size / 2):
+            levels.append(round(curr, 2))
+            curr += tick_size
+            
+        if not levels: continue
+        
+        total_vol = c.get('tick_volume', 100)
+        
+        # POC centralizado en el cuerpo de la vela
+        poc_price = round((c['open'] + c['close']) / 2 / tick_size) * tick_size
+        
+        for p in levels:
+            p_str = str(p)
+            # Distribución Gaussiana simplificada alrededor del POC
+            dist = 1.0 / (1.0 + abs(p - poc_price) / tick_size)
+            level_vol = int(total_vol * dist * (0.5 + random.random() * 0.5))
+            
+            # Generar Delta
+            # Si el precio está en el extremo superior de una vela bajista -> Bearish Absorption
+            # Si el precio está en el extremo inferior de una vela alcista -> Bullish Absorption
+            delta_bias = 0
+            if c['close'] < c['open'] and p >= c['high'] - tick_size:
+                delta_bias = 0.4 # Agresividad compradora atrapada arriba
+            elif c['close'] > c['open'] and p <= c['low'] + tick_size:
+                delta_bias = -0.4 # Agresividad vendedora atrapada abajo
+                
+            ask_ratio = (0.5 + delta_bias) + (random.random() * 0.2 - 0.1)
+            ask_ratio = max(0.1, min(0.9, ask_ratio))
+            
+            footprint[t][p_str] = {
+                "ask": int(level_vol * ask_ratio),
+                "bid": int(level_vol * (1 - ask_ratio))
+            }
+            
+    return footprint
+
 if __name__ == "__main__":
     import uvicorn
     # Forzamos 0.0.0.0 para evitar problemas de IPv6/localhost en Windows
-    uvicorn.run(app, host="0.0.0.0", port=8005)
+    uvicorn.run(app, host="0.0.0.0", port=8000)

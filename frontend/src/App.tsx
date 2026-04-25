@@ -10,6 +10,7 @@ import OrderTicket from './components/Sidebar/OrderTicket';
 import PineEditor from './components/PineEditor/PineEditor';
 import PositionsPanel from './components/Chart/PositionsPanel';
 import { useStore } from './store/useStore';
+import { AuctionBiasPanel } from './components/Sidebar/AuctionBiasPanel';
 
 
 function App() {
@@ -22,6 +23,12 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
+
+  // Forzar apertura de dashboards al iniciar
+  useEffect(() => {
+    const state = useStore.getState();
+    state.setOrderTicketOpen(false);
+  }, []);
 
   // Resize Handling
   const startResizing = () => setIsResizing(true);
@@ -82,7 +89,14 @@ function App() {
       
       <BottomBar />
       <aside className="rightbar-tv">
-        {isOrderTicketOpen ? <OrderTicket /> : <Watchlist />}
+        {isOrderTicketOpen ? <OrderTicket /> : (
+            <div className="flex flex-col h-full">
+                <Watchlist />
+                <div className="border-t border-[#2a2e39] mt-2">
+                    <AuctionBiasPanel />
+                </div>
+            </div>
+        )}
       </aside>
 
       {/* Overlays */}

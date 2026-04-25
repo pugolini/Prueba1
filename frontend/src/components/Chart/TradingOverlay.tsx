@@ -469,30 +469,14 @@ const TradingOverlay: React.FC<TradingOverlayProps> = ({ chart, series }) => {
                     </div>
                 </div>
             )}
-            {/* Price Tag with Candle Timer (TV Style - Native Vertical Fusion) */}
-            {lastTickPrice && (
-                <div 
-                    ref={priceTagRef}
-                    className="absolute right-0 flex items-center pointer-events-none z-50 transition-transform duration-0 ease-linear"
-                    style={{ top: 0, width: 'auto' }}
-                >
-                    <div className="flex flex-col items-center -translate-y-1/2 overflow-hidden rounded-l-[1px] bg-[#2962ff] min-w-[70px] py-[3px] border border-white/5">
-                        {/* Line 1: Price */}
-                        <div className="text-white flex items-center justify-center leading-none">
-                            <span className="text-[11px] font-medium tracking-tight">
-                                {lastTickPrice.toFixed(symbol.includes('JPY') ? 3 : 2)}
-                            </span>
-                        </div>
-                        
-                        {/* Line 2: Timer */}
-                        <div className="text-white/70 flex items-center justify-center leading-none mt-[2px] mb-[1px]">
-                            <span className="text-[10px] font-medium font-mono tracking-tighter">
-                                {candleTimer}
-                            </span>
-                        </div>
-                    </div>
+            {/* Candle Timer (Posicionado arriba del eje temporal y a la izquierda del eje de precios) */}
+            <div className="absolute bottom-[30px] right-[65px] z-50 pointer-events-none">
+                <div className="bg-black/80 backdrop-blur-sm border border-white/10 px-2 py-0.5 rounded-[2px] min-w-[50px] text-center shadow-xl">
+                    <span className="text-white text-[10px] font-mono font-medium tracking-tight">
+                        {candleTimer}
+                    </span>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

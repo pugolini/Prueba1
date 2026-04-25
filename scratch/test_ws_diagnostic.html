@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Diagnostic</title>
+</head>
+<body>
+    <h1>Pugobot WebSocket Diagnostic</h1>
+    <div id="status">Connecting...</div>
+    <div id="messages"></div>
+    <button onclick="connect()">Reconnect</button>
+    <button onclick="disconnect()">Disconnect</button>
+
+    <script>
+        let ws = null;
+        let msgCount = 0;
+        let priceUpdates = 0;
+        let heatmaps = 0;
+
+        function log(msg) {
+            const div = document.getElementById('messages');
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            div.appendChild(p);
+            console.log(msg);
+        }
+
+        function connect() {
+            if (ws) ws.close();
+            
+            const symbol = 'NAS100.fs';
+            ws = new WebSocket(`ws://127.0.0.1:8000/ws/orderflow/${symbol}`);
+            
+            document.getElementById('status').textContent = 'Connecting...';
+            
+            ws.onopen = () => {
+                document.getElementById('status').textContent = 'Connected ✅';
+                log('WebSocket OPEN');
+            };
+            
+            ws.onmessage = (event) => {
+                msgCount++;
+                const msg = JSON.parse(event.data);
+                
+                if (msg.type === 'price_update') {
+                    priceUpdates++;
+                    log(`💰 PRICE_UPDATE: ${msg.price} (total: ${priceUpdates})`);
+                } else if (msg.type === 'heatmap') {
+                    heatmaps++;
+                    if (heatmaps % 10 === 0) {
+                        log(`🔥 HEATMAP: ${msg.data?.length} niveles (total: ${heatmaps})`);
+                    }
+                } else if (msg.type === 'status_update') {
+                    log(`📡 STATUS: ${JSON.stringify(msg)}`);
+                } else if (msg.type === 'big_trade') {
+                    log(`💎 BIG_TRADE: ${msg.side} ${msg.size} @ ${msg.price}`);
+                } else {
+                    log(`📨 ${msg.type}: ${JSON.stringify(msg).substring(0, 100)}`);
+                }
+                
+                document.getElementById('status').textContent = 
+                    `Connected ✅ | Messages: ${msgCount} | Prices: ${priceUpdates} | Heatmaps: ${heatmaps}`;
+            };
+            
+            ws.onerror = (err) => {
+                log(`❌ ERROR: ${err.type}`);
+                document.getElementById('status').textContent = 'Error ❌';
+            };
+            
+            ws.onclose = (ev) => {
+                log(`🔒 CLOSED: code=${ev.code}, reason=${ev.reason}, wasClean=${ev.wasClean}`);
+                document.getElementById('status').textContent = 
+                    `Disconnected (code=${ev.code}) | Messages: ${msgCount} | Prices: ${priceUpdates}`;
+            };
+        }
+        
+        function disconnect() {
+            if (ws) {
+                ws.close(1000, 'Manual disconnect');
+                ws = null;
+            }
+        }
+        
+        // Auto-connect on load
+        connect();
+    </script>
+</body>
+</html>

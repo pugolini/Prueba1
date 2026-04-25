@@ -1,0 +1,1550 @@
+
+--- INICIO: 5.1 - Gestión Monetaria.txt ---
+
+La gestión monetaria es una parte fundamental en el trader.
+
+Da igual cómo de buenos seamos, cómo de rentable sea
+
+nuestra estrategia o cómo de precisos
+
+seamos con order flow: si no tenemos una buena gestión monetaria,
+
+money management en inglés,
+
+va a ser complicado tener éxito a largo plazo en el trading.
+
+Podemos tener un buen mes o lograr éxito a corto plazo, pero si
+
+queremos que esto funcione de forma
+
+sostenible a largo plazo, necesitamos aplicar una buena
+
+gestión monetaria y una buena gestión de riesgo, de la que hablaremos en otro
+
+vídeo,
+
+como la que os voy a mostrar en el día a día durante esta formación.
+
+Vamos a hablar de tres parámetros que hay que
+
+tener muy definidos, establecidos y claros,
+
+y, si es posible, sistematizarlos para que, cuando se
+
+llegue a ese límite, el
+
+broker o la plataforma nos bloquee y no nos permita operar más.
+
+Hay que entender, antes de entrar en esto, que incluso,
+
+como comenté en un vídeo
+
+anterior, aunque
+
+tengamos un trade perfecto,
+
+que cumple todas las condiciones y parece el trade
+
+del día o del mes,
+
+puede salir mal, porque hay
+
+una parte en el trading que es la aleatoriedad, que está
+
+fuera de nuestro control. Incluso un trade que aparentemente es
+
+perfecto también puede salir mal, porque hay cosas que no podemos
+
+controlar y debemos ser conscientes de que, en el momento en el que nos
+
+exponemos en el mercado, asumimos el riesgo de que ese trade
+
+pueda salir mal. Hay que tener eso muy claro.
+
+De ahí la importancia de nunca ir con todo el riesgo
+
+de tu cuenta, porque da igual: aunque sea perfecto,
+
+siempre existe la posibilidad, aunque sea menor, de que el trade
+
+salga negativo y pierdas dinero. Por eso necesitamos
+
+una buena gestión monetaria y una buena gestión de
+
+riesgo. En cuanto al riesgo por trade,
+
+esto va a depender muchísimo de si es capital propio o si es cuenta fondeada.
+
+Lo importante es que, en un trade, estés
+
+arriesgando algo que puedes permitirte perder y que te permita continuar operando
+
+durante semanas, meses o incluso años.
+
+Me
+
+gustaría distinguir aquí entre capital propio
+
+o cuenta fondeada,
+
+porque la verdad es que es bastante diferente.
+
+Antes de esto, decir que cuando operamos una cuenta fondeada con un drawdown
+
+del 10 %, por ponerlo sencillo,
+
+realmente,
+
+cuando decimos que arriesgamos un 1 % o un 2 %,
+
+lo
+
+que estamos arriesgando no es ese porcentaje de la cuenta, sino el
+
+10 %.
+
+¿Por qué?
+
+¿Alguien sabría decirme, aunque sé que no me vais a responder, por
+
+qué esto no es un 1 %, sino un 10 %?
+
+La respuesta es porque, realmente,
+
+tu
+
+capacidad
+
+de
+
+capitalizar en el mercado de esa cuenta es ese 10 %.
+
+Con lo cual, si tú tienes una cuenta de 100.000,
+
+una cuenta fondeada,
+
+el 10 %, que serían 10.000 dólares, es lo máximo que puedes perder.
+
+Ese 10 %, esos 10.000 dólares, es tu cuenta, no los 100.000.
+
+Con lo cual, cuando dices que estás arriesgando un 1 %, que es un buen riesgo,
+
+realmente lo que estás haciendo es arriesgar el 10 %.
+
+Estás arriesgando 1.000 dólares de los 10.000 que tienes disponibles,
+
+no 100.000.
+
+Porque si pierdes los 10.000, pierdes la cuenta.
+
+La cuenta la pierdes cuando
+
+llegas al drawdown máximo.
+
+Ese es tu cuenta. El drawdown es
+
+el capital que estás manejando realmente.
+
+Quiero que quede esto claro: cuando estamos arriesgando un 1 %
+
+en una cuenta de 100.000, donde tenemos un drawdown máximo del 10 %,
+
+que serían 10.000 dólares, realmente lo que estamos arriesgando es un 10
+
+%. Lo que estamos diciendo es: "Me estoy dando 10 balas".
+
+En el caso de que tenga
+
+pérdidas seguidas, pierdo la cuenta.
+
+Eso es lo que estoy diciendo cuando estoy arriesgando un 1 % de una cuenta con un
+
+drawdown de 10.000, de 10 %.
+
+Cuando realmente, con un 1 % de una cuenta de 100.000
+
+dólares, que serían 1.000 dólares
+
+en capital propio,
+
+necesitarías 100
+
+trades seguidos negativos para perder la cuenta.
+
+Esto quiere decir que lo del riesgo es un poco relativo, porque mucha gente
+
+no diferencia entre capital propio, cuentas fondeadas y demás.
+
+Lo que quiero decir con esto es que
+
+lo que yo considero adecuado
+
+en capital propio,
+
+también va a depender de qué
+
+cuentas tengamos de capital propio, pero de forma general diría un riesgo de
+
+1-10, en el sentido de: "Me voy a dar 10 balas".
+
+Si
+
+pierdo 10 trades seguidos en negativo, pierdo la cuenta.
+
+Eso es lo que sería para mí un approach algo agresivo, pero
+
+que se podría tomar en capital propio.
+
+En cuenta fondeada, mi approach sería algo más agresivo
+
+y diría de 1-5,
+
+donde me doy cinco balas. Si tengo cinco trades seguidos
+
+negativosPierdo la cuenta. En cuentas fondeadas me
+
+interesa,
+
+al menos en mi caso, ser agresivo.
+
+Si tengo cinco trades negativos, pierdo la cuenta y
+
+asumo eso. Cuando compro el examen, asumo que si lo paso, estaré operando
+
+de esta manera y,
+
+si lo pierdo, es un riesgo que estoy asumiendo.
+
+Esto es muy personal, por eso no me gusta decir demasiado: "Tú
+
+date 10 balas, date cinco balas, arriesga un 1 %, arriesga 10 %".
+
+Va a depender mucho de tu contexto, de si tienes varias cuentas
+
+fondeadas o solo tienes una,
+
+si tienes dinero en el banco por si puedes comprar más cuentas si pierdes las
+
+que tienes.
+
+Es muy personal y no me gusta dar demasiada
+
+información concreta sobre esto, pero esto es lo que yo hago.
+
+Tengo dos cuentas
+
+donde suelo tener más o menos
+
+un ratio de uno veinticinco, se podría decir, en una cuenta, que es una cuenta más
+
+grande,
+
+en Interactive Brokers, donde soy mucho más
+
+conservador.
+
+Luego tengo dos o tres cuentas personales en
+
+AMP o en Tradovate, donde
+
+me gusta operar de forma más agresiva.
+
+Tampoco considero que sea muy agresivo, porque si realmente entiendes el mercado y
+
+tienes una buena gestión de riesgo, que luego también hablaremos un poco de
+
+la gestión de la posición,
+
+arriesgar
+
+una décima parte de tu
+
+drawdown,
+
+no deberías de tener 10 operaciones seguidas negativas.
+
+¿Puede ocurrir?
+
+A mí no me ha pasado, pero podría ocurrir.
+
+Diez operaciones seguidas negativas podría ocurrir.
+
+De alguna forma soy un poco más agresivo.
+
+En cuentas fondeadas, cinco operaciones seguidas negativas 100 % puede
+
+ocurrir, pero a
+
+mí no me interesa operarlas como una cuenta de capital propio, porque
+
+la ventaja que tengo en la cuenta fondeada es que tengo ese apalancamiento con el
+
+que con un coste bajo puedo llegar a hacer mucho dinero.
+
+Entonces, aquí me interesa ser agresivo.
+
+Esa es mi forma de proceder. Mi foco,
+
+obviamente, está en capital propio, no tanto en fondeadas, pero las fondeadas que
+
+tengo las utilizo de esta manera.
+
+Esto en cuanto a riesgo por
+
+trade. Como os digo, no he dado una respuesta fija, sino un poco para que
+
+entendáis. Luego, máximo número de trades al día.
+
+Esto es algo que tiene que estar clarísimo.
+
+Tú no puedes hacer 20 operaciones al día, o por poder puedes, pero no es el
+
+estilo de trading que yo propongo y que yo os voy a mostrar aquí.
+
+A mí,
+
+por ejemplo, me gusta poner un máximo de
+
+tres, cuatro operaciones por sesión.
+
+No suelo llegar a ese número de operaciones, pero me doy la
+
+oportunidad de que, si es una sesión con varias oportunidades,
+
+pueda llegar a hacer cuatro operaciones en una misma sesión.
+
+De forma general, suelo hacer una, dos, tres.
+
+Es importante tener ese máximo. Tener ese límite de: "He llegado ya a
+
+cuatro, no puedo seguir operando".
+
+Esto es algo que es complicado de automatizar,
+
+de sistematizar, con algún bróker que te diga: "Has operado ya cuatro veces, no
+
+sigas operando". Se puede hacer,
+
+pero es algo más complejo porque no hay una función
+
+específica para esto. En capital propio quizás sí que es más posible.
+
+Puedes hablar con el bróker y de alguna forma acordarlo,
+
+pero es importante tirar de disciplina.
+
+La disciplina del trading es importantísima por este tipo de cosas,
+
+porque tenemos que tener esa disciplina de decir: "Estas
+
+son mis reglas, he llegado al máximo número de trades que me permito
+
+hacer, con lo cual se acabó el día y me da igual si ha sido positivo o si ha
+
+sido negativo. Si ha sido negativo,
+
+mañana será otro día".
+
+Y esto es lo que nos va a permitir
+
+tratar el trading de una forma profesional y sostenerlo a largo plazo.
+
+Es lo que nos va a permitir
+
+sobrevivir y vivir del trading directamente.
+
+Si no tenemos este tipo de reglas de gestión de límites diarios,
+
+va a haber un día donde nos vamos a calentar porque somos humanos.
+
+A mí me ha pasado muchas veces, he aprendido a base de muchas
+
+h*****s muy dolorosas.
+
+Es muy importante tener unos límites
+
+en cuanto a número de trades al día y luego, el siguiente paso, que es al que vamos
+
+ahora, máxima pérdida diaria, que está directamente
+
+relacionado.
+
+Si nosotros, de forma general, un día negativo es 1.000 dólares,
+
+1.500,
+
+quizá 2.000 en un día que ha sido horrible.
+
+2.000 es el máximo, pero no puede ser que luego de golpe en un día tengamos menos
+
+10.000.
+
+Aquí ha pasado algo. Cuando nuestros días negativos oscilan entre 1.000 y 2.000
+
+y luego hay un día en el que perdemos 10.000, aquí ha ocurrido
+
+algo.
+
+Eso no podemos permitirlo. Eso es un error enorme, muy
+
+común, sobre todo en traders que
+
+no tienen la experiencia, pero que sí que tienen el conocimiento.
+
+Yo estuve durante mucho tiempo en esa fase.
+
+Estuve en una fase en la que sabía hacer dinero, sabía capitalizar.
+
+De hecho, me pasaba mucho cuando todavía estaba operando con acción del precio,
+
+con Smart Money y demás.
+
+Me pasaba que tenía un sistema que era rentable, ganaba
+
+dinero, me iba bien,
+
+pero tenía un día que la liaba.
+
+Ni siquiera un día, una sesión o ni eso,
+
+unos minutos donde perdía la cabeza,
+
+me entraba ese estado de frustración de: "Este me ha sacado y luego se me ha ido
+
+TP, este se me ha escapado". Y luego ya entras con una revancha
+
+en un estado mental que es controlado por la amígdala, literalmente,
+
+no es tu parte racional, sino es ese estado de frustración, de
+
+no entender qué está pasando y de querer tener la razón y
+
+egoLo que pasa es que son esos
+
+momentos, pueden ser incluso segundos, en los que pierdes la
+
+cabeza y puedes perder mucho dinero,
+
+cargándote en un día los últimos dos,
+
+tres, cuatro o cinco meses de trabajo bien hecho y
+
+disciplinado.
+
+Son reglas de protección: riesgo que voy a asumir por "trade", máximo
+
+número de "trades" al día, máxima pérdida diaria.
+
+Al final, los tres tienen cierta relación, en el sentido de que
+
+si mi máxima pérdida diaria es
+
+2.000 dólares.
+
+De hecho, tenemos que empezar con este orden.
+
+Número uno,
+
+esto es lo primero que debemos definir: cuánto estoy dispuesto a perder en un día
+
+como máximo. No quiero llegar aquí tampoco.
+
+Esta es otra: no porque mi máxima pérdida diaria sea 2.000,
+
+tengo que llegar a 2.000 un día negativo. No tiene por qué.
+
+Si estás en 1.000, estás en menos 1.000, has hecho una o dos operaciones
+
+negativas
+
+y no hay ninguna oportunidad clara, cierra el día.
+
+No digas: "Bueno, voy a ver si encuentro alguna
+
+oportunidad y si no, llego a 2.000 y paro".
+
+Tampoco es eso. Es cuestión de entender,
+
+de intentar quitar el concepto monetario.
+
+Sé que es difícil, pero hay que intentar quitar el concepto monetario del
+
+"trading" y centrarnos en ser buenos operadores, en ser buenos "traders".
+
+Esto es secundario. Son reglas que hay que tener, pero es secundario.
+
+No tenemos que llegar a la máxima pérdida diaria para parar.
+
+Si hay un día que no está claro, no nos sentimos bien o no vemos nada clarísimo,
+
+por lo que sea, se acabó. No hay
+
+que llegar aquí para parar. Este es
+
+el punto número uno que debemos definir: máxima pérdida diaria, porque de
+
+esto parte el resto. Si esto es lo máximo que podemos perder en un
+
+día, nos vamos al siguiente punto.
+
+Máximo número de "trades" al día.
+
+¿Cuál es mi estilo de "trading"? ¿Cuántos "trades" me gusta hacer o
+
+suelo encontrar oportunidades en un mismo día?
+
+Pueden ser dos, quizá, si tienes un estilo de "trading" no
+
+tan agresivo, sino un poco más de "day trader", incluso "swing".
+
+Dos "trades" al día, o pueden ser cuatro, incluso pueden ser 10 o 15.
+
+Yo no digo a nadie cómo tiene que operar.
+
+Voy a mostrar únicamente cómo opero yo y cómo me gusta operar a mí y cómo vivo
+
+yo de esto.
+
+Yo suelo oscilar entre cuatro, en ocasiones
+
+cinco
+
+máximo,
+
+"trades". Me equivoco.
+
+Cinco máximo. Mis "trades" suelen estar entre
+
+dos y cinco.
+
+Máximo cinco es lo que suelo operar en un
+
+día. Cinco "trades" al día.
+
+Esto es lo que yo hago, pero quizá tu forma es un poco más "scalper",
+
+hiper"scalper", y puedes tener hasta 10 operaciones al día.
+
+Da igual.
+
+Si tú haces 10 operaciones al día o encuentras oportunidades ejecutando 10 veces
+
+al día, está perfecto. No digo que esté mal.
+
+Ahora vamos al siguiente punto, que es lo
+
+importante, que parte de estas dos.
+
+Si tú haces un máximo de 10 operaciones al
+
+día y lo máximo que quieres perder es 2.000 o que estás
+
+dispuesto a perder es 2.000, lo único que tienes que hacer es 2.000 entre 10.
+
+Máxima pérdida diaria entre máximo número de "trades" al día que
+
+te permites hacer. 2.000 entre 10, 200.
+
+Lo máximo que vas a arriesgar por "trade" es 200.
+
+En mi caso, digamos que
+
+me permito hacer cinco operaciones al día como máximo.
+
+Mi riesgo será
+
+400,
+
+que sería 2.000 entre cinco.
+
+Si
+
+hago dos operaciones máximo al día, mi riesgo será
+
+2.000 entre dos: 1.000.
+
+Es importante
+
+seguir este mecanismo. Primero definimos la máxima
+
+pérdida que estamos dispuestos a asumir en un mismo día.
+
+Luego, vamos a definir el número de "trades" con el que solemos
+
+encontrarnos cómodos en base a nuestra operativa y nuestra personalidad.
+
+Y luego vamos a definir el riesgo por "trade" en función de la máxima pérdida
+
+diaria y el máximo número de "trades".
+
+Y esto en cuanto a
+
+gestión monetaria.
+
+
+--- FIN: 5.1 - Gestión Monetaria.txt ---
+
+
+--- INICIO: 5.2 - Psicología, gestión de riesgo y de posición.txt ---
+
+En el vídeo anterior hablamos de la gestión monetaria, enfocándonos
+
+en el
+
+riesgo por trade, el número máximo de trades al día y
+
+la máxima pérdida diaria. En este caso, vamos a hablar un
+
+poco más de gestión de riesgo y gestión de la
+
+posición, el "position management", que es
+
+igual o más importante. Bueno, no diría más importante, creo que lo anterior
+
+es sin duda más importante para
+
+sobrevivir en este negocio, pero sin duda también
+
+es un factor, o varios
+
+temas a tener en cuenta,
+
+que nos van a marcar la diferencia.
+
+Lo que va a marcar la diferencia entre un buen trader o un trader que
+
+sobresale, puede estar dentro
+
+de este saco.
+
+Por un lado, tema win rate. Este es un
+
+debate enorme. ¿Cuánto win rate es necesario para ganar en
+
+el trading? La realidad es que si tienes un RR muy alto, con un
+
+win rate muy bajo puedes ganar dinero.
+
+Esta relación entre win rate y
+
+RR supongo que ya se conoce. Si tienes un
+
+win rate alto
+
+y un RR alto, básicamente vas a ser
+
+millonario dentro de muy poco.
+
+Con un
+
+RR
+
+algo más bajo, probablemente tu win rate va a aumentar.
+
+Con un RR
+
+algo más alto, tu win rate probablemente se va a ver perjudicado.
+
+Esa relación entre win rate y RR está inversamente
+
+relacionada.
+
+Cuanto más intentamos alargar los trades, más
+
+probabilidad hay de que el trade salga mal o se dé la vuelta.
+
+Este es un
+
+gran debate.
+
+Yo personalmente
+
+tengo el foco en el ratio RR. Si bien el win rate
+
+obviamente es importante,
+
+para mí el foco está en el RR. Yo soy una persona que se
+
+siente cómoda arriesgando poco para ganar mucho.
+
+No quiero arriesgar mucho para ganar lo mismo que estoy arriesgando.
+
+Yo trades con un ratio
+
+de uno a uno, donde arriesgas
+
+1.000 para ganar 1.000,
+
+no me siento cómodo. Esto es algo también muy personal.
+
+El tema de gestión de riesgo, como os digo, es muy personal también.
+
+Pero yo arriesgar 1.000 para ganar 1.000 no lo veo
+
+sostenible,
+
+incluso con un win rate alto, porque realmente vas al mercado sin ningún tipo de
+
+ventaja.
+
+¿Que tienes un win rate del 95 %? Eso ya son
+
+otras cosas, porque ganas prácticamente siempre.
+
+Pero, ¿quién tiene un win rate del 95 %?
+
+Probablemente nadie. Esa es la realidad.
+
+Los mejores traders que yo conozco tienen win rates en
+
+torno al 50 %, y eso ya es mucho. El mío está
+
+en torno al 57, 58.
+
+Estoy en ronda ahora, más o menos, este año.
+
+He tenido algún año con un win rate bastante más alto, en torno al
+
+65 % y demás.
+
+Depende también, obviamente, de algunos elementos
+
+externos, como es la volatilidad que pueda haber en el mercado,
+
+incluso la presidencia. Actualmente tenemos a Trump y a veces
+
+es un poco más complicado aguantar posiciones.
+
+Eso también puede hacer que tu win rate
+
+se vea perjudicado y demás. Pero de forma general,
+
+tengo un win rate
+
+por encima del 50 %, lo cual ya es muy bueno.
+
+Y esto quiero que quede muy claro: es
+
+imposible
+
+ganar siempre.
+
+Yo creo que esto todo el mundo ya lo sabe, pero mucha gente todavía es incapaz de
+
+aceptarlo.
+
+Y esto es algo, ya metiéndome un poco en psicología, que si
+
+no
+
+eres consciente de ello y no eres capaz de aceptarlo,
+
+estás muy j****o porque te vas a llevar la h****a.
+
+Yo me he llevado la h****a muchas veces de creerme que: "H****a, qué bueno soy,
+
+cuánto dinero estoy haciendo, me va superbién".
+
+Luego hay un día que me entra ese
+
+ego de que me
+
+niego a aceptar la pérdida, me niego a aceptar que estoy en la idea equivocada, me
+
+niego a aceptar que en el mercado haya sido liquidez, que me haya tomado el stop
+
+loss y luego se haya ido en mi dirección en dos trades
+
+seguidos.
+
+Eso es lo que el mercado va a intentar sacar de nosotros.
+
+El mercado básicamente es un reflejo de las emociones de la
+
+gente. Entonces, ¿qué es lo que ocurre aquí?
+
+Que estamos en un negocio donde los que ganan son los que mayor control emocional
+
+tienen.
+
+Y si tú no eres capaz de controlarte a ti mismo en situaciones que te
+
+llevan al punto máximo de frustración, de
+
+rabia, de ansiedad, si no te controlas en esos momentos,
+
+algún día vas a quemar la cuenta. Esa es la
+
+realidad. Y lo puedo decir desde la experiencia, que ya llevo
+
+más de seis años operando,
+
+que he tenido momentos de perder el control absoluto,
+
+de una pérdida del autocontrol increíble,
+
+ansiedad, frustración, rabia, revancha, ego
+
+enorme.
+
+Entonces, hay que tener cuidado con todo esto y hay que
+
+intentar
+
+conocernos a nosotros mismos. De ahí también la importancia del "journal", también
+
+hablaremos de esto,
+
+de journalear los trades, y no solo los trades, sino también las emociones.
+
+Cómo nos sentimos nosotros cuando tenemos un trade perdedor, un trade positivo,
+
+un trade que se nos escapa. Sentimos rabia, sentimos frustración,
+
+¿qué pensamos? ¿Cuál es nuestro proceso
+
+emocionalquímico en el cerebro, qué estamos sintiendo.
+
+Todo eso es importantísimo, porque el mercado nos va a llevar
+
+en muchas ocasiones a emociones extremas
+
+y tener ese autocontrol es lo que nos va
+
+a
+
+sostener
+
+en este mercado, en este negocio. Es lo que nos va a permitir
+
+continuar viviendo de esto, si llegamos a un punto en el que podemos vivir
+
+de esto.
+
+Todo esto lo estoy diciendo porque
+
+la
+
+psicología en el "trading" es superimportante.
+
+Tampoco quiero enredarme demasiado en esto, porque esto es una formación de "order
+
+flow", pero indirectamente lo vamos a tocar en el día a día
+
+y es importantísimo tener eso muy claro.
+
+Estaba hablando aquí de "win rate" y de RR.
+
+Yo soy una persona
+
+a la que
+
+le gusta poner el foco en el RR. Yo no quiero arriesgar
+
+1.000 para ganar 1.100. Yo quiero arriesgar 1.000
+
+para ganar mínimo
+
+3.000.
+
+Esa es la forma en la que llevo el mercado.
+
+Quiero
+
+exponerme al mercado de tal forma que si yo estoy arriesgando algo,
+
+cuando gane, gane más. Y es que yo creo que en el "trading"
+
+obviamente hay estrategias en las que tú con RR incluso negativos,
+
+puedes hacer dinero.
+
+Yo no vengo a criticar a nada ni a nadie.
+
+No hay
+
+ninguna forma
+
+correcta o mejor que otra,
+
+siempre y cuando se adapte a ti y tú sepas
+
+gestionarlo bien y
+
+hagas dinero en el mercado. Eso al final es el resumen de todo.
+
+Sin embargo,
+
+mi forma de ver el mercado es: yo no voy a arriesgar 1.000 para ganar 1.000.
+
+O
+
+peor todavía, no voy a arriesgar 1.000 para ganar 500 con un
+
+ratio negativo de uno dos,
+
+o dos uno, más bien dicho, donde arriesgo
+
+dos para ganar uno.
+
+Aquí el foco, en mi opinión, cuando realmente le puedes sacar
+
+ventaja en el "trading" es cuando sabes leer el
+
+mercado,
+
+eres preciso en tus ejecuciones y además tienes una ventaja en
+
+cuanto a ratio. Cuando tú arriesgas 100 para ganar 500.
+
+Si eso además lo haces con precisión, con entendimiento de lo que está
+
+ocurriendo,
+
+te puedes convertir en una máquina de hacer dinero. Esa es la realidad.
+
+No es fácil llegar a ese punto, pero te puedes convertir en una máquina de hacer
+
+dinero. Esto también
+
+hablo ya encarándolo con el posicionamiento del "stop loss".
+
+Yo cada vez estoy transicionando un poco más,
+
+y esto en base a estudiar de varios "traders" de "order flow", como por ejemplo en
+
+este caso, Fabio Valentini, es el que más
+
+influencia ha tenido en cuanto a esto,
+
+el posicionamiento de los "stop loss".
+
+Estoy transicionando un poco más a
+
+poner "break even" siempre que pueda.
+
+Porque al final en el mercado tú puedes entrar en cualquier momento.
+
+Pero creo que la diferencia cuando eres un "trader" que ya gana dinero,
+
+cuando eres un "trader" que ya es rentable,
+
+lo que te puede hacer ganar más o menos dinero es si pierdes más o menos dinero.
+
+Porque hay un punto en el que si tú ganas tal, no vas a poder ganar
+
+mucho más, a menos que gestiones más capital.
+
+Pero si tienes tal estrategia y entiendes lo que estás haciendo, tu
+
+capacidad de aumentar el "win rate" está limitada. Es complicado.
+
+Cuando ya llevas meses perfeccionando la estrategia y no pasas del
+
+60 % de una forma sostenible, que eso está muy bien,
+
+60 % de "win rate", hay un punto en el que
+
+es
+
+prácticamente imposible aumentar, o si subes, quizá puedes tener algún mes
+
+65, incluso 70, de forma puntual, pero la
+
+media va a estar en torno a este número.
+
+Es muy complicado que vayas al 90 % en un mes, por ejemplo.
+
+Hay un punto en el que es complicado mejorar eso, porque
+
+es que en el "trading" no puedes mejorar mucho más.
+
+Hay una parte de aleatoriedad donde, como os he
+
+dicho anteriormente, incluso haciendo las cosas bien, el
+
+resultado puede ser negativo.
+
+Y eso es lo que también a veces cuesta meterse en la cabeza, que
+
+lo importante del "trading" no es tanto
+
+si he ganado o he perdido, sino:
+
+he operado bien, he seguido el plan, ha sido un buen "trade", ha sido un "trade"
+
+que volvería a tomar.
+
+Eso es lo que realmente cuenta, no tanto si he ganado o he perdido.
+
+Y sé que es complicado porque estamos en una sociedad donde
+
+desde pequeños nos enseñan que lo importante es
+
+el resultado.
+
+Por ejemplo, un partido de fútbol.
+
+¿Qué es lo importante? Quién gana o quién pierde. Da igual quién ha jugado mejor.
+
+O cualquier trabajo, lo que importa es que el trabajo haya sido
+
+positivo, que se haya hecho bien, que haya tenido un buen
+
+impacto en una empresa tal.
+
+Pero no tenemos en cuenta cómo ha sido el camino.
+
+Eso no lo tenemos en cuenta. Es lo que nos desde pequeños,
+
+prácticamente todo, cualquier tarea, cualquier cosa que se nos
+
+pueda venir a la mente, se basa en el resultado.
+
+¿Ha salido bien o ha salido mal? ¿Has ganado o has perdido?
+
+¿Estás contento o no? Este es el resultado, es el fin.
+
+Pero no tenemos en cuenta cómo ha sido el camino. ¿Has disfrutado o no?
+
+¿Ha sido beneficioso para todos o
+
+no?¿Ha habido costes
+
+o no? ¿Se ha seguido cierto
+
+orden o no? ¿Se han reducido costes o no?
+
+Ese tipo de cosas que quedan en un segundo plano cuando vemos el
+
+resultado, pero que son igualmente importantes en el
+
+"trading".
+
+Tenemos que diferenciar entre la mente humana
+
+y la mente del "trader". El "trader" como
+
+tal
+
+puede llegar a considerarse como sobrehumana.
+
+En la mente del "trader" tenemos que intentar que
+
+esto,
+
+que de forma general es un segundo plano, sea más importante
+
+que esto.
+
+El camino,
+
+el plan, el proceso, es más importante que el resultado.
+
+Y cambiar ese proceso mental es muy complicado, lo sé.
+
+Sé que es complejo, incluso a mí mismo me cuesta.
+
+Se requieren años y años. Yo con seis o siete años me sigue
+
+costando. Hay veces que tengo un día negativo
+
+y estoy un poco
+
+apagado o desanimado, incluso.
+
+Luego lo pienso y digo: "H****a, ¿por qué estoy desanimado si ha sido un
+
+buen 'trade'? He tomado tres 'trades', los tres han sido buenos, los volvería a
+
+tomar. He seguido el plan, he ejecutado bien en
+
+función a mi riesgo.
+
+Simplemente, el mercado no me ha acompañado, el 'timing' no ha sido del todo
+
+correcto
+
+y el resultado ha sido negativo". Pero,
+
+¿por qué iba a estar triste cuando he hecho mi trabajo
+
+de la mejor forma posible?
+
+Sé que eso es muy complicado, pero
+
+es muchísimo mejor perder dinero habiendo seguido tu plan,
+
+que ganar dinero saltándote el plan.
+
+Eso lo he visto yo con varios alumnos que he
+
+tenido en el pasado,
+
+donde algunos se alegraban por algunos "trades" que habían hecho.
+
+El primer error de todos es celebrar algo.
+
+No celebres un
+
+"trade" positivo, porque es aleatorio.
+
+¿De qué te sirve celebrar que hoy has ganado si mañana podrías
+
+perder? Celebra que has operado bien o enfádate si
+
+has operado mal, pero no
+
+celebres, no te vayas de fiesta, no publiques en redes sociales, no
+
+fardes,
+
+no te vengas arriba porque has tenido un buen día, porque mañana podría ser
+
+negativo.
+
+Si quieres,
+
+puedes
+
+mostrar cómo has operado, lo bien que has operado, lo bien que has hecho el
+
+trabajo, lo bien que has seguido tu plan.
+
+Eso muéstralo perfectamente y es lo que va a ayudar a otra gente.
+
+Pero el resultado
+
+ayuda muy poco. Con esto no quiero
+
+decir, que
+
+tengas buenos resultados también está directamente relacionado a que estás
+
+siguiendo el plan.
+
+Lo que quiero decir aquí es que el foco está, no tanto en si he ganado o perdido,
+
+sino en si estoy ejecutando bien o no, porque a la larga
+
+esto es lo que nos va a dar resultados.
+
+No resultados buenos a corto plazo.
+
+Lo que queremos a la larga es tener ciertos hábitos, ciertas rutinas, que nos
+
+lleven a
+
+seguir un plan de forma consistente y
+
+que se adapte a nosotros y que
+
+lo podamos seguir en el tiempo, y eso nos hará tener resultados a largo plazo.
+
+Estoy enredando un montón.
+
+Todo esto os lo quería decir porque cada vez estoy transicionando mucho
+
+más, y lo vais a ver en los directos, en el día a día, a reducir el
+
+"drawdown".
+
+La idea ahora mismo
+
+es que yo estoy en un punto en el que mi forma de mejorar es reducir
+
+"drawdown".
+
+Yo no puedo mejorar mucho más. Obviamente, siempre se
+
+puede mejorar,
+
+pero yo estoy en un punto en el que soy rentable, gano dinero
+
+y la forma que tengo yo de mejorar es pulir detalles.
+
+Con detalles que puedes pulir, puedes pasar de un
+
+60 % a 65 %, que ya es mucho.
+
+Cuando lo vemos a final de un año
+
+es muchísimo.
+
+Pero realmente mi mejora está de alguna forma limitada en cuanto a
+
+operativa.
+
+Donde yo realmente sé que puedo sacarle mucha ventaja es el
+
+"drawdown".
+
+Llevo
+
+unos meses muy enfocado en reducir el "drawdown", en el tiempo que paso en
+
+"drawdown", en "drawdown" no realizado.
+
+Todo esto lo iremos viendo, pero ahora mismo mi foco está en
+
+que mi cuenta esté en rojo o mi "trade" esté en rojo, negativo,
+
+el mínimo tiempo posible. No quiero estar en negativo.
+
+Si estoy en negativo, lo voy a cortar.
+
+Si mi "trade" no sale bien de forma prácticamente inmediata, lo voy a cortar.
+
+Ya entraré más tarde.
+
+Porque eso es algo que tiene que quedar muy claro,
+
+y es que el mercado está abierto en todo momento y está lleno de
+
+oportunidades. Si se te escapa un "trade", tranquilo, espera la
+
+siguiente oportunidad. Hay un montón de oportunidades y sobre todo cuando
+
+operamos con "order flow"
+
+y estamos leyendo lo que está ocurriendo, tenemos muchísimas oportunidades.
+
+No tenemos que esperar a un FVG M15 o que haya una toma de liquidez.
+
+No necesitamos eso. Tenemos una ventaja extra, no necesitamos
+
+ese tipo de cosas. Estamos leyendo información, datos, números,
+
+estamos viendo lo que está ocurriendo en el mercado y podemos aprovecharnos de
+
+incluso pequeños movimientos.
+
+Con
+
+esto lo que quiero decir es que
+
+estoy intentando
+
+reducir al máximo el tiempo en el que estoy en negativo.
+
+Y si yo tengo un "trade" que no está saliendo bien y yo estoy viendo que
+
+sigo en negativo, sigo en "drawdown", sigo en "break
+
+even", incluso, pero no acaba de darme buenas vibras, lo voy a cortar.
+
+Fuera. ¿Qué necesidad hay de sufrir?
+
+¿Qué necesidad tienes tú de sufrir, sobre todo cuando gestionas altas
+
+cantidades?No una cuenta fondeada de 50.000
+
+que te ha regalado tu "influencer".
+
+Cuando estás gestionando altas cantidades de dinero,
+
+tu enfoque debe ser reducir el drawdown, porque cuando estás perdiendo dinero y no
+
+hablo de 500 dólares, sino quizá 5.000, 10.000.
+
+Es relativo, pero cuando estás
+
+operando capital real y estás en negativo, eso
+
+no gusta, es incómodo. Da igual la experiencia que lleves,
+
+lo bueno que seas
+
+o cuánto dinero hayas ganado, estar en negativo no gusta, es incómodo.
+
+Con lo cual
+
+hay un punto en que yo me
+
+planteé: "¿Qué necesidad tengo de sufrir?
+
+¿Por qué?" Si yo tengo un trade
+
+colocado y tengo un cierto margen, pero veo que no arranca, lo cierro.
+
+Ya entraré cuando me empiece a gustar de nuevo.
+
+Eso es lo que hay que tener muy claro, que no te cases con ninguna idea, sé un poco
+
+más flexible con los trades, no tan
+
+estático de: "He entrado aquí, mi "stop loss" es aquí.
+
+Hasta que no llegue aquí, no lo voy a cerrar".
+
+Vamos a ver, ¿qué nos está diciendo "order flow"?
+
+Esa es una ventaja que tenemos al
+
+operar con "order flow". Estamos viendo
+
+exactamente lo que está ocurriendo, y si tenemos un trade y vemos que
+
+está yendo en contra y está habiendo agresión en nuestra contra, ¿para qué lo vamos
+
+a aguantar? Cierra,
+
+no sufras. Estás viendo que va a salir mal.
+
+Si quieres, cierra, dale un tiempo y valora si quieres volver a entrar, aunque
+
+entres a un precio peor.
+
+Aunque tengas antes la entrada en compra aquí,
+
+y luego, por salirte, tienes que entrar aquí, da igual.
+
+Ha sido una buena decisión. Te has salido porque no veías muy claro el trade,
+
+porque estás viendo datos. No es intuición, no es un FVG que se
+
+está respetando.
+
+Hablamos de datos, hablamos de números, hablamos de agresión real que estamos
+
+viendo en el libro de órdenes. Con lo cual, si lo estamos viendo,
+
+salte y espérate a ver si la cosa de alguna forma mejora, cambia un
+
+poco el panorama, e incluso si tengo que esperar un rato y luego veo que el precio
+
+se está moviendo en mi dirección, genial. Ahora sí, voy a buscar una entrada.
+
+Con esto quiero decir que
+
+el objetivo, y lo iréis viendo en mis vídeos, es
+
+estar lo mínimo en drawdown posible.
+
+Veréis que soy bastante partidario de poner breakeven mucho
+
+más que antes. Si me seguís en redes sociales, yo era un "trader" un poco
+
+más estático, en el que yo tenía mi punto de entrada, mi "stop loss",
+
+y yo no lo tocaba, porque no ponía nunca breakeven.
+
+Al final, el "stop loss" tiene su parte de razón.
+
+El "stop loss" es,
+
+para mí,
+
+punto de invalidación.
+
+¿Qué es lo que ocurre? Que realmente con "order flow",
+
+ese punto de invalidación que podemos obtener desde la acción
+
+del precio,
+
+no tiene nada que ver con un punto de invalidación en base a "order flow".
+
+Porque con "order flow" estamos viendo mucho más que
+
+velas japonesas. Con velas japonesas, tu punto de invalidación va a
+
+ser quizá un máximo-mínimo o el máximo de un FVG.
+
+Con
+
+"order flow" podemos delimitar el punto de invalidación al tic, en
+
+base si ha habido agresión, ha habido absorción, ha habido alguna
+
+ineficiencia, lo que sea.
+
+Creo que también es un poco parte de la evolución.
+
+Creo que poco a poco he ido transicionando a ir
+
+ajustando ese "stop" a donde yo creo que es un punto de
+
+invalidación en base a lo que estoy viendo en el libro de órdenes.
+
+Eso
+
+es lo que, de alguna forma, me está
+
+ayudando a reducir el drawdown y estoy ganando más o menos lo mismo.
+
+Entonces,
+
+el resultado neto al final del mes es mayor.
+
+Una de las cosas que me pasa mucho es que a veces tengo un buen trade, tomo un buen
+
+parcial, quizá se me da la vuelta, me sacan breakeven
+
+y luego vuelvo a entrar. Incluso vuelvo a entrar, como os he dicho aquí.
+
+Vuelvo a entrar un poco más arriba, no sé si estáis viendo esto que tengo aquí la
+
+cámara.
+
+Quizá tengo un peor punto de entrada, pero estoy más seguro de la entrada o tengo
+
+una validación algo mejor.
+
+Lo importante también es entender que en el "trading" no es tanto tener
+
+un mejor precio de entrada o comprar
+
+barato y vender caro, sino entrar en
+
+un punto en el que el precio desde ahí se va a mover de
+
+forma más o menos rápida y no va a estar consolidando mi punto de entrada, no
+
+queremos eso, y que tenga un punto de invalidación
+
+claramente definido. Eso es importantísimo.
+
+Ya veréis un poco cómo manejamos el tema del "stop loss" y demás, esto lo veremos
+
+en el directo, pero soy bastante partidario, en la medida que puedo, de tomar un
+
+parcial, poner breakeven, piramidar, ajustar el "stop".
+
+Tengo una gestión un poco más flexible, un poco más dinámica.
+
+Quizá tienes que ser un poco más ágil, tienes que entender lo que está ocurriendo
+
+y
+
+tienes que saber adaptarte. Muy importante esto.
+
+También entramos un poco en tema psicología de nuevo.
+
+Tienes que ser capaz de adaptarte a lo que te está diciendo el mercado y
+
+no casarte en tu idea. Con una idea de: "Voy a usar compras".
+
+Vamos a ver, voy a usar compras. Si el mercado me está diciendo que
+
+las compras no están funcionando y está entrando agresión, los compradores están
+
+siendo absorbidos y estamos viendo agresión
+
+vendedora,
+
+olvídate de esa idea y empieza a buscar ventas, porque el "trading" es muy dinámico
+
+y, sobre todo cuando lo vemos con "order flow", vemos que está continuamente
+
+habiendo cambios.
+
+Hay que tener en cuenta esto: la capacidad de adaptación.
+
+Toma de parciales y piramidar o añadir
+
+contratos a la posición también es algo importante.Que también
+
+me gusta hacer bastante en mis ejecuciones.
+
+Sin embargo, aquí tenemos que diferenciar
+
+el régimen en el que estamos. El mercado en el que
+
+estamos: ¿es un mercado balanceado o es un mercado
+
+en desequilibrio?
+
+Esto ya lo hemos hablado en vídeos
+
+anteriores, el tema del perfil de volumen,
+
+del bias y demás. Pero vamos, ¿es un mercado
+
+balanceado, donde el precio hace algo tal que así,
+
+o es un mercado donde el valor va
+
+migrando y tenemos al precio
+
+subiendo o bajando?
+
+Esto va a ser clave a la hora de tomar la decisión de
+
+tomar parciales, de piramidar, porque
+
+piramidar aquí no me va a hacer mucha gracia.
+
+Soy más partidario de coger trades cortitos y
+
+tomar parciales.
+
+Esto es lo que voy a buscar aquí, RR cortitos,
+
+trades claros con una invalidación clara, centrándome mucho también en el POC
+
+y "value at high", "value at low". Y de piramidar más
+
+bien poco. Aquí la idea es más tomar parciales y
+
+quizá ajustar el stop que piramidar.
+
+Aquí, en cambio, la cosa cambia. Aquí la cosa
+
+quizá ya no es tanto tomar parciales, sino que el enfoque cambia más
+
+a: "H****a, estoy en un trade con fuerza, con agresión,
+
+hemos salido de valor, estamos ahora en una fase de imbalance y por lo menos
+
+hasta que el precio vuelva a encontrar balance,
+
+quiero seguir añadiendo tamaño a la posición,
+
+quiero seguir añadiendo contratos, porque estoy en la idea correcta", con lo cual
+
+voy a maximizarlo hasta que llegue a una zona que para mí ya sea suficiente y
+
+decida cortar o tomar parciales de forma agresiva.
+
+Esto
+
+ya lo hemos hablado,
+
+sobre todo cuando hablamos del "auction market theory", de cómo diferenciar un
+
+mercado balanceado, un mercado imbalanceado.
+
+Esto lo hemos hablado y creo que con "order flow" le podemos sacar
+
+muchísimo provecho a esto, porque podemos identificar cuándo esperamos esto,
+
+cuándo vamos a ser más agresivos con parciales, cuándo
+
+vamos a intentar alargar un poco más los trades, incluso vamos a intentar
+
+piramidar.
+
+Y lo bueno es que con "order flow" estamos viendo exactamente lo que está
+
+ocurriendo. Estamos viendo información,
+
+qué agresiones está habiendo, quién está siendo absorbido, dónde están siendo
+
+absorbidos los compradores o vendedores.
+
+En función a eso, podemos ajustar el "stop loss"
+
+y tomar decisiones todavía más precisas.
+
+Esto, de nuevo, lo iremos viendo en el día a día.
+
+El vídeo se me ha alargado un poquito en cuanto a gestión de
+
+riesgo, psicología y lo que sería el "position management",
+
+que vamos a seguir viendo en el día a día durante esta formación.
+
+
+--- FIN: 5.2 - Psicología, gestión de riesgo y de posición.txt ---
+

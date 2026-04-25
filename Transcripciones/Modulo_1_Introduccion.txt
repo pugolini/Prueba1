@@ -1,0 +1,1462 @@
+
+--- INICIO: 1.1 Introduccion y objetivos.txt ---
+
+Muy buenas, bienvenido o bienvenida a Adrianus Flow.
+
+Si estás aquí es porque probablemente eres una persona que tiene cierto interés en
+
+esto del order flow,
+
+ya sea que seas una persona que parte de cero y quiere empezar a aprender sobre
+
+order flow, porque lo has visto en redes sociales, te llama la atención,
+
+quieres empezar a mejorar en el trading o lo que sea, o bien quizá eres un trader
+
+que ya tiene ciertos conocimientos básicos sobre order flow,
+
+pero quiere empezar a entenderlo mucho más y profundizar en ello.
+
+Aquí es donde viene Adrianus Flow.
+
+Lo que estáis viendo en pantalla es School.
+
+School viene a ser la plataforma principal de la formación.
+
+Ahora hablaremos un poco sobre herramientas, objetivos, plataformas que
+
+utilizaremos y demás.
+
+Pero básicamente,
+
+Adrianus Flow, obviamente, si estás aquí, entiendo que ya sabes de qué va esto,
+
+o eso espero. Es una formación de order flow.
+
+La idea es que es una formación realmente completa sobre ello,
+
+empezando desde cero, básicamente, e iremos paso a paso, poco a
+
+poco avanzando en las diferentes áreas.
+
+Y de futuros. Formación completa de trading de futuros.
+
+Importante esto, porque realmente mucha gente me ha preguntado si esto
+
+aplica a Forex, si se puede utilizar en el euro, la libra y demás.
+
+Y la realidad es que no, por lo menos en mi opinión, no. ¿Por qué?
+
+Porque en Forex hay muchísimo volumen OTC, over the counter.
+
+Es volumen que no ocurre de forma centralizada.
+
+Entonces, al final nosotros como traders
+
+profesionales, si nos queremos aprovechar de las herramientas de order flow,
+
+necesitamos operar mercados regulados y centralizados donde disponemos de toda la
+
+información.
+
+¿Qué pasa? Que si operamos un mercado donde parte de esa información no la
+
+estamos viendo, porque ocurre fuera de los exchange, como es el caso de Forex,
+
+esa información que vamos a estar viendo no es completa.
+
+¿Se puede utilizar? Sí, pero probablemente no va a ser tan
+
+eficiente
+
+como
+
+sí lo es en un activo donde todo ocurre de forma centralizada.
+
+Tenemos que entender que order flow, ya entraremos un poco más en detalle
+
+exactamente de qué es y demás,
+
+del action market theory y demás. Pero básicamente, order flow es análisis de
+
+información, con lo cual
+
+si nuestro análisis parte de información parcial o incompleta,
+
+probablemente ese análisis va a perder valor.
+
+Con lo cual, como digo,
+
+nos interesa operar mercados que ocurren de forma
+
+centralizada, como por ejemplo S&amp;P 500 o el Nasdaq, que es en lo que yo me
+
+especializo y lo que vamos a ver en esta formación, que son
+
+activos que
+
+operan en el CME, que es el Chicago Mercantile Exchange, o por ejemplo, también
+
+podríamos operar el crudo, el petróleo, que ocurre
+
+en el
+
+New York Mercantile Exchange. Y luego tenemos también el oro, por ejemplo,
+
+parte del volumen también es OTC, pero también se podría utilizar
+
+de forma decente con order flow, donde
+
+opera en el COMEX, si no recuerdo mal.
+
+Entonces, ese es el tipo de mercados que queremos operar.
+
+Probablemente ya lo sabéis, yo opero
+
+principalmente S&amp;P 500, ocasionalmente también el Nasdaq,
+
+y esa va a ser un poco la forma de proceder y lo que vamos a ir
+
+viendo en las operativas en directo.
+
+Entonces, ¿cuál es el objetivo de esta formación?
+
+Básicamente, el objetivo es que tú, como trader, entiendas
+
+los
+
+pilares de order flow, el porqué del order flow
+
+y que aprendas a utilizar las herramientas profesionales que nos ofrece esta forma
+
+de ver o entender el mercado.
+
+El objetivo es muy claro, que tú entiendas el mercado desde dentro, el
+
+porqué de cada movimiento. ¿Por qué se mueve el mercado realmente?
+
+La respuesta, ya te avanzo, es volumen.
+
+Todo parte del volumen en order flow y no es porque hay un
+
+algoritmo o por dos líneas que hayas dibujado en un gráfico,
+
+por un soporte, resistencia, un cruce de medias, no.
+
+Todo parte de volumen. Sin volumen, el mercado no se va a mover.
+
+Y lo bueno es que ese volumen lo podemos ver, lo podemos analizar con datos de
+
+forma objetiva.
+
+Esa es la principal ventaja que le veo yo a order flow,
+
+es que tenemos una forma de analizar o de
+
+ejecutar en este mercado de una forma mucho más objetiva que cualquier otra
+
+estrategia, porque estamos ejecutando en función a datos,
+
+es objetivo.
+
+De esta forma, probablemente, vas a poder mejorar la toma de decisiones a la
+
+hora de operar. ¿Por qué? Porque vamos a entender mucho mejor el porqué
+
+se está dando ese movimiento o por qué el precio se está moviendo de esa
+
+forma. Entonces, cuando estamos ejecutando desde la
+
+seguridad de entender lo que está ocurriendo, vamos a operar con
+
+mucha más tranquilidad, con mucha más convicción, y eso al final se va a traducir
+
+en mejores resultados.
+
+Y una de las principales ventajas que le veo también a order flow, que yo he visto
+
+por lo menos en el último año y medio, desde que transicioné de acción del
+
+precio a order flow, es la precisión,
+
+sobre todo la precisión, la precisión que podemos llegar a obtener con order flow
+
+me parece increíble. Y eso también se traduce en
+
+RRs, ratios de riesgo-beneficio mucho más largos, pero muchísimo.
+
+Y eso al final, también se traduce en mayor beneficio y mejores
+
+resultados.
+
+Entonces, antes de entrar un poco en tema formación, cómo
+
+va a funcionar y demás, quiero hacer un pequeño inciso.
+
+De hecho, hice un pequeño "post" aquí
+
+en la
+
+misma plataforma School:
+
+quién soy yo y por qué Adrianus Flow.
+
+Básicamente, soy un trader con casi siete años de experiencia, seis años y medio de
+
+experiencia en los mercados.
+
+Yo empecé con criptomonedas
+
+en 2019 y demás. Y poco a poco
+
+fui transicionando a un sistema de acción del precio muy basada en
+
+ICT, Smart Money,
+
+trading institucional y demás.
+
+Y la verdad que me fue bastante bien.
+
+Sí que es verdad que hasta 2023 básicamente estuve perdiendo dinero, pero fue a
+
+partir de 2023 que empecé a
+
+vivir de esto, ya pudiendo dejar mi trabajo y
+
+demás.Y sobre todo 2024 fue el año
+
+que di el gran salto.
+
+Todo esto lo hice con "price action", con acción del precio
+
+ICT.
+
+Me fue muy bien. No puedo decir
+
+que ICT no funciona.
+
+Sería deshonesto por mi parte
+
+decir que ICT no funciona.
+
+Creo que es una forma de ver el mercado
+
+algo diferente a lo que vamos a ver en "order flow", pero que bien
+
+aplicada, con una gestión de riesgo y demás, te puedes aprovechar
+
+bastante
+
+de
+
+esa forma de ver el mercado. Me fue muy bien con ICT, con acción del precio,
+
+pero donde yo he visto un
+
+siguiente nivel ha sido con "order flow".
+
+Básicamente, por un lado, por la precisión y por
+
+la tranquilidad cuando estoy operando, decir: "Estoy tranquilo,
+
+porque entiendo lo que está pasando o entiendo la probabilidad de qué lado
+
+está. Y si sale mal, entiendo por qué me sale mal".
+
+Muchas veces , con esa forma de operar que tenía yo,
+
+veía que el precio reaccionaba en zonas que digo: "¿Por
+
+qué reacciona aquí el precio? Porque si aquí no hay ningún 'order block', no hay
+
+ningún FVG, no hay nada. O ¿por qué cae el precio sin tomar ese máximo?
+
+Tampoco hay SMT". Habían cosas que siempre me dejaban la
+
+duda. Y
+
+es cuando poco a poco fui transicionando o me fui preguntando: "H****a, ¿y por
+
+qué?" Estuve en un punto en el que me iba bien,
+
+entendía, hacía dinero, bastante dinero, me iba
+
+bastante bien,
+
+pero tenía ese conflicto interno de decir: "H*****s,
+
+no
+
+acabo de entender el porqué de muchas cosas".
+
+Llevo con esa
+
+duda detrás de la oreja durante mucho tiempo y poco a poco fui conociendo a
+
+gente.
+
+De hecho, también conocí alguna empresa con la que hice alguna entrevista para
+
+manejar capital institucional y demás, y ahí me di cuenta de que
+
+realmente lo que operan los profesionales es "order flow".
+
+Entonces, desde ahí empecé a investigar, a estudiar, me hice varias formaciones de
+
+pago también,
+
+y
+
+me llamó mucho la atención.
+
+Hay una cosa con el "order flow" y es que una vez que entras a operar o empiezas a
+
+operar con "order flow", no vuelves atrás.
+
+Es
+
+otro mundo y cuando ya eres capaz de verlo de esa
+
+manera, donde estás viendo datos, básicamente, operar sin ello luego
+
+es como operar a ciegas. Entonces, esto probablemente lo veréis y os pasará lo
+
+mismo a vosotros.
+
+Y es un placer por mi parte ser esa persona que os pueda introducir, os
+
+pueda
+
+hacer este camino un poco mejor.
+
+Dicho esto, que me enrollo demasiado, vamos al lío.
+
+En cuanto a la formación,
+
+la duración va a ser de dos meses. Empezamos el día 6 de abril
+
+y terminaremos el día 5 de junio.
+
+Entonces, ¿qué incluye esta formación?
+
+Esta formación básicamente la podemos dividir en tres partes.
+
+Uno, lo que sería
+
+la formación teórica, los módulos teóricos, que los vamos a poder
+
+ver desde School.
+
+Todo esto va a ocurrir en School. Y ya aprovecho para mostraros un poco cómo
+
+funciona School.
+
+Esta es la página principal desde donde
+
+accedéis a la formación. Aquí tenéis los detalles.
+
+Ahora somos 29 personas.
+
+Si nos vamos aquí a Comunidad, Community,
+
+podemos ver diferentes "posts" que, aunque todavía no hemos empezado,
+
+he ido poniendo poco a poco.
+
+Probablemente conocéis Twitter,
+
+que es una plataforma de una red social que funciona en base a
+
+"posts". Yo puedo poner aquí lo que sea, por ejemplo, aviso legal y
+
+condiciones de uso.
+
+Aquí podéis comentar y demás. Incluso puedo poner también una
+
+encuesta.
+
+Es un poco como Twitter. No tenemos esa parte del chat y
+
+demás, que sí que vamos a tener en Discord, ahora iremos a ello.
+
+Pero aquí yo puedo ir comentando cositas, podéis comentar y
+
+demás. Luego tenemos la parte de Classroom, que aquí es donde va a
+
+estar en Order Flow Bootcamp. Aquí va a estar toda la parte teórica, todavía no hay
+
+nada.
+
+Todo va a estar aquí, inclusive los directos.
+
+Luego, si entramos en calendario, ya lo tenemos,
+
+veréis que tenemos
+
+todas las operativas,
+
+ya en cada uno de los días. Lo haremos de lunes a jueves,
+
+ahora también iremos a ello. Pero nosotros podemos clicar directamente,
+
+venirnos aquí a calendario, entramos aquí, el lunes 6 de
+
+abril. Entramos y aquí tenemos
+
+la operativa de New York y tenemos este enlace. Podemos entrar directamente aquí.
+
+Y aquí se nos abrirá lo que es la llamada,
+
+donde yo aquí pondré mi cámara, compartiré la pantalla y demás.
+
+También habrá un chat donde podremos comentar el mercado en tiempo real, preguntar
+
+dudas y demás. La verdad que va bastante bien y todo va a quedar
+
+grabado aquí.
+
+Abril,
+
+mayo, también de lunes a jueves, y luego en junio terminaremos el
+
+viernes
+
+5. Aquí podemos ver los miembros
+
+y ya está. Es bastante simple realmente la plataforma, pero
+
+creo que es una plataforma todo en uno que va bastante bien.
+
+Entonces, como os decía, por un lado tenemos la formación teórica que será en
+
+School.
+
+Luego tenemos,
+
+por otro lado, las operativas en directo, que también se van a dar en School.
+
+Como habéis visto ahí
+
+en el calendario. Y luego tenemos la parte del Discord, de la
+
+comunidad. Aquí
+
+vamos a tener esa parte que quizás falta en School, que es el chat, un poco más la
+
+interacción en el momento presente.
+
+Entonces,
+
+os voy a hacer una pequeña explicación de cómo he estructurado el Discord.
+
+Básicamente, tenemos esta parte de bienvenida donde os explico un poquito
+
+el funcionamiento. Lo estoy explicando un poquito ahora en vídeo, pero en
+
+escrito.
+
+Plataformas, también iremos en ello en profundidad
+
+ahoraOperativas en
+
+directo. Como os he dicho, vamos a operar de lunes a jueves, cuatro
+
+operativas a la semana. Lunes y miércoles serán la sesión de New York, más o menos
+
+de 15:15 a 17:30 hora española, y martes y jueves
+
+operaré Londres, más o menos de 8:45 o
+
+9:00 a 11:00,
+
+con flexibilidad. Dicho esto, durante
+
+las sesiones donde no haya operativa en directo, igualmente se irá comentando la
+
+sesión por el chat de Discord. Por ejemplo, el viernes, que no hay
+
+operativa en directo, también comentaré por Discord si veo algo, si tomo
+
+algún trade o lo que sea.
+
+Lo comentaré también por aquí. O por ejemplo, el lunes que operamos New York.
+
+Si opero Londres y veo algo de interés, tomo algún trade o lo que sea, también lo
+
+voy a comentar por aquí. Realmente son dos meses en los que voy a estar de forma
+
+intensiva mostrando absolutamente todo lo que hago en el mercado.
+
+Una cosa a tener en cuenta,
+
+os lo voy a leer, porque creo que es importante para
+
+poner el foco donde realmente importa en la formación.
+
+Y es que para mantener el foco en la formación teórica, operativas en directo y lo
+
+que viene a ser el trabajo puramente de trader, vamos a intentar
+
+concentrar la resolución de dudas y preguntas vía Discord
+
+después de la sesión de New York o el fin de semana.
+
+Es decir, durante el día voy a estar centrado en mi trading, en
+
+mercado y en
+
+daros la información que estoy viendo en el mercado a tiempo real.
+
+Todo lo que es resolución de dudas y preguntas, voy a dejarlo para el final del
+
+día, viernes quizá también, y fin de semana.
+
+Pero voy a intentar durante el día concentrarme en lo que es mi operativa,
+
+porque
+
+si no, lo que voy a hacer es perjudicar esa parte que realmente es la que tiene
+
+mayor valor y la que yo os quiero aportar a vosotros.
+
+Al final, como trader, muchas veces tienes que intentar
+
+de alguna forma que tu vida gire un poco en
+
+torno a eso.
+
+Entonces, si yo pongo el foco en resolución de preguntas o
+
+en cualquier otro tipo de actividad,
+
+el foco se me va a ir del trading, que es lo que realmente me importa.
+
+Por eso os digo que vosotros podéis preguntar
+
+cualquier duda que tengáis y demás, la podéis hacer y yo, al final del
+
+día, la responderé. Si puedo durante el día porque tengo un momento
+
+libre, que voy a tomar un café o lo que sea, perfecto, pero no quiero
+
+comprometerme en ese sentido de decir: "Mira, si me preguntas algo a las
+
+9:00, igual no te respondo hasta las 7:00 p.m".
+
+Y que no haya ningún tipo de problema por eso.
+
+Y aquí, como entenderéis, antes de formador soy trader y no dispongo de un
+
+equipo que me lleve la comunidad tampoco, lo llevo todo yo íntegramente.
+
+De manera que durante las horas operativas voy a mantener el foco en lo que está
+
+pasando en el mercado y aportar mi punto de vista y dejar la resolución de dudas
+
+cuando haya terminado el día o el fin de semana.
+
+Entonces, dicho esto, también tengo un canal aquí de normas donde,
+
+por ejemplo, os digo el tema de aviso legal y condiciones de
+
+uso,
+
+lo que queda totalmente prohibido compartirlo y demás. Guía del servidor.
+
+Aquí os hago una pequeña explicación de cada uno de los canales.
+
+Luego tenemos aquí una sección de comunidad,
+
+donde tenemos el chat general, donde podemos hablar de cualquier tema aquí, por la
+
+mañana, buenos días o lo que sea, o cualquier tema, lo hablamos en chat general.
+
+Y sí que me gustaría aquí hacer una distinción y separar entre chat general y
+
+dudas. Me gustaría que cualquier duda se ponga aquí para que yo,
+
+cuando tenga mi momento libre, me vaya a dudas y me ponga directamente a
+
+responder todas las dudas. Aquí en esta sección de
+
+trades,
+
+la idea es que vosotros podáis compartir vuestros trades tomados y que
+
+compartamos
+
+ideas con el resto de miembros de la formación.
+
+Tenemos también un canal de macroeconomía donde voy a tener un
+
+analista macro, experto, se dedica a esto, para que él nos vaya
+
+dando información sobre noticias, movimientos
+
+de macroeconomía y demás que pueden tener un impacto en nuestra operativa.
+
+Tenemos también un canal de logros para que compartáis cualquier tipo de
+
+logro en cuentas de fondeo, retiros, lo que sea.
+
+Bienvenido es. Y tenemos también un canal de School donde se
+
+anunciará cualquier novedad sobre School,
+
+la plataforma que os he mostrado anteriormente.
+
+Luego tenemos también una sección de operativa diaria,
+
+donde básicamente aquí podemos ir hablando durante la sesión
+
+de Londres o sesión de New York,
+
+sobre todo en esas operativas en las que no tenemos operativa en directo.
+
+Por ejemplo, el lunes que operamos New York,
+
+si yo voy a hacer algo en Londres, lo comentaré por aquí.
+
+O por ejemplo, el viernes, que tampoco hay operativa en directo,
+
+estaremos operando por aquí.
+
+Luego tenemos una sección de order flow.
+
+Como veis aquí tenemos bookmap, deep charts, plantillas.
+
+Yo también os voy a compartir mis plantillas, también lo voy a dejar abierto para
+
+que cualquier persona,
+
+si quiere, pueda compartir sus plantillas de las diferentes plataformas y
+
+demás. Una sección también de indicadores para hablar
+
+únicamente de indicadores, configuraciones, filtros y demás.
+
+Y tenemos también una sección de material adicional.
+
+Aquí os voy a colgar unos documentos muy interesantes para el trabajo
+
+más psicológico de cada uno.
+
+Y bueno, información que os puede venir bastante bien.
+
+Y luego tenemos un canal de Zentra.
+
+Os quiero hacer un vídeo exclusivamente de esto.
+
+Zentra es el journal
+
+automatizado que estoy haciendo con
+
+un socio mío,
+
+que creo que os va a flipar. No hay nada en el mercado
+
+similar, os lo prometo, mucho mejor que TradeZella, mucho mejor que cualquier
+
+journal que conozcáis.
+
+De hecho, mi socio, que es
+
+programador y el que está haciendo la parte técnica y demás, y yo me
+
+estoy encargando un poco de la parte del trader.
+
+Yo que he utilizado un montón de journals,
+
+quiero hacer un journal que realmente
+
+me aporte información valiosa como trader.
+
+Creo que os va a flipar. Os haré un vídeo sobre ello y
+
+vosotros, como miembros de esta formación, vais a tener acceso gratuito,
+
+obviamente, a la versión beta. Todavía no está en venta, no se
+
+vende, no está en el mercado, no cualquier persona puede acceder a esto, pero
+
+vosotros, como miembros de Adrianus Flow,
+
+tenéis acceso a la versión beta del journal.
+
+Esto yo también os lo iré mostrando día a día o semana a semana, cómo utilizo yo
+
+Zentra, mi journal de trades y demás, para que lo
+
+vayáis viendo. Pero creo de verdad que os va a gustar muchísimo, porque
+
+es increíble, espectacular. Entonces, esto
+
+es un poco todo en cuanto a Discord, también ya os he comentado
+
+tema School, creo que no me estoy dejando nada.
+
+Y eso sería todo. En cuanto a primer vídeo de bienvenida y demás.
+
+De nuevo, bienvenidos a Adrianus Flow.
+
+Es un placer acompañaros en esta aventura de order
+
+flow y ya veréis que creo que os va a molar.
+
+Creo que os va a molar, va a estar muy chulo.
+
+Le vamos a dar mucha caña y espero no decepcionaros.
+
+Así que nos vemos en el siguiente vídeo. Chao chao.
+
+
+--- FIN: 1.1 Introduccion y objetivos.txt ---
+
+
+--- INICIO: 1.2 Que plataformas necesitas y cuanto cuestan.txt ---
+
+Vamos a hablar de plataformas y costes.
+
+Plataformas o herramientas que necesitamos para la formación o, por lo
+
+menos, que yo recomiendo para operar como yo opero.
+
+Y cuáles son los costes.
+
+Básicamente, ya lo estáis viendo aquí, pero os voy a hacer el
+
+desglose y os voy a explicar alguna forma de reducir
+
+costes.
+
+Básicamente, yo utilizo dos plataformas.
+
+Por un lado, Deep Charts, que es mi plataforma principal, y por otro lado, Bookmap,
+
+que la utilizo de forma un poco más secundaria, pero también para mí superútil.
+
+Tanto Deep Charts como Bookmap para mí es el combo perfecto.
+
+TradingView lo vamos a ir dejando bastante de lado.
+
+Si bien es cierto que TradingView es una plataforma que ya conocéis todos
+
+y que va realmente bien para todo lo que es chartear, dibujar, marcar
+
+zonas,
+
+escribir, hacer dibujos
+
+para comparar. Es
+
+una plataforma muy "user-friendly" que
+
+funciona muy bien, pero si queremos utilizar
+
+order flow como nuestra operativa base,
+
+tenemos que migrar a una plataforma
+
+que se especialice en order flow, porque
+
+necesitamos ese tipo de información que en TradingView no tenemos para poder
+
+utilizar herramientas como los big trades,
+
+footprint y demás,
+
+que en TradingView no se puede. Algunos te dirán que sí que se puede, pero la
+
+realidad es que no, porque la información que nos puede dar TradingView
+
+con, por ejemplo, footprint, no es del todo precisa.
+
+Porque no tiene la data por tick, sino que es otro tipo de data
+
+por volumen y demás.
+
+Con lo cual no nos sirve TradingView para operar order flow. Eso tenerlo muy claro.
+
+Si operamos perfiles de volumen, cualquier
+
+herramienta de volumen que apliquemos no va a ser tan precisa como sí lo va
+
+a ser en una plataforma de order flow, como por ejemplo Deep Charts.
+
+Es cierto que TradingView va muy bien, si os fijáis, por ejemplo, para cambiar de
+
+activo a activo. Estoy en el S&amp;P 500 ahora, cambio al Nasdaq, es
+
+prácticamente inmediato. Cambio al crudo, también es inmediato.
+
+O si estoy en cuatro horas, quiero pasar a 15 minutos, también, superrápido el
+
+cambio. Esto es algo que con plataformas de order flow suele tardar un poco,
+
+porque
+
+la plataforma tiene que cargar cierta data que aquí no tenemos.
+
+Es una data que cuesta cargarla, para cambiar de
+
+temporalidad de 15 minutos a cinco minutos, tenemos que esperar
+
+10 segundos o 15 segundos, podría ser.
+
+Inicialmente, creo que es el paso que más puede
+
+costar al cambiar de TradingView a una plataforma más profesional,
+
+el tiempo de carga. Creo que es un poco engorroso inicialmente,
+
+pero al final creo que te acostumbras.
+
+Hay maneras de tener diferentes gráficos y demás y no tener que estar cambiando ni
+
+activo ni
+
+temporalidades, ni nada. Y al final, creo que te acostumbras y cuando
+
+empiezas a utilizar una plataforma como Deep Charts, que sería esto de aquí,
+
+en mi caso suelo utilizar esta configuración, la verdad que luego
+
+no vuelves atrás.
+
+Cuando empiezas a operar con esto, volver a esto es
+
+prácticamente
+
+imposible, es como operar a ciegas. Te falta información aquí, ya lo veréis.
+
+Pero sí que es verdad que esos primeros días y semanas de coger la plataforma, ver
+
+cómo funciona y demás, tienes que pasar por el proceso, pero una vez lo coges ya,
+
+veréis que realmente es una plataforma que funciona muy bien.
+
+Esa es la configuración que yo suelo utilizar.
+
+De todas formas, os quiero hacer un vídeo explicando paso a paso cómo utilizarlo,
+
+qué configuración utilizo yo,
+
+cómo conectar las cuentas, cómo ejecutar, cómo operar aquí dentro.
+
+Todo este tipo de cosas lo veremos en profundidad, paso a paso.
+
+No es el
+
+vídeo de hoy, simplemente hoy quiero entrar en plataformas y costes que tenemos que
+
+tener en cuenta.
+
+Pero esto sería Deep Charts y luego Bookmap sería esto de aquí.
+
+Seguramente algunos ya lo habéis visto alguna vez, que yo lo he mostrado mucho en
+
+historias de Instagram.
+
+Básicamente es un mapa de calor donde vemos dónde está la liquidez y luego tenemos
+
+estas burbujas de color rojo y verde,
+
+que son las órdenes agresivas a mercado.
+
+Lo mismo, ya haré un vídeo sobre esto explicando paso a
+
+paso cómo utilizarlo, cómo configurarlo,
+
+cómo nos podemos aprovechar de ello.
+
+Pero básicamente estas son las dos plataformas que yo utilizo, Deep Charts
+
+y Bookmap. Entonces, vamos a lo que realmente nos importa en este
+
+vídeo, el tema costes.
+
+Tenemos dos tipos de costes: el
+
+coste de la plataforma y el coste de la data.
+
+Al final, cuando operamos con order flow, tenemos que contar con
+
+un coste, que es el coste de la data, que es el que nos permite utilizar las
+
+herramientas de order flow. Por ejemplo, los big trades, footprint o
+
+cualquier tipo de herramienta que vayamos a utilizar con el flujo de órdenes.
+
+Esta data, como veis, tiene un coste aproximado
+
+normalmente en todas las plataformas entre 30 y 40 dólares,
+
+depende un poco de la data y demás.
+
+Tenemos
+
+normalmente dos tipos de data, que son las más utilizadas y más
+
+conocidas, que son, por un lado, DX Feed
+
+y, por otro lado, Rithmic.
+
+Estos dos son los tipos de data feed
+
+que podemos utilizar. El coste suele ser similar.
+
+Rithmic es un poco más caro, ahora lo veremos.
+
+DX Feed suele rondar estos precios.
+
+También decir, ahora que se me ha venido a la mente,
+
+Deep Charts es una plataforma de order flow que
+
+puede ser sustituida o es lo equivalente a
+
+Sierra
+
+Chart, o también, por ejemplo, ATAS o
+
+MotiveWave. Hay varias.
+
+Pero estas son algunas de las plataformas que también se podrían utilizar sin
+
+problema.
+
+En lugar de Deepcharts. Son plataformas de order
+
+flow equivalentes cuya función es prácticamente la
+
+misma, cambia un poco la interfaz y la manera de visualizarlo.
+
+Yo personalmente me quedo con Deepcharts, porque
+
+me formé con Fabio Valentini, el fundador de Deepcharts,
+
+es la que empecé a utilizar y creo que la
+
+interfaz es un poco más moderna. Sierra y Atlas son un poco más rollo Windows
+
+98, un poco más antiguas,
+
+y yo me siento muy cómodo con Deepcharts.
+
+Dicho eso,
+
+como digo, dos tipos de data, DX Feed y Rithmic.
+
+Luego tenemos el coste de la plataforma, por un lado, y el coste de la
+
+data.
+
+Podemos contar
+
+con un coste de la plataforma de Deepcharts de $99
+
+y Bookmap de también unos $99.
+
+Luego la data, como os digo, en Deepcharts,
+
+en el caso de DX Feed, lo vamos a ver ahora, es $39 y en
+
+Bookmap, en el caso del DX Feed para CME,
+
+son $37.
+
+Si hacemos la suma de esto, en total son unos
+
+$270
+
+aproximadamente.
+
+Esto sería el coste total en caso de que decidiésemos utilizar las dos plataformas
+
+con los dos tipos de data. Ahora bien, quizá
+
+inicialmente, creo que Bookmap puede ser una
+
+opción que podríamos marcar como opcional.
+
+Porque Deepcharts va a ser la plataforma principal a la hora de
+
+operar, analizar y ejecutar. Bookmap es un más a más.
+
+Si te lo puedes permitir, perfecto.
+
+Yo lo mostraré también, lo seguiré comentando.
+
+Pero
+
+esto también lo podemos encontrar en YouTube.
+
+Al final, hay vídeos en YouTube, si ponemos Bookmap
+
+SP500, por ejemplo, nos sale en vivo el Bookmap del SP500 y lo
+
+podemos ir siguiendo
+
+sin tener que pagar la plataforma.
+
+Con lo cual,
+
+a la hora de iniciarnos en order flow, creo, que es
+
+lo que yo hice, que esta es la mejor opción.
+
+Utilizar Bookmap mediante YouTube.
+
+Simplemente os lo voy a mostrar.
+
+Bookmap
+
+Live SP500.
+
+Ahora estamos a domingo, el mercado está cerrado, pero si entramos en
+
+uno de los canales, hay varios, y aquí veremos
+
+lo que os he mostrado yo antes. Con lo cual podéis tener YouTube abierto y ver
+
+esto. Creo que es la opción, siendo sincero, más
+
+económica y realmente eficiente,
+
+sobre todo si estamos empezando.
+
+Con esto quiero decir que estos $136
+
+nos los podemos ahorrar. Creo que por
+
+lo menos
+
+estos $138 de
+
+Deepcharts, incluyendo la data, sí que es una
+
+inversión probablemente necesaria.
+
+Esa sí que es 100 % necesaria. Lo que sería únicamente Deepcharts.
+
+Deepcharts junto con la data son estos
+
+$138.
+
+Ahora bien, hay otra forma de utilizar Deepcharts únicamente
+
+por $35,
+
+que es la siguiente.
+
+Es mediante una empresa de fondeo.
+
+De hecho, os quiero hacer un vídeo con Biel, que es un
+
+alumno que tuve en el pasado
+
+que utiliza Deepcharts de esta manera, y quiero que él nos
+
+lo muestre y nos haga un vídeo. Y lo vamos a ver con él.
+
+Pero básicamente, en lo que consiste es en tener una
+
+cuenta de Blue Guardian.
+
+Variante Guardian, que es la más barata,
+
+$50.000, que es lo más pequeño, y en
+
+el bróker debemos elegir Bolsis, que
+
+estaría directamente relacionado con Deepcharts,
+
+y de esta forma podemos utilizar directamente
+
+Deepcharts sin ni siquiera pagar
+
+por la plataforma Deepcharts. Nuestro
+
+coste total sería de $35,
+
+sin necesidad de pagar data, sin necesidad de pagar plataformas,
+
+únicamente $35. Ahora bien, tenemos funciones limitadas.
+
+Por ejemplo, el tema de los big trades está limitado.
+
+Hay alguna forma de hacerlo más o menos similar, pero tenemos algunas funciones
+
+que están limitadas. Pero también puede ser una opción que dices: "Estoy empezando
+
+con order flow, quiero ver un poquito cómo funciona la plataforma y demás sin
+
+invertir dinero".
+
+Esta es una opción de utilizar la plataforma, aprender a
+
+utilizarla y además me hago un challenge, que quizá lo paso y empiezo
+
+a operar capital y puedo obtener un retiro.
+
+Con lo cual esta es la opción más económica.
+
+Vamos a volver a ir paso a paso.
+
+Esto es
+
+Deepcharts.
+
+Cuando se me conecta y se me desconecta.
+
+Perdonad, os mostraré
+
+esto de aquí. A ver, un segundito.
+
+Esto es un tema que se me está yendo el Internet
+
+o algo por el estilo.
+
+Perdonad. Lo voy a quitar y ya está.
+
+Entonces vamos a ir paso a paso.
+
+De nuevo, tendríamos un coste total si utilizamos tanto Deepcharts como
+
+Bookmap con la respectiva data de aproximadamente
+
+$270.
+
+Deepcharts, venimos aquí, que es la página principal.
+
+De hecho, aquí estoy ya logueado en mi cuenta personal de
+
+Deepcharts.
+
+Vemos
+
+aquí, en "Review", que tenemos
+
+estaEstas tres formas de
+
+pagarlo, anualmente, seis meses o tres meses.
+
+Anualmente sale al mes por $99, es la opción más económica, pero
+
+tenemos estos tres packs.
+
+Luego tenemos, en el caso de la data, como veis aquí abajo,
+
+yo tengo DX Feed, que me sale por $39 más VAT.
+
+En mi caso no pago nada porque vivo en Dubai.
+
+Luego tenemos la opción de Rithmic, que es
+
+algo más cara. Parte de $57.
+
+Pero con DX Feed tenéis de sobra.
+
+Esto en cuanto a DeepCharts. Luego, en cuanto a Bookmap, esta es la plataforma de
+
+Bookmap, podéis ir aquí, descargaros la aplicación y demás.
+
+Estamos en mi perfil de Bookmap, que desde aquí os lo podéis
+
+descargar. Esto no lo he dicho antes, pero Bookmap está disponible tanto para
+
+Windows como Mac y Linux. Sin embargo, DeepCharts, a día de hoy,
+
+creo que solo está todavía únicamente para Windows.
+
+De hecho, esto os lo puse en
+
+Discord también, a tener en cuenta.
+
+Importante para usuarios iOS, para la plataforma de order flow es necesario un
+
+sistema operativo de Windows. En caso de utilizar MacBook, es
+
+necesario descargar Parallels y mediante este acceder
+
+a escritorio Windows en MacBook y con ello poder utilizar DeepCharts.
+
+Pero se necesita Parallels, que es como un escritorio remoto, en el que utilizamos
+
+el escritorio de Windows y se puede utilizar desde MacBook.
+
+Yo estuve mucho tiempo también utilizándolo en MacBook, no hay ningún tipo de
+
+problema, pero solo que lo sepáis.
+
+Bookmap sí se puede, DeepCharts tiene que estar cerca.
+
+Yo recuerdo que me dijeron entre Q1 y Q2.
+
+Puede ser que en los próximos días ya esté listo.
+
+Sé que estaban en ello. Hay bastante gente que lo pedía para que estuviera también
+
+en MacBook.
+
+Volvemos a Bookmap. Nos vamos a ir aquí a mi perfil para que veáis el tema de las
+
+suscripciones.
+
+Aquí vamos a ver las suscripciones que tengo yo ahora mismo activas.
+
+Tengo esta de aquí del Eurex, que actualmente,
+
+para la formación no la voy a utilizar, con lo cual la he cancelado,
+
+porque se me iba a renovar ya este mes.
+
+Me gusta bastante operar índices
+
+europeos, tanto el DAX como
+
+el Eurostocks en Londres, pero por ahora lo voy a descartar, porque no quiero
+
+liar más activos con la formación, con lo cual he
+
+decidido cancelarla y me voy a centrar únicamente en S&amp;P 500 y el
+
+Nasdaq. ¿Qué es lo que necesitáis?
+
+Necesitamos el Global Plus anual, que es el Bookmap.
+
+Cuando le demos a comprar Bookmap, hay tres tipos
+
+de Bookmap. Este es el más caro,
+
+entre comillas, que es el coste que os he puesto aquí.
+
+Los $99 al mes.
+
+Perdón, aquí.
+
+Luego tenemos la data para el CME.
+
+Yo actualmente tengo el Bookmap Data, porque durante un tiempo también he estado
+
+operando activos fuera del CME, como el petróleo, que está en
+
+el New York Mercantile Exchange, y luego el
+
+Comex,
+
+para el oro también, pero la verdad que creo que lo voy a cancelar.
+
+No lo voy a hacer ahora, porque me va a obligar a
+
+comprar otra data, pero la voy a cancelar y voy a comprar la que
+
+tenéis que tener vosotros también.
+
+De hecho, vamos a entrar aquí en Add Subscriptions
+
+para que veáis qué es lo que necesitáis.
+
+Que os lo he puesto aquí. Tenemos en Bookmap el Global Plus
+
+Annual. En cuanto a la plataforma, en cuanto a la data, DX Feed CME
+
+Futures Full Depth Data.
+
+Nos vamos a venir aquí. Aquí tenemos todos los diferentes tipos
+
+de data, DX Feed, Bookmap Data,
+
+Multibook y demás.
+
+Vamos a entrar en concreto a DX Feed
+
+Futures Data,
+
+que va a ser esta de aquí. Entraremos en esta de aquí.
+
+La de $36 cada mes.
+
+Simplemente, clicamos aquí. Y
+
+vamos a comprar.
+
+Un segundo.
+
+Ahora no me deja
+
+ir a la siguiente pestaña. Bueno, que no lo veía. Perdón. Next.
+
+Hacemos la compra directamente desde aquí y
+
+ya tendremos la data en Bookmap. Bueno, son
+
+datos personales.
+
+Y ya está. Eso es todo lo que tenemos que tener en cuenta.
+
+Estos son los costes con todas las variantes que
+
+os he comentado. El coste total, pagándolo todo, es de
+
+$270. Ahora, necesario a día de hoy,
+
+para mí, 100 % DeepCharts. Bookmap, como os digo,
+
+opcional. Luego, para DeepCharts
+
+tenemos
+
+varias opciones: una, pagamos la plataforma y pagamos el data feed.
+
+Dos, pagamos
+
+únicamente DeepCharts.
+
+Esto no os lo he comentado. Se me ha olvidado darme esta opción.
+
+DeepCharts
+
+con la data son $138.
+
+Luego tenemos la opción de utilizar DeepCharts con Blue
+
+Guardian, que nos sale por $35.
+
+Y luego tenemos otra opción, que me he olvidado de
+
+ponerla aquí, justo lo estaba pensando y de ahí que entrara en ese colapso
+
+mental. Perdonad.
+
+Lo que quería poner
+
+esCon
+
+Blue Guardian
+
+nos sale por $35
+
+y luego tenemos la opción de utilizar
+
+DeepCharts con una
+
+empresa de fondeo en la cual utilizamos la data de Rithmic.
+
+Que es lo que me faltaba por aquí escribiros, se me ha pasado totalmente.
+
+Tenemos una tercera opción aquí, solo DeepCharts.
+
+Tenemos DeepCharts con empresa fondeo,
+
+data
+
+Rithmic. Y esto lo que nos va a costar será los $99
+
+de la plataforma de DeepCharts más
+
+el coste de la empresa del
+
+examen de la cuenta de fondeo.
+
+De esta forma también nos evitamos pagar el data feed.
+
+Si nosotros compramos
+
+un challenge, por ejemplo, de Lucid Trading,
+
+como es mi caso, tengo varios de Lucid,
+
+con la data de Rithmic,
+
+no necesitamos pagar el data feed de DXFeed o Rithmic, porque la
+
+empresa de fondeo como tal ya nos provee la data de Rithmic,
+
+con lo cual nos ahorramos ese coste.
+
+De hecho, lo quiero poner
+
+en segundo nivel para
+
+poner
+
+ordenado por costes. Vamos a hacer las cosas bien, que
+
+quede todo bien claro.
+
+Estas son las tres opciones: número uno, pago de DeepCharts, plataforma con
+
+data feed, $138. Número dos, DeepCharts con
+
+una cuenta de fondeo con la data de Rithmic,
+
+serán los $99 más el coste del examen de fondeo.
+
+Puede ser $50, $60, lo que sea,
+
+pero sin necesidad de pagar el
+
+data feed.
+
+Con lo cual aquí el coste de plataforma como tal es simplemente los $99.
+
+Y luego tenemos la opción de utilizar DeepCharts con una
+
+cuenta de fondeo de Blue Guardian, que es la opción más económica.
+
+Sin embargo, aquí tenemos que tener en cuenta que tenemos funciones
+
+limitadas. Pero puede ser una primera buena opción para iniciarse
+
+en la plataforma.
+
+Así que espero que haya quedado claro.
+
+Perdonad esta confusión en el último punto con DeepCharts, pero
+
+creo que ha quedado bastante claro.
+
+Tenemos la opción de hacer el
+
+pago total, que nos quedaría por $270.
+
+Luego, si decidimos obviar Bookmap o utilizar la opción
+
+de YouTube,
+
+también nos
+
+obviaremos este coste.
+
+Y luego, en
+
+el caso de DeepCharts, tenemos la opción de utilizar
+
+DeepCharts con el data feed. Por ejemplo, para una cuenta personal
+
+es inevitable.
+
+Luego tenemos la opción de DeepCharts con una cuenta de fondeo con data Rithmic,
+
+donde básicamente con el coste del examen de la cuenta
+
+de fondeo ya nos entra la data, con lo cual solo hay que pagar
+
+la plataforma. Y luego tenemos la opción de DeepCharts con Blue
+
+Guardian,
+
+que es la opción más económica.
+
+Y como os digo, ya hará un vídeo más en profundidad sobre cómo
+
+utilizar cada una de las plataformas,
+
+funciones, configuraciones, iremos paso a paso en todo esto.
+
+Así que nos vemos en el siguiente vídeo.
+
+
+--- FIN: 1.2 Que plataformas necesitas y cuanto cuestan.txt ---
+

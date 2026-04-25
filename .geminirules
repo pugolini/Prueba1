@@ -1,33 +1,28 @@
-# Hybrid Vibe Coding System Rules
 # Target: Antigravity Assistant & Claude Code CLI
 
 ## 1. Hybrid Model Routing (MANDATORY)
-- **Architect (Cloud/Claude)**: Use primarily for project mapping, complex logic, architectural decisions, and final review of code.
-- **Worker (Local/Ollama - qwen-obrero)**: Use for all "grunt work" including boilerplate generation, unit tests creation, verbose documentation, and repetitive refactoring (e.g., adding logs, error handling).
+- **Architect (Cloud/Claude)**: Use for architectural decisions, complex logic mapping, and final verification.
+- **Worker (Local/Ollama)**: Use for all "grunt work": boilerplate, unit tests, documentation, and repetitive refactors.
+- **Protocol**: Always identify if a task is delegatable to the local sub-agent (`ollama run qwen-obrero` or equivalent).
 
-## 2. Interaction Protocol
-- When the USER requests code changes, ALWAYS first identify if the task can be delegated to the local sub-agent.
-- If delegatable, use `ollama run qwen-obrero` or the Ollama API at `http://localhost:11434` to generate the code block.
-- ALWAYS review the local output for architectural coherence and syntax correctness before persistence.
+## 2. Efficiency & Token Saving (Obrero Protocals)
+- **Pre-Análisis de Consistencia**: Antes de proponer cambios, el Obrero debe buscar patrones existentes (`grep`) para asegurar que la solución sea coherente con el resto del búnker.
+- **Filtrado de Mensajes de Error**: NUNCA enviar stacks de error de más de 50 líneas a la nube sin antes ser resumidos por el Obrero Local (`ollama run qwen-obrero`).
+- **Context Management**: Usar el Obrero para generar resúmenes de archivos de >10KB antes de alimentar al Architect.
+- **Incremental Edits**: Preferir `replace_file_content` sobre reescrituras completas.
 
-## 3. Hardware Optimization
-- Maximize GPU utilization on the NVIDIA RTX 4060 Ti 8GB.
-- Use `OLLAMA_KV_CACHE_TYPE=q4_0` and `num_ctx=16384` for the local worker to handle medium context files efficiently.
-- Avoid unnecessary cloud token consumption by pre-summarizing files locally if needed.
+## 3. Hardware & Local Worker Optimization
+- **GPU Acceleration**: Maximize utilization of the local GPU (NVIDIA RTX series) and VRAM.
+- **Local Context**: Configure `num_ctx=16384` (minimum) for the local worker to handle project files efficiently.
 
-## 4. Developer Experience
-- Maintain transparency: explicitly state "[Obrero Local: Generando código...]" when using Ollama.
-- Speed is key: prefer the local model's lower latency for interactive drafting tasks.
+## 4. Orchestration: Equipo Pugobot (MANDATORY)
+- **Centralized Tracking**: ALL work must be tracked in `.antigravity/team/tasks.json`.
+- **Gatekeeping**: No implementation without an `APPROVED` plan in the mailbox or tasks system.
+- **Task Lifecycle**: Update status to `IN_PROGRESS` when starting and `COMPLETED` before ending the turn.
 
-## 5. Orchestration (Equipo Pugobot) - MANDATORY
-- For ANY non-trivial task, Antigravity MUST act as **Pugobot (Director)** and/o **Arquitecto**.
-- All work must be tracked in `.antigravity/team/tasks.json`.
-- **Gatekeeping**: No code implementation is allowed without an `APPROVED` plan in the corresponding agent's mailbox or `tasks.json`.
-- **Hybrid Assignment**:
-    - **Cloud**: Logic mapping, Architecture, Final Review.
-    - **Obrero (Local)**: Boilerplate, repetitive tasks, unit testing, and documentation.
-- Antes de finalizar una tarea, el agente debe actualizar el estado en `tasks.json` a `COMPLETED`.
+## 5. Idioma y Localización
+- **Comunicación**: Todas las interacciones, planes, tareas y documentación (archivos .md) **DEBEN** estar en **ESPAÑOL**.
+- **Pensamiento**: El proceso de razonamiento interno (<thought>) también debe ser en **ESPAÑOL**.
 
-## 6. Idioma y Localización (MANDATORIO)
-- Todas las comunicaciones con el usuario, documentación (incluyendo archivos `.md`), planes de implementación y nombres de tareas en `task.md` **DEBEN** ser en **ESPAÑOL**.
-- Los bloques de pensamiento interno (`<thought>`) también deben redactarse en **ESPAÑOL** para mantener la coherencia total del proyecto.
+## 6. Blindaje de Calidad
+- Consultar siempre `AGENTS.md` para conocer las reglas del stack tecnológico actual (Next.js, Python, C, etc.).
