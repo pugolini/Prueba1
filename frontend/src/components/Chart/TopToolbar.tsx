@@ -30,7 +30,9 @@ const TopToolbar: React.FC = () => {
     heatmapFilter,
     setHeatmapFilter,
     minTradeSize,
-    setMinTradeSize
+    setMinTradeSize,
+    showDeltaAxis,
+    setShowDeltaAxis
   } = useStore();
   
   const tfList = ['1m', '5m', '15m', '30m', '1h', '4h', '1d'];
@@ -214,6 +216,22 @@ const TopToolbar: React.FC = () => {
               )}
               {useStore.getState().isSessionZonesEnabled && <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />}
             </div>
+          </button>
+
+          <button 
+            className={`w-full text-left px-4 py-2 text-[13px] flex items-center justify-between hover:bg-[#2a2e39] ${showDeltaAxis ? 'text-orange-400 font-bold' : 'text-[#d1d4dc]'}`}
+            onClick={() => setShowDeltaAxis(!showDeltaAxis)}
+          >
+            <span>📊 Delta Horizontal (Eje)</span>
+            {showDeltaAxis && <div className="w-1.5 h-1.5 rounded-full bg-orange-400 shadow-[0_0_8px_rgba(251,146,60,0.6)]" />}
+          </button>
+
+          <button 
+            className={`w-full text-left px-4 py-2 text-[13px] flex items-center justify-between hover:bg-[#2a2e39] ${useStore.getState().showPriceLabels ? 'text-orange-400 font-bold' : 'text-[#d1d4dc]'}`}
+            onClick={() => useStore.getState().setShowPriceLabels(!useStore.getState().showPriceLabels)}
+          >
+            <span>🏷️ Mostrar Etiquetas</span>
+            {useStore.getState().showPriceLabels && <div className="w-1.5 h-1.5 rounded-full bg-orange-400" />}
           </button>
 
           <div className="h-[1px] bg-[#363a45] my-1 opacity-50" />

@@ -24,6 +24,8 @@ import { FibonacciPrimitive } from './plugins/FibonacciPrimitive';
 import { PositionPrimitive } from './plugins/PositionPrimitive';
 import { DrawingToolbar } from './DrawingToolbar';
 import { AnchoredVwapPrimitive } from './plugins/AnchoredVwapPrimitive';
+import { DeltaTotalsPrimitive } from './plugins/DeltaTotalsPrimitive';
+import DeltaLevelsOverlay from './DeltaLevelsOverlay';
 
 const ChartComponent: React.FC = () => {
     const chartContainerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +49,7 @@ const ChartComponent: React.FC = () => {
     const indicatorMarkersRef = useRef<any[]>([]);
     const lastDeltaUpdateRef = useRef<number>(0);
     const priceLinesRef = useRef<Record<string, any[]>>({});
+    const deltaTotalsPrimitiveRef = useRef<DeltaTotalsPrimitive>(new DeltaTotalsPrimitive());
     const [draggingLine, setDraggingLine] = useState<{ ticket: number, type: string, isOrder: boolean } | null>(null);
     const [draggingHandle, setDraggingHandle] = useState<{ id: string, pointIndex: number } | null>(null);
     const [draggingDrawingBody, setDraggingDrawingBody] = useState<{ id: string, startX: number, startY: number, originalPoints: {time: number, price: number}[] } | null>(null);
@@ -55,6 +58,7 @@ const ChartComponent: React.FC = () => {
     const [mainPaneHeight, setMainPaneHeight] = useState(70);
     const [isResizing, setIsResizing] = useState(false);
     const [showDetailedMarkers, setShowDetailedMarkers] = useState(true);
+    const [isChartReady, setIsChartReady] = useState(false);
 
     const symbol         = useStore(s => s.symbol);
     const timeframe      = useStore(s => s.timeframe);
@@ -85,6 +89,8 @@ const ChartComponent: React.FC = () => {
     const pendingLimitPrice      = useStore(s => s.pendingLimitPrice);
     const isPendingLimitDragged  = useStore(s => s.isPendingLimitDragged);
     const strategySignals        = useStore(s => s.strategySignals);
+    const sessionZonesData       = useStore(s => s.sessionZonesData);
+    const showPriceLabels        = useStore(s => s.showPriceLabels);
 
     const {
         setData, setChartRange, setDefaultLot, setActiveTool,
@@ -189,7 +195,7 @@ const ChartComponent: React.FC = () => {
             wickUpColor: '#000000',
             wickDownColor: '#000000',
             priceLineColor: '#757575', // Etiqueta de precio gris
-            lastValueVisible: true,
+            lastValueVisible: useStore.getState().showPriceLabels,
         });
         
         const diamondPrimitive = new DiamondPrimitive();
@@ -197,6 +203,10 @@ const ChartComponent: React.FC = () => {
         diamondPrimitiveRef.current = diamondPrimitive;
 
         chartRef.current = chart;
+        // Adjuntar el motor de totales Delta mejorado
+        deltaTotalsPrimitiveRef.current.setDataRef(dataRef);
+        series.attachPrimitive(deltaTotalsPrimitiveRef.current);
+        
         seriesRef.current = series;
 
         // ═══════════════════════════════════════════════════════
@@ -332,13 +342,15 @@ const ChartComponent: React.FC = () => {
             const deltaStr = (isPos ? '+' : '') + Math.round(delta).toLocaleString();
 
             deltaMarkersPersistRef.current.set(bucketTime, {
-                time: bucketTime as Time,
-                position: 'belowBar',
-                color: isPos ? '#10B981' : '#EF4444',
-                shape: 'circle', 
-                text: deltaStr,
-                size: 0 
+                time: bucketTime,
+                delta: delta 
             });
+
+            // Sincronizar con el primitivo visual
+            deltaTotalsPrimitiveRef.current.deltaMarkers.set(bucketTime, { delta });
+            deltaTotalsPrimitiveRef.current.theme = theme;
+            deltaTotalsPrimitiveRef.current.updateAllViews();
+            series.applyOptions({}); // Forzar redibujado de la serie
 
             // 🚀 ACTUALIZACIÓN EN TIEMPO REAL: Refrescar marcadores inmediatamente
             // Throttling de 250ms para no saturar el renderizado en ticks rápidos
@@ -375,23 +387,10 @@ const ChartComponent: React.FC = () => {
                 finalMarkerMap.set(key, { ...m, time: t as Time });
             });
 
-            // 2. Marcadores Delta
-            if (showDetailedMarkers) {
-                const deltaMarkersArray = Array.from(deltaMarkersPersistRef.current.values());
-                const seenTimes = new Set<number>();
-                
-                deltaMarkersArray.reverse().forEach(m => {
-                    const t = getBestTime(Number(m.time));
-                    if (!seenTimes.has(t)) {
-                        const key = `${t}_${m.position}`;
-                        const existing = finalMarkerMap.get(key);
-                        if (!existing || existing.shape === 'circle') {
-                            finalMarkerMap.set(key, { ...m, time: t as Time });
-                            seenTimes.add(t);
-                        }
-                    }
-                });
-            }
+            // 2. Marcadores Delta (Ahora gestionados por DeltaTotalsPrimitive para mejor visibilidad)
+            // Ya no añadimos marcadores nativos para Delta para evitar duplicidad y mejorar limpieza
+            deltaTotalsPrimitiveRef.current.theme = theme;
+            deltaTotalsPrimitiveRef.current.updateAllViews();
 
             const finalMarkers = Array.from(finalMarkerMap.values())
                 .sort((a, b) => (a.time as number) - (b.time as number));
@@ -433,7 +432,14 @@ const ChartComponent: React.FC = () => {
             subSeriesRef.current = null;
             diamondPrimitiveRef.current = null;
             subChartRef.current = null;
+            setIsChartReady(false);
         };
+    }, [theme]);
+
+    useEffect(() => {
+        if (chartRef.current && seriesRef.current) {
+            setIsChartReady(true);
+        }
     }, [theme]);
 
     // 📏 Lógica de Redimensionamiento
@@ -689,6 +695,87 @@ const ChartComponent: React.FC = () => {
             const rect = container.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+
+            // 🚀 INTERACCIÓN CON EJE DE PRECIOS (Click en Etiquetas de Zonas)
+            const priceScaleWidth = chart.priceScale('right').width();
+            if (x > (container.clientWidth - priceScaleWidth)) {
+                const priceAtY = series.coordinateToPrice(y);
+                if (priceAtY !== null && sessionZonesData) {
+                    const zones = sessionZonesData;
+                    const zoneEntries = [
+                        { price: zones.overnight?.high, label: 'ON High' },
+                        { price: zones.overnight?.low, label: 'ON Low' },
+                        { price: zones.rth?.poc, label: 'POC' },
+                        { price: zones.rth?.vah, label: 'VAH' },
+                        { price: zones.rth?.val, label: 'VAL' },
+                        { price: zones.initial_balance?.high, label: 'IBH' },
+                        { price: zones.initial_balance?.low, label: 'IBL' },
+                        { price: zones.prev_day?.poc, label: 'pPOC' },
+                        { price: zones.prev_day?.high, label: 'PDH' },
+                        { price: zones.prev_day?.low, label: 'PDL' },
+                    ].filter(z => z.price != null);
+
+                    let closestZone = null;
+                    let minPixelDist = 20; // Tolerancia generosa para el label
+
+                    zoneEntries.forEach(z => {
+                        const zY = series.priceToCoordinate(z.price!);
+                        if (zY !== null) {
+                            const dist = Math.abs(zY - y);
+                            if (dist < minPixelDist) {
+                                minPixelDist = dist;
+                                closestZone = z;
+                            }
+                        }
+                    });
+
+                    if (closestZone) {
+                        // 1. COMPORTAMIENTO TOGGLE: Buscar por etiqueta exacta (es lo más fiable)
+                        const existingDrawing = currentDrawings.find(d => 
+                            d.type === 'rectangle' && 
+                            d.text === closestZone!.label
+                        );
+
+                        if (existingDrawing) {
+                            removeDrawing(existingDrawing.id);
+                            return;
+                        }
+
+                        // 2. DETERMINAR ANCLAJE DE TIEMPO SEGÚN LA ZONA
+                        let startTime = zones.rth?.start_time || (dataRef.current[0]?.time as number);
+                        if (closestZone.label.startsWith('ON')) {
+                            startTime = zones.overnight?.start_time || startTime;
+                        } else if (closestZone.label.startsWith('p') || closestZone.label.startsWith('PD')) {
+                            // Zonas previas: Anclamos al inicio de los datos disponibles para dar perspectiva
+                            startTime = dataRef.current[0]?.time as number;
+                        }
+
+                        // 3. CREACIÓN CON CENTRADO Y MAYOR GROSOR
+                        const pY = series.priceToCoordinate(closestZone.price!);
+                        if (pY !== null) {
+                            const pTop = series.coordinateToPrice(pY - 10) || closestZone.price!;
+                            const pBottom = series.coordinateToPrice(pY + 10) || closestZone.price!;
+
+                            addDrawing({
+                                type: 'rectangle',
+                                points: [
+                                    { time: startTime, price: pTop },
+                                    { time: startTime + 3600, price: pBottom }
+                                ],
+                                color: 'transparent',
+                                lineWidth: 0,
+                                fillColor: theme === 'dark' ? '#D1D1D1' : '#666666',
+                                fillOpacity: 0.12,
+                                extendRight: true,
+                                text: closestZone.label,
+                                textColor: theme === 'dark' ? '#CCCCCC' : '#333333'
+                            });
+                        }
+                        return;
+                    }
+                }
+            }
+
             const ts = getChartTime(x);
             const price = series.coordinateToPrice(y);
             
@@ -979,7 +1066,7 @@ const ChartComponent: React.FC = () => {
             window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [draggingLine, draggingHandle, draggingDrawingBody, modifyTradingOrder, activeTool, currentAnchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, currentDrawings, theme]);
+    }, [draggingLine, draggingHandle, draggingDrawingBody, modifyTradingOrder, activeTool, currentAnchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedDrawingId, selectedDrawingId, addDrawing, setSelectedDrawingId, selectedDrawingId, currentDrawings, theme, sessionZonesData]);
 
     // Control de flujo y recuperación de errores
     const lastFetchTimeRef = useRef<number>(0);
@@ -1117,6 +1204,51 @@ const ChartComponent: React.FC = () => {
 
 
     // 3. WebSocket Streaming con Reconexión Automática Robusta
+    // [CODE BLOCK REMOVED FOR BREVITY IN DIFF]
+    
+    // 3.5 Sincronización de Etiquetas de Precio
+    useEffect(() => {
+        if (seriesRef.current) {
+            seriesRef.current.applyOptions({
+                lastValueVisible: true, // El precio actual siempre visible por petición del usuario
+            });
+        }
+        if (subSeriesRef.current) {
+            subSeriesRef.current.applyOptions({
+                lastValueVisible: true, // CVD/SubChart siempre visible por petición del usuario
+            });
+        }
+        if (chartRef.current) {
+            chartRef.current.applyOptions({
+                crosshair: {
+                    horzLine: {
+                        labelVisible: showPriceLabels,
+                    },
+                },
+            });
+        }
+        if (subChartRef.current) {
+            subChartRef.current.applyOptions({
+                crosshair: {
+                    horzLine: {
+                        labelVisible: showPriceLabels,
+                    },
+                },
+            });
+        }
+        // Sincronización para indicadores dinámicos (Pine)
+        Object.entries(pineSeriesRef.current).forEach(([indId, seriesList]) => {
+            const ind = pineIndicators.find(i => i.id === indId);
+            seriesList.forEach((s, idx) => {
+                const lsTitle = ind?.results?.lineSeries?.[idx]?.title || ' ';
+                s.applyOptions({ 
+                    lastValueVisible: showPriceLabels,
+                    title: showPriceLabels ? lsTitle : ' '
+                });
+            });
+        });
+    }, [showPriceLabels, pineIndicators]);
+
     useEffect(() => {
         if (!symbol) return;
         
@@ -1577,7 +1709,8 @@ const ChartComponent: React.FC = () => {
                             color: ls.color || '#2962ff',
                             lineWidth: (ls.linewidth as any) || 2,
                             lineStyle: lineStyle,
-                            title: ls.title,
+                            title: showPriceLabels ? ls.title : '',
+                            lastValueVisible: showPriceLabels,
                         });
                         series.setData(ls.data);
                         return series;
@@ -1717,16 +1850,20 @@ const ChartComponent: React.FC = () => {
                             style={{ height: `${mainPaneHeight}%` }}
                         >
                             {/* OPTIMIZED OVERLAYS (Relative to Main Pane) */}
-                            {chartRef.current && seriesRef.current && (
+                            {isChartReady && chartRef.current && seriesRef.current && (
                                 <>
                                     <HeatmapOverlay chart={chartRef.current} series={seriesRef.current} />
                                     <BigTradesOverlay chart={chartRef.current} series={seriesRef.current} />
                                     <OrderFlowStrategiesOverlay chart={chartRef.current} series={seriesRef.current} />
                                     <TradingOverlay chart={chartRef.current} series={seriesRef.current} />
-                                    <SessionZonesOverlay 
-                                        chart={chartRef.current} 
+                                    <SessionZonesOverlay
+                                        chart={chartRef.current}
                                         subChart={subChartRef.current}
-                                        series={seriesRef.current} 
+                                        series={seriesRef.current}
+                                    />
+                                    <DeltaLevelsOverlay
+                                        chart={chartRef.current}
+                                        series={seriesRef.current}
                                     />
                                 </>
                             )}

@@ -14,7 +14,7 @@ const TradingOverlay: React.FC<TradingOverlayProps> = ({ chart, series }) => {
         isLimitMode, pendingLimitPrice, setPendingLimitPrice,
         pendingSL, setPendingSL, pendingTP, setPendingTP,
         isPendingLimitDragged, setPendingLimitDragged,
-        symbolInfo, timeframe, lastTickPrice
+        symbolInfo, timeframe, lastTickPrice, showPriceLabels
     } = useStore();
     
     // 🚀 Performance Optimization: Direct DOM Refs
@@ -338,16 +338,18 @@ const TradingOverlay: React.FC<TradingOverlayProps> = ({ chart, series }) => {
                             onMouseDown={(e) => handleMouseDown(e, data, isPos ? 'pos' : 'ord')}
                         >
                             {/* Etiqueta de Precio en Eje Y (Derecha) */}
-                            <div 
-                                className="absolute right-[-246px] -translate-y-1/2 px-1.5 py-0.5 text-[11px] font-bold text-white z-50 pointer-events-none min-w-[60px] text-center"
-                                style={{ 
-                                    backgroundColor: isPos 
-                                        ? ((data as any).profit >= 0 ? '#009688' : '#f23645')
-                                        : '#2962FF'
-                                }}
-                            >
-                                {data.price_open.toFixed(2)}
-                            </div>
+                            {showPriceLabels && (
+                                <div 
+                                    className="absolute right-[-246px] -translate-y-1/2 px-1.5 py-0.5 text-[11px] font-bold text-white z-50 pointer-events-none min-w-[60px] text-center"
+                                    style={{ 
+                                        backgroundColor: isPos 
+                                            ? ((data as any).profit >= 0 ? '#009688' : '#f23645')
+                                            : '#2962FF'
+                                    }}
+                                >
+                                    {data.price_open.toFixed(2)}
+                                </div>
+                            )}
 
                             <div className={`flex items-center h-[22px] rounded-[4px] border overflow-hidden backdrop-blur-sm transition-all ${
                                 isPos
@@ -407,11 +409,13 @@ const TradingOverlay: React.FC<TradingOverlayProps> = ({ chart, series }) => {
                             >
                                 <div className="w-full border-t border-dotted border-rose-500/20" />
                                 <div className="absolute right-0 w-[246px] border-t border-dotted border-[#ff9800]" />
-                                <div 
-                                    className="absolute right-[246px] -translate-y-1/2 px-1.5 py-0.5 bg-[#ff9800] text-white text-[11px] font-bold z-50 min-w-[60px] text-center pointer-events-none"
-                                >
-                                    {data.sl.toFixed(2)}
-                                </div>
+                                {showPriceLabels && (
+                                    <div 
+                                        className="absolute right-[246px] -translate-y-1/2 px-1.5 py-0.5 bg-[#ff9800] text-white text-[11px] font-bold z-50 min-w-[60px] text-center pointer-events-none"
+                                    >
+                                        {data.sl.toFixed(2)}
+                                    </div>
+                                )}
                                 <div 
                                     className="absolute right-[310px] -translate-y-1/2 flex items-center h-[18px] rounded-[4px] border border-dashed border-[#ff9800] bg-[#ff9800]/10 text-[#ff9800] backdrop-blur-sm pointer-events-auto cursor-ns-resize overflow-hidden"
                                     onMouseDown={(e) => handleMouseDown(e, data, isPos ? 'pos' : 'ord', 'sl')}
@@ -433,11 +437,13 @@ const TradingOverlay: React.FC<TradingOverlayProps> = ({ chart, series }) => {
                             >
                                 <div className="w-full border-t border-dotted border-emerald-500/20" />
                                 <div className="absolute right-0 w-[246px] border-t border-dotted border-[#009688]" />
-                                <div 
-                                    className="absolute right-[246px] -translate-y-1/2 px-1.5 py-0.5 bg-[#009688] text-white text-[11px] font-bold z-50 min-w-[60px] text-center pointer-events-none"
-                                >
-                                    {data.tp.toFixed(2)}
-                                </div>
+                                {showPriceLabels && (
+                                    <div 
+                                        className="absolute right-[246px] -translate-y-1/2 px-1.5 py-0.5 bg-[#009688] text-white text-[11px] font-bold z-50 min-w-[60px] text-center pointer-events-none"
+                                    >
+                                        {data.tp.toFixed(2)}
+                                    </div>
+                                )}
                                 <div 
                                     className="absolute right-[310px] -translate-y-1/2 flex items-center h-[18px] rounded-[4px] border border-dashed border-[#009688] bg-[#009688]/10 text-[#009688] backdrop-blur-sm pointer-events-auto cursor-ns-resize overflow-hidden"
                                     onMouseDown={(e) => handleMouseDown(e, data, isPos ? 'pos' : 'ord', 'tp')}

@@ -22,6 +22,7 @@ export interface AnchoredProfileOptions {
     pocColor: string;
     vahValColor: string;
     opacity: number;
+    showPriceLabels?: boolean;
 }
 
 interface BarData {
@@ -138,8 +139,10 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
                 ctx.fillStyle = isPoc ? '#9C27B0' : '#FFFFFF';
                 ctx.font = `${isPoc ? 'bold' : 'normal'} ${Math.round(9 * verticalPixelRatio)}px Inter, Arial`;
                 
-                const labelX = lineEnd + 5 * horizontalPixelRatio;
-                ctx.fillText(`${this._options.label} ${type}`, labelX, y + 3 * verticalPixelRatio);
+                if (this._options.showPriceLabels !== false) {
+                    const labelX = lineEnd + 5 * horizontalPixelRatio;
+                    ctx.fillText(`${this._options.label} ${type}`, labelX, y + 3 * verticalPixelRatio);
+                }
             };
 
             drawReferenceLine(this._vahY, '#FFFFFF', 'VAH');

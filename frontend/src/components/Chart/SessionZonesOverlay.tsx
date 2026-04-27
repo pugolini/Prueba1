@@ -30,7 +30,7 @@ interface PriceLineRef {
 }
 
 const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subChart, series }) => {
-  const { symbol, isSessionZonesEnabled, sessionZonesData, setSessionZonesData } = useStore();
+  const { symbol, isSessionZonesEnabled, sessionZonesData, setSessionZonesData, showPriceLabels } = useStore();
   const priceLinesRef = useRef<PriceLineRef[]>([]);
   const primitivesRef = useRef<ISeriesPrimitive[]>([]);
   const cvdSeriesRef = useRef<ISeriesApi<'Line'> | null>(null);
@@ -146,8 +146,8 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
           color,
           lineWidth,
           lineStyle,
-          axisLabelVisible: true,
-          title,
+          axisLabelVisible: showPriceLabels,
+          title: showPriceLabels ? title : ' ',
         });
         priceLinesRef.current.push({ line, key });
       } catch (err) { console.warn(`[SessionZones] Error creating line ${key}:`, err); }
@@ -212,7 +212,7 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
           {
             label: 'ON', dynamicAnchor: true, vaColor: 'rgba(110, 110, 110, 0.7)',
             nonVaColor: 'rgba(230, 230, 230, 0.4)', pocColor: 'rgba(30, 144, 255, 0.9)',
-            vahValColor: 'rgba(80, 80, 80, 0.7)', opacity: 0.3
+            vahValColor: 'rgba(80, 80, 80, 0.7)', opacity: 0.3, showPriceLabels
           }
         );
         series.attachPrimitive(onProfile);
@@ -229,7 +229,7 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
           {
             label: 'NY', dynamicAnchor: false, vaColor: 'rgba(156, 39, 176, 0.25)',
             nonVaColor: 'rgba(230, 230, 230, 0.45)', pocColor: 'rgba(156, 39, 176, 0.8)',
-            vahValColor: 'rgba(156, 39, 176, 0.3)', opacity: 0.4
+            vahValColor: 'rgba(156, 39, 176, 0.3)', opacity: 0.4, showPriceLabels
           }
         );
         series.attachPrimitive(rthProfile);
@@ -242,10 +242,14 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
     if (zones.overnight.vwap && zones.overnight.vwap.length > 0) {
       if (!onVwapSeriesRef.current) {
         onVwapSeriesRef.current = chart.addLineSeries({
-          color: 'rgba(30, 144, 255, 0.8)', title: 'ON VWAP', lineWidth: 1,
-          priceLineVisible: false, lastValueVisible: true,
+          color: 'rgba(30, 144, 255, 0.8)', title: showPriceLabels ? 'ON VWAP' : ' ', lineWidth: 1,
+          priceLineVisible: false, lastValueVisible: showPriceLabels,
         });
       }
+      onVwapSeriesRef.current.applyOptions({ 
+        lastValueVisible: showPriceLabels,
+        title: showPriceLabels ? 'ON VWAP' : ' '
+      });
       onVwapSeriesRef.current.setData(zones.overnight.vwap);
     }
 
@@ -253,10 +257,14 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
     if (zones.rth && zones.rth.vwap && zones.rth.vwap.length > 0) {
       if (!nyVwapSeriesRef.current) {
         nyVwapSeriesRef.current = chart.addLineSeries({
-          color: 'rgba(156, 39, 176, 0.6)', title: 'NY VWAP', lineWidth: 1.5,
-          priceLineVisible: false, lastValueVisible: true,
+          color: 'rgba(156, 39, 176, 0.6)', title: showPriceLabels ? 'NY VWAP' : ' ', lineWidth: 1.5,
+          priceLineVisible: false, lastValueVisible: showPriceLabels,
         });
       }
+      nyVwapSeriesRef.current.applyOptions({ 
+        lastValueVisible: showPriceLabels,
+        title: showPriceLabels ? 'NY VWAP' : ' '
+      });
       nyVwapSeriesRef.current.setData(zones.rth.vwap);
     }
 
@@ -268,10 +276,14 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
           priceLineVisible: false, lastValueVisible: true,
         });
       }
+      cvdSeriesRef.current.applyOptions({ 
+        lastValueVisible: true,
+        title: 'CVD'
+      });
       cvdSeriesRef.current.setData(zones.current_day.cvd);
     }
 
-  }, [chart, subChart, series, sessionZonesData, isSessionZonesEnabled]);
+  }, [chart, subChart, series, sessionZonesData, isSessionZonesEnabled, showPriceLabels]);
 
   return null;
 };
