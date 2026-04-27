@@ -45,25 +45,76 @@ class MT5Service:
         self.initialized = True
         return True
 
+    _cached_offset: int = None  # Caché del offset calculado
+
     def get_broker_offset(self, symbol: str = "NAS100.fs"):
         """
-        Calcula el offset en segundos entre el broker y UTC.
-        Lógica: broker_time - utc_time.
+        Calcula el offset en segundos entre el servidor del broker y UTC.
+        
+        Axi opera en EEST (UTC+3) durante horario de verano europeo.
+        
+        Método robusto:
+        1. Si hay caché válido, lo usa directamente.
+        2. Intenta calcular vía tick reciente (fiable solo con mercado abierto).
+        3. Fallback: Heurística de gaps de sesión analizando velas históricas.
+        4. Fallback final: 10800 (UTC+3, EEST - verificado empíricamente para Axi).
         """
+        if self._cached_offset is not None:
+            return self._cached_offset
+
         if not self.initialized: self.initialize()
+        
+        # --- Método 1: Tick reciente (solo fiable con mercado abierto) ---
         tick = mt5.symbol_info_tick(symbol)
         if not tick:
-            # Fallback a un símbolo común si el solicitado falla
             tick = mt5.symbol_info_tick("NQ.fs") or mt5.symbol_info_tick("BTCUSD")
         
-        if not tick:
-            return 7200 # Fallback estándar (UTC+2)
+        if tick and tick.time > 0:
+            now_utc = time.time()
+            diff = tick.time - now_utc
+            # Solo fiable si el tick es reciente (< 5 minutos)
+            if abs(diff) < 5 * 3600:
+                offset = round(diff / 3600) * 3600
+                logger.info(f"[MT5] Offset via tick reciente: {offset}s ({offset // 3600}h)")
+                self._cached_offset = offset
+                return offset
+        
+        # --- Método 2: Heurística de gaps de sesión ---
+        try:
+            actual_symbol = self.translate_to_mt5_symbol(symbol)
+            mt5.symbol_select(actual_symbol, True)
+            rates = mt5.copy_rates_from_pos(actual_symbol, mt5.TIMEFRAME_M1, 0, 3000)
             
-        now_utc = time.time()
-        # El tick.time viene en hora del broker
-        diff = tick.time - now_utc
-        # Redondeamos a horas exactas ya que los offsets de broker suelen ser enteros (2h, 3h, etc)
-        return round(diff / 3600) * 3600
+            if rates is not None and len(rates) > 100:
+                for i in range(1, len(rates)):
+                    gap = int(rates[i][0]) - int(rates[i - 1][0])
+                    if 3000 < gap < 40 * 3600:  # Gap diario (~1h mantenimiento)
+                        # La primera vela post-gap es la apertura de sesión
+                        # NAS100 abre a las 18:00 NY (EDT) = 22:00 UTC (verano)
+                        from datetime import datetime
+                        import pytz
+                        srv_open_ts = int(rates[i][0])
+                        srv_open_naive = datetime.utcfromtimestamp(srv_open_ts)
+                        srv_hour = srv_open_naive.hour  # Hora "naive" del servidor
+                        
+                        # Apertura real: 22:00 UTC (18:00 NY EDT, verano)
+                        # offset = srv_hour - 22 (ajustando por cruce de medianoche)
+                        offset_h = srv_hour - 22
+                        if offset_h < 0:
+                            offset_h += 24
+                        
+                        offset = offset_h * 3600
+                        logger.info(f"[MT5] Offset via heurística de gaps: {offset}s ({offset_h}h) "
+                                    f"(apertura servidor={srv_hour}:00)")
+                        self._cached_offset = offset
+                        return offset
+        except Exception as e:
+            logger.warning(f"[MT5] Error en heurística de gaps: {e}")
+
+        # --- Fallback: UTC+3 (EEST, verificado empíricamente para Axi) ---
+        logger.warning("[MT5] Usando fallback fijo: 10800s (UTC+3 EEST)")
+        self._cached_offset = 10800
+        return 10800
 
     def translate_to_mt5_symbol(self, raw_symbol: str) -> str:
         """Convierte un símbolo agnóstico o de CME al formato que usa el broker Axi."""

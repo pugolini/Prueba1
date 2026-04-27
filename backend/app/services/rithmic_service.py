@@ -2,7 +2,7 @@ import asyncio
 import logging
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from async_rithmic.client import RithmicClient
 from async_rithmic.enums import DataType, SysInfraType
 from google.protobuf.json_format import MessageToDict
@@ -584,6 +584,8 @@ class RithmicService:
                 raise e # Propagar a main.py
             logging.error(f"[RITHMIC] Error fatal en stream_data para {symbol}: {e}")
         finally:
+
+
             # Limpieza segura
             logging.info(f"[RITHMIC] Finalizando stream para {symbol}")
 

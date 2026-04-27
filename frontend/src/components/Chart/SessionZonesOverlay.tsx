@@ -207,12 +207,12 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
     if (zones.overnight.histogram && zones.overnight.histogram.length > 0 && zones.overnight.start_time) {
       try {
         const onProfile = new AnchoredProfilePrimitive(
-          zones.overnight.histogram, zones.overnight.start_time,
+          zones.overnight.histogram, zones.overnight.start_time, zones.overnight.end_time || null,
           zones.overnight.poc, zones.overnight.vah, zones.overnight.val,
           {
             label: 'ON', dynamicAnchor: true, vaColor: 'rgba(110, 110, 110, 0.7)',
             nonVaColor: 'rgba(230, 230, 230, 0.4)', pocColor: 'rgba(30, 144, 255, 0.9)',
-            vahValColor: 'rgba(80, 80, 80, 0.7)', opacity: 0.3, widthFactor: 0.08
+            vahValColor: 'rgba(80, 80, 80, 0.7)', opacity: 0.3
           }
         );
         series.attachPrimitive(onProfile);
@@ -224,12 +224,12 @@ const SessionZonesOverlay: React.FC<SessionZonesOverlayProps> = ({ chart, subCha
     if (zones.rth && zones.rth.histogram && zones.rth.histogram.length > 0 && zones.rth.start_time) {
       try {
         const rthProfile = new AnchoredProfilePrimitive(
-          zones.rth.histogram, zones.rth.start_time,
+          zones.rth.histogram, zones.rth.start_time, zones.rth.end_time || null,
           zones.rth.poc, zones.rth.vah, zones.rth.val,
           {
             label: 'NY', dynamicAnchor: false, vaColor: 'rgba(156, 39, 176, 0.25)',
             nonVaColor: 'rgba(230, 230, 230, 0.45)', pocColor: 'rgba(156, 39, 176, 0.8)',
-            vahValColor: 'rgba(156, 39, 176, 0.3)', opacity: 0.4, widthFactor: 0.12
+            vahValColor: 'rgba(156, 39, 176, 0.3)', opacity: 0.4
           }
         );
         series.attachPrimitive(rthProfile);

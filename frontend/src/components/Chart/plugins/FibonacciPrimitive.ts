@@ -9,6 +9,7 @@ class FibonacciRenderer implements ISeriesPrimitivePaneRenderer {
         private _p2: { x: number, y: number } | null,
         private _color: string,
         private _width: number,
+        private _selected: boolean,
     ) {}
 
     draw(target: any) {
@@ -46,6 +47,26 @@ class FibonacciRenderer implements ISeriesPrimitivePaneRenderer {
                 ctx.fillText(label, endX + 5 * scope.horizontalPixelRatio, y + 4 * scope.verticalPixelRatio);
             });
 
+            // Handles
+            if (this._selected) {
+                const radius = 4 * scope.horizontalPixelRatio;
+                const centerRadius = 5 * scope.horizontalPixelRatio;
+                
+                const drawHandle = (hx: number, hy: number, isCenter: boolean = false) => {
+                    ctx.beginPath();
+                    ctx.fillStyle = isCenter ? this._color : '#ffffff';
+                    ctx.strokeStyle = isCenter ? '#ffffff' : this._color;
+                    ctx.lineWidth = 2 * scope.horizontalPixelRatio;
+                    ctx.arc(hx, hy, isCenter ? centerRadius : radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                };
+
+                drawHandle(x1, y1);
+                drawHandle(x2, y2);
+                drawHandle((x1 + x2) / 2, (y1 + y2) / 2, true);
+            }
+
             ctx.restore();
         });
     }
@@ -72,7 +93,7 @@ class FibonacciView implements ISeriesPrimitivePaneView {
     }
 
     renderer() {
-        return new FibonacciRenderer(this._p1, this._p2, this._source.parameters.color, this._source.parameters.width);
+        return new FibonacciRenderer(this._p1, this._p2, this._source.parameters.color, this._source.parameters.width, this._source.selected);
     }
 }
 
@@ -80,6 +101,7 @@ export class FibonacciPrimitive implements ISeriesPrimitive {
     private _view = new FibonacciView(this);
     public chart: IChartApi | null = null;
     public series: ISeriesApi<'Candlestick' | 'Line'> | null = null;
+    public selected: boolean = false;
 
     constructor(
         public points: Point[],

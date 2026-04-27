@@ -22,7 +22,6 @@ export interface AnchoredProfileOptions {
     pocColor: string;
     vahValColor: string;
     opacity: number;
-    widthFactor: number;
 }
 
 interface BarData {
@@ -36,6 +35,7 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
     constructor(
         private _bars: BarData[],
         private _startX: number | null,
+        private _endX: number | null,
         private _pocY: number | null,
         private _vahY: number | null,
         private _valY: number | null,
@@ -51,53 +51,67 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
             const verticalPixelRatio = scope.verticalPixelRatio;
 
             const startX = this._startX! * horizontalPixelRatio;
-            const chartWidth = scope.bitmapSize.width;
-            const maxWidth = chartWidth * this._options.widthFactor;
+            const endX = (this._endX !== null ? this._endX : scope.bitmapSize.width / horizontalPixelRatio) * horizontalPixelRatio;
+            // 🚀 COMPACTACIÓN NIVEL DEEPCHART: 15% del ancho de sesión
+            const maxWidth = Math.abs(endX - startX) * 0.15;
 
             ctx.save();
 
-            // 1. Dibujar Histograma (Líneas de Alta Densidad Píxel a Píxel)
-
+            // 1. Dibujar Histograma con Textura de "Beaning" (Estilo Deepchart)
             if (this._bars.length === 0) return;
 
-            // Encontramos el rango vertical total
-            const minY = Math.round(this._bars[0].y * verticalPixelRatio - (this._bars[0].height * verticalPixelRatio) / 2);
-            const maxY = Math.round(this._bars[this._bars.length - 1].y * verticalPixelRatio + (this._bars[this._bars.length - 1].height * verticalPixelRatio) / 2);
-
-            // Función para dibujar masa densa de líneas
-            const drawDenseLines = (bars: BarData[], color: string, alpha: number) => {
+            const drawProfileLines = (bars: BarData[], color: string, alpha: number) => {
                 if (bars.length === 0) return;
                 
                 ctx.save();
                 ctx.globalAlpha = alpha;
-                ctx.beginPath();
                 ctx.strokeStyle = color;
-                ctx.lineWidth = 1; // 1 píxel físico
+                ctx.lineWidth = 1;
 
-                for (const bar of bars) {
+                const pocYPhysical = this._pocY !== null ? Math.round(this._pocY * verticalPixelRatio) : null;
+
+                for (let i = 0; i < bars.length; i++) {
+                    const bar = bars[i];
                     const yTop = Math.round(bar.y * verticalPixelRatio - (bar.height * verticalPixelRatio) / 2);
                     const yBottom = Math.round(bar.y * verticalPixelRatio + (bar.height * verticalPixelRatio) / 2);
-                    const w = (bar.width / 1000) * maxWidth;
+                    
+                    const wStart = (bar.width / 1000) * maxWidth;
+                    const nextBar = bars[i + 1];
+                    const wEnd = nextBar ? (nextBar.width / 1000) * maxWidth : wStart;
 
-                    // Dibujamos líneas para cada píxel de altura de este bin
-                    for (let py = yTop; py <= yBottom; py++) {
-                        ctx.moveTo(startX, py);
-                        ctx.lineTo(startX + w, py);
+                    for (let py = yTop; py <= yBottom; py += 3) {
+                        const progress = (py - yTop) / (yBottom - yTop || 1);
+                        const currentW = wStart + (wEnd - wStart) * progress;
+                        
+                        ctx.beginPath();
+                        
+                        // 🚀 RESALTADO POC: Si esta línea coincide con el POC, usamos morado intenso
+                        if (pocYPhysical !== null && Math.abs(py - pocYPhysical) <= 1) {
+                            ctx.save();
+                            ctx.globalAlpha = 0.9;
+                            ctx.strokeStyle = '#9C27B0'; // Morado institucional
+                            ctx.lineWidth = 2 * verticalPixelRatio;
+                            ctx.moveTo(startX, py);
+                            ctx.lineTo(startX + currentW, py);
+                            ctx.stroke();
+                            ctx.restore();
+                        } else {
+                            ctx.moveTo(startX, py);
+                            ctx.lineTo(startX + currentW, py);
+                            ctx.stroke();
+                        }
                     }
                 }
-                ctx.stroke();
                 ctx.restore();
             };
 
             const vaBars = this._bars.filter(b => b.inVA);
-            const nonVaBars = this._bars.filter(b => !b.inVA);
 
-            // Dibujamos con el esquema de colores institucional
-            drawDenseLines(nonVaBars, '#E5E4E2', 0.3); // Exterior traslúcido
-            drawDenseLines(vaBars, '#2A2A2A', 0.6);   // VA Carbón
+            // Ajuste de colores y opacidad para nitidez industrial
+            drawProfileLines(this._bars.filter(b => !b.inVA), '#D1D1D1', 0.2); 
+            drawProfileLines(vaBars, '#1A1A1A', 0.25);    
 
-            // 2. Silueta Exterior Blanca (ELIMINADA PARA EVITAR BORDES ARTIFICIALES)
-            // El perfil se define exclusivamente por la densidad de sus líneas horizontales.
+            // 2. Silueta Exterior Blanca (ELIMINADA)
 
             // 3. Líneas de Referencia y Etiquetas (Alineación Derecha)
             const drawReferenceLine = (yVal: number | null, color: string, type: string, isPoc: boolean = false) => {
@@ -109,8 +123,8 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
                     ctx.setLineDash([3 * horizontalPixelRatio, 3 * horizontalPixelRatio]);
                     ctx.strokeStyle = 'rgba(255, 255, 255, 0.4)';
                 } else {
-                    ctx.setLineDash([]);
-                    ctx.strokeStyle = '#1A1A1A'; // POC Gris muy oscuro
+                    ctx.setLineDash([5 * horizontalPixelRatio, 5 * horizontalPixelRatio]);
+                    ctx.strokeStyle = '#9C27B0'; // POC Morado coincidente con el perfil
                 }
                 
                 ctx.lineWidth = (isPoc ? 1.5 : 0.8) * verticalPixelRatio;
@@ -121,7 +135,7 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
                 ctx.stroke();
 
                 ctx.setLineDash([]);
-                ctx.fillStyle = isPoc ? '#1A1A1A' : '#FFFFFF';
+                ctx.fillStyle = isPoc ? '#9C27B0' : '#FFFFFF';
                 ctx.font = `${isPoc ? 'bold' : 'normal'} ${Math.round(9 * verticalPixelRatio)}px Inter, Arial`;
                 
                 const labelX = lineEnd + 5 * horizontalPixelRatio;
@@ -129,7 +143,7 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
             };
 
             drawReferenceLine(this._vahY, '#FFFFFF', 'VAH');
-            drawReferenceLine(this._pocY, '#1A1A1A', 'POC', true);
+            drawReferenceLine(this._pocY, '#9C27B0', 'POC', true);
             drawReferenceLine(this._valY, '#FFFFFF', 'VAL');
 
             ctx.restore();
@@ -140,6 +154,7 @@ class AnchoredProfileRenderer implements ISeriesPrimitivePaneRenderer {
 class AnchoredProfileView implements ISeriesPrimitivePaneView {
     private _bars: BarData[] = [];
     private _startX: number | null = null;
+    private _endX: number | null = null;
     private _pocY: number | null = null;
     private _vahY: number | null = null;
     private _valY: number | null = null;
@@ -147,23 +162,22 @@ class AnchoredProfileView implements ISeriesPrimitivePaneView {
     constructor(private _source: AnchoredProfilePrimitive) {}
 
     update() {
-        const { chart, series, startTime, histogram, poc, vah, val, options } = this._source;
+        const { chart, series, startTime, endTime, histogram, poc, vah, val, options } = this._source;
         if (!chart || !series || histogram.length === 0) return;
 
         const timeScale = chart.timeScale();
         let startX = timeScale.timeToCoordinate(startTime as Time);
+        let endX = endTime ? timeScale.timeToCoordinate(endTime as Time) : null;
         
         // Manejo de anclaje dinámico
         if (options.dynamicAnchor) {
             if (startX === null || startX < 0) {
                 startX = 0 as Coordinate;
             }
-        } else {
-            // Si no es dinámico y está fuera a la izquierda, lightweight-charts suele devolver null o valores negativos grandes.
-            // lo dejamos tal cual para que se desplace con el gráfico.
         }
         
         this._startX = startX;
+        this._endX = endX;
 
         const maxVol = Math.max(...histogram.map(h => h.volume));
         const totalWidth = 1000;
@@ -196,6 +210,7 @@ class AnchoredProfileView implements ISeriesPrimitivePaneView {
         return new AnchoredProfileRenderer(
             this._bars,
             this._startX,
+            this._endX,
             this._pocY,
             this._vahY,
             this._valY,
@@ -212,6 +227,7 @@ export class AnchoredProfilePrimitive implements ISeriesPrimitive {
     constructor(
         public histogram: HistogramItem[],
         public startTime: number,
+        public endTime: number | null,
         public poc: number,
         public vah: number,
         public val: number,

@@ -25,6 +25,12 @@ export interface Drawing {
   lineWidth: number;
   lineStyle: number; // 0: Solid, 1: Dotted, 2: Dashed
   symbol: string;
+  text?: string;
+  textColor?: string;
+  fillColor?: string;
+  fillOpacity?: number;
+  extendRight?: boolean;
+  isLocked?: boolean;
 }
 
 export interface VwapBand {
@@ -194,7 +200,15 @@ interface TradingState {
   pendingOrders: PendingOrder[];
   defaultLot: number;
   isTradingSyncing: boolean;
-  accountInfo: AccountInfo | null;
+  account: AccountInfo | null;
+  drawingClipboard: Omit<Drawing, 'id' | 'symbol'> | null;
+  
+  // Actions
+  copyDrawing: (id: string) => void;
+  pasteDrawing: () => void;
+  addDrawing: (drawing: Drawing) => void;
+  removeDrawing: (id: string) => void;
+  clearDrawings: () => void;
   setAccountInfo: (info: AccountInfo | null) => void;
   
   // Pending Limit Order Creation
@@ -264,10 +278,8 @@ interface TradingState {
   setSelectedAnchoredVwapId: (id: string | null) => void;
   updateAnchoredVwap: (id: string, updates: Partial<AnchoredVwap>) => void;
   
-  addDrawing: (drawing: Omit<Drawing, 'id' | 'symbol'>) => void;
-  removeDrawing: (id: string | null) => void;
-  updateDrawing: (id: string, updates: Partial<Drawing>) => void;
   setSelectedDrawingId: (id: string | null) => void;
+  updateDrawing: (id: string, updates: Partial<Drawing>) => void;
   setPositionHistory: (history: Position[]) => void;
   setSessionZonesEnabled: (enabled: boolean) => void;
   setSessionZonesData: (data: SessionZones | null) => void;
@@ -348,7 +360,8 @@ export const useStore = createWithEqualityFn<TradingState>()(
       pendingOrders: [],
       defaultLot: 0.1,
       isTradingSyncing: false,
-      accountInfo: null,
+      account: null,
+      drawings: [],
       isLimitMode: false,
       pendingLimitPrice: null,
       pendingSL: null,
@@ -885,6 +898,34 @@ export const useStore = createWithEqualityFn<TradingState>()(
       removeAnchoredVwap: (id) => set((state) => ({ anchoredVwapsBySymbol: { ...state.anchoredVwapsBySymbol, [state.symbol]: (state.anchoredVwapsBySymbol[state.symbol]||[]).filter(v=>v.id!==id) } })),
       setSelectedAnchoredVwapId: (id) => set({ selectedAnchoredVwapId: id }),
       updateAnchoredVwap: (id, u) => set((state) => ({ anchoredVwapsBySymbol: { ...state.anchoredVwapsBySymbol, [state.symbol]: (state.anchoredVwapsBySymbol[state.symbol]||[]).map(v=>v.id===id?{...v,...u}:v) } })),
+      drawingClipboard: null,
+      copyDrawing: (id) => {
+        const { symbol, drawingsBySymbol } = get();
+        const drawing = (drawingsBySymbol[symbol] || []).find(d => d.id === id);
+        if (drawing) {
+          const { id: _, symbol: __, ...copy } = drawing;
+          set({ drawingClipboard: copy });
+        }
+      },
+      pasteDrawing: () => {
+        const { symbol, drawingClipboard, addDrawing } = get();
+        if (drawingClipboard) {
+          // Desplazar un poco para que se vea la copia
+          const p0 = drawingClipboard.points[0];
+          const p1 = drawingClipboard.points[1] || p0;
+          const offsetPrice = (p0.price - p1.price) * 0.1 || 10; // 10 ticks si p0=p1
+          
+          const offsetPoints = drawingClipboard.points.map(p => ({
+            ...p,
+            price: p.price + offsetPrice
+          }));
+
+          addDrawing({
+            ...drawingClipboard,
+            points: offsetPoints
+          } as any);
+        }
+      },
       addDrawing: (d) => set((state) => {
         const nd = { ...d, id: Math.random().toString(36).substr(2,9), symbol: state.symbol };
         return { drawingsBySymbol: { ...state.drawingsBySymbol, [state.symbol]: [...(state.drawingsBySymbol[state.symbol]||[]), nd] } };
@@ -892,6 +933,7 @@ export const useStore = createWithEqualityFn<TradingState>()(
       removeDrawing: (id) => set((state) => ({ drawingsBySymbol: { ...state.drawingsBySymbol, [state.symbol]: (state.drawingsBySymbol[state.symbol]||[]).filter(d=>d.id!==id) } })),
       updateDrawing: (id, u) => set((state) => ({ drawingsBySymbol: { ...state.drawingsBySymbol, [state.symbol]: (state.drawingsBySymbol[state.symbol]||[]).map(d=>d.id===id?{...d,...u}:d) } })),
       setSelectedDrawingId: (id) => set({ selectedDrawingId: id }),
+
       setPositionHistory: (h) => set({ positionHistory: h }),
     }),
     {

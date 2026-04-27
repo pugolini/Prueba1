@@ -22,6 +22,7 @@ import { TrendlinePrimitive } from './plugins/TrendlinePrimitive';
 import { RectanglePrimitive } from './plugins/RectanglePrimitive';
 import { FibonacciPrimitive } from './plugins/FibonacciPrimitive';
 import { PositionPrimitive } from './plugins/PositionPrimitive';
+import { DrawingToolbar } from './DrawingToolbar';
 import { AnchoredVwapPrimitive } from './plugins/AnchoredVwapPrimitive';
 
 const ChartComponent: React.FC = () => {
@@ -43,8 +44,12 @@ const ChartComponent: React.FC = () => {
     const deltaMarkersPersistRef = useRef<Map<number, any>>(new Map());
     const lastUpdateRef = useRef<number>(0);
     const lastDataLengthRef = useRef<number>(0);
+    const indicatorMarkersRef = useRef<any[]>([]);
+    const lastDeltaUpdateRef = useRef<number>(0);
     const priceLinesRef = useRef<Record<string, any[]>>({});
     const [draggingLine, setDraggingLine] = useState<{ ticket: number, type: string, isOrder: boolean } | null>(null);
+    const [draggingHandle, setDraggingHandle] = useState<{ id: string, pointIndex: number } | null>(null);
+    const [draggingDrawingBody, setDraggingDrawingBody] = useState<{ id: string, startX: number, startY: number, originalPoints: {time: number, price: number}[] } | null>(null);
 
     // 📏 Estado de Paneles (Resizable) e Interfaz Adaptativa
     const [mainPaneHeight, setMainPaneHeight] = useState(70);
@@ -334,9 +339,68 @@ const ChartComponent: React.FC = () => {
                 text: deltaStr,
                 size: 0 
             });
+
+            // 🚀 ACTUALIZACIÓN EN TIEMPO REAL: Refrescar marcadores inmediatamente
+            // Throttling de 250ms para no saturar el renderizado en ticks rápidos
+            const now = Date.now();
+            if (now - lastDeltaUpdateRef.current > 250) {
+                lastDeltaUpdateRef.current = now;
+                refreshMarkers();
+            }
+        };
+
+        const refreshMarkers = () => {
+            if (!seriesRef.current) return;
+            
+            const currentData = dataRef.current;
+            const finalMarkerMap = new Map<string, any>();
+            
+            const getBestTime = (markerTime: number) => {
+                if (currentData.length === 0) return Math.floor(markerTime);
+                let bestT = currentData[0].time as number;
+                for (let i = currentData.length - 1; i >= 0; i--) {
+                    const candTime = currentData[i].time as number;
+                    if (candTime <= markerTime) {
+                        bestT = candTime;
+                        break;
+                    }
+                }
+                return bestT;
+            };
+
+            // 1. Marcadores de indicadores (VortexJS/Pine)
+            indicatorMarkersRef.current.forEach(m => {
+                const t = getBestTime(Number(m.time));
+                const key = `${t}_${m.position}`;
+                finalMarkerMap.set(key, { ...m, time: t as Time });
+            });
+
+            // 2. Marcadores Delta
+            if (showDetailedMarkers) {
+                const deltaMarkersArray = Array.from(deltaMarkersPersistRef.current.values());
+                const seenTimes = new Set<number>();
+                
+                deltaMarkersArray.reverse().forEach(m => {
+                    const t = getBestTime(Number(m.time));
+                    if (!seenTimes.has(t)) {
+                        const key = `${t}_${m.position}`;
+                        const existing = finalMarkerMap.get(key);
+                        if (!existing || existing.shape === 'circle') {
+                            finalMarkerMap.set(key, { ...m, time: t as Time });
+                            seenTimes.add(t);
+                        }
+                    }
+                });
+            }
+
+            const finalMarkers = Array.from(finalMarkerMap.values())
+                .sort((a, b) => (a.time as number) - (b.time as number));
+                
+            seriesRef.current.setMarkers(finalMarkers);
         };
 
         (chart as any)._updateDelta = updateDeltaMarkers;
+        (chart as any)._refreshMarkers = refreshMarkers;
         (chart as any)._clearDeltas = () => {
             deltaMarkersPersistRef.current.clear();
             seriesRef.current?.setMarkers([]);
@@ -546,20 +610,30 @@ const ChartComponent: React.FC = () => {
             let plugin = drawingsRef.current[d.id];
             
             const isSelected = d.id === selectedDrawingId;
-            const activeColor = isSelected ? '#ffffff' : d.color;
-            const activeWidth = isSelected ? 4 : d.lineWidth || 2;
+            const activeColor = d.color || '#2962ff';
+            const activeTextColor = d.textColor || activeColor; // Por defecto el mismo de la línea
+            const activeWidth = d.lineWidth || 2;
 
             if (!plugin) {
                 if (d.type === 'trendline') {
-                    plugin = new TrendlinePrimitive(d.points, { color: activeColor, width: activeWidth, style: d.lineStyle });
+                    plugin = new TrendlinePrimitive(d.points, { color: activeColor, width: activeWidth, style: d.lineStyle, text: d.text, textColor: activeTextColor });
                 } else if (d.type === 'rectangle') {
-                    plugin = new RectanglePrimitive(d.points, { color: activeColor, width: activeWidth, fillColor: isSelected ? 'rgba(255,255,255,0.1)' : 'rgba(41, 98, 255, 0.1)' });
+                    plugin = new RectanglePrimitive(d.points, { 
+                        color: activeColor, 
+                        width: activeWidth, 
+                        fillColor: d.fillColor || activeColor, 
+                        fillOpacity: d.fillOpacity ?? 0.1,
+                        extendRight: d.extendRight || false,
+                        text: d.text, 
+                        textColor: activeTextColor 
+                    });
                 } else if (d.type === 'fibonacci') {
                     plugin = new FibonacciPrimitive(d.points, { color: activeColor, width: activeWidth });
                 } else if (d.type === 'long' || d.type === 'short') {
                     plugin = new PositionPrimitive(d.type, d.points, { color: activeColor, width: activeWidth });
                 }
                 if (plugin) {
+                    plugin.selected = isSelected;
                     series.attachPrimitive(plugin);
                     drawingsRef.current[d.id] = plugin;
                 }
@@ -569,10 +643,15 @@ const ChartComponent: React.FC = () => {
                 plugin.parameters = { 
                     ...plugin.parameters, 
                     color: activeColor, 
+                    textColor: activeTextColor,
                     width: activeWidth,
                     style: d.lineStyle,
-                    fillColor: isSelected ? 'rgba(255,255,255,0.1)' : 'rgba(41, 98, 255, 0.1)'
+                    text: d.text,
+                    fillColor: d.fillColor || activeColor,
+                    fillOpacity: d.fillOpacity ?? 0.1,
+                    extendRight: d.extendRight || false
                 };
+                plugin.selected = isSelected;
                 plugin.updateAllViews();
             }
         });
@@ -585,7 +664,6 @@ const ChartComponent: React.FC = () => {
         const chart = chartRef.current;
         const series = seriesRef.current;
 
-        // Helper para obtener tiempo (Real o Extrapolado al futuro)
         const getChartTime = (x: number) => {
             const currentData = dataRef.current;
             if (!chart || currentData.length === 0) return null;
@@ -616,46 +694,86 @@ const ChartComponent: React.FC = () => {
             
             if (price === null || ts === null) return;
 
-            // --- Selection Logic (Cursor Mode) ---
             if (activeTool === 'cursor') {
-                const clickedDrawing = currentDrawings.find(d => {
-                    const seriesList = drawingsRef.current[d.id];
-                    if (!seriesList || d.points.length < 2) return false;
+                const timeScale = chart.timeScale();
 
-                    const timeScale = chart.timeScale();
+                // 1. Prioridad: Punto Central
+                const drawingWithCenterHit = currentDrawings.find(d => {
+                    if (d.points.length < 2) return false;
                     const p1X = timeScale.timeToCoordinate(d.points[0].time as Time);
                     const p1Y = series.priceToCoordinate(d.points[0].price);
                     const p2X = timeScale.timeToCoordinate(d.points[1].time as Time);
                     const p2Y = series.priceToCoordinate(d.points[1].price);
+                    if (p1X === null || p1Y === null || p2X === null || p2Y === null) return false;
+                    
+                    const centerX = (p1X + p2X) / 2;
+                    const centerY = (p1Y + p2Y) / 2;
+                    const distC = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+                    return distC < 35;
+                });
 
+                if (drawingWithCenterHit) {
+                    setSelectedDrawingId(drawingWithCenterHit.id);
+                    if (!drawingWithCenterHit.isLocked) {
+                        setDraggingDrawingBody({
+                            id: drawingWithCenterHit.id,
+                            startX: x,
+                            startY: y,
+                            originalPoints: JSON.parse(JSON.stringify(drawingWithCenterHit.points))
+                        });
+                        chart.applyOptions({ handleScroll: false, handleScale: false });
+                    }
+                    return;
+                }
+
+                // 2. Extremos
+                if (selectedDrawingId) {
+                    const drawing = currentDrawings.find(d => d.id === selectedDrawingId);
+                    if (drawing && !drawing.isLocked && drawing.points.length >= 2) {
+                        const p1X = timeScale.timeToCoordinate(drawing.points[0].time as Time);
+                        const p1Y = series.priceToCoordinate(drawing.points[0].price);
+                        const p2X = timeScale.timeToCoordinate(drawing.points[1].time as Time);
+                        const p2Y = series.priceToCoordinate(drawing.points[1].price);
+
+                        if (p1X !== null && p1Y !== null && p2X !== null && p2Y !== null) {
+                            const dist1 = Math.sqrt(Math.pow(x - p1X, 2) + Math.pow(y - p1Y, 2));
+                            const dist2 = Math.sqrt(Math.pow(x - p2X, 2) + Math.pow(y - p2Y, 2));
+
+                            if (dist1 < 25) {
+                                setDraggingHandle({ id: selectedDrawingId, pointIndex: 0 });
+                                chart.applyOptions({ handleScroll: false, handleScale: false });
+                                return;
+                            } else if (dist2 < 25) {
+                                setDraggingHandle({ id: selectedDrawingId, pointIndex: 1 });
+                                chart.applyOptions({ handleScroll: false, handleScale: false });
+                                return;
+                            }
+                        }
+                    }
+                }
+
+                // 3. Selección por Cuerpo
+                const clickedDrawing = currentDrawings.find(d => {
+                    const p = drawingsRef.current[d.id];
+                    if (!p || d.points.length < 2) return false;
+                    const p1X = timeScale.timeToCoordinate(d.points[0].time as Time);
+                    const p1Y = series.priceToCoordinate(d.points[0].price);
+                    const p2X = timeScale.timeToCoordinate(d.points[1].time as Time);
+                    const p2Y = series.priceToCoordinate(d.points[1].price);
                     if (p1X === null || p1Y === null || p2X === null || p2Y === null) return false;
 
                     if (d.type === 'trendline') {
-                        const A = x - p1X;
-                        const B = y - p1Y;
-                        const C = p2X - p1X;
-                        const D = p2Y - p1Y;
-                        const dot = A * C + B * D;
-                        const lenSq = C * C + D * D;
+                        const A = x - p1X; const B = y - p1Y; const C = p2X - p1X; const D = p2Y - p1Y;
+                        const dot = A * C + B * D; const lenSq = C * C + D * D;
                         let param = lenSq !== 0 ? dot / lenSq : -1;
                         let xx, yy;
-                        if (param < 0) { xx = p1X; yy = p1Y; }
-                        else if (param > 1) { xx = p2X; yy = p2Y; }
-                        else { xx = p1X + param * C; yy = p1Y + param * D; }
-                        const dx = x - xx;
-                        const dy = y - yy;
-                        return Math.sqrt(dx * dx + dy * dy) < 15;
-                    } else if (d.type === 'rectangle' || d.type === 'fibonacci' || d.type === 'long' || d.type === 'short') {
-                        const xMin = Math.min(p1X, p2X);
-                        const xMax = Math.max(p1X, p2X);
-                        const yMin = Math.min(p1Y, p2Y);
-                        const yMax = Math.max(p1Y, p2Y);
-                        const nearEdge = (Math.abs(x - xMin) < 15 || Math.abs(x - xMax) < 15) && y >= yMin && y <= yMax ||
-                                         (Math.abs(y - yMin) < 15 || Math.abs(y - yMax) < 15) && x >= xMin && x <= xMax;
-                        const isInside = x >= xMin && x <= xMax && y >= yMin && y <= yMax;
-                        return nearEdge || isInside;
+                        if (param < 0) { xx = p1X; yy = p1Y; } else if (param > 1) { xx = p2X; yy = p2Y; } else { xx = p1X + param * C; yy = p1Y + param * D; }
+                        return Math.sqrt(Math.pow(x - xx, 2) + Math.pow(y - yy, 2)) < 15;
+                    } else {
+                        const xMin = Math.min(p1X, p2X); const xMax = Math.max(p1X, p2X);
+                        const yMin = Math.min(p1Y, p2Y); const yMax = Math.max(p1Y, p2Y);
+                        return (x >= xMin && x <= xMax && y >= yMin && y <= yMax);
                     }
-                    return false;
                 });
                 
                 if (clickedDrawing) {
@@ -665,22 +783,15 @@ const ChartComponent: React.FC = () => {
                     setSelectedDrawingId(null);
                 }
 
-                // AVWAP Selection (Check near anchor)
                 const clickedVwap = (currentAnchoredVwaps || []).find(v => {
-                    const timeScale = chart.timeScale();
                     const xV = timeScale.timeToCoordinate(v.startTime as Time);
                     if (xV === null) return false;
-                    
                     const candle = dataRef.current.find(d => (d.time as number) === v.startTime);
                     if (!candle) return false;
                     const yV = series.priceToCoordinate(candle.high);
                     if (yV === null) return false;
-
-                    const dx = x - xV;
-                    const dy = y - yV;
-                    return Math.sqrt(dx * dx + dy * dy) < 25;
+                    return Math.sqrt(Math.pow(x - xV, 2) + Math.pow(y - yV, 2)) < 25;
                 });
-
                 if (clickedVwap) {
                     setSelectedAnchoredVwapId(clickedVwap.id);
                     return;
@@ -689,65 +800,43 @@ const ChartComponent: React.FC = () => {
                 }
             }
 
-            // --- Drawing Tool Logic (Trendline / Rectangle / Fib / Position) ---
             const drawingTools = ['trendline', 'rectangle', 'fibonacci', 'long', 'short'];
             if (drawingTools.includes(activeTool)) {
                 const initialPoints = [{ time: ts, price: price }, { time: ts, price: price }];
                 const tempId = 'temp_' + Math.random();
                 const previewColor = theme === 'dark' ? '#ffffff' : '#000000';
-                
                 let plugin: any = null;
-                if (activeTool === 'trendline') {
-                    plugin = new TrendlinePrimitive(initialPoints, { color: previewColor, width: 3, style: LineStyle.Solid });
-                } else if (activeTool === 'rectangle') {
-                    plugin = new RectanglePrimitive(initialPoints, { color: previewColor, width: 3, fillColor: 'rgba(255,255,255,0.1)' });
-                } else if (activeTool === 'fibonacci') {
-                    plugin = new FibonacciPrimitive(initialPoints, { color: previewColor, width: 2 });
-                } else if (activeTool === 'long' || activeTool === 'short') {
-                    plugin = new PositionPrimitive(activeTool as 'long' | 'short', initialPoints, { color: previewColor, width: 2 });
-                }
+                if (activeTool === 'trendline') plugin = new TrendlinePrimitive(initialPoints, { color: previewColor, width: 3, style: LineStyle.Solid });
+                else if (activeTool === 'rectangle') plugin = new RectanglePrimitive(initialPoints, { color: previewColor, width: 3, fillColor: 'rgba(255,255,255,0.1)' });
+                else if (activeTool === 'fibonacci') plugin = new FibonacciPrimitive(initialPoints, { color: previewColor, width: 2 });
+                else if (activeTool === 'long' || activeTool === 'short') plugin = new PositionPrimitive(activeTool as 'long' | 'short', initialPoints, { color: previewColor, width: 2 });
 
                 if (plugin) {
                     series.attachPrimitive(plugin);
                     tempDrawingRef.current = { id: tempId, type: activeTool, points: initialPoints, plugin };
-                }
-                
-                // Solo bloqueamos si realmente empezamos un dibujo
-                if (tempDrawingRef.current) {
                     chart.applyOptions({ handleScroll: false, handleScale: false });
                 }
                 return;
             }
 
-            // --- Anchored VWAP Placement ---
             if (activeTool === 'anchoredVwap') {
                 const index = dataRef.current.findIndex(d => (d.time as number) >= ts);
                 if (index !== -1) {
-                    addAnchoredVwap({
-                        startTime: ts,
-                        startIndex: index,
-                        color: theme === 'dark' ? '#2962ff' : '#2196f3',
-                        lineWidth: 2
-                    });
+                    addAnchoredVwap({ startTime: ts, startIndex: index, color: theme === 'dark' ? '#2962ff' : '#2196f3', lineWidth: 2 });
                     setActiveTool('cursor');
-                    return;
                 }
+                return;
             }
 
-            // --- Trading Line Drag Logic ---
             let closest: any = null;
             let minDist = 15;
             Object.values(priceLinesRef.current).flat().forEach((line: any) => {
                 const lineY = series.priceToCoordinate(line.options().price);
                 if (lineY !== null) {
                     const dist = Math.abs(lineY - y);
-                    if (dist < minDist) {
-                        minDist = dist;
-                        closest = line;
-                    }
+                    if (dist < minDist) { minDist = dist; closest = line; }
                 }
             });
-
             if (closest) {
                 const ticket = parseInt(closest._ticketKey.split('_')[1]);
                 setDraggingLine({ ticket, type: closest._type, isOrder: closest._ticketKey.startsWith('ord_') });
@@ -763,13 +852,47 @@ const ChartComponent: React.FC = () => {
             const price = series.coordinateToPrice(y);
             if (price === null || ts === null) return;
 
+            const getSnappedPrice = (p: number, t: number) => {
+                if (!e.ctrlKey) return p;
+                const candle = dataRef.current.find(d => (d.time as number) === (t as number));
+                if (!candle) return p;
+                const dH = Math.abs(p - candle.high), dL = Math.abs(p - candle.low), dO = Math.abs(p - candle.open), dC = Math.abs(p - candle.close);
+                const minV = Math.min(dH, dL, dO, dC);
+                if (minV === dH) return candle.high; if (minV === dL) return candle.low; if (minV === dO) return candle.open; return candle.close;
+            };
+
+            if (draggingDrawingBody) {
+                const plugin = drawingsRef.current[draggingDrawingBody.id];
+                if (plugin) {
+                    const timeScale = chart.timeScale();
+                    const sP = series.coordinateToPrice(draggingDrawingBody.startY), cP = series.coordinateToPrice(y);
+                    const sL = timeScale.coordinateToLogical(draggingDrawingBody.startX), cL = timeScale.coordinateToLogical(x);
+                    if (sP !== null && cP !== null && sL !== null && cL !== null) {
+                        const priceDelta = cP - sP, logicalDelta = Math.round(cL - sL);
+                        plugin.points = draggingDrawingBody.originalPoints.map(p => {
+                            const pX = timeScale.timeToCoordinate(p.time as Time);
+                            const pL = pX !== null ? timeScale.coordinateToLogical(pX) : null;
+                            const nX = pL !== null ? timeScale.logicalToCoordinate((pL + logicalDelta) as any) : null;
+                            return { time: (nX !== null ? getChartTime(nX) : p.time) as number, price: p.price + priceDelta };
+                        });
+                        plugin.updateAllViews(); series.applyOptions({});
+                    }
+                }
+                return;
+            }
+
             if (tempDrawingRef.current) {
                 const temp = tempDrawingRef.current;
-                temp.points[1] = { time: ts as number, price: price as number };
-                
-                if (temp.plugin) {
-                    temp.plugin.points = [...temp.points];
-                    temp.plugin.updateAllViews();
+                temp.points[1] = { time: ts as number, price: getSnappedPrice(price as number, ts as number) };
+                if (temp.plugin) { temp.plugin.points = [...temp.points]; temp.plugin.updateAllViews(); series.applyOptions({}); }
+                return;
+            }
+
+            if (draggingHandle) {
+                const plugin = drawingsRef.current[draggingHandle.id];
+                if (plugin) {
+                    plugin.points[draggingHandle.pointIndex] = { time: ts as number, price: getSnappedPrice(price as number, ts as number) };
+                    plugin.updateAllViews(); series.applyOptions({});
                 }
                 return;
             }
@@ -790,19 +913,20 @@ const ChartComponent: React.FC = () => {
                 const price = series.coordinateToPrice(e.clientY - rect.top);
                 const temp = tempDrawingRef.current;
                 if (ts !== null && price !== null) temp.points[1] = { time: ts, price };
-                
                 if (Math.abs(temp.points[0].time - temp.points[1].time) > 0 || Math.abs(temp.points[0].price - temp.points[1].price) > 0.1) {
-                    addDrawing({
-                        type: temp.type as any,
-                        points: temp.points,
-                        color: theme === 'dark' ? '#2962ff' : '#2196f3',
-                        lineWidth: 2,
-                        lineStyle: 0
+                    const baseColor = theme === 'dark' ? '#2962ff' : '#2196f3';
+                    const extraProps = temp.type === 'rectangle' ? { fillColor: baseColor, fillOpacity: 0.1 } : {};
+                    addDrawing({ 
+                        type: temp.type as any, 
+                        points: temp.points, 
+                        color: baseColor, 
+                        lineWidth: 2, 
+                        lineStyle: 0,
+                        ...extraProps
                     });
                 }
                 if (temp.plugin) series.detachPrimitive(temp.plugin);
-                tempDrawingRef.current = null;
-                chart.applyOptions({ handleScroll: true, handleScale: true });
+                tempDrawingRef.current = null; chart.applyOptions({ handleScroll: true, handleScale: true });
                 setActiveTool('cursor');
                 return;
             }
@@ -817,17 +941,31 @@ const ChartComponent: React.FC = () => {
                     else if (draggingLine.type === 'tp') await modifyTradingOrder(draggingLine.ticket, 0, finalPrice);
                     else if (draggingLine.isOrder && draggingLine.type === 'price') await modifyTradingOrder(draggingLine.ticket, 0, 0, finalPrice);
                 }
-                setDraggingLine(null);
                 chart.applyOptions({ handleScroll: true, handleScale: true });
+                setDraggingLine(null);
+            }
+
+            if (draggingHandle) {
+                const plugin = drawingsRef.current[draggingHandle.id];
+                if (plugin) updateDrawing(draggingHandle.id, { points: [...plugin.points] });
+                setDraggingHandle(null); chart.applyOptions({ handleScroll: true, handleScale: true });
+            }
+
+            if (draggingDrawingBody) {
+                const plugin = drawingsRef.current[draggingDrawingBody.id];
+                if (plugin) updateDrawing(draggingDrawingBody.id, { points: [...plugin.points] });
+                setDraggingDrawingBody(null); chart.applyOptions({ handleScroll: true, handleScale: true });
             }
         };
 
         const handleKeyDown = (e: KeyboardEvent) => {
+            const state = useStore.getState();
             if (e.key === 'Delete' || e.key === 'Backspace') {
-                const state = useStore.getState();
                 if (state.selectedDrawingId) state.removeDrawing(state.selectedDrawingId);
                 else if (state.selectedAnchoredVwapId) state.removeAnchoredVwap(state.selectedAnchoredVwapId);
             }
+            if (e.ctrlKey && e.key.toLowerCase() === 'c' && state.selectedDrawingId) state.copyDrawing(state.selectedDrawingId);
+            if (e.ctrlKey && e.key.toLowerCase() === 'v') state.pasteDrawing();
         };
 
         container.addEventListener('mousedown', handleMouseDown);
@@ -841,7 +979,7 @@ const ChartComponent: React.FC = () => {
             window.removeEventListener('mouseup', handleMouseUp);
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [draggingLine, modifyTradingOrder, activeTool, dataLength, currentAnchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, currentDrawings, theme]);
+    }, [draggingLine, draggingHandle, draggingDrawingBody, modifyTradingOrder, activeTool, currentAnchoredVwaps, addAnchoredVwap, setActiveTool, setSelectedAnchoredVwapId, selectedAnchoredVwapId, addDrawing, setSelectedDrawingId, selectedDrawingId, currentDrawings, theme]);
 
     // Control de flujo y recuperación de errores
     const lastFetchTimeRef = useRef<number>(0);
@@ -1408,12 +1546,13 @@ const ChartComponent: React.FC = () => {
 
         // B. Ejecutar todos los scripts
         try {
+            const allIndicatorMarkers: any[] = [];
             pineIndicators.forEach(ind => {
                 const results = executeVortexJS(ind.script, currentData, serverOffset, theme);
                 const { lineSeries, markers, barColors, dashboard } = results;
 
                 if (dashboard) combinedDashboard = { ...combinedDashboard, ...dashboard };
-                if (markers) allMarkers = [...allMarkers, ...markers];
+                if (markers) allIndicatorMarkers.push(...markers);
                 if (barColors) {
                     barColors.forEach((bc: any) => finalBarColors.set(bc.time, bc.color));
                 }
@@ -1458,6 +1597,7 @@ const ChartComponent: React.FC = () => {
                     });
                 }
             });
+            indicatorMarkersRef.current = allIndicatorMarkers;
         } catch (error) {
             console.error('[Chart] Indicator execution crashed:', error);
         }
@@ -1483,54 +1623,11 @@ const ChartComponent: React.FC = () => {
                 setDashboardData(combinedDashboard);
             }
             
-            // 🛡️ DEDUPLICACIÓN Y ALINEACIÓN INDUSTRIAL (Snapping a Velas Reales)
-            const finalMarkerMap = new Map<string, any>();
-            
-            // Helper para encontrar la vela que debe "contenier" este marcador
-            const getBestTime = (markerTime: number) => {
-                if (currentData.length === 0) return Math.floor(markerTime);
-                
-                // BÚSQUEDA BINARIA / LOOKUP: Buscamos la vela cuya hora sea <= tiempo del marcador
-                // Esto garantiza que si el marcador llega con 1-2 segundos de desfase, se pegue a su vela.
-                let bestT = currentData[0].time as number;
-                for (let i = currentData.length - 1; i >= 0; i--) {
-                    const candTime = currentData[i].time as number;
-                    if (candTime <= markerTime) {
-                        bestT = candTime;
-                        break;
-                    }
-                }
-                return bestT;
-            };
-
-            // 1. Procesar marcadores de indicadores (VortexJS/Pine)
-            allMarkers.forEach(m => {
-                const t = getBestTime(Number(m.time));
-                const key = `${t}_${m.position}`;
-                finalMarkerMap.set(key, { ...m, time: t as Time });
-            });
-            
-            // 2. Procesar y priorizar Deltas (Solo si el zoom lo permite)
-            if (showDetailedMarkers) {
-                uniqueDeltaMarkers.forEach(m => {
-                    const t = getBestTime(Number(m.time));
-                    const key = `${t}_${m.position}`;
-                    
-                    // Solo insertamos si no hay un marcador de indicador ya ocupando ese espacio
-                    // O si el marcador existente es un Delta antiguo para esa vela (Sobreescritura)
-                    const existing = finalMarkerMap.get(key);
-                    if (!existing || existing.shape === 'circle') { // 'circle' identifica nuestros deltas
-                        finalMarkerMap.set(key, { ...m, time: t as Time });
-                    }
-                });
+            // 🛡️ REFRESH UNIFICADO
+            if ((chartRef.current as any)?._refreshMarkers) {
+                (chartRef.current as any)._refreshMarkers();
             }
 
-            const finalMarkers = Array.from(finalMarkerMap.values())
-                .sort((a, b) => (a.time as number) - (b.time as number));
-                
-            if (seriesRef.current) {
-                seriesRef.current.setMarkers(finalMarkers);
-            }
         } catch (e) {
             console.warn('[Chart] Final render step recovered from:', e);
         }
@@ -1816,6 +1913,7 @@ const ChartComponent: React.FC = () => {
                             </div>
                         </div>
                     )}
+                    <DrawingToolbar />
                 </div>
             </div>
     );

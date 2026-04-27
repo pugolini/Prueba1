@@ -96,11 +96,11 @@ def calculate_volume_profile(candles: List[Dict], tick_size: float = 0.25, value
     }
 
     if return_histogram:
-        # Simplificamos el histograma para el frontend (ej. 40 niveles max)
-        # Agrupamos por bins si hay demasiados niveles
+        # Histograma de alta definición — enviar hasta 500 niveles al frontend
+        # Para NAS100 (~1600 niveles nativos), esto da barras de ~0.8 pts cada una
         num_levels = len(sorted_prices)
-        if num_levels > 40:
-            step = num_levels // 40
+        if num_levels > 500:
+            step = max(1, num_levels // 500)
             binned_hist = []
             for i in range(0, num_levels, step):
                 chunk = sorted_prices[i:i+step]
@@ -109,6 +109,7 @@ def calculate_volume_profile(candles: List[Dict], tick_size: float = 0.25, value
                 binned_hist.append({"price": round(avg_price, 2), "volume": round(total_vol, 2)})
             result["histogram"] = binned_hist
         else:
+            # Sin binning — resolución nativa tick a tick
             result["histogram"] = [{"price": p, "volume": round(volume_by_price[p], 2)} for p in sorted_prices]
 
     return result
@@ -217,24 +218,44 @@ def calculate_session_zones(candles: List[Dict], tick_size: float = 0.25) -> Dic
 
     try:
         if not df_all.empty and latest_ny:
-            # --- ANCLAJE UTC (00:00 UTC) ---
-            # Identificamos el inicio del día actual en UTC basado en la última vela
-            latest_utc = pd.to_datetime(df_all['time'].max(), unit='s', utc=True)
-            day_start_utc = latest_utc.replace(hour=0, minute=0, second=0, microsecond=0)
-            ny_open_utc = latest_utc.replace(hour=13, minute=30, second=0, microsecond=0) # 09:30 NY = 13:30 UTC (aprox)
+            # --- CÁLCULO DE SESIONES (UTC PURO) ---
+            latest_ts = int(df_all['time'].max())
+            dt_utc = datetime.utcfromtimestamp(latest_ts).replace(tzinfo=None)
             
-            min_ts = int(day_start_utc.timestamp())
-            mid_ts = int(ny_open_utc.timestamp())
+            # Apertura NY (13:30 UTC = 09:30 NY en horario de verano)
+            # En invierno es 14:30 UTC. Para ser dinámico:
+            import pytz
+            ny_tz = pytz.timezone('America/New_York')
+            dt_ny = datetime.fromtimestamp(latest_ts, ny_tz)
             
-            # Filtro Overnight: Desde 00:00 UTC hasta 13:30 UTC
+            # Apertura NY hoy (09:30 local NY = 15:30 Madrid aprox)
+            rth_start_ny = dt_ny.replace(hour=9, minute=30, second=0, microsecond=0)
+            # Cierre NY hoy (16:15 local NY = 22:15 Madrid aprox)
+            rth_end_ny = dt_ny.replace(hour=16, minute=15, second=0, microsecond=0)
+            
+            # Inicio Overnight hoy (00:00 local Madrid)
+            madrid_tz = pytz.timezone('Europe/Madrid')
+            dt_madrid = datetime.fromtimestamp(latest_ts, madrid_tz)
+            day_start_madrid = dt_madrid.replace(hour=0, minute=0, second=0, microsecond=0)
+            
+            min_ts = int(day_start_madrid.timestamp())
+            mid_ts = int(rth_start_ny.timestamp())
+            max_ts = int(rth_end_ny.timestamp())
+            
+            logging.info(f"[ZONES] Latest: {dt_madrid} | ON: {day_start_madrid} -> {rth_start_ny} | NY: {rth_start_ny} -> {rth_end_ny}")
+
+            # Filtro Overnight: 00:00 a 15:30 Madrid
             mask_on = (df_all['time'] >= min_ts) & (df_all['time'] < mid_ts)
             on_df = df_all[mask_on].sort_values('time')
             on_candles = on_df.to_dict('records')
             
-            # --- RTH (NY): Desde 13:30 UTC en adelante ---
-            mask_rth = (df_all['time'] >= mid_ts)
+            # --- RTH (NY): 15:30 a 22:15 Madrid ---
+            mask_rth = (df_all['time'] >= mid_ts) & (df_all['time'] <= max_ts)
             rth_df = df_all[mask_rth].sort_values('time')
             rth_candles = rth_df.to_dict('records')
+
+            # Si no hay velas en RTH aún (antes de las 15:30), usamos las últimas disponibles para el cálculo de zonas si es necesario,
+            # pero el startTime debe ser el oficial.
 
             # Calcular Perfil Overnight
             on_vwap_data = []
@@ -348,8 +369,8 @@ def calculate_session_zones(candles: List[Dict], tick_size: float = 0.25) -> Dic
             "poc": on_profile.get("poc", 0),
             "vah": on_profile.get("vah", 0),
             "val": on_profile.get("val", 0),
-            "start_time": int(on_candles[0].get("time")) if on_candles else 0,
-            "end_time": int(on_candles[-1].get("time")) if on_candles else 0,
+            "start_time": min_ts,
+            "end_time": mid_ts,
             "histogram": on_profile.get("histogram", []),
             "vwap": on_vwap_data
         },
@@ -357,7 +378,8 @@ def calculate_session_zones(candles: List[Dict], tick_size: float = 0.25) -> Dic
             "poc": rth_profile.get("poc", 0),
             "vah": rth_profile.get("vah", 0),
             "val": rth_profile.get("val", 0),
-            "start_time": int(rth_df.iloc[0]['time']) if not rth_df.empty else 0,
+            "start_time": mid_ts,
+            "end_time": max_ts,
             "histogram": rth_profile.get("histogram", []),
             "vwap": ny_vwap_data
         },

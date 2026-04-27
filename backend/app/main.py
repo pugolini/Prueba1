@@ -596,7 +596,7 @@ async def get_history_footprint(symbol: str, timeframe: str = "1m", count: int =
     # Determinar punto de anclaje (Anchor)
     timeframe_mt5 = TF_MAP.get(timeframe, mt5.TIMEFRAME_M1)
     try:
-        if to_timestamp:
+        if to_timestamp and to_timestamp > 0:
             logging.info(f"[Footprint] Paginando al pasado desde {datetime.fromtimestamp(to_timestamp)}")
             # 1. Ajustar el timestamp de búsqueda a hora del broker
             broker_to_timestamp = to_timestamp + offset

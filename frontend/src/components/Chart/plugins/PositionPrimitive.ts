@@ -8,6 +8,7 @@ class PositionRenderer implements ISeriesPrimitivePaneRenderer {
         private _type: 'long' | 'short',
         private _color: string,
         private _width: number,
+        private _selected: boolean,
     ) {}
 
     draw(target: any) {
@@ -64,6 +65,26 @@ class PositionRenderer implements ISeriesPrimitivePaneRenderer {
             ctx.fillStyle = this._color;
             ctx.fillText(`R/B: 1.00`, startX + 5 * scope.horizontalPixelRatio, y1 - 5 * scope.verticalPixelRatio);
 
+            // Handles
+            if (this._selected) {
+                const radius = 4 * scope.horizontalPixelRatio;
+                const centerRadius = 5 * scope.horizontalPixelRatio;
+                
+                const drawHandle = (hx: number, hy: number, isCenter: boolean = false) => {
+                    ctx.beginPath();
+                    ctx.fillStyle = isCenter ? this._color : '#ffffff';
+                    ctx.strokeStyle = isCenter ? '#ffffff' : this._color;
+                    ctx.lineWidth = 2 * scope.horizontalPixelRatio;
+                    ctx.arc(hx, hy, isCenter ? centerRadius : radius, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.stroke();
+                };
+
+                drawHandle(x1, y1);
+                drawHandle(x2, y2);
+                drawHandle((startX + endX) / 2, (y1 + y2) / 2, true);
+            }
+
             ctx.restore();
         });
     }
@@ -94,7 +115,8 @@ class PositionView implements ISeriesPrimitivePaneView {
             this._p1, this._p2, 
             this._source.type,
             this._source.parameters.color, 
-            this._source.parameters.width
+            this._source.parameters.width,
+            this._source.selected
         );
     }
 }
@@ -103,6 +125,7 @@ export class PositionPrimitive implements ISeriesPrimitive {
     private _view = new PositionView(this);
     public chart: IChartApi | null = null;
     public series: ISeriesApi<'Candlestick' | 'Line'> | null = null;
+    public selected: boolean = false;
 
     constructor(
         public type: 'long' | 'short',
